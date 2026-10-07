@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using LeagueVR.Champions;
 namespace LeagueVR.Match
 {
     public class RiftMinion : RiftActor
@@ -96,7 +97,7 @@ namespace LeagueVR.Match
                 var structure = actor as RiftStructure;
                 if (structure && structure.lane >= 0 && structure.lane != lane)
                     continue;
-                float distance = GwenAbilities.FlatDistance(transform.position, actor.transform.position) - actor.radius;
+                float distance = Geo.FlatDistance(transform.position, actor.transform.position) - actor.radius;
                 if (distance > 7)
                     continue;
                 if (!actor.structure && CorridorDistance(actor.transform.position, route) > 3.8f)
@@ -156,7 +157,7 @@ namespace LeagueVR.Match
             }
             else if (route != null && route.Length > waypoint)
             {
-                while (waypoint < route.Length - 1 && (GwenAbilities.FlatDistance(transform.position, FormationPoint(waypoint)) < .65f || GwenAbilities.FlatDistance(transform.position, route[waypoint]) < .65f))
+                while (waypoint < route.Length - 1 && (Geo.FlatDistance(transform.position, FormationPoint(waypoint)) < .65f || Geo.FlatDistance(transform.position, route[waypoint]) < .65f))
                     waypoint++;
                 goal = FormationPoint(waypoint);
             }
@@ -200,7 +201,7 @@ namespace LeagueVR.Match
                         foreach (var other in All)
                             if (other is RiftMinion minion && other != this && minion.health.IsAlive)
                             {
-                                float distance = GwenAbilities.FlatDistance(at, other.transform.position);
+                                float distance = Geo.FlatDistance(at, other.transform.position);
                                 if (distance < radius + minion.radius + .1f)
                                     value -= 3 * (radius + minion.radius + .1f - distance);
                             }
@@ -240,7 +241,7 @@ namespace LeagueVR.Match
             {
                 if (other is not RiftMinion minion || other == this || !minion.health.IsAlive || minion.health.team != health.team)
                     continue;
-                float current = GwenAbilities.FlatDistance(transform.position, other.transform.position), nextDistance = GwenAbilities.FlatDistance(ground, other.transform.position), minimum = radius + minion.radius + .05f;
+                float current = Geo.FlatDistance(transform.position, other.transform.position), nextDistance = Geo.FlatDistance(ground, other.transform.position), minimum = radius + minion.radius + .05f;
                 if (nextDistance < minimum - .0001f && nextDistance < current + .00001f)
                     return false;
             }
@@ -259,7 +260,7 @@ namespace LeagueVR.Match
         IEnumerator Strike(RiftActor victim, float delay, int variant)
         {
             yield return new WaitForSeconds(delay);
-            if (health.Stunned || !health.IsAlive || !victim || !victim.Targetable || !victim.health.IsTargetableBy(health) || !RiftMatch.Instance.Running || GwenAbilities.FlatDistance(transform.position, victim.transform.position) > Range(victim) + .35f)
+            if (health.Stunned || !health.IsAlive || !victim || !victim.Targetable || !victim.health.IsTargetableBy(health) || !RiftMatch.Instance.Running || Geo.FlatDistance(transform.position, victim.transform.position) > Range(victim) + .35f)
                 yield break;
             float damage = stats.damage;
             if (victim.GetComponent<RiftMinion>())

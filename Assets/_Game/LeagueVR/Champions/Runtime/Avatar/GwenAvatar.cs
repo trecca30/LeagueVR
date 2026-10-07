@@ -1,12 +1,14 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.XR;
-namespace LeagueVR
+namespace LeagueVR.Champions
 {
+    /// <summary>Gwen's first-person body: tracked arms, finger curl and the animated scissors.</summary>
     [DefaultExecutionOrder(220)]
     public class GwenAvatar : MonoBehaviour
     {
-        public GwenAbilities champion;
+        [FormerlySerializedAs("champion")] public PlayerChampion player;
         public Transform visualRoot, scissorsRoot, bladeA, bladeB, leftUpper, leftLower, leftPalm, rightUpper, rightLower, rightPalm;
         public Animation animationPlayer;
         public GwenHandPoses handPoses;
@@ -43,7 +45,7 @@ namespace LeagueVR
             }
         }
         readonly List<(Transform bone, Quaternion rest, Quaternion holding, bool left)> fingers = new();
-        public Quaternion WeaponRotation => champion.DesktopMode ? champion.head.transform.rotation : GwenTracking.Grip(champion, false).rotation * (handPoses ? handPoses.weaponGripAlignment : Quaternion.identity);
+        public Quaternion WeaponRotation => player.DesktopMode ? player.head.transform.rotation : XRPoses.Grip(player, false).rotation * (handPoses ? handPoses.weaponGripAlignment : Quaternion.identity);
 
         void Awake()
         {
@@ -105,14 +107,34 @@ namespace LeagueVR
 
         void OnEnable()
         {
-            champion.Cast += OnCast;
+            player.Cast += OnCast;
+            player.WeaponPose = WeaponPose;
             Application.onBeforeRender += BeforeRender;
         }
 
         void OnDisable()
         {
-            champion.Cast -= OnCast;
+            player.Cast -= OnCast;
+            if (player.WeaponPose == WeaponPose)
+                player.WeaponPose = null;
             Application.onBeforeRender -= BeforeRender;
+        }
+
+        /// <summary>The scissors' grip pose; melee sweeps start at the visible blade.</summary>
+        Pose WeaponPose()
+        {
+            var grip = XRPoses.Grip(player, false);
+            return new Pose(grip.position + grip.rotation * rightGripOffset, WeaponRotation);
+        }
+
+        /// <summary>Shows or hides Gwen's body and scissors when she is (un)equipped.</summary>
+        public void SetVisible(bool visible)
+        {
+            enabled = visible;
+            if (visualRoot)
+                visualRoot.gameObject.SetActive(visible);
+            if (scissorsRoot)
+                scissorsRoot.gameObject.SetActive(visible);
         }
 
         void OnCast(string kind, Vector3 p, Vector3 d)
@@ -129,7 +151,7 @@ namespace LeagueVR
         [BeforeRenderOrder(150)]
         void BeforeRender()
         {
-            if (!champion.DesktopMode)
+            if (!player.DesktopMode)
                 UpdateTrackedVisuals();
         }
 
@@ -137,7 +159,7 @@ namespace LeagueVR
         {
             if (!ready)
                 return;
-            var head = champion.head.transform;
+            var head = player.head.transform;
             Vector3 flat = Vector3.ProjectOnPlane(head.forward, Vector3.up);
             // Avoid a 180 degree body flip when the wearer looks straight up/down.
             Vector3 forward = flat.sqrMagnitude > .04f ? flat.normalized : (lastBodyForward.sqrMagnitude > .01f ? lastBodyForward : visualRoot.forward);
@@ -145,10 +167,10 @@ namespace LeagueVR
             visualRoot.rotation = Quaternion.LookRotation(forward);
             // Crouching moves the shoulders with eye height; head tracking itself is never changed.
             visualRoot.position = new Vector3(head.position.x, head.position.y - (avatarHeight - .1f), head.position.z) - forward * .12f;
-            Pose rightGripPose = GwenTracking.Grip(champion, false), leftGripPose = GwenTracking.Grip(champion, true);
-            Quaternion rightRotation = champion.DesktopMode ? head.rotation : rightGripPose.rotation, leftRotation = champion.DesktopMode ? head.rotation : leftGripPose.rotation;
-            Vector3 rightTarget = champion.DesktopMode ? head.TransformPoint(new Vector3(.23f, -.30f, .40f)) : rightGripPose.position + rightRotation * rightGripOffset;
-            Vector3 leftTarget = champion.DesktopMode ? head.TransformPoint(new Vector3(-.23f, -.30f, .36f)) : leftGripPose.position + leftRotation * leftGripOffset;
+            Pose rightGripPose = XRPoses.Grip(player, false), leftGripPose = XRPoses.Grip(player, true);
+            Quaternion rightRotation = player.DesktopMode ? head.rotation : rightGripPose.rotation, leftRotation = player.DesktopMode ? head.rotation : leftGripPose.rotation;
+            Vector3 rightTarget = player.DesktopMode ? head.TransformPoint(new Vector3(.23f, -.30f, .40f)) : rightGripPose.position + rightRotation * rightGripOffset;
+            Vector3 leftTarget = player.DesktopMode ? head.TransformPoint(new Vector3(-.23f, -.30f, .36f)) : leftGripPose.position + leftRotation * leftGripOffset;
             leftPose.Restore(leftUpper, leftLower, leftPalm);
             rightPose.Restore(rightUpper, rightLower, rightPalm);
             SolveArm(rightUpper, rightLower, rightPalm, rightTarget, visualRoot.right * .65f - Vector3.up);
@@ -175,13 +197,13 @@ namespace LeagueVR
                 if (bladeB)
                     bladeB.localRotation = bladeBRest * Quaternion.AngleAxis(-open, Vector3.right);
             }
-            bool tracked = champion.DesktopMode || (GwenTracking.Tracked(true) && GwenTracking.Tracked(false));
+            bool tracked = player.DesktopMode || (XRPoses.Tracked(true) && XRPoses.Tracked(false));
             foreach (var r in bodyRenderers)
                 if (r)
                     r.forceRenderingOff = !tracked;
             foreach (var r in weaponRenderers)
                 if (r)
-                    r.forceRenderingOff = !champion.DesktopMode && !GwenTracking.Tracked(false);
+                    r.forceRenderingOff = !player.DesktopMode && !XRPoses.Tracked(false);
         }
 
         static void SolveArm(Transform upper, Transform lower, Transform palm, Vector3 target, Vector3 pole)

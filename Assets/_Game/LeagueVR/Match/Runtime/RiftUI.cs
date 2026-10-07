@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using TMPro;
+using LeagueVR.Champions;
 namespace LeagueVR.Match
 {
     public class RiftUIButton : MonoBehaviour
@@ -241,7 +242,7 @@ namespace LeagueVR.Match
             if (!stable)
                 preservePose = false;
             Screen("League VR", stable);
-            var roster = match.player.GetComponent<LeagueVR.Champions.ChampionRoster>();
+            var roster = match.player.GetComponent<ChampionRoster>();
             if (!roster || roster.champions == null || roster.champions.Length == 0)
             {
                 Button(root, "PLAY", -300, 0, 600, 100, () => match.Play(), "play");
@@ -300,7 +301,7 @@ namespace LeagueVR.Match
         {
             shopScreen = false;
             Screen("Champion ability guide", true);
-            var d = match.player.GetComponent<LeagueVR.Champions.ChampionRoster>().Selected;
+            var d = match.player.GetComponent<ChampionRoster>().Selected;
             Text(root, d.name + "  /  " + d.passiveName + " — " + d.passiveDescription, -790, 334, 1560, 89, 25, d.color);
             for (int i = 0; i < 4; i++)
             {
@@ -353,7 +354,7 @@ namespace LeagueVR.Match
 
         string AbilityName(int slot)
         {
-            var roster = match.player.GetComponent<LeagueVR.Champions.ChampionRoster>();
+            var roster = match.player.GetComponent<ChampionRoster>();
             return roster && roster.Selected ? roster.Selected.spells[slot].name : "QWER"[slot].ToString();
         }
 
@@ -442,10 +443,10 @@ namespace LeagueVR.Match
             if (category == 0)
             {
                 int[] recommend = { 1056, 2003, 1001, 2031, 3340, 3115, 4633, 3089, 3157, 3152, 3135, 3100, 3020, 3158, 4630, 3916 };
-                var active = match.player.GetComponent<LeagueVR.Champions.ChampionRoster>()?.Active;
-                if (active && (active.id == LeagueVR.Champions.ChampionId.Aatrox || active.id == LeagueVR.Champions.ChampionId.Pantheon))
+                var active = match.player.GetComponent<ChampionRoster>()?.Active;
+                if (active && (active.id == ChampionId.Aatrox || active.id == ChampionId.Pantheon))
                     recommend = new[] { 1054, 2003, 1001, 2031, 3340, 3071, 3161, 3053, 3074, 6333, 3142, 3158 };
-                else if (active && (active.id == LeagueVR.Champions.ChampionId.Akshan || active.id == LeagueVR.Champions.ChampionId.Yunara))
+                else if (active && (active.id == ChampionId.Akshan || active.id == ChampionId.Yunara))
                     recommend = new[] { 1055, 2003, 1001, 2031, 3340, 6672, 3031, 3085, 3094, 3036, 3072, 3006 };
                 list = list.Where(i => recommend.Contains(i.id));
             }
@@ -606,7 +607,7 @@ namespace LeagueVR.Match
         {
             if (weaponHidden && menuAvatar && menuAvatar.scissorsRoot)
             {
-                menuAvatar.scissorsRoot.gameObject.SetActive(weaponWasActive && !match.player.OtherActive);
+                menuAvatar.scissorsRoot.gameObject.SetActive(weaponWasActive && menuAvatar.enabled);
                 weaponHidden = false;
             }
             if (panel)

@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using TMPro;
+using LeagueVR.Champions;
 namespace LeagueVR.Match
 {
     [DefaultExecutionOrder(310)]
@@ -32,9 +33,6 @@ namespace LeagueVR.Match
 
         void Start()
         {
-            var feedback = match.player.GetComponent<GwenFeedback>();
-            if (feedback && feedback.status)
-                feedback.status.gameObject.SetActive(false);
             wrist = Canvas("Gwen wrist interface", 500, 264, .00038f);
             Surface(wrist.transform, -250, 0, 500, 264, new Color(.015f, .027f, .04f, .94f));
             Surface(wrist.transform, -250, 130, 500, 4, new Color(.3f, .9f, .92f));
@@ -140,10 +138,15 @@ namespace LeagueVR.Match
             hp.fillAmount = h.Health / h.maxHealth;
             mp.fillAmount = e.MaxMana > 0 ? e.Mana / e.MaxMana : 0;
             shield.fillAmount = Mathf.Clamp01(h.Shield / h.maxHealth);
-            string CD(string k) => p.Cooldown(k) > 0 ? $"<color=#829399>{p.Cooldown(k):0.0}s</color>" : "READY";
-            abilities.text = $"Q  {CD("Q")}   <color=#E5C478>{p.QStacks}/4</color>    W  {(p.MistActive ? "MIST" : CD("W"))}\nE  {CD("E")}       R  {(p.RStage > 0 ? "RECAST " + (p.RStage + 1) : CD("R"))}";
-            if (p.OtherActive)
-                abilities.text = $"Q {CD("Q")}    W {CD("W")}\nE {CD("E")}    R {CD("R")}\n{p.Other.StateText}";
+            string Slot(int i)
+            {
+                string custom = p.Kit?.SlotStatus(i);
+                if (custom != null)
+                    return custom;
+                float cd = p.Cooldown(i);
+                return cd > 0 ? $"<color=#829399>{cd:0.0}s</color>" : "READY";
+            }
+            abilities.text = $"Q  {Slot(0)}     W  {Slot(1)}\nE  {Slot(2)}     R  {Slot(3)}\n<color=#E5C478>{p.Kit?.StateText}</color>";
             meta.text = $"Lv {e.Level}    {e.Gold:N0}g    {(int)match.Seconds / 60:00}:{(int)match.Seconds % 60:00}";
             recallTime.text = $"{match.RecallRemaining:0.0} s";
             recallFill.fillAmount = 1 - match.RecallRemaining / 8;

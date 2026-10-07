@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using LeagueVR.Champions;
 
 namespace LeagueVR.Match
 {
@@ -17,7 +18,11 @@ namespace LeagueVR.Match
         }
     }
 
-    public class RiftEconomy : MonoBehaviour, IDamageGuard
+    /// <summary>
+    /// Gold, experience, inventory and every champion stat derived from level and items.
+    /// Writes totals into the champion's <see cref="ChampionStats"/> and health component.
+    /// </summary>
+    public class RiftEconomy : MonoBehaviour, IDamageGuard, ITargetFilter
     {
         public RiftMatch match;
         public List<InventorySlot> inventory = new();
@@ -26,68 +31,48 @@ namespace LeagueVR.Match
         public float CombatGold, SupportGold;
         public int Version { get; private set; }
         public RiftItemEffects Effects { get; private set; }
+        public RiftItemRack Rack { get; private set; }
+        public ChampionDefinition ChampionBase { get; private set; }
         public bool Stasis => Effects && Effects.Stasis;
         public float BonusResistance => 0;
 
         public bool Blocks(DamageHit hit) => Stasis;
+
+        /// <summary>Stasis (Zhonya's) makes the champion untargetable by everyone.</summary>
+        public bool HiddenFrom(Combatant attacker) => Stasis;
+
         public event Action Changed;
-        GwenTuning original, basis;
-        float baseHealth, baseArmor, baseMR, healthRegen, manaRegen, incomeFraction, baronUntil;
+        float healthRegen, manaRegen, goldPerTen, incomeFraction, baronUntil;
         int dragons;
         bool initialized;
+        PlayerChampion Player => match.player;
 
         void Start()
         {
-            original = match.player.tuning;
-            basis = Instantiate(original);
-            match.player.tuning = Instantiate(original);
-            baseHealth = match.player.Health.maxHealth;
-            baseArmor = match.player.Health.armor;
-            baseMR = match.player.Health.magicResistance;
             Effects = GetComponent<RiftItemEffects>();
             if (!Effects)
                 Effects = gameObject.AddComponent<RiftItemEffects>();
             Effects.Initialize(this);
-            if (!GetComponent<RiftItemRack>())
-                gameObject.AddComponent<RiftItemRack>().Initialize(this);
+            Rack = GetComponent<RiftItemRack>();
+            if (!Rack)
+            {
+                Rack = gameObject.AddComponent<RiftItemRack>();
+                Rack.Initialize(this);
+            }
             initialized = true;
-            var roster = GetComponent<LeagueVR.Champions.ChampionRoster>();
+            var roster = GetComponent<ChampionRoster>();
             if (roster && roster.Active)
                 SetChampionBase(roster.Active);
-            match.player.Health.RefreshGuards();
+            Player.Health.RefreshGuards();
             Recalculate();
             Mana = MaxMana;
         }
 
-        void OnDestroy()
-        {
-            if (match && match.player && original)
-            {
-                Destroy(match.player.tuning);
-                match.player.tuning = original;
-            }
-            if (basis)
-                Destroy(basis);
-        }
-        public LeagueVR.Champions.ChampionDefinition ChampionBase { get; private set; }
-
-        public void SetChampionBase(LeagueVR.Champions.ChampionDefinition d)
+        public void SetChampionBase(ChampionDefinition d)
         {
             ChampionBase = d;
             if (!initialized)
                 return;
-            baseHealth = d.health;
-            baseArmor = d.armor;
-            baseMR = d.magicResist;
-            if (basis)
-                Destroy(basis);
-            basis = Instantiate(original);
-            if (d.id != LeagueVR.Champions.ChampionId.Gwen)
-            {
-                basis.attackDamage = d.attackDamage;
-                basis.attackInterval = 1 / d.attackSpeed;
-                basis.attackReach = d.attackReach;
-            }
             Recalculate();
             Mana = MaxMana;
         }
@@ -208,7 +193,7 @@ namespace LeagueVR.Match
                 return "Return to your own fountain.";
             if (!item.showInShop)
                 return "This item transforms automatically.";
-            if (!string.IsNullOrEmpty(item.requiredChampion) && !string.Equals(item.requiredChampion, "Gwen", StringComparison.OrdinalIgnoreCase))
+            if (!string.IsNullOrEmpty(item.requiredChampion) && !string.Equals(item.requiredChampion, Player.ChampionName, StringComparison.OrdinalIgnoreCase))
                 return "Requires " + item.requiredChampion + ".";
             if ((item.id == 3363 || item.id == 3364) && Level < 9 && item.id == 3363)
                 return "Unlocks at level 9.";
@@ -358,7 +343,7 @@ namespace LeagueVR.Match
             }
             Mana -= amount;
             if (Owns(6657))
-                match.player.Health.Heal(amount * .25f);
+                Player.Health.Heal(amount * .25f);
             return true;
         }
 
@@ -366,18 +351,25 @@ namespace LeagueVR.Match
 
         public void Recalculate()
         {
-            if (!initialized)
+            if (!initialized || !ChampionBase)
                 return;
+            var d = ChampionBase;
+            var player = Player;
+            var stats = player.Stats;
+            var health = player.Health;
             var items = OwnedItems.Where(i => !i.consumable).ToArray();
-            var health = match.player.Health;
-            var tuning = match.player.tuning;
-            float hp = (Effects ? Effects.TimelessStacks * 10 : 0) + items.Sum(i => i.health) + (Effects ? Effects.PermanentHealth : 0), aspeed = items.Sum(i => i.attackSpeed), oldMana = MaxMana;
+            float Grow(float baseValue, float growth) => ChampionStats.Grow(baseValue, growth, Level);
+
+            float bonusHealth = (Effects ? Effects.TimelessStacks * 10 + Effects.PermanentHealth + Effects.BonusHP : 0) + items.Sum(i => i.health);
+            float oldMana = MaxMana;
             AbilityHaste = items.Sum(i => i.abilityHaste) + (Effects ? Effects.FamineHaste : 0);
-            AbilityPower = (Effects ? Effects.TimelessStacks * 3 : 0) + items.Sum(i => i.abilityPower) + health.SpellPowerBonus + (Effects ? Effects.BonusAP : 0);
+            AbilityPower = (Effects ? Effects.TimelessStacks * 3 + Effects.BonusAP : 0) + items.Sum(i => i.abilityPower) + health.SpellPowerBonus;
             if (Owns(4633))
-                AbilityPower += hp * .02f;
+                AbilityPower += bonusHealth * .02f;
             if (Owns(3003) || Owns(3040))
-                AbilityPower += (330 + 40 * (Level - 1) + items.Sum(i => i.mana)) * .01f;
+                AbilityPower += (Grow(d.mana, d.manaGrowth) + items.Sum(i => i.mana)) * .01f;
+            if (Owns(6621))
+                AbilityPower += items.Sum(i => i.manaRegen) * 10;
             if (Owns(3089))
                 AbilityPower *= 1.3f;
             if (Time.time < baronUntil)
@@ -387,61 +379,51 @@ namespace LeagueVR.Match
             Lifesteal = items.Sum(i => i.lifesteal);
             Omnivamp = items.Sum(i => i.omnivamp) + (Effects ? Effects.BonusVamp + Effects.ExtraOmnivamp : 0);
             Tenacity = 1 - items.Aggregate(1f, (v, i) => v * (1 - i.tenacity));
-            HealShieldPower = items.Sum(i => i.healShieldPower);
-            if (Owns(6621))
-            {
-                HealShieldPower += items.Sum(i => i.manaRegen) * .02f;
-                AbilityPower += items.Sum(i => i.manaRegen) * 10;
-            }
+            HealShieldPower = items.Sum(i => i.healShieldPower) + (Owns(6621) ? items.Sum(i => i.manaRegen) * .02f : 0);
             MagicPen = items.Sum(i => i.magicPen);
             MagicPenPercent = 1 - items.Aggregate(1f, (v, i) => v * (1 - i.magicPenPercent));
             ArmorPen = 1 - items.Aggregate(1f, (v, i) => v * (1 - i.armorPen));
             Lethality = items.Sum(i => i.lethality);
+
+            // Movement: flat bonuses add to base speed before percentage bonuses; 340 is the reference speed of the XR rig.
             float moveFlat = items.Sum(i => i.moveSpeed), movePercent = items.Sum(i => i.movePercent) + (Effects ? Effects.BonusMove : 0);
-            float baseMove = ChampionBase ? ChampionBase.moveSpeed : 340;
-            MoveSpeedBonus = ((baseMove + moveFlat) * (1 + movePercent) / 340) - 1;
-            MaxMana = (ChampionBase ? ChampionBase.mana : 330) + (ChampionBase ? ChampionBase.manaGrowth : 40) * (Level - 1) + (Effects ? Effects.TimelessStacks * 30 : 0) + items.Sum(i => i.mana) + (Effects ? Effects.ManaCharge : 0);
-            if (ChampionBase && !ChampionBase.UsesMana)
-                MaxMana = 0;
+            stats.MoveSpeed = (d.moveSpeed + moveFlat) * (1 + movePercent);
+            MoveSpeedBonus = stats.MoveSpeed / 340 - 1;
+
+            MaxMana = d.UsesMana ? Grow(d.mana, d.manaGrowth) + (Effects ? Effects.TimelessStacks * 30 + Effects.ManaCharge : 0) + items.Sum(i => i.mana) : 0;
             Mana = Mathf.Clamp(Mana + Mathf.Max(0, MaxMana - oldMana), 0, MaxMana);
-            health.SetMaximumHealth(baseHealth + (ChampionBase ? ChampionBase.healthGrowth : 109) * (Level - 1) + hp + (Effects ? Effects.BonusHP : 0), true);
-            health.armor = baseArmor + (ChampionBase ? ChampionBase.armorGrowth : 4.7f) * (Level - 1) + items.Sum(i => i.armor) + (Effects ? Effects.BonusArmor : 0);
-            health.magicResistance = baseMR + (ChampionBase ? ChampionBase.magicResistGrowth : 2.05f) * (Level - 1) + items.Sum(i => i.magicResistance) + (Effects ? Effects.BonusMR : 0);
-            healthRegen = (ChampionBase ? ChampionBase.healthRegen / 5 : 1.7f) * (1 + items.Sum(i => i.healthRegen)) + items.Sum(i => i.flatHealthRegen) / 5;
-            manaRegen = (ChampionBase ? ChampionBase.manaRegen / 5 : 1.5f) * (1 + items.Sum(i => i.manaRegen)) + items.Sum(i => i.flatManaRegen) / 5;
-            tuning.attackDamage = basis.attackDamage + (ChampionBase ? ChampionBase.attackGrowth : 3) * (Level - 1) + items.Sum(i => i.attackDamage) + (Effects ? Effects.BonusAD + Effects.ExtraAttackDamage : 0);
+
+            float baseHealth = Grow(d.health, d.healthGrowth);
+            health.SetMaximumHealth(baseHealth + bonusHealth, true);
+            health.armor = Grow(d.armor, d.armorGrowth) + items.Sum(i => i.armor) + (Effects ? Effects.BonusArmor : 0);
+            health.magicResistance = Grow(d.magicResist, d.magicResistGrowth) + items.Sum(i => i.magicResistance) + (Effects ? Effects.BonusMR : 0);
+            healthRegen = Grow(d.healthRegen, 0) / 5 * (1 + items.Sum(i => i.healthRegen)) + items.Sum(i => i.flatHealthRegen) / 5;
+            manaRegen = Grow(d.manaRegen, 0) / 5 * (1 + items.Sum(i => i.manaRegen)) + items.Sum(i => i.flatManaRegen) / 5;
+            goldPerTen = items.Sum(i => i.goldPer10);
+
+            stats.SetLevelBase(d, Level);
+            float attackDamage = stats.BaseAttackDamage + items.Sum(i => i.attackDamage) + (Effects ? Effects.BonusAD + Effects.ExtraAttackDamage : 0);
             if (Owns(2501))
-                tuning.attackDamage += (health.maxHealth - baseHealth - 109 * (Level - 1)) * .02f;
+                attackDamage += bonusHealth * .02f;
             if (Owns(3004) || Owns(3042))
-                tuning.attackDamage += MaxMana * .025f;
-            tuning.attackInterval = basis.attackInterval / Mathf.Max(.1f, 1 + aspeed + (ChampionBase ? ChampionBase.attackSpeedGrowth / 100 : .0225f) * (Level - 1) + (Effects ? Effects.BonusAS : 0));
-            tuning.passiveMaxHealthFraction = .01f + AbilityPower * .00006f;
-            tuning.qSnipDamage = basis.qSnipDamage + AbilityPower * .05f;
-            tuning.qFinalDamage = basis.qFinalDamage + AbilityPower * .35f;
-            tuning.eBonusDamage = basis.eBonusDamage + AbilityPower * .15f;
-            tuning.rDamage = basis.rDamage + AbilityPower * .1f;
-            tuning.wResistance = basis.wResistance + AbilityPower * .05f;
-            if (ChampionBase && ChampionBase.id == LeagueVR.Champions.ChampionId.Gwen)
-            {
-                tuning.eBonusDamage = basis.eBonusDamage + AbilityPower * .2f;
-                tuning.wResistance = basis.wResistance + AbilityPower * .07f;
-            }
-            float cooldown = 100 / (100 + AbilityHaste);
-            tuning.qCooldown = basis.qCooldown * cooldown;
-            tuning.wCooldown = basis.wCooldown * cooldown;
-            tuning.eCooldown = basis.eCooldown * cooldown;
-            tuning.rCooldown = basis.rCooldown * cooldown;
+                attackDamage += MaxMana * .025f;
+            stats.AttackDamage = attackDamage;
+            stats.AbilityPower = AbilityPower;
+            stats.AbilityHaste = AbilityHaste;
+            stats.CriticalChance = CriticalChance;
+            stats.CriticalDamage = CriticalDamage;
+            // Level growth of attack speed follows the same curve as every other stat (growth is a percentage).
+            stats.BonusAttackSpeed = ChampionStats.Grow(0, d.attackSpeedGrowth / 100, Level) + items.Sum(i => i.attackSpeed) + (Effects ? Effects.BonusAS : 0);
             Touch();
         }
 
         void Update()
         {
-            if (!match.Running || !match.player.Health.IsAlive)
+            if (!match.Running || !Player.Health.IsAlive)
                 return;
-            match.player.Health.Heal(healthRegen * Time.deltaTime);
+            Player.Health.Heal(healthRegen * Time.deltaTime);
             RestoreMana((match.AtShop ? MaxMana * .1f : manaRegen) * Time.deltaTime);
-            float gold10 = OwnedItems.Sum(i => i.goldPer10);
-            incomeFraction += gold10 * Time.deltaTime / 10;
+            incomeFraction += goldPerTen * Time.deltaTime / 10;
             if (incomeFraction >= 1)
             {
                 int gain = (int)incomeFraction;
@@ -449,11 +431,14 @@ namespace LeagueVR.Match
                 Gold += gain;
                 Touch();
             }
-            var refill = inventory.FirstOrDefault(s => s.id == 2031);
-            if (match.AtShop && refill != null && refill.charges < 2)
+            if (match.AtShop)
             {
-                refill.charges = 2;
-                Touch();
+                foreach (var slot in inventory)
+                    if (slot.id == 2031 && slot.charges < 2)
+                    {
+                        slot.charges = 2;
+                        Touch();
+                    }
             }
             Effects?.RefillWards();
             if (baronUntil > 0 && Time.time >= baronUntil)
@@ -462,13 +447,12 @@ namespace LeagueVR.Match
                 Recalculate();
             }
         }
+
         public bool LastAttackCritical { get; private set; }
 
+        /// <summary>Basic attack damage before mitigation, rolling a critical strike.</summary>
         public float AttackDamage(float amount, Combatant target)
         {
-            LastAttackCritical = false;
-            if (target.GetComponent<RiftStructure>())
-                return (amount + AbilityPower * .6f) * 1.2f;
             LastAttackCritical = UnityEngine.Random.value < CriticalChance;
             return LastAttackCritical ? amount * CriticalDamage : amount;
         }

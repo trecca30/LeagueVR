@@ -1,10 +1,13 @@
 using UnityEngine;
 using UnityEngine.InputSystem.XR;
-namespace LeagueVR
+
+namespace LeagueVR.Champions
 {
-    // XRI's controller transform is the pointer/aim pose. The visible palm belongs on the grip pose.
-    // Read the existing OpenXR controls; never change the rig, tracking origin or camera transform.
-    public static class GwenTracking
+    /// <summary>
+    /// Controller poses for the avatar and abilities. XRI's controller transforms carry the pointer/aim pose;
+    /// the visible palm belongs on the grip pose, read here from the same OpenXR device without touching the rig.
+    /// </summary>
+    public static class XRPoses
     {
         public static bool Tracked(bool left)
         {
@@ -14,7 +17,8 @@ namespace LeagueVR
             return device.isTracked.isPressed && (device.trackingState.ReadValue() & 3) == 3;
         }
 
-        public static Pose Grip(GwenAbilities player, bool left)
+        /// <summary>World-space grip pose, or the aim transform when the device is unavailable.</summary>
+        public static Pose Grip(PlayerChampion player, bool left)
         {
             Transform hand = left ? player.leftHand : player.rightHand;
             var device = left ? XRController.leftHand : XRController.rightHand;
@@ -25,7 +29,5 @@ namespace LeagueVR
             }
             return new Pose(hand.position, hand.rotation);
         }
-
-        public static Vector3 Aim(GwenAbilities player, bool left) => player.DesktopMode ? player.head.transform.forward : (left ? player.leftHand : player.rightHand).forward;
     }
 }

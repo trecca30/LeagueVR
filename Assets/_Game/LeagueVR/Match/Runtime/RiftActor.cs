@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using LeagueVR.Champions;
 namespace LeagueVR.Match
 {
     [RequireComponent(typeof(Combatant))]
@@ -44,7 +45,7 @@ namespace LeagueVR.Match
             {
                 if (!actor || actor == source || actor.neutral || actor.health.team == source.health.team || !actor.Targetable || !actor.health.IsTargetableBy(source.health))
                     continue;
-                float d = GwenAbilities.FlatDistance(source.transform.position, actor.transform.position) - actor.radius;
+                float d = Geo.FlatDistance(source.transform.position, actor.transform.position) - actor.radius;
                 if (d > range)
                     continue;
                 float s = d + (actor.structure ? 20 : actor.health.countsAsChampion ? 10 : 0);

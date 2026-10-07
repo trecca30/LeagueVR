@@ -1,4 +1,5 @@
 using UnityEngine;
+using LeagueVR.Champions;
 namespace LeagueVR.Match
 {
     public class RiftObjective : RiftActor
@@ -69,7 +70,7 @@ namespace LeagueVR.Match
             Visible(true);
             if (!attacker || !attacker.IsAlive)
                 return;
-            if (GwenAbilities.FlatDistance(home, attacker.transform.position) > leash)
+            if (Geo.FlatDistance(home, attacker.transform.position) > leash)
             {
                 attacker = null;
                 health.Heal(health.maxHealth);

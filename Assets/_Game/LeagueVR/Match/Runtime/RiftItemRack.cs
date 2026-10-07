@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.XR;
 using TMPro;
+using LeagueVR.Champions;
 
 namespace LeagueVR.Match
 {

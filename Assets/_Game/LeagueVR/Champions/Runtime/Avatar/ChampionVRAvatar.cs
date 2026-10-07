@@ -7,7 +7,7 @@ namespace LeagueVR.Champions
     [DefaultExecutionOrder(225)]
     public class ChampionVRAvatar : MonoBehaviour
     {
-        public GwenAbilities player;
+        public PlayerChampion player;
         public GameObject Instance { get; private set; }
         public Transform LeftPalm => left.palm;
         public Transform RightPalm => right.palm;

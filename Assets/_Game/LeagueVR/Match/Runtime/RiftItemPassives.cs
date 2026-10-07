@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using LeagueVR.Champions;
 
 namespace LeagueVR.Match
 {
@@ -123,7 +124,7 @@ namespace LeagueVR.Match
                 amount *= .6f;
             if (health.Health - amount < health.maxHealth * .3f && !HasProc("lifeline"))
             {
-                float shield = economy.Owns(3053) ? (health.maxHealth - 650) * .8f : economy.Owns(3156) ? 200 + (player.tuning.attackDamage - 65) * 1.5f : economy.Owns(6673) ? Mathf.Lerp(400, 700, (economy.Level - 1) / 17f) : economy.Owns(3155) ? 200 : 0;
+                float shield = economy.Owns(3053) ? (health.maxHealth - 650) * .8f : economy.Owns(3156) ? 200 + player.Stats.BonusAttackDamage * 1.5f : economy.Owns(6673) ? Mathf.Lerp(400, 700, (economy.Level - 1) / 17f) : economy.Owns(3155) ? 200 : 0;
                 if (shield > 0)
                 {
                     SetProc("lifeline", 90);
@@ -183,7 +184,7 @@ namespace LeagueVR.Match
                         economy.Recalculate();
                     }
                     if (economy.Owns(6696))
-                        player.AdvanceUltimateCooldown(player.tuning.rCooldown * .2f);
+                        player.RefundCooldown(3, .2f);
                     if (economy.Owns(3137) && !HasProc("cryptbloom"))
                     {
                         SetProc("cryptbloom", 60);
@@ -224,7 +225,7 @@ namespace LeagueVR.Match
                 if (eclipseHits.TryGetValue(target, out float at) && Time.time - at < 2)
                 {
                     SetProc("eclipse", 6);
-                    Shield(health, 160 + (player.tuning.attackDamage - 65) * .4f, 2);
+                    Shield(health, 160 + player.Stats.BonusAttackDamage * .4f, 2);
                     Deal(target, target.maxHealth * .06f, DamageKind.Physical);
                     eclipseHits.Remove(target);
                 }
@@ -333,7 +334,7 @@ namespace LeagueVR.Match
             if (economy.Owns(6672) && attackCount % 3 == 0)
                 Deal(target, Mathf.Lerp(150, 310, (economy.Level - 1) / 17f) * (1 + Mathf.Clamp01(1 - target.Health / target.maxHealth) * .5f), DamageKind.Physical);
             if (economy.Owns(2512) && attackCount % 3 == 0)
-                Deal(target, player.tuning.attackDamage * .75f, DamageKind.Physical);
+                Deal(target, player.Stats.AttackDamage * .75f, DamageKind.Physical);
             if (economy.Owns(3302))
             {
                 terminusStacks = Mathf.Min(6, terminusStacks + 1);
@@ -356,7 +357,7 @@ namespace LeagueVR.Match
                 Cleave(target, 40 + health.maxHealth * .03f);
             }
             else if (economy.Owns(3074) || economy.Owns(3077) || economy.Owns(6631) || economy.Owns(6698))
-                Cleave(target, player.tuning.attackDamage * .4f);
+                Cleave(target, player.Stats.AttackDamage * .4f);
             if (spellbladeUntil > Time.time)
             {
                 int blade = economy.Owns(3100) ? 3100 : economy.Owns(3078) ? 3078 : economy.Owns(6662) ? 6662 : economy.Owns(2510) ? 2510 : economy.Owns(3877) ? 3877 : economy.Owns(3057) ? 3057 : 0;
@@ -364,7 +365,7 @@ namespace LeagueVR.Match
                 {
                     spellbladeUntil = 0;
                     SetProc("spellblade", 1.5f);
-                    float baseAD = 65 + 3 * (economy.Level - 1);
+                    float baseAD = player.Stats.BaseAttackDamage;
                     Deal(target, blade == 3100 ? baseAD * .75f + economy.AbilityPower * .45f : blade == 3078 ? baseAD * 2 : blade == 2510 ? baseAD + economy.AbilityPower * .1f : baseAD, blade == 3100 || blade == 2510 ? DamageKind.Magic : DamageKind.Physical);
                     if (blade == 6662)
                     {
@@ -376,7 +377,7 @@ namespace LeagueVR.Match
             if (economy.Owns(6610) && target.countsAsChampion && !targetProcs.ContainsKey(target))
             {
                 targetProcs[target] = Time.time + 6;
-                health.Heal((65 + 3 * (economy.Level - 1)) * 1.5f + (health.maxHealth - health.Health) * .06f);
+                health.Heal(player.Stats.BaseAttackDamage * 1.5f + (health.maxHealth - health.Health) * .06f);
             }
             if (economy.Owns(3084) && target.countsAsChampion && !HasProc("heartsteel-" + target.GetEntityId()))
             {
@@ -400,7 +401,7 @@ namespace LeagueVR.Match
             }
             if (economy.Owns(3085))
                 foreach (var extra in Enemies(5).Where(t => t != target).Take(2))
-                    Deal(extra, player.tuning.attackDamage * .55f, DamageKind.Physical);
+                    Deal(extra, player.Stats.AttackDamage * .55f, DamageKind.Physical);
             if (economy.Owns(3046))
                 Speed(health, .08f, 3);
             if (economy.Owns(3044) || economy.Owns(3071))
@@ -408,14 +409,14 @@ namespace LeagueVR.Match
             if (economy.Owns(6675))
                 player.AdvanceBasicCooldowns(.6f);
             if (economy.Owns(3508))
-                economy.RestoreMana(15 + player.tuning.attackDamage * .1f);
+                economy.RestoreMana(15 + player.Stats.AttackDamage * .1f);
             if (economy.Owns(3742))
             {
                 Deal(target, 40, DamageKind.Physical);
                 target.ApplySlow(.5f, 1);
             }
             if (economy.Owns(3181) && attackCount % 5 == 0)
-                Deal(target, player.tuning.attackDamage * 1.2f + health.maxHealth * .05f, DamageKind.Physical);
+                Deal(target, player.Stats.AttackDamage * 1.2f + health.maxHealth * .05f, DamageKind.Physical);
             ChargeMana(target.countsAsChampion ? 6 : 3);
         }
         float permanentHP;
@@ -525,11 +526,11 @@ namespace LeagueVR.Match
 
         IEnumerator Defy()
         {
-            float left = (player.tuning.attackDamage - 65) * .5f;
+            float left = player.Stats.BonusAttackDamage * .5f;
             float end = Time.time + 2;
             while (Time.time < end && health.IsAlive)
             {
-                float v = Mathf.Min(left, (player.tuning.attackDamage - 65) * .25f * Time.deltaTime);
+                float v = Mathf.Min(left, player.Stats.BonusAttackDamage * .25f * Time.deltaTime);
                 left -= v;
                 health.Heal(v);
                 yield return null;

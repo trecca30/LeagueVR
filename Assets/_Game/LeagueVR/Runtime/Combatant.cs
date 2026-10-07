@@ -31,12 +31,20 @@ namespace LeagueVR
         }
     }
 
+    /// <summary>Blocks damage outright or adds temporary resistances (mist, shields of faith, stasis...).</summary>
     public interface IDamageGuard
     {
         bool Blocks(DamageHit hit);
         float BonusResistance { get; }
     }
 
+    /// <summary>Hides its owner from attackers. <c>attacker</c> is null for general targetability checks.</summary>
+    public interface ITargetFilter
+    {
+        bool HiddenFrom(Combatant attacker);
+    }
+
+    /// <summary>Health, mitigation and status effects for every unit that can fight: champions, minions, structures, monsters and wards.</summary>
     [DisallowMultipleComponent]
     public class Combatant : MonoBehaviour
     {
@@ -46,51 +54,27 @@ namespace LeagueVR
         public Transform aimPoint;
         public UnityEvent onDeath = new(), onDamaged = new();
         public event Action<DamageHit, float> Damaged;
+        public event Action HealthChanged;
         public static event Action<Combatant, DamageHit> Attacked;
         public static event Action<Combatant, DamageHit> Defeated;
-        float stunUntil, rootUntil, sleepUntil, sleepBonus;
-        Combatant sleepSource;
-        public bool Stunned => Time.time < stunUntil || Time.time < sleepUntil;
-        public bool Rooted => Stunned || Time.time < rootUntil;
 
-        public void ApplyStun(float seconds)
-        {
-            stunUntil = Mathf.Max(stunUntil, Time.time + seconds * (1 - (GetComponent<RiftEconomy>()?.Tenacity ?? 0)));
-        }
-
-        public void ApplyRoot(float seconds)
-        {
-            rootUntil = Mathf.Max(rootUntil, Time.time + seconds * (1 - (GetComponent<RiftEconomy>()?.Tenacity ?? 0)));
-        }
-
-        public void ApplySleep(float seconds, float bonus, Combatant source)
-        {
-            sleepUntil = Time.time + seconds;
-            sleepBonus = bonus;
-            sleepSource = source;
-        }
-        public event Action HealthChanged;
         public float Health { get; private set; }
         public bool IsAlive => Health > 0;
-        public bool IsTargetable => IsAlive && !(GetComponent<LeagueVR.Champions.ChampionAbilities>()?.Camouflaged ?? false) && !(GetComponent<RiftEconomy>()?.Stasis ?? false) && (!GetComponent<RiftVisionWard>() || GetComponent<RiftVisionWard>().Revealed);
         public Vector3 AimPosition => aimPoint ? aimPoint.position : transform.position + Vector3.up;
 
-        public bool IsTargetableBy(Combatant attacker)
-        {
-            if (!IsTargetable)
-                return false;
-            var gwen = GetComponent<GwenAbilities>();
-            return !gwen || !gwen.MistActive || !attacker || attacker.GetComponent<RiftStructure>() || GwenAbilities.FlatDistance(attacker.AimPosition, gwen.MistCenter) <= gwen.tuning.wRadius;
-        }
-        public float SlowMultiplier => Rooted ? 0 : Time.time < slowUntil ? slowMultiplier : 1;
-        public float SpeedMultiplier => Time.time < speedUntil ? 1 + speedBonus : 1;
-        public float AttackIntervalMultiplier => (Time.time < attackSlowUntil ? 1 / (1 - attackSlow) : 1) / (1 + (Time.time < attackBuffUntil ? attackBuff : 0));
-        public float SpellPowerBonus => Time.time < spellBuffUntil ? spellBuff : 0;
-        public float OnHitBonus => Time.time < onHitUntil ? onHitBonus : 0;
-        public float Shield => shields.Exists(s => s.until > Time.time) ? shields.FindAll(s => s.until > Time.time).ConvertAll(s => s.amount).ToArraySum() : 0;
-        float slowUntil, slowMultiplier = 1, woundsUntil, wounds, speedUntil, speedBonus, attackSlowUntil, attackSlow, attackBuffUntil, attackBuff, spellBuffUntil, spellBuff, onHitUntil, onHitBonus, armorShredUntil, armorShred, magicShredUntil, magicShred;
+        /// <summary>Last time this unit damaged something, and what it hit. Minions and turrets use it for "call for help" aggro.</summary>
+        public float LastHitTime { get; private set; } = -100;
+        public Combatant LastHitTarget { get; private set; }
+
+        float stunUntil, rootUntil, sleepUntil, sleepBonus;
+        float slowUntil, slowMultiplier = 1, woundsUntil, wounds, speedUntil, speedBonus, attackSlowUntil, attackSlow;
+        float attackBuffUntil, attackBuff, spellBuffUntil, spellBuff, onHitUntil, onHitBonus;
+        float armorShredUntil, armorShred, magicShredUntil, magicShred;
         bool deathReported;
-        IDamageGuard[] guards;
+        IDamageGuard[] guards = Array.Empty<IDamageGuard>();
+        ITargetFilter[] filters = Array.Empty<ITargetFilter>();
+        RiftEconomy economy;
+        bool isWard;
 
         class ShieldLayer
         {
@@ -98,7 +82,44 @@ namespace LeagueVR
             public DamageKind? type;
             public string key;
         }
+
         readonly List<ShieldLayer> shields = new();
+        static readonly List<IDamageGuard> guardBuffer = new();
+        static readonly List<ITargetFilter> filterBuffer = new();
+
+        public bool Stunned => Time.time < stunUntil || Time.time < sleepUntil;
+        public bool Rooted => Stunned || Time.time < rootUntil;
+        public float SlowMultiplier => Rooted ? 0 : Time.time < slowUntil ? slowMultiplier : 1;
+        public float SpeedMultiplier => Time.time < speedUntil ? 1 + speedBonus : 1;
+        public float AttackIntervalMultiplier => (Time.time < attackSlowUntil ? 1 / (1 - attackSlow) : 1) / (1 + (Time.time < attackBuffUntil ? attackBuff : 0));
+        public float SpellPowerBonus => Time.time < spellBuffUntil ? spellBuff : 0;
+        public float OnHitBonus => Time.time < onHitUntil ? onHitBonus : 0;
+        float Tenacity => economy ? economy.Tenacity : 0;
+
+        public float Shield
+        {
+            get
+            {
+                float total = 0;
+                foreach (var s in shields)
+                    if (s.until > Time.time)
+                        total += s.amount;
+                return total;
+            }
+        }
+
+        /// <summary>Alive and not hidden from everyone (stealth, stasis, unrevealed wards).</summary>
+        public bool IsTargetable => IsAlive && !HiddenFrom(null);
+
+        public bool IsTargetableBy(Combatant attacker) => IsAlive && !HiddenFrom(attacker);
+
+        bool HiddenFrom(Combatant attacker)
+        {
+            foreach (var filter in filters)
+                if (filter.HiddenFrom(attacker))
+                    return true;
+            return false;
+        }
 
         void Awake()
         {
@@ -108,18 +129,34 @@ namespace LeagueVR
 
         void Update()
         {
-            foreach (var s in shields)
-                s.amount = Mathf.Max(0, s.amount - s.rate * Time.deltaTime);
-            shields.RemoveAll(s => s.amount <= 0 || Time.time >= s.until);
+            if (shields.Count == 0)
+                return;
+            float now = Time.time, dt = Time.deltaTime;
+            for (int i = shields.Count - 1; i >= 0; i--)
+            {
+                var s = shields[i];
+                s.amount = Mathf.Max(0, s.amount - s.rate * dt);
+                if (s.amount <= 0 || now >= s.until)
+                    shields.RemoveAt(i);
+            }
         }
 
+        /// <summary>Re-collects guards and target filters. Call after adding or removing such components.</summary>
         public void RefreshGuards()
         {
-            var list = new List<IDamageGuard>();
+            economy = GetComponent<RiftEconomy>();
+            isWard = GetComponent<RiftVisionWard>();
+            guardBuffer.Clear();
+            filterBuffer.Clear();
             foreach (var c in GetComponents<MonoBehaviour>())
+            {
                 if (c is IDamageGuard guard)
-                    list.Add(guard);
-            guards = list.ToArray();
+                    guardBuffer.Add(guard);
+                if (c is ITargetFilter filter)
+                    filterBuffer.Add(filter);
+            }
+            guards = guardBuffer.ToArray();
+            filters = filterBuffer.ToArray();
         }
 
         public static float Mitigate(float damage, float resistance) => damage * (resistance >= 0 ? 100 / (100 + resistance) : 2 - 100 / (100 - resistance));
@@ -135,34 +172,40 @@ namespace LeagueVR
                 hit.amount += sleepBonus;
                 sleepBonus = 0;
             }
-            float bonus = 0;
-            if (guards != null)
-                foreach (var guard in guards)
-                {
-                    if (guard.Blocks(hit))
-                        return 0;
-                    bonus += guard.BonusResistance;
-                }
-            var sourceItems = hit.source ? hit.source.GetComponent<RiftEconomy>() : null;
-            var items = GetComponent<RiftEconomy>();
-            float amount = sourceItems && sourceItems.Effects ? sourceItems.Effects.ModifyOutgoing(hit, this) : hit.amount;
-            if (items && items.Effects)
-                amount = items.Effects.ModifyIncoming(hit, amount);
-            if (GetComponent<RiftVisionWard>())
+            float bonusResistance = 0;
+            foreach (var guard in guards)
             {
+                if (guard.Blocks(hit))
+                    return 0;
+                bonusResistance += guard.BonusResistance;
+            }
+            var sourceItems = hit.source ? hit.source.economy : null;
+            float amount = sourceItems && sourceItems.Effects ? sourceItems.Effects.ModifyOutgoing(hit, this) : hit.amount;
+            if (economy && economy.Effects)
+                amount = economy.Effects.ModifyIncoming(hit, amount);
+            if (isWard)
+            {
+                // Wards take exactly one point of damage per basic attack and ignore everything else.
                 if (!hit.isBasicAttack)
                     return 0;
                 amount = 1;
                 hit.kind = DamageKind.True;
             }
-            float resistance = hit.kind == DamageKind.Physical ? armor * (1 - (Time.time < armorShredUntil ? armorShred : 0)) : magicResistance * (1 - (Time.time < magicShredUntil ? magicShred : 0));
-            resistance += bonus;
-            if (sourceItems && resistance > 0)
-                resistance = Mathf.Max(0, resistance * (1 - (hit.kind == DamageKind.Physical ? sourceItems.ArmorPen : sourceItems.MagicPenPercent)) - (hit.kind == DamageKind.Physical ? sourceItems.Lethality : sourceItems.MagicPen));
-            amount = hit.kind == DamageKind.True ? amount : Mitigate(amount, resistance);
+            if (hit.kind != DamageKind.True)
+            {
+                bool physical = hit.kind == DamageKind.Physical;
+                float resistance = physical
+                    ? armor * (1 - (Time.time < armorShredUntil ? armorShred : 0))
+                    : magicResistance * (1 - (Time.time < magicShredUntil ? magicShred : 0));
+                resistance += bonusResistance;
+                // Percentage penetration applies before flat penetration; penetration never takes resistance below zero.
+                if (sourceItems && resistance > 0)
+                    resistance = Mathf.Max(0, resistance * (1 - (physical ? sourceItems.ArmorPen : sourceItems.MagicPenPercent)) - (physical ? sourceItems.Lethality : sourceItems.MagicPen));
+                amount = Mitigate(amount, resistance);
+            }
             amount = RiftItemEffects.RedirectVowDamage(this, hit, amount);
-            if (items && items.Effects)
-                amount = items.Effects.AfterMitigation(hit, amount);
+            if (economy && economy.Effects)
+                amount = economy.Effects.AfterMitigation(hit, amount);
             foreach (var shield in shields)
             {
                 if (Time.time >= shield.until || shield.type.HasValue && shield.type.Value != hit.kind)
@@ -175,8 +218,13 @@ namespace LeagueVR
             }
             float dealt = Mathf.Min(Health, amount);
             Health -= dealt;
-            if (!IsAlive && items && items.Effects)
-                items.Effects.TryPreventDeath();
+            if (!IsAlive && economy && economy.Effects)
+                economy.Effects.TryPreventDeath();
+            if (hit.source && dealt > 0)
+            {
+                hit.source.LastHitTime = Time.time;
+                hit.source.LastHitTarget = this;
+            }
             Damaged?.Invoke(hit, dealt);
             HealthChanged?.Invoke();
             onDamaged.Invoke();
@@ -213,7 +261,7 @@ namespace LeagueVR
         {
             if (!IsAlive || amount <= 0)
                 return;
-            float multiplier = GetComponent<RiftEconomy>()?.Effects?.HealingModifier ?? 1;
+            float multiplier = economy && economy.Effects ? economy.Effects.HealingModifier : 1;
             Health = Mathf.Min(maxHealth, Health + amount * multiplier * (Time.time < woundsUntil ? 1 - wounds : 1));
             HealthChanged?.Invoke();
         }
@@ -225,6 +273,8 @@ namespace LeagueVR
             ClearCrowdControl();
             ClearShield();
             woundsUntil = armorShredUntil = magicShredUntil = speedUntil = attackBuffUntil = spellBuffUntil = onHitUntil = 0;
+            LastHitTime = -100;
+            LastHitTarget = null;
             HealthChanged?.Invoke();
         }
 
@@ -257,9 +307,19 @@ namespace LeagueVR
                 shield.amount *= 1 - fraction;
         }
 
+        public void ApplyStun(float seconds) => stunUntil = Mathf.Max(stunUntil, Time.time + seconds * (1 - Tenacity));
+
+        public void ApplyRoot(float seconds) => rootUntil = Mathf.Max(rootUntil, Time.time + seconds * (1 - Tenacity));
+
+        public void ApplySleep(float seconds, float bonus, Combatant source)
+        {
+            sleepUntil = Time.time + seconds;
+            sleepBonus = bonus;
+        }
+
         public void ApplyGrievousWounds(float reduction, float seconds)
         {
-            wounds = Mathf.Max(wounds, reduction);
+            wounds = Mathf.Max(Time.time < woundsUntil ? wounds : 0, reduction);
             woundsUntil = Time.time + seconds;
         }
 
@@ -273,12 +333,8 @@ namespace LeagueVR
 
         public void ApplySlow(float multiplier, float seconds)
         {
-            float tenacity = GetComponent<RiftEconomy>()?.Tenacity ?? 0;
-            if (Time.time < slowUntil)
-                slowMultiplier = Mathf.Min(slowMultiplier, multiplier);
-            else
-                slowMultiplier = multiplier;
-            slowUntil = Mathf.Max(slowUntil, Time.time + seconds * (1 - tenacity));
+            slowMultiplier = Time.time < slowUntil ? Mathf.Min(slowMultiplier, multiplier) : multiplier;
+            slowUntil = Mathf.Max(slowUntil, Time.time + seconds * (1 - Tenacity));
         }
 
         public void ApplySpeed(float amount, float seconds)
@@ -303,7 +359,8 @@ namespace LeagueVR
         {
             spellBuff = amount;
             spellBuffUntil = Time.time + seconds;
-            GetComponent<RiftEconomy>()?.Recalculate();
+            if (economy)
+                economy.Recalculate();
         }
 
         public void ApplyOnHit(float amount, float seconds)
@@ -322,17 +379,6 @@ namespace LeagueVR
         {
             magicShred = Mathf.Min(amount * maxStacks, (Time.time < magicShredUntil ? magicShred : 0) + amount);
             magicShredUntil = Time.time + seconds;
-        }
-    }
-
-    static class CombatArrayMath
-    {
-        public static float ToArraySum(this IEnumerable<float> values)
-        {
-            float total = 0;
-            foreach (float v in values)
-                total += v;
-            return total;
         }
     }
 }

@@ -5,7 +5,7 @@ using TMPro;
 
 namespace LeagueVR.Match
 {
-    public class RiftVisionWard : MonoBehaviour
+    public class RiftVisionWard : MonoBehaviour, ITargetFilter
     {
         public static readonly HashSet<RiftVisionWard> All = new();
         public int ownerTeam, itemId;
@@ -51,6 +51,9 @@ namespace LeagueVR.Match
             foreach (var c in go.GetComponentsInChildren<Collider>())
                 c.gameObject.layer = 8;
         }
+
+        /// <summary>Enemy stealth wards can only be attacked while revealed.</summary>
+        public bool HiddenFrom(Combatant attacker) => !Revealed;
 
         void OnEnable() => All.Add(this);
 

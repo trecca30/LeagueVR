@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Collections;
 using UnityEngine;
+using LeagueVR.Champions;
 namespace LeagueVR.Match
 {
     [Serializable]
@@ -16,7 +17,7 @@ namespace LeagueVR.Match
         public static RiftMatch Instance { get; private set; }
         public RiftRules rules;
         public LeagueCatalog catalog;
-        public GwenAbilities player;
+        public PlayerChampion player;
         public RiftEconomy economy;
         public RiftUI ui;
         public RiftLane[] lanes;
@@ -116,7 +117,7 @@ namespace LeagueVR.Match
             }
             if (recalling)
             {
-                if (GwenAbilities.FlatDistance(recallFrom, player.Feet) > .35f || !player.Health.IsAlive || economy.Stasis || ui.IsOpen)
+                if (Geo.FlatDistance(recallFrom, player.Feet) > .35f || !player.Health.IsAlive || economy.Stasis || ui.IsOpen)
                     recalling = false;
                 else if (Time.time >= recallUntil)
                 {
@@ -129,7 +130,7 @@ namespace LeagueVR.Match
 
         public void Play()
         {
-            player.GetComponent<LeagueVR.Champions.ChampionRoster>()?.ApplySelection();
+            player.GetComponent<ChampionRoster>()?.ApplySelection();
             StopAllCoroutines();
             foreach (Transform child in spawnedRoot)
                 Destroy(child.gameObject);
@@ -221,7 +222,7 @@ namespace LeagueVR.Match
                 economy.AddGold(Mathf.RoundToInt(gold), true);
                 player.Defeated++;
             }
-            if (target.team != player.Health.team && GwenAbilities.FlatDistance(target.transform.position, player.Feet) < 15)
+            if (target.team != player.Health.team && Geo.FlatDistance(target.transform.position, player.Feet) < 15)
                 economy.AddExperience(xp);
         }
 

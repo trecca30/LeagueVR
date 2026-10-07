@@ -98,3 +98,6 @@ MonoBehaviour:
   manaRegen: 7.5
   attackReach: 2.2
   bodyHeight: 1.75
+  kitTuning: {fileID: 11400000, guid: c707e3ed8c8cc4d43871639f2a40270b, type: 2}
+  kitPrefab: {fileID: 890919293964952924, guid: 22c2002ece41abc45b582d1588d1a5fc, type: 3}
+  kitMaterial: {fileID: 2100000, guid: 4470fe6ead7e4e24faee0283e5004d3f, type: 2}

@@ -44,6 +44,25 @@ namespace LeagueVR.Match
             return new MinionStats { health = Mathf.Min(7500, 1500 + 100 * n), damage = Mathf.Min(510, 180 + 5 * n), armor = 100, magicResistance = -30, attackInterval = 1.176f, range = 170, gold = Mathf.Min(90, 49 + n), xp = 75 };
         }
 
+        static readonly float[] BaseRespawnWait = { 10, 10, 12, 12, 14, 16, 20, 25, 28, 32.5f, 35, 37.5f, 40, 42.5f, 45, 47.5f, 50, 52.5f };
+
+        /// <summary>
+        /// League death timer: base respawn wait by level, lengthened by the time impact factor after 15:00 (capped at +50%).
+        /// </summary>
+        public float DeathTimer(int level, float seconds)
+        {
+            float wait = BaseRespawnWait[Mathf.Clamp(level, 1, 18) - 1];
+            float minutes = seconds / 60;
+            float impact = minutes < 15 ? 0
+                : minutes < 30 ? (minutes - 15) * 2 * .00425f
+                : minutes < 45 ? .1275f + (minutes - 30) * 2 * .003f
+                : Mathf.Min(.5f, .2175f + (minutes - 45) * 2 * .0145f);
+            return wait * (1 + impact) * deathTimerScale;
+        }
+
+        [Tooltip("Multiplier on League's death timers (1 = live game).")]
+        public float deathTimerScale = 1;
+
         public float StructureHealth(StructureKind kind) => kind == StructureKind.OuterTurret ? 9000 : kind == StructureKind.InnerTurret ? 5000 : kind == StructureKind.InhibitorTurret ? 4750 : kind == StructureKind.NexusTurret ? 3500 : kind == StructureKind.Inhibitor ? 4000 : 5500;
     }
 }

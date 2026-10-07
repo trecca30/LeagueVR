@@ -1,12 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem.XR;
+using LeagueVR.Champions;
 namespace LeagueVR.Match
 {
     [DefaultExecutionOrder(300)]
     public class RiftPlayerView : MonoBehaviour
     {
-        public GwenAbilities champion;
+        public PlayerChampion champion;
         readonly List<Renderer> templateMeshes = new();
         readonly List<LineRenderer> templateRays = new();
         public int HiddenTemplateMeshCount => templateMeshes.Count;
@@ -14,7 +15,7 @@ namespace LeagueVR.Match
         void Awake()
         {
             if (!champion)
-                champion = GetComponent<GwenAbilities>();
+                champion = GetComponent<PlayerChampion>();
             champion.head.nearClipPlane = .025f;
             foreach (var pose in champion.origin.GetComponentsInChildren<TrackedPoseDriver>(true))
                 pose.updateType = TrackedPoseDriver.UpdateType.UpdateAndBeforeRender;

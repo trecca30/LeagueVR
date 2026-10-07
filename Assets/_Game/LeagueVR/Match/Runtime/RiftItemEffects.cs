@@ -4,13 +4,14 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit.Locomotion;
 using UnityEngine.XR.Interaction.Toolkit.Locomotion.Movement;
+using LeagueVR.Champions;
 
 namespace LeagueVR.Match
 {
     public partial class RiftItemEffects : MonoBehaviour
     {
         public RiftEconomy economy { get; private set; }
-        GwenAbilities player => economy.match.player;
+        PlayerChampion player => economy.match.player;
         Combatant health => player.Health;
         public bool Stasis => Time.time < stasisUntil;
         public bool EmpoweredMana => Time.time < actualizerUntil;
@@ -321,7 +322,7 @@ namespace LeagueVR.Match
                     foreach (var target in Enemies(4.5f))
                     {
                         float mult = item.active == ItemActive.Hydra ? 1 : item.active == ItemActive.Stridebreaker ? .8f : item.active == ItemActive.Profane ? (target.Health < target.maxHealth * .5f ? 1.3f : 1) : 1;
-                        float dealt = Deal(target, player.tuning.attackDamage * mult, DamageKind.Physical);
+                        float dealt = Deal(target, player.Stats.AttackDamage * mult, DamageKind.Physical);
                         if (item.active == ItemActive.Ravenous)
                             health.Heal(dealt * economy.Lifesteal);
                         if (item.active == ItemActive.Stridebreaker)
@@ -483,9 +484,9 @@ namespace LeagueVR.Match
             return true;
         }
 
-        Combatant[] Enemies(float range) => RiftActor.All.Where(a => a && a.Targetable && !a.structure && a.health != health && a.health.team != health.team && GwenAbilities.FlatDistance(player.Feet, a.transform.position) <= range).Select(a => a.health).ToArray();
+        Combatant[] Enemies(float range) => RiftActor.All.Where(a => a && a.Targetable && !a.structure && a.health != health && a.health.team != health.team && Geo.FlatDistance(player.Feet, a.transform.position) <= range).Select(a => a.health).ToArray();
 
-        Combatant[] Allies(float range) => RiftActor.All.Where(a => a && a.Targetable && !a.structure && a.health != health && a.health.team == health.team && GwenAbilities.FlatDistance(player.Feet, a.transform.position) <= range).Select(a => a.health).ToArray();
+        Combatant[] Allies(float range) => RiftActor.All.Where(a => a && a.Targetable && !a.structure && a.health != health && a.health.team == health.team && Geo.FlatDistance(player.Feet, a.transform.position) <= range).Select(a => a.health).ToArray();
 
         Combatant AimEnemy(Vector3 origin, Vector3 direction, float range) => AimTarget(origin, direction, range, false);
 

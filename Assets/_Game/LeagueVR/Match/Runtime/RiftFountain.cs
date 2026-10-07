@@ -1,4 +1,5 @@
 using UnityEngine;
+using LeagueVR.Champions;
 namespace LeagueVR.Match
 {
     public class RiftFountain : MonoBehaviour
@@ -6,7 +7,7 @@ namespace LeagueVR.Match
         public int team;
         public Transform shopAnchor;
 
-        public bool Contains(Vector3 point) => RiftMatch.Instance && Mathf.Abs(point.y - transform.position.y) < 3 && GwenAbilities.FlatDistance(point, transform.position) < RiftMatch.Instance.rules.fountainRadius;
+        public bool Contains(Vector3 point) => RiftMatch.Instance && Mathf.Abs(point.y - transform.position.y) < 3 && Geo.FlatDistance(point, transform.position) < RiftMatch.Instance.rules.fountainRadius;
 
         void Update()
         {

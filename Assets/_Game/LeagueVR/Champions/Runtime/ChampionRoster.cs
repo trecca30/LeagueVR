@@ -1,52 +1,52 @@
 using UnityEngine;
 using LeagueVR.Match;
+
 namespace LeagueVR.Champions
 {
+    /// <summary>The selectable champions and the one used for the next match.</summary>
     [DefaultExecutionOrder(-110)]
     public class ChampionRoster : MonoBehaviour
     {
         public ChampionDefinition[] champions;
         public int selected;
-        public GwenAbilities player;
-        public ChampionAbilities abilities;
+        public PlayerChampion player;
         public ChampionVRAvatar avatar;
+
         public ChampionDefinition Active { get; private set; }
         public ChampionDefinition Selected => champions != null && champions.Length > 0 ? champions[Mathf.Clamp(selected, 0, champions.Length - 1)] : null;
+
         GwenAvatar gwen;
-        Vector3 gwenScale;
 
         void Awake()
         {
             if (!player)
-                player = GetComponent<GwenAbilities>();
+                player = GetComponent<PlayerChampion>();
+            if (!avatar)
+                avatar = GetComponent<ChampionVRAvatar>();
             gwen = GetComponent<GwenAvatar>();
-            if (gwen && gwen.visualRoot)
-                gwenScale = gwen.visualRoot.localScale;
-            Active = champions[0];
         }
 
-        public void Select(int index)
+        void Start()
         {
-            selected = Mathf.Clamp(index, 0, champions.Length - 1);
+            // Equip the default champion so the menu scene already has working hands and stats.
+            if (Active == null && Selected)
+                ApplySelection();
         }
 
+        public void Select(int index) => selected = Mathf.Clamp(index, 0, champions.Length - 1);
+
+        /// <summary>Equips the selected champion: kit, stats and first-person body.</summary>
         public void ApplySelection()
         {
             Active = Selected;
-            player.ResetPractice();
-            abilities.SetChampion(Active);
+            player.SetChampion(Active);
             bool isGwen = Active.id == ChampionId.Gwen;
             if (gwen)
-            {
-                gwen.enabled = isGwen;
-                if (gwen.visualRoot)
-                    gwen.visualRoot.gameObject.SetActive(isGwen);
-                if (gwen.scissorsRoot)
-                    gwen.scissorsRoot.gameObject.SetActive(isGwen);
-            }
-            avatar.SetChampion(isGwen ? null : Active);
+                gwen.SetVisible(isGwen);
+            if (avatar)
+                avatar.SetChampion(isGwen ? null : Active);
             player.GetComponent<RiftEconomy>()?.SetChampionBase(Active);
-            player.Health.RefreshGuards();
+            player.ResetPractice();
         }
     }
 }

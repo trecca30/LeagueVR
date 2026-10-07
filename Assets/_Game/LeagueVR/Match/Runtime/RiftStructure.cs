@@ -1,4 +1,5 @@
 using UnityEngine;
+using LeagueVR.Champions;
 namespace LeagueVR.Match
 {
     public class RiftStructure : RiftActor, IDamageGuard
@@ -83,7 +84,7 @@ namespace LeagueVR.Match
             }
             if (Time.time < nextAttack)
                 return;
-            if (!target || !target.Targetable || GwenAbilities.FlatDistance(transform.position, target.transform.position) > range + target.radius)
+            if (!target || !target.Targetable || Geo.FlatDistance(transform.position, target.transform.position) > range + target.radius)
                 target = Target(this, range, true);
             if (!target)
                 return;
