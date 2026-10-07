@@ -90,7 +90,7 @@ MonoBehaviour:
   mana: 0
   manaGrowth: 0
   attackDamage: 60
-  attackGrowth: 0
+  attackGrowth: 5
   attackSpeed: 0.651
   attackSpeedGrowth: 2.5
   moveSpeed: 345
@@ -98,3 +98,6 @@ MonoBehaviour:
   manaRegen: 0
   attackReach: 2.4
   bodyHeight: 1.75
+  kitTuning: {fileID: 0}
+  kitPrefab: {fileID: 0}
+  kitMaterial: {fileID: 0}

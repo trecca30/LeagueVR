@@ -18,6 +18,8 @@ namespace LeagueVR.Champions
         protected float BonusAD => Stats.BonusAttackDamage;
         protected float AP => Stats.AbilityPower;
         protected Color Tint => Definition ? Definition.color : Color.white;
+        /// <summary>The first-person body: palms, grips and held props for effects that sit in the hands.</summary>
+        protected ChampionBodyBase Body => Player.Body;
 
         internal void Bind(PlayerChampion player, ChampionDefinition definition)
         {
@@ -42,6 +44,12 @@ namespace LeagueVR.Champions
 
         /// <summary>Resolves a basic attack. The attack timer has already been started.</summary>
         public abstract void BasicAttack(Vector3 origin, Vector3 direction);
+
+        /// <summary>
+        /// False when a basic attack would have nothing to fire at (ranged champions pointing at empty space), so the
+        /// attack timer is not spent on a shot that never leaves the hand. Melee swings always go.
+        /// </summary>
+        public virtual bool HasAttackTarget(Vector3 origin, Vector3 direction) => true;
 
         /// <summary>Casts Q, W, E or R (slot 0-3). Call <see cref="PlayerChampion.Commit"/> once the cast is valid.</summary>
         public abstract bool Cast(int slot);
@@ -88,6 +96,8 @@ namespace LeagueVR.Champions
         public virtual float BonusAttackRange => 0;
         public virtual bool Blocks(DamageHit hit) => false;
         public virtual float BonusResistance => 0;
+        /// <summary>Percentage armor penetration granted by the kit (0-1), combined with items by the economy.</summary>
+        public virtual float ArmorPenetration => 0;
         public virtual bool HiddenFrom(Combatant attacker) => false;
         /// <summary>Optional HUD text replacing the cooldown of a slot, e.g. "RECAST 2".</summary>
         public virtual string SlotStatus(int slot) => null;

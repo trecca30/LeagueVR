@@ -40,6 +40,13 @@ namespace LeagueVR.Champions
 
         protected virtual void OnAttackHit(Combatant target, float dealt) { }
 
+        /// <summary>A weapon prop on the first-person body (Pantheon's spear) strikes physically.</summary>
+        public override bool WeaponEdge(out Vector3 from, out Vector3 to)
+        {
+            from = to = default;
+            return Player.Body is ChampionVRAvatar avatar && avatar.isActiveAndEnabled && avatar.WeaponEdge(out from, out to);
+        }
+
         public override void WeaponHit(Combatant target, Vector3 point, Vector3 swing)
         {
             float dealt = Player.Hit(target, AttackDamage(target), DamageKind.Physical, "Attack1", true, point);
@@ -55,13 +62,24 @@ namespace LeagueVR.Champions
     public abstract class RangedKit : ChampionKit
     {
         protected virtual float MissileSpeed => 22;
+        /// <summary>How far off the pointing direction (degrees) a target can be and still be picked.</summary>
+        protected virtual float AimCone => 14;
+
+        /// <summary>The enemy a basic attack would fire at right now (pointing soft lock, then a thick ray).</summary>
+        public Combatant AttackTarget(Vector3 origin, Vector3 direction)
+        {
+            var target = Player.ConeTarget(origin, direction, Player.AttackReach, AimCone, true);
+            return target ? target : Player.AimTarget(Player.AttackReach, origin, direction, true);
+        }
+
+        public override bool HasAttackTarget(Vector3 origin, Vector3 direction) => AttackTarget(origin, direction);
 
         public override void BasicAttack(Vector3 origin, Vector3 direction)
         {
-            var target = Player.AimTarget(Player.AttackReach, origin, direction, true);
+            var target = AttackTarget(origin, direction);
             if (!target)
                 return;
-            var missile = Player.Projectile(origin, (target.AimPosition - origin).normalized, AD, DamageKind.Physical, "Attack1", MissileSpeed, Player.AttackReach + 4, false);
+            var missile = LaunchAttack(origin, target);
             missile.basic = true;
             missile.homing = target;
             missile.hit = (t, dealt) =>
@@ -70,6 +88,10 @@ namespace LeagueVR.Champions
                 OnAttackHit(t, dealt);
             };
         }
+
+        /// <summary>Spawns the attack missile; kits replace the look.</summary>
+        protected virtual AbilityProjectile LaunchAttack(Vector3 origin, Combatant target)
+            => Player.Projectile(origin, (target.AimPosition - origin).normalized, AD, DamageKind.Physical, "Attack1", MissileSpeed, Player.AttackReach + 4, false);
 
         protected virtual void OnAttackHit(Combatant target, float dealt) { }
     }

@@ -16,13 +16,13 @@ MonoBehaviour:
   title: the Aspect of Twilight
   role: Mage
   passiveName: More Sparkles!
-  passiveDescription: Casting empowers the next attack with More Sparkles.
+  passiveDescription: 'After each spell your right hand sparkles: your next attack or Spell Thief bolt within 5 seconds deals 16-150 (+20% AP) bonus magic damage. Right trigger fires a star bolt at the enemy you point at (gold ring).'
   patch: 16.19.1
   portrait: {fileID: 2800000, guid: 485bf2db157df74488498ea7d7382e56, type: 3}
   passiveIcon: {fileID: 2800000, guid: dcbac6732d23d134cb93ae690228baa7, type: 3}
   spells:
   - name: Paddle Star!
-    vrDescription: 'Right secondary: launch a star. Press again within 1.25 seconds to redirect it. Distance increases damage.'
+    vrDescription: 'Hold B: a star appears in your palm. Release while throwing and it flies where you threw it (behind you works). Press B again while it flies or hovers and point where it should go: it is paddled there, bigger and faster. The further it travels, the bigger it grows and the harder it hits.'
     icon: {fileID: 2800000, guid: 97abd46c252dd2142b98e150f21d8bcd, type: 3}
     cooldowns:
     - 8.5
@@ -37,7 +37,7 @@ MonoBehaviour:
     - 55
     - 60
   - name: Spell Thief
-    vrDescription: Collect glowing shards from fallen minions with your left hand or nearby W. W uses Heal, Flash or Ignite and launches three missiles.
+    vrDescription: 'Minions you finish off sometimes drop a spell shard: walk over or touch it and it floats over your left palm. Hold X and release to use it. Heal, Barrier, Ghost and Cleanse burst from your hand; Ignite and Exhaust are thrown at the enemy your left hand points at. Every use speeds you up and summons three orbiting bolts.'
     icon: {fileID: 2800000, guid: ebdd5693cdc593944b5276832cf9966c, type: 3}
     cooldowns:
     - 0.25
@@ -52,7 +52,7 @@ MonoBehaviour:
     - 0
     - 0
   - name: Sleepy Trouble Bubble
-    vrDescription: 'Right primary: toss a bubble. The hit slows, then sleeps. Your next hit wakes it for bonus damage.'
+    vrDescription: 'Hold A to blow a bubble, release while lobbing it: it arcs (over walls too), bounces on to full range and waits there as a trap. The first enemy it touches gets drowsy, then falls asleep. Your next hit on it deals double.'
     icon: {fileID: 2800000, guid: 42d5c4683e730d042b19b3c08fe3826f, type: 3}
     cooldowns:
     - 18
@@ -67,7 +67,7 @@ MonoBehaviour:
     - 80
     - 80
   - name: Portal Jump
-    vrDescription: 'Left trigger: aim at ground. Blink through a portal for one second, then return. Tracking orientation stays yours.'
+    vrDescription: Hold the left trigger and aim the arc from your hand. Release to blink there through a portal; you come back a second later. Resets your attack.
     icon: {fileID: 2800000, guid: 08e5f30f915875148881042c11163b4a, type: 3}
     cooldowns:
     - 11
@@ -90,7 +90,7 @@ MonoBehaviour:
   mana: 425
   manaGrowth: 25
   attackDamage: 58
-  attackGrowth: 0
+  attackGrowth: 3.3
   attackSpeed: 0.658
   attackSpeedGrowth: 2.5
   moveSpeed: 340
@@ -98,3 +98,6 @@ MonoBehaviour:
   manaRegen: 8
   attackReach: 10
   bodyHeight: 1.75
+  kitTuning: {fileID: 0}
+  kitPrefab: {fileID: 0}
+  kitMaterial: {fileID: 0}

@@ -90,7 +90,7 @@ MonoBehaviour:
   mana: 330
   manaGrowth: 40
   attackDamage: 63
-  attackGrowth: 0
+  attackGrowth: 3
   attackSpeed: 0.69
   attackSpeedGrowth: 2.25
   moveSpeed: 340

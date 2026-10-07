@@ -7,6 +7,21 @@ namespace LeagueVR
     public static class ComfortSettings
     {
         const string VignetteKey = "LeagueVR.VignetteLevel";
+        const string SkyViewKey = "LeagueVR.SkyView";
+
+        /// <summary>
+        /// Big leaps (Pantheon's Grand Starfall) show the landing from high above instead of fading out.
+        /// The view itself never moves smoothly: it cuts behind a short fade both ways.
+        /// </summary>
+        public static bool SkyView
+        {
+            get => PlayerPrefs.GetInt(SkyViewKey, 1) != 0;
+            set
+            {
+                PlayerPrefs.SetInt(SkyViewKey, value ? 1 : 0);
+                PlayerPrefs.Save();
+            }
+        }
 
         public static readonly string[] VignetteNames = { "OFF", "VERY LIGHT", "LIGHT", "MEDIUM", "STRONG" };
         // Aperture is the diameter of the clear circle (bigger = less black); "STRONG" is the XR template's default.

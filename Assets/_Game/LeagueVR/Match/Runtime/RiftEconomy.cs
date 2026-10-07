@@ -382,7 +382,8 @@ namespace LeagueVR.Match
             HealShieldPower = items.Sum(i => i.healShieldPower) + (Owns(6621) ? items.Sum(i => i.manaRegen) * .02f : 0);
             MagicPen = items.Sum(i => i.magicPen);
             MagicPenPercent = 1 - items.Aggregate(1f, (v, i) => v * (1 - i.magicPenPercent));
-            ArmorPen = 1 - items.Aggregate(1f, (v, i) => v * (1 - i.armorPen));
+            // Kit penetration (Pantheon's Grand Starfall passive) stacks multiplicatively with items, like League.
+            ArmorPen = 1 - items.Aggregate(1f, (v, i) => v * (1 - i.armorPen)) * (1 - Mathf.Clamp01(player.Kit?.ArmorPenetration ?? 0));
             Lethality = items.Sum(i => i.lethality);
 
             // Movement: flat bonuses add to base speed before percentage bonuses; 340 is the reference speed of the XR rig.

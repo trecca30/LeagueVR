@@ -54,6 +54,36 @@ namespace LeagueVR.Champions
         }
 
         /// <summary>
+        /// Soft lock for pointing in VR: the enemy nearest the aim ray, within <paramref name="maxAngle"/> degrees and
+        /// <paramref name="range"/> (ground distance from the feet), with a clear line from the hand. Nearer targets
+        /// win close calls, so pointing roughly at a wave picks the minion in front.
+        /// </summary>
+        public Combatant ConeTarget(Vector3 origin, Vector3 direction, float range, float maxAngle, bool includeStructures = false, System.Func<Combatant, bool> filter = null)
+        {
+            Combatant best = null;
+            float bestScore = float.MaxValue;
+            var feet = Feet;
+            foreach (var t in EnemiesAround(feet, range + 1, includeStructures))
+            {
+                if (filter != null && !filter(t))
+                    continue;
+                float distance = Geo.FlatDistance(t.transform.position, feet);
+                if (distance > range + (IsStructure(t) ? 2.5f : .4f))
+                    continue;
+                float angle = Vector3.Angle(direction, t.AimPosition - origin);
+                if (angle > maxAngle)
+                    continue;
+                float score = angle + distance * .5f;
+                if (score < bestScore && ClearAttackLine(origin, t.AimPosition, t))
+                {
+                    best = t;
+                    bestScore = score;
+                }
+            }
+            return best;
+        }
+
+        /// <summary>
         /// Melee sweep in front of a weapon. Ground-plane assistance lets a chest-height blade reach short minions.
         /// A cone narrows near the hand; otherwise the band has constant width. Results are sorted nearest-to-centreline first.
         /// </summary>
@@ -92,6 +122,9 @@ namespace LeagueVR.Champions
             return Vector3.Cross(d, forward).magnitude * 3 + d.magnitude * .2f;
         }
 
+        /// <summary>How far below a swung weapon an enemy still counts as hit (VR melee assist for short units).</summary>
+        public const float WeaponReachBelow = .45f;
+
         /// <summary>
         /// First enemy crossed by a weapon edge that moved from (a0, b0) to (a1, b1) since last frame. Points along the
         /// outer 80% of the edge are swept, so the part inside the fist never counts.
@@ -101,6 +134,9 @@ namespace LeagueVR.Champions
             target = null;
             point = default;
             float best = float.MaxValue;
+            // Each sample sweeps a short vertical capsule hanging below the blade: lane minions are about a metre
+            // tall, and a thrust at chest height should still connect with the one in front.
+            Vector3 reachDown = Vector3.down * WeaponReachBelow;
             for (int s = 0; s <= 4; s++)
             {
                 float t = .2f + .8f * s / 4f;
@@ -109,7 +145,7 @@ namespace LeagueVR.Champions
                 float length = d.magnitude;
                 if (length > 1e-4f)
                 {
-                    int count = Physics.SphereCastNonAlloc(p0, radius, d / length, castBuffer, length, combatMask, QueryTriggerInteraction.Collide);
+                    int count = Physics.CapsuleCastNonAlloc(p0, p0 + reachDown, radius, d / length, castBuffer, length, combatMask, QueryTriggerInteraction.Collide);
                     for (int i = 0; i < count; i++)
                     {
                         var c = castBuffer[i].collider.GetComponentInParent<Combatant>();
@@ -122,8 +158,8 @@ namespace LeagueVR.Champions
                         }
                     }
                 }
-                // Sphere casts miss colliders they start inside; the end position catches those.
-                int overlaps = Physics.OverlapSphereNonAlloc(p1, radius, overlapBuffer, combatMask, QueryTriggerInteraction.Collide);
+                // Casts miss colliders they start inside; the end position catches those.
+                int overlaps = Physics.OverlapCapsuleNonAlloc(p1, p1 + reachDown, radius, overlapBuffer, combatMask, QueryTriggerInteraction.Collide);
                 for (int i = 0; i < overlaps; i++)
                 {
                     var c = overlapBuffer[i].GetComponentInParent<Combatant>();
@@ -243,6 +279,46 @@ namespace LeagueVR.Champions
         }
 
         CharacterController Controller => origin.GetComponent<CharacterController>();
+
+        readonly List<Behaviour> frozenLocomotion = new();
+        CharacterController frozenController;
+        bool locomotionFrozen;
+
+        /// <summary>
+        /// Holds the rig still in the air (Pantheon's sky view): every locomotion provider (move, turn, gravity, jump,
+        /// teleport) and the character controller pause until unfrozen. Safe to call repeatedly.
+        /// </summary>
+        public void FreezeLocomotion(bool frozen)
+        {
+            if (frozen == locomotionFrozen)
+                return;
+            locomotionFrozen = frozen;
+            if (frozen)
+            {
+                foreach (var provider in origin.GetComponentsInChildren<UnityEngine.XR.Interaction.Toolkit.Locomotion.LocomotionProvider>())
+                    if (provider.enabled)
+                    {
+                        provider.enabled = false;
+                        frozenLocomotion.Add(provider);
+                    }
+                var cc = Controller;
+                if (cc && cc.enabled)
+                {
+                    cc.enabled = false;
+                    frozenController = cc;
+                }
+                return;
+            }
+            foreach (var b in frozenLocomotion)
+                if (b)
+                    b.enabled = true;
+            frozenLocomotion.Clear();
+            if (frozenController)
+                frozenController.enabled = true;
+            frozenController = null;
+        }
+
+        public bool LocomotionFrozen => locomotionFrozen;
 
         /// <summary>Instantly places the player's feet at a point (blinks, portals, respawns).</summary>
         public void MoveFeet(Vector3 point)

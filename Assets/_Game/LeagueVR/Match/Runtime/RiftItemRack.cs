@@ -46,8 +46,6 @@ namespace LeagueVR.Match
         readonly InputAction[] grips = new InputAction[2], triggers = new InputAction[2];
         Transform harness;
         string signature = "";
-        GwenAvatar avatar;
-        bool scissorsWereActive;
 
         public void Initialize(RiftEconomy owner)
         {
@@ -61,7 +59,6 @@ namespace LeagueVR.Match
                 return;
             LastUseTime = -100f;
             harness = new GameObject("Champion physical item harness").transform;
-            avatar = economy.match.player.GetComponent<GwenAvatar>();
             for (int h = 0; h < 2; h++)
             {
                 string hand = h == 0 ? "LeftHand" : "RightHand";
@@ -102,8 +99,6 @@ namespace LeagueVR.Match
                 ReturnHeld(h);
             if (harness)
                 Destroy(harness.gameObject);
-            if (avatar && avatar.scissorsRoot)
-                avatar.scissorsRoot.gameObject.SetActive(avatar.enabled && (scissorsWereActive || !IsHolding));
         }
 
         Transform Hand(int h) => h == 0 ? economy.match.player.leftHand : economy.match.player.rightHand;
@@ -277,11 +272,8 @@ namespace LeagueVR.Match
             held[hand].model.transform.SetParent(null, true);
             mouthTime[hand] = 0;
             Haptic(hand, .3f);
-            if (hand == 1 && avatar && avatar.scissorsRoot)
-            {
-                scissorsWereActive = avatar.scissorsRoot.gameObject.activeSelf;
-                avatar.scissorsRoot.gameObject.SetActive(false);
-            }
+            // The hand's weapon or shield is put away while it holds the item.
+            economy.match.player.Stow(this, hand == 0, true);
             economy.match.Notify("Holding " + economy.match.catalog.Find(held[hand].id).name + " · trigger to use · release grip to holster");
             return true;
         }
@@ -318,8 +310,8 @@ namespace LeagueVR.Match
             }
             held[hand] = null;
             mouthTime[hand] = 0;
-            if (hand == 1 && avatar && avatar.scissorsRoot)
-                avatar.scissorsRoot.gameObject.SetActive(scissorsWereActive && avatar.enabled);
+            if (economy && economy.match && economy.match.player)
+                economy.match.player.Stow(this, hand == 0, false);
         }
 
         public static bool CanSip(GameObject model, Transform head)

@@ -23,6 +23,9 @@ namespace LeagueVR.Champions
         /// </summary>
         public static Quaternion GripFromAim(Quaternion aim) => aim * Quaternion.Euler(-55, 0, 0);
 
+        /// <summary>The pointing orientation for a grip orientation (inverse of <see cref="GripFromAim"/>).</summary>
+        public static Quaternion AimFromGrip(Quaternion grip) => grip * Quaternion.Euler(55, 0, 0);
+
         /// <summary>World-space grip pose, or the aim transform when the device is unavailable.</summary>
         public static Pose Grip(PlayerChampion player, bool left)
         {

@@ -35,16 +35,18 @@ namespace LeagueVR.Champions
 
         public void Select(int index) => selected = Mathf.Clamp(index, 0, champions.Length - 1);
 
-        /// <summary>Equips the selected champion: kit, stats and first-person body.</summary>
+        /// <summary>Equips the selected champion: first-person body, kit and stats.</summary>
         public void ApplySelection()
         {
             Active = Selected;
-            player.SetChampion(Active);
+            // The body comes first so the kit can attach its effects to it when it is equipped.
             bool isGwen = Active.id == ChampionId.Gwen;
             if (gwen)
                 gwen.SetVisible(isGwen);
             if (avatar)
                 avatar.SetChampion(isGwen ? null : Active);
+            player.Body = isGwen ? gwen : avatar;
+            player.SetChampion(Active);
             player.GetComponent<RiftEconomy>()?.SetChampionBase(Active);
             player.ResetPractice();
         }

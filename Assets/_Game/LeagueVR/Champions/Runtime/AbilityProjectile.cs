@@ -20,6 +20,8 @@ namespace LeagueVR.Champions
         public Combatant homing;
         public Action<Combatant, float> hit;
         public Func<float, float> damageAtDistance;
+        /// <summary>Per-target damage (for example full damage to the first enemy, half to the rest); overrides the others.</summary>
+        public Func<Combatant, float> damageFor;
         public Func<Combatant, float> slowFor;
         public float slowDuration;
 
@@ -34,7 +36,7 @@ namespace LeagueVR.Champions
             var go = new GameObject(owner.ChampionName + " " + ability);
             go.transform.SetPositionAndRotation(start, Quaternion.LookRotation(direction.sqrMagnitude > 1e-4f ? direction : Vector3.forward));
             if (visual)
-                Instantiate(visual, go.transform, false);
+                Instantiate(visual, go.transform, false).SetActive(true);
             else
                 AbilityFx.Orb(go.transform, color, size);
             var p = go.AddComponent<AbilityProjectile>();
@@ -183,7 +185,8 @@ namespace LeagueVR.Champions
             var target = collider.GetComponentInParent<Combatant>();
             if (!target || !owner.IsEnemy(target) || (ignoreStructures && !basic && (target.GetComponent<RiftStructure>() || target.GetComponent<RiftVisionWard>())) || !victims.Add(target))
                 return false;
-            float dealt = owner.Hit(target, damageAtDistance != null ? damageAtDistance(travelled) : damage, kind, ability, basic, at);
+            float amount = damageFor != null ? damageFor(target) : damageAtDistance != null ? damageAtDistance(travelled) : damage;
+            float dealt = owner.Hit(target, amount, kind, ability, basic, at);
             if (dealt > 0)
             {
                 if (slowFor != null)
@@ -216,6 +219,46 @@ namespace LeagueVR.Champions
         }
 
         static bool RiftMatchRunning() => !RiftMatch.Instance || RiftMatch.Instance.Running;
+    }
+
+    /// <summary>Spins an effect about its own axes.</summary>
+    public class FxSpin : MonoBehaviour
+    {
+        public Vector3 degreesPerSecond = new(0, 0, 360);
+
+        void Update() => transform.Rotate(degreesPerSecond * Time.deltaTime, Space.Self);
+    }
+
+    /// <summary>
+    /// A non-damaging delivery (a thrown spell shard, a tether pulse): flies to a unit and calls back on arrival,
+    /// or fades out if the target is lost.
+    /// </summary>
+    public class FxSeeker : MonoBehaviour
+    {
+        public Combatant target;
+        public float speed = 18;
+        public System.Action<Combatant> arrive;
+        float born;
+
+        void Start() => born = Time.time;
+
+        void Update()
+        {
+            if (!target || !target.IsAlive || Time.time - born > 4)
+            {
+                Destroy(gameObject);
+                return;
+            }
+            Vector3 to = target.AimPosition - transform.position;
+            float step = speed * Time.deltaTime;
+            if (to.magnitude <= step + .2f)
+            {
+                arrive?.Invoke(target);
+                Destroy(gameObject);
+                return;
+            }
+            transform.position += to.normalized * step;
+        }
     }
 
     /// <summary>Fades a ghost's own material to transparent, then destroys the object and the material.</summary>
@@ -457,6 +500,115 @@ namespace LeagueVR.Champions
             fx.duration = seconds;
             fx.expand = true;
             return go;
+        }
+
+        static Mesh starMesh, crystalMesh;
+
+        /// <summary>A puffy five-pointed star, 1 unit across, facing +Z (Zoe's stars).</summary>
+        public static Mesh StarMesh
+        {
+            get
+            {
+                if (starMesh)
+                    return starMesh;
+                const int points = 5;
+                var vertices = new List<Vector3> { new(0, 0, .16f), new(0, 0, -.16f) };
+                for (int i = 0; i < points * 2; i++)
+                {
+                    float angle = Mathf.PI / 2 + i * Mathf.PI / points;
+                    float radius = i % 2 == 0 ? .5f : .22f;
+                    vertices.Add(new Vector3(Mathf.Cos(angle) * radius, Mathf.Sin(angle) * radius, 0));
+                }
+                var triangles = new List<int>();
+                for (int i = 0; i < points * 2; i++)
+                {
+                    int a = 2 + i, b = 2 + (i + 1) % (points * 2);
+                    triangles.AddRange(new[] { 0, b, a, 1, a, b });
+                }
+                // Flat-shaded copy so each facet catches the light.
+                var flat = new List<Vector3>();
+                var flatTriangles = new List<int>();
+                for (int t = 0; t < triangles.Count; t++)
+                {
+                    flat.Add(vertices[triangles[t]]);
+                    flatTriangles.Add(t);
+                }
+                starMesh = new Mesh { name = "Ability star", hideFlags = HideFlags.HideAndDontSave };
+                starMesh.SetVertices(flat);
+                starMesh.SetTriangles(flatTriangles, 0);
+                starMesh.RecalculateNormals();
+                starMesh.RecalculateBounds();
+                return starMesh;
+            }
+        }
+
+        /// <summary>A long eight-faced crystal, 1 unit tall (spell shards).</summary>
+        public static Mesh CrystalMesh
+        {
+            get
+            {
+                if (crystalMesh)
+                    return crystalMesh;
+                var top = new Vector3(0, .5f, 0);
+                var bottom = new Vector3(0, -.5f, 0);
+                var ring = new Vector3[4];
+                for (int i = 0; i < 4; i++)
+                    ring[i] = new Vector3(Mathf.Cos(i * Mathf.PI / 2) * .28f, .08f, Mathf.Sin(i * Mathf.PI / 2) * .28f);
+                var vertices = new List<Vector3>();
+                for (int i = 0; i < 4; i++)
+                {
+                    Vector3 a = ring[i], b = ring[(i + 1) % 4];
+                    vertices.AddRange(new[] { top, b, a, bottom, a, b });
+                }
+                var triangles = new int[vertices.Count];
+                for (int i = 0; i < triangles.Length; i++)
+                    triangles[i] = i;
+                crystalMesh = new Mesh { name = "Ability crystal", hideFlags = HideFlags.HideAndDontSave };
+                crystalMesh.SetVertices(vertices);
+                crystalMesh.SetTriangles(triangles, 0);
+                crystalMesh.RecalculateNormals();
+                crystalMesh.RecalculateBounds();
+                return crystalMesh;
+            }
+        }
+
+        /// <summary>A mesh object drawn with a shared two-sided unlit glass material.</summary>
+        public static GameObject MeshObject(string name, Mesh mesh, Color color, bool additive, Transform parent = null, float scale = 1)
+        {
+            var go = new GameObject(name);
+            if (parent)
+                go.transform.SetParent(parent, false);
+            go.transform.localScale = Vector3.one * scale;
+            go.AddComponent<MeshFilter>().sharedMesh = mesh;
+            var r = go.AddComponent<MeshRenderer>();
+            r.sharedMaterial = Glass(color, additive, true);
+            r.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+            return go;
+        }
+
+        /// <summary>A world-space line renderer for arcs and guides.</summary>
+        public static LineRenderer Line(string name, Color color, float width, int points, bool additive = true)
+        {
+            var go = new GameObject(name);
+            var lr = go.AddComponent<LineRenderer>();
+            lr.sharedMaterial = Glass(color, additive);
+            lr.useWorldSpace = true;
+            lr.positionCount = points;
+            lr.startWidth = lr.endWidth = width;
+            lr.numCapVertices = 2;
+            lr.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+            return lr;
+        }
+
+        /// <summary>Points a ground ring (from <see cref="Ring"/>-style loops) at a radius around a centre.</summary>
+        public static void SetCircle(LineRenderer line, Vector3 centre, float radius)
+        {
+            int n = line.positionCount;
+            for (int i = 0; i < n; i++)
+            {
+                float a = i * Mathf.PI * 2 / n;
+                line.SetPosition(i, centre + new Vector3(Mathf.Cos(a) * radius, .06f, Mathf.Sin(a) * radius));
+            }
         }
 
         /// <summary>Projectile body: a bright core with a fading trail.</summary>

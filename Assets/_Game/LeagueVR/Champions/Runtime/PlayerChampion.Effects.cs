@@ -41,13 +41,20 @@ namespace LeagueVR.Champions
 
         GameObject blinkQuad;
         Material blinkMaterial;
-        float blinkStart, blinkDuration;
+        float blinkStart, blinkIn, blinkHold, blinkOut, blinkAlpha;
+        Color blinkColor;
 
         /// <summary>
         /// A brief dark fade in front of the eyes for instant repositioning (dashes, blinks, leaps). Teleport-style moves
         /// with a short fade are far more comfortable in VR than visible camera motion.
         /// </summary>
-        public void ComfortBlink(float seconds = .16f)
+        public void ComfortBlink(float seconds = .16f) => ScreenFade(Color.black, 0, 0, seconds, .9f);
+
+        /// <summary>
+        /// Covers the eyes with a colour: fades in, holds, then fades out (all in seconds). Used to hide cuts such as
+        /// Pantheon's leap into the sky; nothing about the view ever moves smoothly behind it.
+        /// </summary>
+        public void ScreenFade(Color color, float fadeIn, float hold, float fadeOut, float alpha = 1)
         {
             if (!blinkQuad)
             {
@@ -63,18 +70,28 @@ namespace LeagueVR.Champions
                 r.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
             }
             blinkStart = Time.time;
-            blinkDuration = seconds;
+            blinkIn = fadeIn;
+            blinkHold = hold;
+            blinkOut = fadeOut;
+            blinkColor = color;
+            blinkAlpha = alpha;
             blinkQuad.SetActive(true);
             UpdateBlink();
         }
+
+        /// <summary>Seconds until a running screen fade is fully covering the view (0 once covered).</summary>
+        public float FadeCoveredIn => blinkQuad && blinkQuad.activeSelf ? Mathf.Max(0, blinkStart + blinkIn - Time.time) : 0;
 
         void UpdateBlink()
         {
             if (!blinkQuad || !blinkQuad.activeSelf)
                 return;
-            float t = (Time.time - blinkStart) / Mathf.Max(.01f, blinkDuration);
-            blinkMaterial.SetColor("_BaseColor", new Color(0, 0, 0, .9f * (1 - Mathf.Clamp01(t))));
-            if (t >= 1)
+            float t = Time.time - blinkStart;
+            float amount = t < blinkIn ? t / Mathf.Max(.01f, blinkIn) : t < blinkIn + blinkHold ? 1 : 1 - (t - blinkIn - blinkHold) / Mathf.Max(.01f, blinkOut);
+            var c = blinkColor;
+            c.a = blinkAlpha * Mathf.Clamp01(amount);
+            blinkMaterial.SetColor("_BaseColor", c);
+            if (t >= blinkIn + blinkHold + blinkOut)
                 blinkQuad.SetActive(false);
         }
 

@@ -172,7 +172,7 @@ namespace LeagueVR.Champions
         public override bool WeaponEdge(out Vector3 from, out Vector3 to)
         {
             from = to = default;
-            if (!avatar || !avatar.isActiveAndEnabled || Player.WeaponPose == null || !avatar.scissorsRoot.gameObject.activeInHierarchy)
+            if (!avatar || !avatar.isActiveAndEnabled || Player.WeaponPose == null || !avatar.WeaponReady)
                 return false;
             var pose = Player.WeaponPose();
             var forward = pose.rotation * Vector3.forward;
@@ -254,7 +254,7 @@ namespace LeagueVR.Champions
             if (!avatar || !avatar.bladeA || !avatar.bladeB)
                 return null;
             var go = new GameObject("Spectral scissors");
-            var weapon = Player.WeaponPose();
+            var weapon = Player.WeaponPose != null ? Player.WeaponPose() : new Pose(Player.AttackOrigin, Quaternion.LookRotation(Player.AttackDirection));
             float roll = Vector3.SignedAngle(Vector3.up, Vector3.ProjectOnPlane(weapon.rotation * Vector3.up, forward), forward);
             go.transform.SetPositionAndRotation(feet + Vector3.up * .9f + forward * (t.qRange * .25f), Quaternion.LookRotation(forward) * Quaternion.Euler(0, 0, Mathf.Clamp(roll, -40, 40)));
             go.transform.localScale = Vector3.one * avatar.WeaponScale * 2.2f;

@@ -16,13 +16,13 @@ MonoBehaviour:
   title: the Unbreakable Spear
   role: Fighter / Assassin
   passiveName: Mortal Will
-  passiveDescription: Five attacks or spells empower the next basic ability.
+  passiveDescription: 'Mortal Will: attacks and spells add stacks (gold pips on your shield rim). At five your spear blazes and your next spell is empowered. Full at the start, on respawn and in the fountain. Thrust or swing the spear through enemies, or hold the right trigger to jab.'
   patch: 16.19.1
   portrait: {fileID: 2800000, guid: 083cbf077ab6e694ba9694626abc15d9, type: 3}
   passiveIcon: {fileID: 2800000, guid: a632cc498124225469be25935e475166, type: 3}
   spells:
   - name: Comet Spear
-    vrDescription: 'Right secondary: throw your spear. Five Mortal Will stacks empower it. Low-health enemies take extra damage.'
+    vrDescription: 'Tap B: a spectral spear thrusts where your spear points, and 60% of the cooldown comes back. Hold B until the spear ignites, then throw it like a javelin: it pierces, the first enemy takes full damage. Enemies below 20% health take execute damage.'
     icon: {fileID: 2800000, guid: f4e536dd880308149bc8cb438c381507, type: 3}
     cooldowns:
     - 11
@@ -37,7 +37,7 @@ MonoBehaviour:
     - 25
     - 25
   - name: Shield Vault
-    vrDescription: Aim left hand at a nearby enemy and press left primary. Step into range and stun them; empowered vault adds three hits.
+    vrDescription: 'Hold X and point your shield at an enemy (gold ring), release to vault onto it: a 1 second stun and a max-health bash. Empowered: your next attack strikes three times.'
     icon: {fileID: 2800000, guid: b1db46c3d1b405241b9dfae1f6867878, type: 3}
     cooldowns:
     - 13
@@ -52,7 +52,7 @@ MonoBehaviour:
     - 55
     - 55
   - name: Aegis Assault
-    vrDescription: 'Right primary: raise Aegis Assault. Point the left shield toward incoming damage while your spear strikes. Turrets still hurt.'
+    vrDescription: 'Press A to brace for 1.5 seconds: everything that hits the front of your real shield is blocked (turrets get through) while spectral spears stab out from behind it. Turn the shield toward the danger. Press A again, or wait, for the shield slam.'
     icon: {fileID: 2800000, guid: 40c82e2dae3e15d48822a9e77a0d249a, type: 3}
     cooldowns:
     - 22
@@ -67,7 +67,7 @@ MonoBehaviour:
     - 80
     - 80
   - name: Grand Starfall
-    vrDescription: 'Left trigger: aim at ground up to 24 metres. A one-second landing warning, then a comfortable blink and impact.'
+    vrDescription: 'Hold the left trigger: a hologram of the Rift rises over your shield hand. Point your spear at where you want to land and release. Hold still for 2 seconds, then leap: you watch the landing from the sky (or a fade, see Settings), a comet spear strikes first, then you crash down with a shockwave.'
     icon: {fileID: 2800000, guid: 6cb65621056916e408f2c51a49232cf6, type: 3}
     cooldowns:
     - 180
@@ -90,7 +90,7 @@ MonoBehaviour:
   mana: 317
   manaGrowth: 31
   attackDamage: 64
-  attackGrowth: 0
+  attackGrowth: 3.3
   attackSpeed: 0.658
   attackSpeedGrowth: 2.95
   moveSpeed: 345
@@ -98,3 +98,6 @@ MonoBehaviour:
   manaRegen: 7.35
   attackReach: 2.4
   bodyHeight: 1.75
+  kitTuning: {fileID: 0}
+  kitPrefab: {fileID: 0}
+  kitMaterial: {fileID: 0}

@@ -1,290 +1,320 @@
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.XR;
+
 namespace LeagueVR.Champions
 {
+    /// <summary>
+    /// First-person body for champions built from a prefab (Zoe, Pantheon and the other imported champions). The
+    /// champion's first-person model (its own mesh without the head) gets the shared full-body rig, its idle and run
+    /// clips and a complete shadow. Weapons are fitted to the controllers: a weapon runs along the right grip, a shield
+    /// faces where the left fist punches.
+    /// </summary>
     [DefaultExecutionOrder(225)]
-    public class ChampionVRAvatar : MonoBehaviour
+    public class ChampionVRAvatar : ChampionBodyBase
     {
-        public PlayerChampion player;
-        public GameObject Instance { get; private set; }
-        public Transform LeftPalm => left.palm;
-        public Transform RightPalm => right.palm;
-        Transform root;
-        float shouldersBelowEye;
-        ChampionDefinition definition;
-
-        class Arm
+        /// <summary>A prop carried by a hand. Its bone is re-posed from the controller every frame.</summary>
+        public class Prop
         {
-            public Transform upper, lower, palm;
-            public Vector3 lowerPos, palmPos;
-            public Quaternion upperRot, lowerRot, palmRot, align;
-            public readonly List<(Transform bone, Vector3 position)> helpers = new();
+            public Transform bone;
+            public bool left;
+            /// <summary>Rotation from the hand frame into the prop's own axes.</summary>
+            public Quaternion fit;
+            /// <summary>Prop-space points: where the hand holds it, the start of its striking edge and its tip.</summary>
+            public Vector3 handle, edge, tip;
+            /// <summary>Prop size relative to the body (1 = as modelled).</summary>
+            public float scale;
+            /// <summary>Standalone copy of the prop's geometry in prop space, for glows, ghosts and thrown copies.</summary>
+            public Mesh mesh;
+            public Material material;
+            /// <summary>Hidden by the kit (for example while the spear is in flight).</summary>
+            public bool hidden;
 
-            public Arm(Transform u, Transform l, Transform p)
+            public bool Visible => bone && !hidden && bone.localScale.x > 0;
+        }
+
+        /// <summary>How a champion's props sit in the hands.</summary>
+        struct PropSpec
+        {
+            public string bone, material;
+            public bool left;
+            /// <summary>Prop-space direction that points along the hand frame's forward, and the one along its up.</summary>
+            public Vector3 forward, up;
+            public Vector3 handle, edge, tip;
+            public float scale;
+        }
+
+        /// <summary>
+        /// Pantheon's spear: the blade is at the prop's -X end (1.2 m long in the model), the shaft continues 2 m to +X.
+        /// The fist holds it a little behind the middle, so about two thirds of the length is in front of the hand.
+        /// The shield is held by its central handle, its convex face (-X) toward where the fist punches, crest (+Y) up.
+        /// </summary>
+        static readonly Dictionary<ChampionId, PropSpec[]> Props = new()
+        {
             {
-                upper = u;
-                lower = l;
-                palm = p;
-                lowerPos = l.localPosition;
-                palmPos = p.localPosition;
-                upperRot = u.localRotation;
-                lowerRot = l.localRotation;
-                palmRot = p.localRotation;
-                align = Alignment(p);
-                foreach (var bone in lower.GetComponentsInChildren<Transform>())
-                    if (bone != lower && !bone.IsChildOf(palm))
-                        helpers.Add((bone, bone.localPosition));
-            }
-        }
-        Arm left, right;
-        readonly List<(Transform t, Quaternion rest, bool left)> fingers = new();
-        Transform weapon, shield;
-        Quaternion weaponAlign, shieldAlign;
-        Vector3 weaponScale, shieldScale;
+                ChampionId.Pantheon, new[]
+                {
+                    new PropSpec { bone = "Spear", material = "Spear", forward = Vector3.left, up = Vector3.forward, handle = new Vector3(.9f, 0, 0), edge = new Vector3(.25f, 0, 0), tip = new Vector3(-1.2f, 0, 0), scale = .6f },
+                    new PropSpec { bone = "Shield", material = "Shield", left = true, forward = Vector3.left, up = Vector3.up, handle = new Vector3(.02f, 0, 0), scale = .48f },
+                }
+            },
+        };
 
-        void OnEnable()
+        /// <summary>Submeshes of the complete model that cast the body's shadow (head, hair, cape and props in hand).</summary>
+        static readonly Dictionary<ChampionId, string[]> ShadowParts = new()
         {
-            Application.onBeforeRender += BeforeRender;
-        }
+            { ChampionId.Zoe, new[] { "Zoe_Base_Mat", "Zoe_Base_Hair_Mat" } },
+            { ChampionId.Pantheon, new[] { "Pantheon_Base_Mat", "L_Arm", "Cape", "Spear", "Shield", "Head", "Helmet" } },
+        };
 
-        void OnDisable()
+        [Tooltip("Angle between the controller handle and a held weapon: pitch, yaw, roll. Positive pitch lowers the weapon toward the pointing direction.")]
+        public Vector3 weaponTilt = new(40, 0, 0);
+
+        public GameObject Instance { get; private set; }
+        public ChampionDefinition Definition { get; private set; }
+        public Prop Weapon { get; private set; }
+        public Prop Shield { get; private set; }
+
+        protected override bool Ready => Instance && Instance.activeInHierarchy;
+
+        protected override void OnDisable()
         {
-            Application.onBeforeRender -= BeforeRender;
+            base.OnDisable();
+            if (player.Body == this)
+                player.Body = null;
         }
 
-        public void SetChampion(ChampionDefinition d)
+        /// <summary>Builds the body for a champion, or removes it (null) when another body takes over.</summary>
+        public void SetChampion(ChampionDefinition definition)
+        {
+            Clear();
+            Definition = definition;
+            enabled = definition && definition.firstPerson;
+            if (!enabled)
+                return;
+            Instance = Instantiate(definition.firstPerson, transform, false);
+            Instance.name = definition.name + " first-person body";
+            var root = Instance.transform;
+            root.SetPositionAndRotation(player.Feet, Quaternion.Euler(0, player.head.transform.eulerAngles.y, 0));
+            var animator = Instance.GetComponentInChildren<Animator>(true);
+            if (animator)
+                animator.enabled = false;
+            Skin = Instance.GetComponentInChildren<SkinnedMeshRenderer>(true);
+            SetupAnimation(Instance.GetComponentInChildren<Animation>(true), null, null);
+            // Props are posed by hand, so their bones must not follow the hand's animated pose; build them from the
+            // animated rest pose before the rig takes over.
+            SetupProps(definition);
+            Rig = new BodyRig(root, Skin);
+            bodyRenderers = Instance.GetComponentsInChildren<Renderer>(true);
+            foreach (var r in bodyRenderers)
+                if (r is SkinnedMeshRenderer smr)
+                {
+                    smr.updateWhenOffscreen = true;
+                    smr.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+                }
+            var full = definition.model ? definition.model.GetComponentInChildren<SkinnedMeshRenderer>(true) : null;
+            if (full && ShadowParts.TryGetValue(definition.id, out var parts) && SameSkeleton(full, Skin))
+                CreateShadow(full.sharedMesh, full.sharedMaterials, (_, name) => Array.Exists(parts, p => name.EndsWith("-" + p, StringComparison.Ordinal)));
+            if (!Rig.Valid)
+                Debug.LogWarning($"{definition.name}: first-person skeleton not recognised; arms will not follow the controllers.");
+        }
+
+        void Clear()
         {
             if (Instance)
             {
                 Instance.SetActive(false);
                 Destroy(Instance);
             }
-            left = right = null;
-            root = weapon = shield = null;
-            fingers.Clear();
-            definition = d;
-            if (!d)
+            foreach (var prop in new[] { Weapon, Shield })
+                if (prop != null && prop.mesh)
+                    Destroy(prop.mesh);
+            if (shadowObject && shadowObject.TryGetComponent<SkinnedMeshRenderer>(out var shadow) && shadow.sharedMesh)
+                Destroy(shadow.sharedMesh);
+            Instance = null;
+            shadowObject = null;
+            Weapon = Shield = null;
+            Rig = null;
+            Skin = null;
+            bodyRenderers = Array.Empty<Renderer>();
+        }
+
+        void OnDestroy() => Clear();
+
+        static bool SameSkeleton(SkinnedMeshRenderer a, SkinnedMeshRenderer b)
+        {
+            if (!a || !b || a.bones.Length != b.bones.Length)
+                return false;
+            for (int i = 0; i < a.bones.Length; i++)
+                if (a.bones[i] && b.bones[i] && a.bones[i].name != b.bones[i].name)
+                    return false;
+            return true;
+        }
+
+        void SetupProps(ChampionDefinition definition)
+        {
+            if (!Props.TryGetValue(definition.id, out var specs) || !Skin)
                 return;
-            Instance = Instantiate(d.firstPerson);
-            Instance.name = d.name + " tracked champion arms";
-            root = Instance.transform;
-            var anim = Instance.GetComponentInChildren<Animation>();
-            if (anim)
+            foreach (var spec in specs)
             {
-                anim.Stop();
-                anim.enabled = false;
-            }
-            var animator = Instance.GetComponentInChildren<Animator>();
-            if (animator)
-                animator.enabled = false;
-            Transform Bone(params string[] names) => names.Select(n => Instance.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => string.Equals(n, t.name, System.StringComparison.OrdinalIgnoreCase))).FirstOrDefault(t => t);
-            left = new Arm(Bone("L_Uparm", "L_Shoulder"), Bone("L_Elbow", "L_Forearm"), Bone("L_Hand"));
-            right = new Arm(Bone("R_Uparm", "R_Shoulder"), Bone("R_Elbow", "R_Forearm"), Bone("R_Hand"));
-            float distance = Mathf.Abs(Bone("Head").position.y - (left.upper.position.y + right.upper.position.y) * .5f);
-            root.localScale *= Mathf.Clamp(.23f / Mathf.Max(.12f, distance), .7f, 1.3f);
-            shouldersBelowEye = .25f;
-            if (d.id == ChampionId.Aatrox || d.id == ChampionId.Akshan || d.id == ChampionId.Pantheon)
-            {
-                weapon = Bone(d.id == ChampionId.Pantheon ? "Spear" : "Weapon");
-                if (weapon)
-                {
-                    Vector3 tip;
-                    if (d.id == ChampionId.Aatrox && Bone("Weapon_Tip"))
-                        tip = Bone("Weapon_Tip").position;
-                    else
-                        tip = WeaponTip(weapon, d.id == ChampionId.Pantheon ? "spear" : "weapon");
-                    var forward = (tip - weapon.position).normalized;
-                    var up = Vector3.ProjectOnPlane(Vector3.up, forward);
-                    if (up.sqrMagnitude < .01f)
-                        up = Vector3.ProjectOnPlane(root.forward, forward);
-                    weaponAlign = Quaternion.Inverse(Quaternion.LookRotation(forward, up)) * weapon.rotation;
-                    if (d.id == ChampionId.Aatrox)
-                        weapon.localScale *= .72f;
-                    if (d.id == ChampionId.Pantheon)
-                        weapon.localScale *= .75f;
-                    weaponScale = weapon.localScale;
-                }
-                if (d.id == ChampionId.Pantheon)
-                {
-                    shield = Bone("Shield");
-                    if (shield)
+                Transform bone = null;
+                foreach (var t in Instance.GetComponentsInChildren<Transform>(true))
+                    if (t.name == spec.bone)
                     {
-                        var bounds = PartBounds(shield, "shield");
-                        var size = bounds.size;
-                        Vector3 normal = size.x < size.y && size.x < size.z ? Vector3.right : size.y < size.z ? Vector3.up : Vector3.forward;
-                        normal = shield.TransformDirection(normal);
-                        var up = Vector3.ProjectOnPlane(root.up, normal);
-                        if (up.sqrMagnitude < .01f)
-                            up = Vector3.ProjectOnPlane(root.forward, normal);
-                        shieldAlign = Quaternion.Inverse(Quaternion.LookRotation(normal, up)) * shield.rotation;
-                        shield.localScale *= .55f;
-                        shieldScale = shield.localScale;
+                        bone = t;
+                        break;
                     }
+                if (!bone)
+                    continue;
+                var prop = new Prop
+                {
+                    bone = bone,
+                    left = spec.left,
+                    fit = Quaternion.Inverse(Quaternion.LookRotation(spec.forward, spec.up)),
+                    handle = spec.handle,
+                    edge = spec.edge,
+                    tip = spec.tip,
+                    scale = spec.scale,
+                };
+                prop.mesh = ExtractPropMesh(Skin, bone, spec.material, out prop.material);
+                if (spec.left)
+                    Shield = prop;
+                else
+                    Weapon = prop;
+            }
+        }
+
+        /// <summary>Copies the prop's triangles out of the skinned mesh into the prop bone's own space.</summary>
+        static Mesh ExtractPropMesh(SkinnedMeshRenderer skin, Transform bone, string materialSuffix, out Material material)
+        {
+            material = null;
+            var source = skin.sharedMesh;
+            int boneIndex = Array.IndexOf(skin.bones, bone);
+            if (!source || boneIndex < 0)
+                return null;
+            var bind = source.bindposes[boneIndex];
+            var vertices = source.vertices;
+            var normals = source.normals;
+            var uvs = source.uv;
+            var map = new Dictionary<int, int>();
+            var outVertices = new List<Vector3>();
+            var outNormals = new List<Vector3>();
+            var outUvs = new List<Vector2>();
+            var triangles = new List<int>();
+            var materials = skin.sharedMaterials;
+            for (int s = 0; s < source.subMeshCount; s++)
+            {
+                if (s >= materials.Length || !materials[s] || !materials[s].name.EndsWith(materialSuffix, StringComparison.Ordinal))
+                    continue;
+                material = materials[s];
+                foreach (int index in source.GetTriangles(s))
+                {
+                    if (!map.TryGetValue(index, out int mapped))
+                    {
+                        mapped = outVertices.Count;
+                        map[index] = mapped;
+                        outVertices.Add(bind.MultiplyPoint3x4(vertices[index]));
+                        outNormals.Add(normals.Length > index ? bind.MultiplyVector(normals[index]).normalized : Vector3.up);
+                        outUvs.Add(uvs.Length > index ? uvs[index] : Vector2.zero);
+                    }
+                    triangles.Add(mapped);
                 }
             }
-            foreach (var arm in new[] { left, right })
-                foreach (var t in arm.palm.GetComponentsInChildren<Transform>())
-                    if (t.name.Contains("Index") || t.name.Contains("Middle") || t.name.Contains("Ring") || t.name.Contains("Pinky"))
-                        fingers.Add((t, t.localRotation, arm == left));
-            foreach (var r in Instance.GetComponentsInChildren<SkinnedMeshRenderer>())
+            if (triangles.Count == 0)
+                return null;
+            var mesh = new Mesh { name = bone.name + " prop" };
+            mesh.SetVertices(outVertices);
+            mesh.SetNormals(outNormals);
+            mesh.SetUVs(0, outUvs);
+            mesh.SetTriangles(triangles, 0);
+            mesh.RecalculateBounds();
+            return mesh;
+        }
+
+        // ---------- Prop poses ----------
+
+        /// <summary>
+        /// The hand frame a prop is fitted to. Weapons run along the controller handle, lowered by
+        /// <see cref="weaponTilt"/>, with the palm normal as up; shields face where the fist points.
+        /// </summary>
+        Quaternion HandFrame(Prop prop)
+        {
+            var grip = Grip(prop.left);
+            if (prop.left)
+                return XRPoses.AimFromGrip(grip.rotation);
+            var along = grip.rotation * Quaternion.Euler(weaponTilt);
+            Vector3 forward = along * Vector3.forward;
+            Vector3 palmNormal = Vector3.ProjectOnPlane(grip.rotation * Vector3.right, forward);
+            return Quaternion.LookRotation(forward, palmNormal.sqrMagnitude > 1e-4f ? palmNormal : along * Vector3.up);
+        }
+
+        /// <summary>World pose and scale of a prop this frame.</summary>
+        public void PropPose(Prop prop, out Vector3 position, out Quaternion rotation, out float scale)
+        {
+            rotation = HandFrame(prop) * prop.fit;
+            scale = prop.scale * BodyScale;
+            position = Palm(prop.left) - rotation * (prop.handle * scale);
+        }
+
+        /// <summary>A point given in prop space, in the world.</summary>
+        public Vector3 PropPoint(Prop prop, Vector3 local)
+        {
+            PropPose(prop, out var position, out var rotation, out float scale);
+            return position + rotation * (local * scale);
+        }
+
+        /// <summary>The weapon's pose in the right fist (forward along the weapon), or the right palm's aim for empty hands.</summary>
+        public override Pose WeaponPose()
+        {
+            if (Weapon != null)
             {
-                r.updateWhenOffscreen = true;
-                r.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
-                r.receiveShadows = false;
-                r.localBounds = new Bounds(Vector3.zero, Vector3.one * 12);
+                var frame = HandFrame(Weapon);
+                return new Pose(Palm(false), frame);
             }
-            UpdatePose();
+            return Aim(false);
         }
 
-        public static Quaternion Alignment(Transform palm)
+        /// <summary>Start and end of the weapon's striking edge in the world (false when the hand has no weapon out).</summary>
+        public bool WeaponEdge(out Vector3 from, out Vector3 to)
         {
-            var children = palm.GetComponentsInChildren<Transform>();
-            var middle = children.FirstOrDefault(t => t.name.ToLowerInvariant().Contains("middle"));
-            var index = children.FirstOrDefault(t => t.name.ToLowerInvariant().Contains("index"));
-            var pinky = children.FirstOrDefault(t => t.name.ToLowerInvariant().Contains("pinky"));
-            if (!middle || !index || !pinky)
-                return Quaternion.Inverse(Quaternion.LookRotation(palm.right, palm.up)) * palm.rotation;
-            var f = (middle.position - palm.position).normalized;
-            var normal = Vector3.Cross(index.position - pinky.position, f).normalized;
-            if (Vector3.Dot(normal, Vector3.up) < 0)
-                normal = -normal;
-            return Quaternion.Inverse(Quaternion.LookRotation(f, normal)) * palm.rotation;
+            from = to = default;
+            if (Weapon == null || !Weapon.Visible || !Ready)
+                return false;
+            from = PropPoint(Weapon, Weapon.edge);
+            to = PropPoint(Weapon, Weapon.tip);
+            return true;
         }
 
-        void LateUpdate()
+        /// <summary>Distance from the fist to the weapon tip in world units.</summary>
+        public float WeaponReach => Weapon != null ? (Weapon.tip - Weapon.handle).magnitude * Weapon.scale * BodyScale : 0;
+
+        protected override HandCurl HeldCurl(bool left)
         {
-            UpdatePose();
+            var prop = left ? Shield : Weapon;
+            return prop != null && prop.Visible ? new HandCurl(.6f, .95f, .8f) : default;
         }
 
-        [BeforeRenderOrder(160)]
-        void BeforeRender()
+        protected override void AfterSolve()
         {
-            if (player && !player.DesktopMode)
-                UpdatePose();
+            PoseProp(Weapon);
+            PoseProp(Shield);
         }
 
-        public void UpdatePose()
+        void PoseProp(Prop prop)
         {
-            if (!root || left == null)
+            if (prop == null || !prop.bone)
                 return;
-            bool show = player.Health && player.Health.IsAlive && !(LeagueVR.Match.RiftMatch.Instance?.ui.IsOpen ?? false);
-            foreach (var r in Instance.GetComponentsInChildren<Renderer>())
-                r.forceRenderingOff = !show;
-            var head = player.head.transform;
-            var forward = Vector3.ProjectOnPlane(head.forward, Vector3.up).normalized;
-            if (forward.sqrMagnitude < .01f)
-                forward = root.forward;
-            root.rotation = Quaternion.LookRotation(forward);
-            root.position += head.position - Vector3.up * shouldersBelowEye - forward * .1f - (left.upper.position + right.upper.position) * .5f;
-            Solve(left, player.DesktopMode ? head.TransformPoint(new Vector3(-.24f, -.32f, .42f)) : player.leftHand.TransformPoint(new Vector3(0, -.025f, -.015f)), -root.right * .65f - Vector3.up, player.DesktopMode ? head.rotation : player.leftHand.rotation);
-            Solve(right, player.DesktopMode ? head.TransformPoint(new Vector3(.24f, -.32f, .45f)) : player.rightHand.TransformPoint(new Vector3(0, -.025f, -.015f)), root.right * .65f - Vector3.up, player.DesktopMode ? head.rotation : player.rightHand.rotation);
-            float lg = 0, rg = definition.id == ChampionId.Aatrox || definition.id == ChampionId.Akshan || definition.id == ChampionId.Pantheon ? .55f : 0;
-            InputDevices.GetDeviceAtXRNode(XRNode.LeftHand).TryGetFeatureValue(CommonUsages.grip, out lg);
-            if (InputDevices.GetDeviceAtXRNode(XRNode.RightHand).TryGetFeatureValue(CommonUsages.grip, out float g))
-                rg = Mathf.Max(rg, g);
-            foreach (var finger in fingers)
-                finger.t.localRotation = finger.rest * Quaternion.AngleAxis((finger.left ? -1 : 1) * 40 * (finger.left ? lg : rg), Vector3.forward);
-            Quaternion rightGrip = player.DesktopMode ? head.rotation : player.rightHand.rotation, leftGrip = player.DesktopMode ? head.rotation : player.leftHand.rotation;
-            var rack = player.GetComponent<LeagueVR.Match.RiftItemRack>();
-            if (weapon)
-                weapon.localScale = rack && rack.IsHandHolding(1) ? Vector3.zero : weaponScale;
-            if (shield)
-                shield.localScale = rack && rack.IsHandHolding(0) ? Vector3.zero : shieldScale;
-            if (weapon)
-                weapon.SetPositionAndRotation(right.palm.position + rightGrip * new Vector3(0, -.015f, .04f), rightGrip * weaponAlign);
-            if (shield)
-                shield.SetPositionAndRotation(left.palm.position + leftGrip * new Vector3(-.06f, -.03f, .16f), leftGrip * shieldAlign);
-        }
-
-        Vector3 WeaponTip(Transform handle, string materialName)
-        {
-            Vector3 tip = handle.position + root.forward;
-            float furthest = 0;
-            foreach (var renderer in Instance.GetComponentsInChildren<SkinnedMeshRenderer>())
+            // A menu, a held item or the kit (thrown spear) puts the prop away: collapsing the bone hides its vertices.
+            if (prop.hidden || player.HandStowed(prop.left))
             {
-                var mesh = new Mesh();
-                renderer.BakeMesh(mesh);
-                var vertices = mesh.vertices;
-                for (int sub = 0; sub < mesh.subMeshCount; sub++)
-                    if (renderer.sharedMaterials[sub].name.ToLowerInvariant().EndsWith(materialName))
-                        foreach (int i in mesh.GetTriangles(sub))
-                        {
-                            var p = renderer.transform.TransformPoint(vertices[i]);
-                            float d = (p - handle.position).sqrMagnitude;
-                            if (d > furthest)
-                            {
-                                furthest = d;
-                                tip = p;
-                            }
-                        }
-                Destroy(mesh);
-            }
-            return tip;
-        }
-
-        Bounds PartBounds(Transform bone, string materialName)
-        {
-            var b = new Bounds();
-            bool first = true;
-            foreach (var renderer in Instance.GetComponentsInChildren<SkinnedMeshRenderer>())
-            {
-                var mesh = new Mesh();
-                renderer.BakeMesh(mesh);
-                var v = mesh.vertices;
-                for (int sub = 0; sub < mesh.subMeshCount; sub++)
-                    if (renderer.sharedMaterials[sub].name.ToLowerInvariant().EndsWith(materialName))
-                        foreach (int i in mesh.GetTriangles(sub))
-                        {
-                            var p = bone.InverseTransformPoint(renderer.transform.TransformPoint(v[i]));
-                            if (first)
-                            {
-                                b = new Bounds(p, Vector3.zero);
-                                first = false;
-                            }
-                            else
-                                b.Encapsulate(p);
-                        }
-                Destroy(mesh);
-            }
-            return b;
-        }
-
-        static void Solve(Arm a, Vector3 target, Vector3 pole, Quaternion grip)
-        {
-            a.upper.localRotation = a.upperRot;
-            a.lower.SetLocalPositionAndRotation(a.lowerPos, a.lowerRot);
-            a.palm.SetLocalPositionAndRotation(a.palmPos, a.palmRot);
-            var p = a.upper.position;
-            var delta = target - p;
-            float x = Vector3.Distance(p, a.lower.position), y = Vector3.Distance(a.lower.position, a.palm.position);
-            if (x < .001f || y < .001f)
+                prop.bone.localScale = Vector3.zero;
                 return;
-            float stretch = Mathf.Clamp(delta.magnitude / (x + y) * 1.003f, 1, 4f);
-            a.lower.localPosition *= stretch;
-            a.palm.localPosition *= stretch;
-            foreach (var helper in a.helpers)
-                helper.bone.localPosition = helper.position * stretch;
-            x *= stretch;
-            y *= stretch;
-            float d = Mathf.Clamp(delta.magnitude, Mathf.Abs(x - y) + .001f, x + y - .001f);
-            var dir = delta.sqrMagnitude > .00001f ? delta.normalized : Vector3.forward;
-            var bend = Vector3.ProjectOnPlane(pole, dir).normalized;
-            if (bend.sqrMagnitude < .01f)
-                bend = Vector3.Cross(dir, Vector3.right).normalized;
-            float along = (x * x - y * y + d * d) / (2 * d), across = Mathf.Sqrt(Mathf.Max(0, x * x - along * along));
-            var elbow = p + dir * along + bend * across;
-            a.upper.rotation = Quaternion.FromToRotation(a.lower.position - p, elbow - p) * a.upper.rotation;
-            a.lower.rotation = Quaternion.FromToRotation(a.palm.position - a.lower.position, p + dir * d - a.lower.position) * a.lower.rotation;
-            a.palm.position = target;
-            a.palm.rotation = grip * a.align;
-        }
-
-        void OnDestroy()
-        {
-            if (Instance)
-                Destroy(Instance);
+            }
+            PropPose(prop, out var position, out var rotation, out float scale);
+            var parent = prop.bone.parent;
+            float parentScale = parent ? parent.lossyScale.x : 1;
+            prop.bone.localScale = Vector3.one * (scale / Mathf.Max(1e-4f, parentScale));
+            prop.bone.SetPositionAndRotation(position, rotation);
         }
     }
 }

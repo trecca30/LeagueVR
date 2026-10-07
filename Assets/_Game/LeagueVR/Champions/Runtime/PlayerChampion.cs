@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using Unity.XR.CoreUtils;
@@ -37,8 +38,31 @@ namespace LeagueVR.Champions
         public float RespawnAt { get; private set; }
         public float RespawnRemaining => Health && !Health.IsAlive ? Mathf.Max(0, RespawnAt - Time.time) : 0;
 
-        /// <summary>Where the right-hand weapon sits; set by the avatar so melee checks start at the visible blade.</summary>
-        public Func<Pose> WeaponPose { get; set; }
+        /// <summary>
+        /// Where the right-hand weapon (or the empty palm) sits on the active body, so melee checks and spells start at
+        /// the visible blade or hand. Null when no body is active.
+        /// </summary>
+        public Func<Pose> WeaponPose => Body && Body.isActiveAndEnabled ? Body.WeaponPoseGetter : null;
+
+        /// <summary>The first-person body currently shown (Gwen's own body or the prefab champion body).</summary>
+        public ChampionBodyBase Body { get; set; }
+
+        readonly HashSet<object> leftStowed = new(), rightStowed = new();
+
+        /// <summary>
+        /// Puts a hand's weapon or shield away while something else uses that hand (menus, held items). Every caller
+        /// passes its own key, so overlapping reasons never un-stow each other.
+        /// </summary>
+        public void Stow(object key, bool left, bool stowed)
+        {
+            var set = left ? leftStowed : rightStowed;
+            if (stowed)
+                set.Add(key);
+            else
+                set.Remove(key);
+        }
+
+        public bool HandStowed(bool left) => (left ? leftStowed : rightStowed).Count > 0;
 
         readonly float[] readyAt = new float[4];
         float attackReadyAt;
@@ -275,7 +299,7 @@ namespace LeagueVR.Champions
 
         public bool BasicAttack()
         {
-            if (!CanAct || Busy || Time.time < attackReadyAt)
+            if (!CanAct || Busy || Time.time < attackReadyAt || !Kit.HasAttackTarget(AttackOrigin, AttackDirection))
                 return false;
             attackReadyAt = Time.time + AttackInterval;
             Emit("Attack1", AttackOrigin, AttackDirection);

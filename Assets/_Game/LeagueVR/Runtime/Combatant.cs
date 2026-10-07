@@ -88,6 +88,8 @@ namespace LeagueVR
         static readonly List<ITargetFilter> filterBuffer = new();
 
         public bool Stunned => Time.time < stunUntil || Time.time < sleepUntil;
+        /// <summary>Asleep (Zoe's bubble): disabled until the next damage, which deals bonus damage and wakes it.</summary>
+        public bool Asleep => Time.time < sleepUntil;
         public bool Rooted => Stunned || Time.time < rootUntil;
         public float SlowMultiplier => Rooted ? 0 : Time.time < slowUntil ? slowMultiplier : 1;
         public float SpeedMultiplier => Time.time < speedUntil ? 1 + speedBonus : 1;

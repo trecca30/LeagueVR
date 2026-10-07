@@ -58,8 +58,7 @@ namespace LeagueVR.Match
         float noticeUntil;
         int renderedVersion;
         float refreshAt;
-        GwenAvatar menuAvatar;
-        bool weaponHidden, weaponWasActive;
+        bool weaponHidden;
         Vector3 lastPosition;
         Quaternion lastRotation;
         bool preservePose;
@@ -201,13 +200,10 @@ namespace LeagueVR.Match
                 rack.ReturnHeld(0);
                 rack.ReturnHeld(1);
             }
-            menuAvatar = match.player.GetComponent<GwenAvatar>();
-            if (menuAvatar && menuAvatar.scissorsRoot)
-            {
-                weaponWasActive = menuAvatar.scissorsRoot.gameObject.activeSelf;
-                menuAvatar.scissorsRoot.gameObject.SetActive(false);
-                weaponHidden = true;
-            }
+            // Weapons and shields are put away while a menu is open.
+            match.player.Stow(this, false, true);
+            match.player.Stow(this, true, true);
+            weaponHidden = true;
             GetComponent<RiftVRHUD>()?.HideForMenu();
             panel = new GameObject(title, typeof(RectTransform), typeof(Canvas));
             root = panel.GetComponent<RectTransform>();
@@ -370,9 +366,19 @@ namespace LeagueVR.Match
                 Settings();
             }, "vignette-toggle");
 
-            Text(root, "WRIST DISPLAY", -720, -140, 1400, 55, 30, cyan);
-            Text(root, "Raise your left wrist, turn its face toward you and look directly at it.\nMenus stay where you open them. Close and reopen to recenter.\nHeadset sound uses the playback device selected by your VR runtime.", -720, -240, 1410, 130, 23, white);
-            Button(root, "BACK", -240, -380, 480, 75, OpenMenu);
+            // Big leaps: Grand Starfall can show the landing from the sky or simply fade out.
+            bool sky = ComfortSettings.SkyView;
+            Text(root, "BIG LEAPS", -720, -125, 1400, 55, 30, cyan);
+            Text(root, $"Grand Starfall: <color=#E5C478>{(sky ? "SKY VIEW" : "FADE")}</color>  ·  watch your landing from high above, or fade out during the leap", -720, -180, 1400, 50, 24, white);
+            Button(root, sky ? "USE FADE" : "USE SKY VIEW", -720, -255, 400, 72, () =>
+            {
+                ComfortSettings.SkyView = !sky;
+                Settings();
+            }, "skyview-toggle");
+
+            Text(root, "WRIST DISPLAY", -720, -330, 1400, 55, 30, cyan);
+            Text(root, "Raise your left wrist and look at it. Menus stay where you open them; reopen to recenter.\nHeadset sound uses the playback device selected by your VR runtime.", -720, -390, 1410, 90, 23, white);
+            Button(root, "BACK", -240, -470, 480, 75, OpenMenu);
         }
 
         string AbilityName(int slot)
@@ -628,9 +634,10 @@ namespace LeagueVR.Match
 
         public void Close()
         {
-            if (weaponHidden && menuAvatar && menuAvatar.scissorsRoot)
+            if (weaponHidden && match && match.player)
             {
-                menuAvatar.scissorsRoot.gameObject.SetActive(weaponWasActive && menuAvatar.enabled);
+                match.player.Stow(this, false, false);
+                match.player.Stow(this, true, false);
                 weaponHidden = false;
             }
             if (panel)

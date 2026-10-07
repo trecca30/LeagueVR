@@ -74,12 +74,14 @@ namespace LeagueVR.Champions
         public bool Valid { get; }
 
         readonly Transform hips, spine1, spine2, chest, neck, leftClavicle, rightClavicle;
+        /// <summary>The spine bones this skeleton has, from the hips up.</summary>
+        readonly Transform[] spineChain;
         readonly List<Finger> fingers = new();
         readonly Transform[] driven;
         readonly Quaternion[] capturedRot;
         readonly Vector3[] capturedPos;
-        readonly Vector3 neckRest;
-        readonly float eyeRest;
+        readonly Vector3 neckRest, hipsRest;
+        readonly float eyeRest, uprightNeck;
 
         float bodyYaw, standingEye = 1.55f;
         Vector3 rootFlat;
@@ -110,9 +112,13 @@ namespace LeagueVR.Champions
             Valid = spine1 && neck && LeftArm.upper && LeftArm.lower && LeftArm.end && RightArm.upper && RightArm.lower && RightArm.end;
             if (!Valid)
                 return;
+            spineChain = Array.FindAll(new[] { spine1, spine2, chest }, t => t);
 
             neckRest = root.InverseTransformPoint(neck.position);
-            eyeRest = neckRest.y + .15f;
+            hipsRest = hips ? root.InverseTransformPoint(hips.position) : new Vector3(neckRest.x, neckRest.y * .55f, neckRest.z);
+            // Idles that hunch (Pantheon's battle stance) are measured with the spine straightened: the player stands upright.
+            uprightNeck = Mathf.Max(neckRest.y, hipsRest.y + Vector3.Distance(hipsRest, neckRest) * .97f);
+            eyeRest = uprightNeck + .15f;
             if (LeftLeg.end)
                 LeftLeg.endHeight = root.InverseTransformPoint(LeftLeg.end.position).y;
             if (RightLeg.end)
@@ -261,10 +267,11 @@ namespace LeagueVR.Champions
             var head = frame.head;
 
             // Height calibration: the avatar grows to the player's standing eye height (never shrinks mid-match).
+            // Small champions such as Zoe need the upper end of the range to reach an adult player's eyes.
             float eye = head.position.y - frame.floorY;
             if (advanceState && eye > standingEye)
                 standingEye = Mathf.Lerp(standingEye, eye, 1 - Mathf.Exp(-3 * dt));
-            Scale = Mathf.Clamp(standingEye / Mathf.Max(.5f, eyeRest), .85f, 1.35f);
+            Scale = Mathf.Clamp(standingEye / Mathf.Max(.5f, eyeRest), .7f, 1.5f);
             root.localScale = Vector3.one * Scale;
 
             Vector3 headForward = head.rotation * Vector3.forward;
@@ -303,8 +310,10 @@ namespace LeagueVR.Champions
 
             // Neck sits a little below and behind the eyes; the torso hangs from it.
             Vector3 neckTarget = head.position + head.rotation * new Vector3(0, -.09f, -.09f) * Scale + Vector3.down * .05f * Scale;
-            Vector3 neckOffset = yaw * Geo.Flat(neckRest) * Scale;
-            Vector3 desiredRoot = Geo.Flat(neckTarget) - Geo.Flat(neckOffset);
+            // The hips stand a little behind the neck like a standing player's; the spine leans to reach the head.
+            // (Placing the animated neck instead would keep hunched idles hunched while the player stands straight.)
+            Vector3 hipsOffset = yaw * (Geo.Flat(hipsRest) + Vector3.forward * .04f) * Scale;
+            Vector3 desiredRoot = Geo.Flat(neckTarget) - hipsOffset;
             if (advanceState)
             {
                 // Hips lag a little behind small leans (the spine bends instead) but follow steps and locomotion.
@@ -317,7 +326,7 @@ namespace LeagueVR.Champions
                 lag = Vector3.Lerp(lag, Vector3.zero, 1 - Mathf.Exp(-1.5f * dt));
                 rootFlat = desiredRoot + lag;
             }
-            float standingNeck = neckRest.y * Scale;
+            float standingNeck = uprightNeck * Scale;
             float crouch = Mathf.Clamp(frame.floorY + standingNeck - neckTarget.y, -.08f, .9f);
             root.SetPositionAndRotation(new Vector3(rootFlat.x, frame.floorY - crouch, rootFlat.z), yaw);
 
@@ -331,13 +340,12 @@ namespace LeagueVR.Champions
 
         void LeanSpine(Vector3 neckTarget)
         {
-            var chain = new[] { spine1, spine2, chest };
-            var weights = new[] { .35f, .45f, .8f };
-            for (int i = 0; i < chain.Length; i++)
+            // The topmost spine bone takes most of the lean, so rigs without a chest (Zoe) or a second spine bone
+            // (Pantheon) lean as far as complete ones.
+            var weights = new[] { .8f, .45f, .35f };
+            for (int i = 0; i < spineChain.Length; i++)
             {
-                var bone = chain[i];
-                if (!bone)
-                    continue;
+                var bone = spineChain[i];
                 Vector3 from = neck.position - bone.position, to = neckTarget - bone.position;
                 if (from.sqrMagnitude < 1e-6f || to.sqrMagnitude < 1e-6f)
                     continue;
@@ -345,17 +353,19 @@ namespace LeagueVR.Champions
                 r.ToAngleAxis(out float angle, out Vector3 axis);
                 if (angle > 180)
                     angle -= 360;
-                angle = Mathf.Clamp(angle * weights[i], -40, 40);
+                angle = Mathf.Clamp(angle * weights[spineChain.Length - 1 - i], -40, 40);
                 bone.rotation = Quaternion.AngleAxis(angle, axis) * bone.rotation;
             }
         }
 
         void TwistChest(float headTwist)
         {
-            if (spine2)
-                spine2.rotation = Quaternion.AngleAxis(headTwist * .25f, Vector3.up) * spine2.rotation;
-            if (chest)
-                chest.rotation = Quaternion.AngleAxis(headTwist * .45f, Vector3.up) * chest.rotation;
+            // The upper back takes most of the head's turn, the bone below it a quarter.
+            int top = spineChain.Length - 1;
+            if (top >= 1)
+                spineChain[top - 1].rotation = Quaternion.AngleAxis(headTwist * .25f, Vector3.up) * spineChain[top - 1].rotation;
+            if (top >= 0)
+                spineChain[top].rotation = Quaternion.AngleAxis(headTwist * .45f, Vector3.up) * spineChain[top].rotation;
         }
 
         void PlantFeet(float floorY)
