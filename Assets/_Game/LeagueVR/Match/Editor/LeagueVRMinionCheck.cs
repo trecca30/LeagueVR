@@ -28,11 +28,15 @@ namespace LeagueVR.Editor
         static bool started;
         static readonly FieldInfo TargetField = typeof(RiftMinion).GetField("target", BindingFlags.Instance | BindingFlags.NonPublic);
 
-        static LeagueVRMinionCheck() { EditorApplication.update += Tick; }
+        static LeagueVRMinionCheck()
+        {
+            EditorApplication.update += Tick;
+        }
 
         public static void ApplyAndBegin()
         {
-            if (EditorApplication.isPlayingOrWillChangePlaymode) throw new Exception("Start the minion check in edit mode.");
+            if (EditorApplication.isPlayingOrWillChangePlaymode)
+                throw new Exception("Start the minion check in edit mode.");
             Directory.CreateDirectory(Output);
             var current = Object.FindAnyObjectByType<RiftMatch>();
             Portraits(current, "Before");
@@ -43,7 +47,8 @@ namespace LeagueVR.Editor
             {
                 string path = AssetDatabase.GetAssetPath(material);
                 string copy = backup + "/" + Path.GetFileName(path);
-                if (!File.Exists(copy)) File.Copy(path, copy);
+                if (!File.Exists(copy))
+                    File.Copy(path, copy);
                 material.SetFloat("_Surface", 0);
                 material.SetFloat("_SrcBlend", 1);
                 material.SetFloat("_DstBlend", 0);
@@ -85,7 +90,8 @@ namespace LeagueVR.Editor
                     try
                     {
                         clone.transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
-                        foreach (var t in clone.GetComponentsInChildren<Transform>(true)) t.gameObject.layer = 31;
+                        foreach (var t in clone.GetComponentsInChildren<Transform>(true))
+                            t.gameObject.layer = 31;
                         clone.GetComponent<RiftMinion>().label.gameObject.SetActive(false);
                         var motion = clone.GetComponentInChildren<RiftMinionMotion>();
                         motion.player[motion.idle].clip.SampleAnimation(motion.gameObject, .2f);
@@ -97,31 +103,46 @@ namespace LeagueVR.Editor
                             LeagueVRMapWork.Capture(c, rt, Output + "/" + version + "-" + prefab.name + "-" + d + ".png");
                         }
                     }
-                    finally { Object.DestroyImmediate(clone); }
+                    finally
+                    {
+                        Object.DestroyImmediate(clone);
+                    }
                 }
             }
-            finally { c.targetTexture = null; rt.Release(); Object.DestroyImmediate(rt); Object.DestroyImmediate(go); }
+            finally
+            {
+                c.targetTexture = null;
+                rt.Release();
+                Object.DestroyImmediate(rt);
+                Object.DestroyImmediate(go);
+            }
         }
 
         static void Tick()
         {
-            if (!SessionState.GetBool(Pending, false) || EditorApplication.isCompiling || EditorApplication.isUpdating) return;
-            if (!EditorApplication.isPlaying) return;
+            if (!SessionState.GetBool(Pending, false) || EditorApplication.isCompiling || EditorApplication.isUpdating)
+                return;
+            if (!EditorApplication.isPlaying)
+                return;
             try
             {
                 if (!started)
                 {
                     match = Object.FindAnyObjectByType<RiftMatch>();
-                    if (!match || !match.player.Health) return;
+                    if (!match || !match.player.Health)
+                        return;
                     started = true;
                     stage = errors = 0;
                     units.Clear();
                     log = new StringBuilder("One focused minion test " + DateTime.Now + "\n");
                     Application.logMessageReceived += Message;
-                    foreach (var s in match.structures) s.enabled = false;
-                    foreach (var o in match.objectives) o.enabled = false;
+                    foreach (var s in match.structures)
+                        s.enabled = false;
+                    foreach (var o in match.objectives)
+                        o.enabled = false;
                     var cc = match.player.origin.GetComponent<CharacterController>();
-                    if (cc) cc.enabled = false;
+                    if (cc)
+                        cc.enabled = false;
                     match.Play();
                     camera = new GameObject("Temporary focused minion camera") { hideFlags = HideFlags.HideAndDontSave }.AddComponent<Camera>();
                     camera.enabled = false;
@@ -150,7 +171,8 @@ namespace LeagueVR.Editor
                         m.health.ResetHealth();
                         m.stats.damage = m.stats.minionOnHit = 0;
                         m.label.gameObject.SetActive(false);
-                        foreach (var child in go.GetComponentsInChildren<Transform>(true)) child.gameObject.layer = 31;
+                        foreach (var child in go.GetComponentsInChildren<Transform>(true))
+                            child.gameObject.layer = 31;
                         m.label.gameObject.layer = 30;
                         units.Add(m);
                     }
@@ -158,7 +180,8 @@ namespace LeagueVR.Editor
                 }
                 if (stage == 1 && t > 1.4f)
                 {
-                    foreach (var u in units) log.AppendLine(u.name + " walking=" + u.GetComponentInChildren<RiftMinionMotion>().State);
+                    foreach (var u in units)
+                        log.AppendLine(u.name + " walking=" + u.GetComponentInChildren<RiftMinionMotion>().State);
                     stage++;
                 }
                 if (stage == 2 && t > 3)
@@ -186,10 +209,12 @@ namespace LeagueVR.Editor
                         float dot = Vector3.Dot(u.transform.forward, direction);
                         var material = u.GetComponentInChildren<SkinnedMeshRenderer>().sharedMaterial;
                         log.AppendLine(u.name + " target=" + (target ? target.name : "none") + " facing target dot=" + dot.ToString("F4") + " animation=" + u.GetComponentInChildren<RiftMinionMotion>().State + " surface=" + material.GetFloat("_Surface") + " depth=" + material.GetFloat("_ZWrite"));
-                        if (!target || target.health.countsAsChampion || dot < .97f) log.AppendLine("CHECK FAILED: unit did not retain enemy-minion facing while viewer orbited.");
+                        if (!target || target.health.countsAsChampion || dot < .97f)
+                            log.AppendLine("CHECK FAILED: unit did not retain enemy-minion facing while viewer orbited.");
                     }
                     Capture("combat", new Vector3(0, 3, 3), new Vector3(0, .7f, 9.5f));
-                    foreach (var u in units.Take(4)) u.gameObject.SetActive(false);
+                    foreach (var u in units.Take(4))
+                        u.gameObject.SetActive(false);
                     MovePlayer(units[5].transform.position + Vector3.back * 3);
                     stage++;
                 }
@@ -205,15 +230,18 @@ namespace LeagueVR.Editor
                 {
                     var caster = units[5];
                     log.AppendLine("Caster releases departed champion=" + (TargetField.GetValue(caster) == null) + " resumes=" + caster.GetComponentInChildren<RiftMinionMotion>().State);
-                    foreach (var u in units.Take(4)) u.gameObject.SetActive(true);
+                    foreach (var u in units.Take(4))
+                        u.gameObject.SetActive(true);
                     deathTime = Time.time;
-                    foreach (var u in units) u.health.TakeDamage(new DamageHit(null, u.transform.position, 1e9f, DamageKind.True));
+                    foreach (var u in units)
+                        u.health.TakeDamage(new DamageHit(null, u.transform.position, 1e9f, DamageKind.True));
                     stage++;
                 }
                 if (stage == 6 && t > 17.4f)
                 {
                     Capture("death-opaque", new Vector3(0, 3, 3), new Vector3(0, .3f, 9.5f));
-                    foreach (var u in units) log.AppendLine(u.name + " death animation surface=" + u.GetComponentInChildren<Renderer>().sharedMaterial.GetFloat("_Surface"));
+                    foreach (var u in units)
+                        log.AppendLine(u.name + " death animation surface=" + u.GetComponentInChildren<Renderer>().sharedMaterial.GetFloat("_Surface"));
                     stage++;
                 }
                 if (stage == 7 && t > 19.7f)
@@ -236,32 +264,54 @@ namespace LeagueVR.Editor
                     End();
                 }
             }
-            catch (Exception e) { log?.AppendLine(e.ToString()); File.WriteAllText(Output + "/error.txt", e.ToString()); End(); }
+            catch (Exception e)
+            {
+                log?.AppendLine(e.ToString());
+                File.WriteAllText(Output + "/error.txt", e.ToString());
+                End();
+            }
         }
 
         static void MovePlayer(Vector3 at)
         {
-            if (match.Ground(at, out var ground)) at = ground;
+            if (match.Ground(at, out var ground))
+                at = ground;
             at.y += .08f;
             Vector3 offset = match.player.head.transform.position - match.player.origin.transform.position;
             offset.y = 0;
             match.player.origin.transform.position = at - offset;
         }
+
         static void Capture(string name, Vector3 eye, Vector3 target)
         {
             camera.transform.SetPositionAndRotation(eye, Quaternion.LookRotation(target - eye));
             LeagueVRMapWork.Capture(camera, texture, Output + "/" + name + ".png");
         }
+
         static void Message(string text, string stack, LogType type)
         {
-            if (type == LogType.Error || type == LogType.Exception) { errors++; log?.AppendLine(text); }
+            if (type == LogType.Error || type == LogType.Exception)
+            {
+                errors++;
+                log?.AppendLine(text);
+            }
         }
+
         static void End()
         {
             Application.logMessageReceived -= Message;
-            if (log != null) File.WriteAllText(Output + "/focused-test.txt", log.ToString());
-            if (camera) { camera.targetTexture = null; Object.DestroyImmediate(camera.gameObject); }
-            if (texture) { texture.Release(); Object.DestroyImmediate(texture); }
+            if (log != null)
+                File.WriteAllText(Output + "/focused-test.txt", log.ToString());
+            if (camera)
+            {
+                camera.targetTexture = null;
+                Object.DestroyImmediate(camera.gameObject);
+            }
+            if (texture)
+            {
+                texture.Release();
+                Object.DestroyImmediate(texture);
+            }
             SessionState.SetBool(Pending, false);
             started = false;
             EditorApplication.isPlaying = false;
