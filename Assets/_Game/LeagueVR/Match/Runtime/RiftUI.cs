@@ -88,6 +88,7 @@ namespace LeagueVR.Match
             ray.enabled = false;
             if (!GetComponent<RiftVRHUD>())
                 gameObject.AddComponent<RiftVRHUD>().match = match;
+            ComfortSettings.ApplyVignette();
         }
 
         void Announce(string value)
@@ -327,29 +328,50 @@ namespace LeagueVR.Match
         {
             shopScreen = false;
             Screen("Comfort & audio", true);
-            Text(root, "GAME VOLUME", -720, 270, 1400, 65, 32, cyan);
-            Text(root, $"{AudioListener.volume * 100:0}%  ·  {(!AudioListener.pause ? "Audio enabled" : "Audio paused")}", -720, 190, 1400, 60, 27, white);
-            Button(root, "QUIETER", -720, 90, 400, 80, () =>
-{
-    AudioListener.pause = false;
-    AudioListener.volume = Mathf.Max(0, AudioListener.volume - .1f);
-    Settings();
-});
-            Button(root, "LOUDER", -270, 90, 400, 80, () =>
+            Text(root, "GAME VOLUME", -720, 340, 1400, 55, 30, cyan);
+            Text(root, $"{AudioListener.volume * 100:0}%  ·  {(!AudioListener.pause ? "Audio enabled" : "Audio paused")}", -720, 280, 1400, 50, 26, white);
+            Button(root, "QUIETER", -720, 200, 400, 72, () =>
+            {
+                AudioListener.pause = false;
+                AudioListener.volume = Mathf.Max(0, AudioListener.volume - .1f);
+                Settings();
+            });
+            Button(root, "LOUDER", -270, 200, 400, 72, () =>
             {
                 AudioListener.pause = false;
                 AudioListener.volume = Mathf.Min(1, AudioListener.volume + .1f);
                 Settings();
             });
-            Button(root, AudioListener.volume > 0 ? "MUTE" : "UNMUTE", 180, 90, 400, 80, () =>
+            Button(root, AudioListener.volume > 0 ? "MUTE" : "UNMUTE", 180, 200, 400, 72, () =>
             {
                 AudioListener.pause = false;
                 AudioListener.volume = AudioListener.volume > 0 ? 0 : .7f;
                 Settings();
             });
-            Text(root, "WRIST DISPLAY", -720, -50, 1400, 60, 32, cyan);
-            Text(root, "Raise your left wrist, turn its face toward you and look directly at it.\nMenus stay where you open them. Close and reopen to recenter.\nHeadset sound uses the playback device selected by your VR runtime.", -720, -165, 1410, 160, 26, white);
-            Button(root, "BACK", -240, -360, 480, 80, OpenMenu);
+
+            // Comfort vignette: the dark ring that narrows the view while moving or turning.
+            int vignette = ComfortSettings.VignetteLevel;
+            Text(root, "COMFORT VIGNETTE", -720, 100, 1400, 55, 30, cyan);
+            Text(root, $"Strength: <color=#E5C478>{ComfortSettings.VignetteName}</color>  ·  the dark ring that narrows your view while you move or turn", -720, 40, 1400, 50, 24, white);
+            Button(root, "LESS", -720, -40, 400, 72, () =>
+            {
+                ComfortSettings.VignetteLevel = vignette - 1;
+                Settings();
+            }, "vignette-less", vignette > 0);
+            Button(root, "MORE", -270, -40, 400, 72, () =>
+            {
+                ComfortSettings.VignetteLevel = vignette + 1;
+                Settings();
+            }, "vignette-more", vignette < ComfortSettings.VignetteNames.Length - 1);
+            Button(root, vignette > 0 ? "TURN OFF" : "TURN ON", 180, -40, 400, 72, () =>
+            {
+                ComfortSettings.VignetteLevel = vignette > 0 ? 0 : ComfortSettings.DefaultVignetteLevel;
+                Settings();
+            }, "vignette-toggle");
+
+            Text(root, "WRIST DISPLAY", -720, -140, 1400, 55, 30, cyan);
+            Text(root, "Raise your left wrist, turn its face toward you and look directly at it.\nMenus stay where you open them. Close and reopen to recenter.\nHeadset sound uses the playback device selected by your VR runtime.", -720, -240, 1410, 130, 23, white);
+            Button(root, "BACK", -240, -380, 480, 75, OpenMenu);
         }
 
         string AbilityName(int slot)
