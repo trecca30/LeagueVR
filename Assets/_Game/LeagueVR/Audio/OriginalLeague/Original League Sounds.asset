@@ -1,0 +1,665 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72e10203c2bed18428bace1c6d5e62d0, type: 3}
+  m_Name: Original League Sounds
+  m_EditorClassIdentifier: Assembly-CSharp::LeagueVR.LeagueSoundBank
+  outputGain: 0.6
+  events:
+  - key: Gwen.Attack
+    eventName: Play_sfx_Gwen_GwenBasicAttack_Swipe_cast
+    sourceBank: gwen_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 9209c9822aebeea4b91460e936e2c08d, type: 3}
+      - {fileID: 8300000, guid: 1a9b8070543438248992732f649421ef, type: 3}
+      - {fileID: 8300000, guid: 30c9f882cd39a1143b720fde830a2ddc, type: 3}
+      - {fileID: 8300000, guid: 289d2dc40342e43489152f175c8986bc, type: 3}
+  - key: Gwen.AttackHit
+    eventName: Play_sfx_Gwen_GwenBasicAttack_Swipe_hit
+    sourceBank: gwen_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: fe812f8a2185f244b9b7c766734aff87, type: 3}
+      - {fileID: 8300000, guid: 066abf85e62b9574099a2a2623720d28, type: 3}
+      - {fileID: 8300000, guid: 932d84e8bd847b04498717c071f30cff, type: 3}
+      - {fileID: 8300000, guid: cead85d3e11a528469dea16ce889aa15, type: 3}
+  - key: Gwen.EmpoweredAttack
+    eventName: Play_sfx_Gwen_GwenEEmpoweredAttack_Oncast
+    sourceBank: gwen_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 52a493c24d8d2b14da4926617afac10f, type: 3}
+      - {fileID: 8300000, guid: 64f1ad27996f35b4088c91d23b2994ed, type: 3}
+      - {fileID: 8300000, guid: 8d88350d254c86040b77cbe42ba3e28a, type: 3}
+      - {fileID: 8300000, guid: c3270fe1e9751b64489136c81751fa7e, type: 3}
+  - key: Gwen.EmpoweredHit
+    eventName: Play_sfx_Gwen_GwenEEmpoweredAttack_OnHitLocation
+    sourceBank: gwen_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: fe812f8a2185f244b9b7c766734aff87, type: 3}
+      - {fileID: 8300000, guid: 066abf85e62b9574099a2a2623720d28, type: 3}
+      - {fileID: 8300000, guid: 932d84e8bd847b04498717c071f30cff, type: 3}
+      - {fileID: 8300000, guid: cead85d3e11a528469dea16ce889aa15, type: 3}
+    - variants:
+      - {fileID: 8300000, guid: 33445bc3574ce1b438e9beb6dffe852c, type: 3}
+      - {fileID: 8300000, guid: 1d46b79357de6c140b5e63623d86bf50, type: 3}
+      - {fileID: 8300000, guid: 65ae5798827032c4e964e3ff06cd1555, type: 3}
+  - key: Gwen.QCast
+    eventName: Play_sfx_Gwen_GwenQ_OnCast
+    sourceBank: gwen_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 7145f358af06b0647a8c59c5200061f5, type: 3}
+      - {fileID: 8300000, guid: b2e2e7721d4b61e448a9b0da91f5cd5a, type: 3}
+      - {fileID: 8300000, guid: 849fc99186216b047833a495678f9474, type: 3}
+  - key: Gwen.QFirst
+    eventName: Play_sfx_Gwen_GwenQFirst_cast
+    sourceBank: gwen_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 6f0134216f4785e48883dec711042f75, type: 3}
+      - {fileID: 8300000, guid: f275ff13731ee184f80c688e9904e4fd, type: 3}
+      - {fileID: 8300000, guid: 780a14800353a084dbf64c3de939c376, type: 3}
+      - {fileID: 8300000, guid: 17377bc33c07a7a469f66535c02e6736, type: 3}
+    - variants:
+      - {fileID: 8300000, guid: 14a4f66921abb2743aa29ecbce82f65b, type: 3}
+      - {fileID: 8300000, guid: bb001b27be8f23945a5c8f9704b9292a, type: 3}
+      - {fileID: 8300000, guid: cfa38997dea317c418027b0e34b03f6b, type: 3}
+      - {fileID: 8300000, guid: bba6c929ca8083d42b716678d4bada6a, type: 3}
+  - key: Gwen.QMiddle
+    eventName: Play_sfx_Gwen_GwenQMiddle_4stack_cast
+    sourceBank: gwen_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 14a4f66921abb2743aa29ecbce82f65b, type: 3}
+      - {fileID: 8300000, guid: bba6c929ca8083d42b716678d4bada6a, type: 3}
+      - {fileID: 8300000, guid: cfa38997dea317c418027b0e34b03f6b, type: 3}
+      - {fileID: 8300000, guid: bb001b27be8f23945a5c8f9704b9292a, type: 3}
+    - variants:
+      - {fileID: 8300000, guid: 14a4f66921abb2743aa29ecbce82f65b, type: 3}
+      - {fileID: 8300000, guid: bba6c929ca8083d42b716678d4bada6a, type: 3}
+      - {fileID: 8300000, guid: cfa38997dea317c418027b0e34b03f6b, type: 3}
+      - {fileID: 8300000, guid: bb001b27be8f23945a5c8f9704b9292a, type: 3}
+    - variants:
+      - {fileID: 8300000, guid: 14a4f66921abb2743aa29ecbce82f65b, type: 3}
+      - {fileID: 8300000, guid: bba6c929ca8083d42b716678d4bada6a, type: 3}
+      - {fileID: 8300000, guid: cfa38997dea317c418027b0e34b03f6b, type: 3}
+      - {fileID: 8300000, guid: bb001b27be8f23945a5c8f9704b9292a, type: 3}
+    - variants:
+      - {fileID: 8300000, guid: 14a4f66921abb2743aa29ecbce82f65b, type: 3}
+      - {fileID: 8300000, guid: bba6c929ca8083d42b716678d4bada6a, type: 3}
+      - {fileID: 8300000, guid: cfa38997dea317c418027b0e34b03f6b, type: 3}
+      - {fileID: 8300000, guid: bb001b27be8f23945a5c8f9704b9292a, type: 3}
+  - key: Gwen.QLast
+    eventName: Play_sfx_Gwen_GwenQLast_cast
+    sourceBank: gwen_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 4002eebd0ec928145b2a956dfc3ac059, type: 3}
+      - {fileID: 8300000, guid: 197ddec895620e54ab2cf150ccfb8726, type: 3}
+      - {fileID: 8300000, guid: 1a0366c91b3e72d458acc090be10835e, type: 3}
+      - {fileID: 8300000, guid: 0aa3061b3d644cb45bc1dd2b0fd163ed, type: 3}
+    - variants:
+      - {fileID: 8300000, guid: 14a4f66921abb2743aa29ecbce82f65b, type: 3}
+      - {fileID: 8300000, guid: bb001b27be8f23945a5c8f9704b9292a, type: 3}
+      - {fileID: 8300000, guid: cfa38997dea317c418027b0e34b03f6b, type: 3}
+      - {fileID: 8300000, guid: bba6c929ca8083d42b716678d4bada6a, type: 3}
+  - key: Gwen.QHit
+    eventName: Play_sfx_Gwen_GwenQFirst_hit
+    sourceBank: gwen_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 774cea19da31ae441b26233102677acf, type: 3}
+      - {fileID: 8300000, guid: 94a4f25f6d89d8a4596c25c510181c94, type: 3}
+      - {fileID: 8300000, guid: 2cd7ab9daa1e43e4db2f8c3b85ca2e3d, type: 3}
+      - {fileID: 8300000, guid: c5a5ca1afe3a52e40ac39936bf43363e, type: 3}
+  - key: Gwen.QLastHit
+    eventName: Play_sfx_Gwen_GwenQLast_hit
+    sourceBank: gwen_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 774cea19da31ae441b26233102677acf, type: 3}
+      - {fileID: 8300000, guid: 94a4f25f6d89d8a4596c25c510181c94, type: 3}
+      - {fileID: 8300000, guid: c5a5ca1afe3a52e40ac39936bf43363e, type: 3}
+      - {fileID: 8300000, guid: 2cd7ab9daa1e43e4db2f8c3b85ca2e3d, type: 3}
+  - key: Gwen.W
+    eventName: Play_sfx_Gwen_GwenW_cast
+    sourceBank: gwen_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 3fece9f001a5f1a4b9aa1f159acd9df2, type: 3}
+      - {fileID: 8300000, guid: bf8c54e5d67193141a1eecbe80cb8227, type: 3}
+      - {fileID: 8300000, guid: 94aaa1548a1d1a04d88702e4ec2660e3, type: 3}
+  - key: Gwen.WRecast
+    eventName: Play_sfx_Gwen_GwenWRecast_cast
+    sourceBank: gwen_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 6a28b7a2ef85182498669f6a4004197b, type: 3}
+      - {fileID: 8300000, guid: 8ee13af4bcd4d1045af7864850347065, type: 3}
+  - key: Gwen.WEnd
+    eventName: Play_sfx_Gwen_GwenW_buffdeactivate
+    sourceBank: gwen_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 99f40a360d79b08498c07c5534b61fdc, type: 3}
+      - {fileID: 8300000, guid: a61c1df9fb80a1340afa89bc4d4dd628, type: 3}
+  - key: Gwen.E
+    eventName: Play_sfx_Gwen_GwenE_OnCast
+    sourceBank: gwen_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 08122857359f586479901d87573316f7, type: 3}
+      - {fileID: 8300000, guid: c7a5a88971165d64db2a42403121f6fa, type: 3}
+      - {fileID: 8300000, guid: b2c61f39223d9b84388e4da6c990c03c, type: 3}
+      - {fileID: 8300000, guid: edee41406517af347992ddbb7b8a5353, type: 3}
+    - variants:
+      - {fileID: 8300000, guid: 9b896fc5b2c1a2044a73321ddf7f9cb0, type: 3}
+  - key: Gwen.R
+    eventName: Play_sfx_Gwen_GwenR_OnCast
+    sourceBank: gwen_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 05058ce88cc974342985d017f4c856e5, type: 3}
+      - {fileID: 8300000, guid: 9d71f9977903afe43842fa61895e8a19, type: 3}
+      - {fileID: 8300000, guid: 025cbaa728e9621449fcd8d676c95615, type: 3}
+  - key: Gwen.RRecast
+    eventName: Play_sfx_Gwen_GwenRRecast_OnCast
+    sourceBank: gwen_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 05058ce88cc974342985d017f4c856e5, type: 3}
+      - {fileID: 8300000, guid: 9d71f9977903afe43842fa61895e8a19, type: 3}
+      - {fileID: 8300000, guid: 025cbaa728e9621449fcd8d676c95615, type: 3}
+  - key: Gwen.R1
+    eventName: Play_sfx_Gwen_GwenR1_buffactivate
+    sourceBank: gwen_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 7114a8b4b0c7480408d24e30d7e8d97b, type: 3}
+    - variants:
+      - {fileID: 8300000, guid: 52ef66b4d558ef04d9b3d080c74153ad, type: 3}
+  - key: Gwen.R2
+    eventName: Play_sfx_Gwen_GwenR2_buffactivate
+    sourceBank: gwen_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 218a0a04491f5aa40b300778d5bdf480, type: 3}
+  - key: Gwen.R3
+    eventName: Play_sfx_Gwen_GwenR3_buffactivate
+    sourceBank: gwen_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: ae890403d015773449d6626cbe1e223e, type: 3}
+  - key: Gwen.RHit
+    eventName: Play_sfx_Gwen_GwenRMis_OnHitLocation
+    sourceBank: gwen_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 0bf1a9b89646ced45b8baa590a39f372, type: 3}
+      - {fileID: 8300000, guid: 71feaf11a73543c47bb1909f563cdac3, type: 3}
+      - {fileID: 8300000, guid: 2a40c381f728c4941b8d4f3049cb4817, type: 3}
+      - {fileID: 8300000, guid: 571498e35b0216340a3ebf3719d4a13c, type: 3}
+      - {fileID: 8300000, guid: 8a8c463e986e6754083d0661df574573, type: 3}
+      - {fileID: 8300000, guid: a67ae82630765a543a0ce37059b42dd6, type: 3}
+      - {fileID: 8300000, guid: 233b3652b8d8b11409434a72b26c6d5d, type: 3}
+  - key: Gwen.Death
+    eventName: Play_sfx_Gwen_Death3D_buffactivate
+    sourceBank: gwen_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 0843916b1bb7e384a9dc593dd3fd5652, type: 3}
+  - key: Gwen.Respawn
+    eventName: Play_sfx_Gwen_Respawn3D_buffactivate
+    sourceBank: gwen_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 3891588cbd2425b48bf2acb1496107a4, type: 3}
+  - key: Turret.0.Minion.Cast
+    eventName: Play_sfx_Env_map11_OrderTurretMinionBasicAttack_missilelaunch
+    sourceBank: env_global_buildings_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: e1e2225949d509f4698bbcf8cf0b2874, type: 3}
+      - {fileID: 8300000, guid: 6b8fec2b64ff1014aabbf8ff1790a51c, type: 3}
+      - {fileID: 8300000, guid: 012cb2ce0b009a34b9df4747df41344b, type: 3}
+  - key: Turret.0.Minion.Hit
+    eventName: Play_sfx_Env_map11_OrderTurretMinionBasicAttack_hit
+    sourceBank: env_global_buildings_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 8b6adac330224d8439ea8b46b9d3c499, type: 3}
+      - {fileID: 8300000, guid: ef514239d1d323a408c19b08140bd05c, type: 3}
+  - key: Turret.0.Champion.Cast
+    eventName: Play_sfx_Env_map11_OrderTurretChampionBasicAttack_missilelaunch
+    sourceBank: env_global_buildings_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 98641adf64e387a4199d8d7a963ab0bd, type: 3}
+      - {fileID: 8300000, guid: 4320b05ca0e77814291a963c24132eae, type: 3}
+      - {fileID: 8300000, guid: 2f8e30e42200fd34d94950dadd65b29d, type: 3}
+      - {fileID: 8300000, guid: 83b2f4e73e0916145b1430f959ac7d2f, type: 3}
+  - key: Turret.0.Champion.Hit
+    eventName: Play_sfx_Env_map11_OrderTurretChampionBasicAttack_hit
+    sourceBank: env_global_buildings_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 0e721b655632206429d33649f5d39b5e, type: 3}
+      - {fileID: 8300000, guid: 2649fd654b478da44942c1b3d45237b5, type: 3}
+      - {fileID: 8300000, guid: a1c3035d4fa78c34ea90dfeea5502a7b, type: 3}
+      - {fileID: 8300000, guid: 21d1ea8320ca7464783eed4dd858dded, type: 3}
+  - key: Turret.0.Death
+    eventName: Play_sfx_Env_Turret_Death3D
+    sourceBank: env_global_buildings_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 40dca5c505ca23045bf02257554fe40d, type: 3}
+  - key: Inhibitor.0.Death
+    eventName: Play_sfx_Env_sruap_order_inhibitor_dead
+    sourceBank: env_global_buildings_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 94d84938a5c725b4082a6c41f7473e85, type: 3}
+  - key: Inhibitor.0.Respawn
+    eventName: Play_sfx_Env_sruap_order_inhibitor_respawn_cast
+    sourceBank: env_global_buildings_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 0f8c89e54c788864680bdebd21d5e1d6, type: 3}
+  - key: Nexus.0.Death
+    eventName: Play_sfx_Env_Global_EoG_OrderNexus_death_oc
+    sourceBank: env_eog_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: f8a4998ab43d04343ad3ad0f9048227a, type: 3}
+    - variants:
+      - {fileID: 8300000, guid: 44da6f7c6a4366e47adb44d90466614e, type: 3}
+    - variants:
+      - {fileID: 8300000, guid: b65acdb239f0d1943b6f29642fd3ed79, type: 3}
+    - variants:
+      - {fileID: 8300000, guid: 9f24cb704294e4a4da28087ae8f5d89c, type: 3}
+    - variants:
+      - {fileID: 8300000, guid: bc838dc8ac3e4ac4d9253c96740911fe, type: 3}
+  - key: Minion.0.Melee.OnCast.0
+    eventName: Play_sfx_SRU_OrderMinionMelee_SRU_OrderMinionMeleeBasicAttack_OnCast
+    sourceBank: npc_global_minions_ordermelee_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 1d7b7a586bc114f479e61ad59a203065, type: 3}
+      - {fileID: 8300000, guid: 982db90325b25a947beda9e3eaaf49af, type: 3}
+      - {fileID: 8300000, guid: 77bff6b7c4b3f8a49b33eeb3b9ec0727, type: 3}
+      - {fileID: 8300000, guid: cb6cd2b9b2c2362459dda2b3a9c36f8d, type: 3}
+  - key: Minion.0.Melee.OnCast.1
+    eventName: Play_sfx_SRU_OrderMinionMelee_SRU_OrderMinionMeleeBasicAttack2_OnCast
+    sourceBank: npc_global_minions_ordermelee_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 577c71b46e1a1734fb2c1db44c788bfd, type: 3}
+      - {fileID: 8300000, guid: 7ddbdf20e9b588f4a8e6bfefb3a7645b, type: 3}
+      - {fileID: 8300000, guid: c5c1a57eb90c4bb449ee10b45bac7f21, type: 3}
+      - {fileID: 8300000, guid: ed98e44c8e5e07d4c80250a39b43141d, type: 3}
+  - key: Minion.0.Melee.OnCast.2
+    eventName: Play_sfx_SRU_OrderMinionMelee_SRU_OrderMinionMeleeBasicAttack3_OnCast
+    sourceBank: npc_global_minions_ordermelee_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: e870152315c455a42aabcde5986bcfe0, type: 3}
+      - {fileID: 8300000, guid: 741b4c8a0047cca49b7ca1aeb2c8af43, type: 3}
+      - {fileID: 8300000, guid: bf9c31d7016b69948b5935e7e66d9622, type: 3}
+      - {fileID: 8300000, guid: 414dedd3badddec489699f4fd2d2347f, type: 3}
+  - key: Minion.0.Melee.OnHit.0
+    eventName: Play_sfx_SRU_OrderMinionMelee_SRU_OrderMinionMeleeBasicAttack_OnHit
+    sourceBank: npc_global_minions_ordermelee_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 740482cc7ada99243a29de0c84975ebe, type: 3}
+      - {fileID: 8300000, guid: b5685038c06b28f4599bef86a9d6e321, type: 3}
+      - {fileID: 8300000, guid: 5e74630496bb2e1418f4528552b74ed0, type: 3}
+      - {fileID: 8300000, guid: ca490201b3f0d3d42bc76d7a39fe16d2, type: 3}
+  - key: Minion.0.Melee.OnHit.1
+    eventName: Play_sfx_SRU_OrderMinionMelee_SRU_OrderMinionMeleeBasicAttack2_OnHit
+    sourceBank: npc_global_minions_ordermelee_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 740482cc7ada99243a29de0c84975ebe, type: 3}
+      - {fileID: 8300000, guid: b5685038c06b28f4599bef86a9d6e321, type: 3}
+      - {fileID: 8300000, guid: 5e74630496bb2e1418f4528552b74ed0, type: 3}
+      - {fileID: 8300000, guid: ca490201b3f0d3d42bc76d7a39fe16d2, type: 3}
+  - key: Minion.0.Melee.OnHit.2
+    eventName: Play_sfx_SRU_OrderMinionMelee_SRU_OrderMinionMeleeBasicAttack3_OnHit
+    sourceBank: npc_global_minions_ordermelee_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: a77315c78b732ac4f986928ef9e40563, type: 3}
+      - {fileID: 8300000, guid: 177bd721c071368409363a82920cd295, type: 3}
+      - {fileID: 8300000, guid: 9c76fec2462b3984e88320b4b17f2ce6, type: 3}
+      - {fileID: 8300000, guid: 96b0c07a21653584da1eb5739beb795c, type: 3}
+  - key: Minion.0.Ranged.OnCast.0
+    eventName: Play_sfx_SRU_OrderMinionRanged_SRU_OrderMinionRangedBasicAttack_OnCast
+    sourceBank: npc_global_minions_orderrange_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: f815fb96461f42748bde11c8fb2dfa06, type: 3}
+      - {fileID: 8300000, guid: 4fb45811416a6cd459b3e8ba2a7d199d, type: 3}
+      - {fileID: 8300000, guid: 123b5ae259e3fc34caf724166f26be09, type: 3}
+  - key: Minion.0.Ranged.OnCast.1
+    eventName: Play_sfx_SRU_OrderMinionRanged_SRU_OrderMinionRangedBasicAttack2_OnCast
+    sourceBank: npc_global_minions_orderrange_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: f815fb96461f42748bde11c8fb2dfa06, type: 3}
+      - {fileID: 8300000, guid: 4fb45811416a6cd459b3e8ba2a7d199d, type: 3}
+      - {fileID: 8300000, guid: 123b5ae259e3fc34caf724166f26be09, type: 3}
+  - key: Minion.0.Ranged.OnHit.0
+    eventName: Play_sfx_SRU_OrderMinionRanged_SRU_OrderMinionRangedBasicAttack_OnHit
+    sourceBank: npc_global_minions_orderrange_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 62fb41eedcff6114aa6974bf5797a7a7, type: 3}
+      - {fileID: 8300000, guid: 229139b7b4ed3374991635a55006b0aa, type: 3}
+      - {fileID: 8300000, guid: 8320e1f388eb88e4fb8fb5e6456b3c8d, type: 3}
+      - {fileID: 8300000, guid: 1dfc4d42bed23f1499269912c516d586, type: 3}
+  - key: Minion.0.Ranged.OnHit.1
+    eventName: Play_sfx_SRU_OrderMinionRanged_SRU_OrderMinionRangedBasicAttack2_OnHit
+    sourceBank: npc_global_minions_orderrange_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 62fb41eedcff6114aa6974bf5797a7a7, type: 3}
+      - {fileID: 8300000, guid: 229139b7b4ed3374991635a55006b0aa, type: 3}
+      - {fileID: 8300000, guid: 8320e1f388eb88e4fb8fb5e6456b3c8d, type: 3}
+      - {fileID: 8300000, guid: 1dfc4d42bed23f1499269912c516d586, type: 3}
+  - key: Minion.0.Siege.OnCast.0
+    eventName: Play_sfx_SRU_OrderMinionSiege_SRU_OrderMinionSiegeBasicAttack_OnCast
+    sourceBank: npc_global_minions_ordersiege_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: e28e64d0be4dace4cb2ad7a4cb9aaf90, type: 3}
+      - {fileID: 8300000, guid: 0b0f1a5c9c3e69a419b15d525d66cb9d, type: 3}
+      - {fileID: 8300000, guid: 31826e5cbac9c24438491a0655ff8468, type: 3}
+      - {fileID: 8300000, guid: b4c4a7c57ab426a4d88cb8e3e528f7e5, type: 3}
+  - key: Minion.0.Siege.OnHit.0
+    eventName: Play_sfx_SRU_OrderMinionSiege_SRU_OrderMinionSiegeBasicAttack_OnHit
+    sourceBank: npc_global_minions_ordersiege_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 800b9015bae4d1841b8ac3a216dc2ad3, type: 3}
+      - {fileID: 8300000, guid: d2eeb692c368d5e43b6ae18e3bfe0ce0, type: 3}
+      - {fileID: 8300000, guid: e3d07c539fae6c8449442f0fa9a02f39, type: 3}
+      - {fileID: 8300000, guid: 7dcf688a350745a40908ce2701c01b89, type: 3}
+      - {fileID: 8300000, guid: 055406a82d7eeb547876f99fae5252b1, type: 3}
+      - {fileID: 8300000, guid: ca1deb2b189441d4cae644e29b4145ba, type: 3}
+      - {fileID: 8300000, guid: 9fbf7204b4d43bd4fb84cf30a2761e1f, type: 3}
+      - {fileID: 8300000, guid: 525e391a6a07f7c45a2c7aa1a1f60bc1, type: 3}
+  - key: Minion.0.Super.OnCast.0
+    eventName: Play_sfx_SRU_OrderMinionSuper_SRU_OrderMinionSuperBasicAttack_OnCast
+    sourceBank: npc_global_minions_ordersuper_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: c77e31c5ec9f58d4c84b035ccf066660, type: 3}
+      - {fileID: 8300000, guid: 1bc3c26a4ed653943b5afc56c5bca046, type: 3}
+      - {fileID: 8300000, guid: 977ec5ecf8512cd4489a9cbc2c2cd54e, type: 3}
+      - {fileID: 8300000, guid: f2917ff2e385b5342b0da353f00b3fab, type: 3}
+  - key: Minion.0.Super.OnCast.1
+    eventName: Play_sfx_SRU_OrderMinionSuper_SRU_OrderMinionSuperBasicAttack2_OnCast
+    sourceBank: npc_global_minions_ordersuper_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 1a5dfa295a603b548ab99cd1c07fe379, type: 3}
+      - {fileID: 8300000, guid: 2af66a53134ceae4b9aa1bc305c7adad, type: 3}
+      - {fileID: 8300000, guid: 6de7ce6b41ca5174ca2524754baffd3d, type: 3}
+      - {fileID: 8300000, guid: 57f7498b14f37a9469a20a2ca1dddd47, type: 3}
+  - key: Minion.0.Super.OnHit.0
+    eventName: Play_sfx_SRU_OrderMinionSuper_SRU_OrderMinionSuperBasicAttack_OnHit
+    sourceBank: npc_global_minions_ordersuper_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 262c6e342dd7031488910fd3b576c3d3, type: 3}
+      - {fileID: 8300000, guid: cb5d0ed950771bb4b8cb5e897e8bb9a6, type: 3}
+      - {fileID: 8300000, guid: 3a03ebec4ac6aa94d81dbc3f44cac00e, type: 3}
+      - {fileID: 8300000, guid: ad935c6940fcf7d439762ca2650fa1c5, type: 3}
+  - key: Minion.0.Super.OnHit.1
+    eventName: Play_sfx_SRU_OrderMinionSuper_SRU_OrderMinionSuperBasicAttack2_OnHit
+    sourceBank: npc_global_minions_ordersuper_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 262c6e342dd7031488910fd3b576c3d3, type: 3}
+      - {fileID: 8300000, guid: cb5d0ed950771bb4b8cb5e897e8bb9a6, type: 3}
+      - {fileID: 8300000, guid: 3a03ebec4ac6aa94d81dbc3f44cac00e, type: 3}
+      - {fileID: 8300000, guid: ad935c6940fcf7d439762ca2650fa1c5, type: 3}
+  - key: Turret.1.Minion.Cast
+    eventName: Play_sfx_Env_map11_ChaosTurretMinionBasicAttack_missilelaunch
+    sourceBank: env_global_buildings_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: ebaf7be1957b3004382cf14d5125e3ef, type: 3}
+      - {fileID: 8300000, guid: 3f01f95d28e4c784088eca1a36892025, type: 3}
+      - {fileID: 8300000, guid: 2edb9d676e5f3d94cba1fe6d29e93db5, type: 3}
+      - {fileID: 8300000, guid: fd4268c3f5862fc4ba7f94a160096bb2, type: 3}
+  - key: Turret.1.Minion.Hit
+    eventName: Play_sfx_Env_map11_ChaosTurretMinionBasicAttack_hit
+    sourceBank: env_global_buildings_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: f3f158cdfd96c4a4d99462ddd0429a4b, type: 3}
+      - {fileID: 8300000, guid: 0d1448b683faa134cbe41136e3618073, type: 3}
+      - {fileID: 8300000, guid: 91546ea49dd3ddf4dba2146ea1c308d5, type: 3}
+      - {fileID: 8300000, guid: ee86f021e33d3d6439c0d871e41dc606, type: 3}
+  - key: Turret.1.Champion.Cast
+    eventName: Play_sfx_Env_map11_ChaosTurretChampionBasicAttack_missilelaunch
+    sourceBank: env_global_buildings_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 99e141c49ab289e40a730e36bd8a52e9, type: 3}
+      - {fileID: 8300000, guid: a832ebfc2e357ba46b1a1e1c74ea7f94, type: 3}
+      - {fileID: 8300000, guid: 9d874727dd211ae499c279306c5f4066, type: 3}
+      - {fileID: 8300000, guid: ce3eadf23fd56e9449473b65fd7fd833, type: 3}
+  - key: Turret.1.Champion.Hit
+    eventName: Play_sfx_Env_map11_ChaosTurretChampionBasicAttack_hit
+    sourceBank: env_global_buildings_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 9ac6412108f82e44d806418d3f56e205, type: 3}
+      - {fileID: 8300000, guid: 569ebc598bd86ba43bfafb0dc767d6ad, type: 3}
+      - {fileID: 8300000, guid: 8c86c590f02631042af3b97ba97678bf, type: 3}
+      - {fileID: 8300000, guid: 8f63e991331b2fd4e95e7972fbde1fd8, type: 3}
+  - key: Turret.1.Death
+    eventName: Play_sfx_Env_Turret_Death3D
+    sourceBank: env_global_buildings_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 40dca5c505ca23045bf02257554fe40d, type: 3}
+  - key: Inhibitor.1.Death
+    eventName: Play_sfx_Env_sruap_chaos_inhibitor_dead
+    sourceBank: env_global_buildings_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: c25bfabe8394ee24d882a17fdd3e0865, type: 3}
+  - key: Inhibitor.1.Respawn
+    eventName: Play_sfx_Env_sruap_chaos_inhibitor_respawn_cast
+    sourceBank: env_global_buildings_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 548bbc9dcbd48c14f8a7e90bbafb83c8, type: 3}
+  - key: Nexus.1.Death
+    eventName: Play_sfx_Env_Global_EoG_ChaosNexus_death_cast
+    sourceBank: env_eog_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: fa3b21f429f295042b3835684964c4cc, type: 3}
+    - variants:
+      - {fileID: 8300000, guid: c4ae61757eea28545bd74648037b7b8b, type: 3}
+    - variants:
+      - {fileID: 8300000, guid: bc838dc8ac3e4ac4d9253c96740911fe, type: 3}
+    - variants:
+      - {fileID: 8300000, guid: 63f1ece46cf615d4d88e2e7b26479f49, type: 3}
+    - variants:
+      - {fileID: 8300000, guid: 4f832e69e484e9f4aa2b3e0b30f1b63d, type: 3}
+  - key: Minion.1.Melee.OnCast.0
+    eventName: Play_sfx_SRU_ChaosMinionMelee_SRU_ChaosMinionMeleeBasicAttack_OnCast
+    sourceBank: npc_global_minions_chaosmelee_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: c73d8c47f7f87824abb4961f28ef6265, type: 3}
+      - {fileID: 8300000, guid: a45201c61b59d154e992d438ebe4a246, type: 3}
+      - {fileID: 8300000, guid: 2b34adb6cf12e7a4b9f5b81e1be50516, type: 3}
+      - {fileID: 8300000, guid: 4da4b5961720cc141924ae96444e10d1, type: 3}
+  - key: Minion.1.Melee.OnCast.1
+    eventName: Play_sfx_SRU_ChaosMinionMelee_SRU_ChaosMinionMeleeBasicAttack2_OnCast
+    sourceBank: npc_global_minions_chaosmelee_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 4948c53b3510dab4bbee826b8ca11bc3, type: 3}
+      - {fileID: 8300000, guid: 948394cc136c50f4280ca70fd9a0e60c, type: 3}
+      - {fileID: 8300000, guid: d960c398ae0dd4c45a7343d7dd421ed4, type: 3}
+      - {fileID: 8300000, guid: 2ca70bd7b89df184692f6f68f3100c2f, type: 3}
+  - key: Minion.1.Melee.OnCast.2
+    eventName: Play_sfx_SRU_ChaosMinionMelee_SRU_ChaosMinionMeleeBasicAttack3_OnCast
+    sourceBank: npc_global_minions_chaosmelee_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: df35c6cff00544345b515782aaa16a0a, type: 3}
+      - {fileID: 8300000, guid: 83c8cf7437dd07743bdf3612d4d4af2d, type: 3}
+      - {fileID: 8300000, guid: 47519f409ca159c4792ff8e16e7cddaf, type: 3}
+      - {fileID: 8300000, guid: 431579e8314d03f42b110cebe2e5e04f, type: 3}
+  - key: Minion.1.Melee.OnHit.0
+    eventName: Play_sfx_SRU_ChaosMinionMelee_SRU_ChaosMinionMeleeBasicAttack_OnHit
+    sourceBank: npc_global_minions_chaosmelee_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 04b1db945ff12eb4eb5b742cdfdf6b26, type: 3}
+      - {fileID: 8300000, guid: 2a338a51877d57a4eb2b7db223c087a9, type: 3}
+      - {fileID: 8300000, guid: 3309e410e9fe4964e9ffd30543e59cab, type: 3}
+      - {fileID: 8300000, guid: f859cff6d667f4d46b36fb959a3bc265, type: 3}
+  - key: Minion.1.Melee.OnHit.1
+    eventName: Play_sfx_SRU_ChaosMinionMelee_SRU_ChaosMinionMeleeBasicAttack2_OnHit
+    sourceBank: npc_global_minions_chaosmelee_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 04b1db945ff12eb4eb5b742cdfdf6b26, type: 3}
+      - {fileID: 8300000, guid: 2a338a51877d57a4eb2b7db223c087a9, type: 3}
+      - {fileID: 8300000, guid: 3309e410e9fe4964e9ffd30543e59cab, type: 3}
+      - {fileID: 8300000, guid: f859cff6d667f4d46b36fb959a3bc265, type: 3}
+  - key: Minion.1.Melee.OnHit.2
+    eventName: Play_sfx_SRU_ChaosMinionMelee_SRU_ChaosMinionMeleeBasicAttack3_OnHit
+    sourceBank: npc_global_minions_chaosmelee_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 5c2a9e4fae01a6d4b99cb4daa32eb887, type: 3}
+      - {fileID: 8300000, guid: 3001e528bb70ef040832be665eed10d4, type: 3}
+      - {fileID: 8300000, guid: a2fe701608852b048b8d66f49b272a90, type: 3}
+      - {fileID: 8300000, guid: d41588d678020f4479c9397c5bcf5581, type: 3}
+  - key: Minion.1.Ranged.OnCast.0
+    eventName: Play_sfx_SRU_ChaosMinionRanged_SRU_ChaosMinionRangedBasicAttack_OnCast
+    sourceBank: npc_global_minions_chaosrange_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 9e023d16a4fb2404e88f0d74b3a582a9, type: 3}
+      - {fileID: 8300000, guid: 8cff685ba73387a409323efc66537540, type: 3}
+      - {fileID: 8300000, guid: b62d2119d5aea5245be8e2e2ed6db5c9, type: 3}
+  - key: Minion.1.Ranged.OnCast.1
+    eventName: Play_sfx_SRU_ChaosMinionRanged_SRU_ChaosMinionRangedBasicAttack2_OnCast
+    sourceBank: npc_global_minions_chaosrange_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 9e023d16a4fb2404e88f0d74b3a582a9, type: 3}
+      - {fileID: 8300000, guid: 8cff685ba73387a409323efc66537540, type: 3}
+      - {fileID: 8300000, guid: b62d2119d5aea5245be8e2e2ed6db5c9, type: 3}
+  - key: Minion.1.Ranged.OnCast.2
+    eventName: Play_sfx_SRU_ChaosMinionRanged_SRU_ChaosMinionRangedBasicAttack3_OnCast
+    sourceBank: npc_global_minions_chaosrange_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 9e023d16a4fb2404e88f0d74b3a582a9, type: 3}
+      - {fileID: 8300000, guid: 8cff685ba73387a409323efc66537540, type: 3}
+      - {fileID: 8300000, guid: b62d2119d5aea5245be8e2e2ed6db5c9, type: 3}
+  - key: Minion.1.Ranged.OnHit.0
+    eventName: Play_sfx_SRU_ChaosMinionRanged_SRU_ChaosMinionRangedBasicAttack_OnHit
+    sourceBank: npc_global_minions_chaosrange_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: d0c3b56ad0047194a9460738a6243c7f, type: 3}
+      - {fileID: 8300000, guid: 1fa76cbb9f63f25458ce0887895a834a, type: 3}
+      - {fileID: 8300000, guid: 867a9998267491e4a9bf6ed12ebc38a3, type: 3}
+      - {fileID: 8300000, guid: 7f5dbed4f9065434798966ec778f1f01, type: 3}
+  - key: Minion.1.Ranged.OnHit.1
+    eventName: Play_sfx_SRU_ChaosMinionRanged_SRU_ChaosMinionRangedBasicAttack2_OnHit
+    sourceBank: npc_global_minions_chaosrange_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: d0c3b56ad0047194a9460738a6243c7f, type: 3}
+      - {fileID: 8300000, guid: 1fa76cbb9f63f25458ce0887895a834a, type: 3}
+      - {fileID: 8300000, guid: 867a9998267491e4a9bf6ed12ebc38a3, type: 3}
+      - {fileID: 8300000, guid: 7f5dbed4f9065434798966ec778f1f01, type: 3}
+  - key: Minion.1.Ranged.OnHit.2
+    eventName: Play_sfx_SRU_ChaosMinionRanged_SRU_ChaosMinionRangedBasicAttack3_OnHit
+    sourceBank: npc_global_minions_chaosrange_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: d0c3b56ad0047194a9460738a6243c7f, type: 3}
+      - {fileID: 8300000, guid: 1fa76cbb9f63f25458ce0887895a834a, type: 3}
+      - {fileID: 8300000, guid: 867a9998267491e4a9bf6ed12ebc38a3, type: 3}
+      - {fileID: 8300000, guid: 7f5dbed4f9065434798966ec778f1f01, type: 3}
+  - key: Minion.1.Siege.OnCast.0
+    eventName: Play_sfx_SRU_ChaosMinionSiege_SRU_ChaosMinionSiegeBasicAttack_OnMissileCast
+    sourceBank: npc_global_minions_chaossiege_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 7a9ac08212c38cd4baeeb2b0dfdf5b7a, type: 3}
+      - {fileID: 8300000, guid: db8de82d62c20924db1e5e3c6130fc2d, type: 3}
+      - {fileID: 8300000, guid: b7a3c7b0c4f38454bb2f737ff6accf54, type: 3}
+      - {fileID: 8300000, guid: c9518f057c640634eb3c11445d5fbf92, type: 3}
+  - key: Minion.1.Siege.OnHit.0
+    eventName: Play_sfx_SRU_ChaosMinionSiege_SRU_ChaosMinionSiegeBasicAttack_OnHit
+    sourceBank: npc_global_minions_chaossiege_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 71906737a4f5c2b43934d746ceba86c5, type: 3}
+      - {fileID: 8300000, guid: 320965a2bd08e274a8003880126067fa, type: 3}
+      - {fileID: 8300000, guid: 6676994c9b6d87a4fa2ea3314dafd491, type: 3}
+      - {fileID: 8300000, guid: f4372d5942ecbb04f8b70ed009fd7da0, type: 3}
+  - key: Minion.1.Super.OnCast.0
+    eventName: Play_sfx_SRU_ChaosMinionSuper_SRU_ChaosMinionSuperBasicAttack_OnCast
+    sourceBank: npc_global_minions_chaossuper_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: ba5ba3c93d69e3342b91ac9e4478bcbc, type: 3}
+      - {fileID: 8300000, guid: b224111cd43ee6948a5fae6f00db4f33, type: 3}
+      - {fileID: 8300000, guid: d716e31362cb9204ca4b9f72ae8b1d2b, type: 3}
+      - {fileID: 8300000, guid: 4b175d9ab4fb78a4e9732dbb0fafa352, type: 3}
+  - key: Minion.1.Super.OnCast.1
+    eventName: Play_sfx_SRU_ChaosMinionSuper_SRU_ChaosMinionSuperBasicAttack2_OnCast
+    sourceBank: npc_global_minions_chaossuper_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 8e765e6bdd90ca94a802f9597537e98b, type: 3}
+      - {fileID: 8300000, guid: 1a559c5101280f644a43e870c51592cf, type: 3}
+      - {fileID: 8300000, guid: 15c1901aacf497f4abd0548093e8c728, type: 3}
+      - {fileID: 8300000, guid: 26a61a68905442e44b32133c7c20910e, type: 3}
+  - key: Minion.1.Super.OnHit.0
+    eventName: Play_sfx_SRU_ChaosMinionSuper_SRU_ChaosMinionSuperBasicAttack_OnHit
+    sourceBank: npc_global_minions_chaossuper_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 1d9a4735afbdc6b4ca6a95de9190c584, type: 3}
+      - {fileID: 8300000, guid: 109c75c60788f13498a3ca2252ddddc3, type: 3}
+      - {fileID: 8300000, guid: 959358744806eea4daea9ba7ec735aeb, type: 3}
+      - {fileID: 8300000, guid: 3b3640a4859691f46b54a7382857e8bc, type: 3}
+  - key: Minion.1.Super.OnHit.1
+    eventName: Play_sfx_SRU_ChaosMinionSuper_SRU_ChaosMinionSuperBasicAttack2_OnHit
+    sourceBank: npc_global_minions_chaossuper_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 1d9a4735afbdc6b4ca6a95de9190c584, type: 3}
+      - {fileID: 8300000, guid: 109c75c60788f13498a3ca2252ddddc3, type: 3}
+      - {fileID: 8300000, guid: 959358744806eea4daea9ba7ec735aeb, type: 3}
+      - {fileID: 8300000, guid: 3b3640a4859691f46b54a7382857e8bc, type: 3}

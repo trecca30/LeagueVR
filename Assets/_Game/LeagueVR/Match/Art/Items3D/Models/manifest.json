@@ -1,0 +1,160 @@
+{
+  "models": [
+    {
+      "name": "Potion",
+      "materials": [
+        "Bork",
+        "Glass",
+        "Leather",
+        "Metal",
+        "Potion"
+      ],
+      "triangles": 4160
+    },
+    {
+      "name": "Hourglass",
+      "materials": [
+        "Glass",
+        "Gold",
+        "Sand"
+      ],
+      "triangles": 1708
+    },
+    {
+      "name": "Sword",
+      "materials": [
+        "Gem",
+        "Gold",
+        "Leather",
+        "Steel"
+      ],
+      "triangles": 1094
+    },
+    {
+      "name": "Axe",
+      "materials": [
+        "Gem",
+        "Gold",
+        "Leather",
+        "Steel"
+      ],
+      "triangles": 1960
+    },
+    {
+      "name": "Shield",
+      "materials": [
+        "Gem",
+        "Gold",
+        "Leather",
+        "Steel"
+      ],
+      "triangles": 1428
+    },
+    {
+      "name": "Sash",
+      "materials": [
+        "Gem",
+        "Gold",
+        "Leather"
+      ],
+      "triangles": 1040
+    },
+    {
+      "name": "Armguard",
+      "materials": [
+        "Gem",
+        "Gold",
+        "Steel"
+      ],
+      "triangles": 716
+    },
+    {
+      "name": "Rocketbelt",
+      "materials": [
+        "Gem",
+        "Gold",
+        "Leather",
+        "Steel"
+      ],
+      "triangles": 1556
+    },
+    {
+      "name": "Gunblade",
+      "materials": [
+        "Gem",
+        "Gold",
+        "Leather",
+        "Steel"
+      ],
+      "triangles": 1734
+    },
+    {
+      "name": "Chalice",
+      "materials": [
+        "Gem",
+        "Gold"
+      ],
+      "triangles": 1448
+    },
+    {
+      "name": "Tome",
+      "materials": [
+        "Gem",
+        "Gold",
+        "Leather",
+        "Sand"
+      ],
+      "triangles": 764
+    },
+    {
+      "name": "Scepter",
+      "materials": [
+        "Gem",
+        "Gold",
+        "Leather"
+      ],
+      "triangles": 1024
+    },
+    {
+      "name": "Relic",
+      "materials": [
+        "Gem",
+        "Gold"
+      ],
+      "triangles": 1532
+    },
+    {
+      "name": "Oracle",
+      "materials": [
+        "Gem",
+        "Gold",
+        "Steel"
+      ],
+      "triangles": 1412
+    },
+    {
+      "name": "Ward",
+      "materials": [
+        "Gem",
+        "Gold",
+        "Steel"
+      ],
+      "triangles": 1296
+    },
+    {
+      "name": "Pendant",
+      "materials": [
+        "Gem",
+        "Gold"
+      ],
+      "triangles": 1316
+    },
+    {
+      "name": "Spear",
+      "materials": [
+        "Steel"
+      ],
+      "triangles": 106
+    }
+  ]
+}

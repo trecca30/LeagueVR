@@ -1,0 +1,7 @@
+LOLVR potion mesh and leather texture by Jannify / LOLVR contributors.
+Source: https://github.com/Jannify/LOLVR
+HealthPotions/RedPotionModel.blend and Materials/leather_red_02_coll1_4k.png.
+License: GNU GPL version 3; see LOLVR-GPL-3.0.txt. Adaptation: normalized to 0.32 metres and exported as an OBJ with original UVs. Original source saved under PrototypeSources/ShopOverhaul.
+Potion hand-to-mouth gesture inspired by LOLVR; this project's combat input code is implemented independently.
+Item icons and Gwen portrait: Riot Games Data Dragon 16.19.1 / Gwen loading portrait. League of Legends assets and names belong to Riot Games.
+Other physical item silhouettes are new prototype meshes created for this project; they are not original League item model exports.

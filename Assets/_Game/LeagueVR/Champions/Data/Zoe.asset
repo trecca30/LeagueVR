@@ -1,0 +1,100 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1507f9c1fc5ee634f85448889214c929, type: 3}
+  m_Name: Zoe
+  m_EditorClassIdentifier: Assembly-CSharp::LeagueVR.Champions.ChampionDefinition
+  id: 1
+  title: the Aspect of Twilight
+  role: Mage
+  passiveName: More Sparkles!
+  passiveDescription: Casting empowers the next attack with More Sparkles.
+  patch: 16.19.1
+  portrait: {fileID: 2800000, guid: 485bf2db157df74488498ea7d7382e56, type: 3}
+  passiveIcon: {fileID: 2800000, guid: dcbac6732d23d134cb93ae690228baa7, type: 3}
+  spells:
+  - name: Paddle Star!
+    vrDescription: 'Right secondary: launch a star. Press again within 1.25 seconds to redirect it. Distance increases damage.'
+    icon: {fileID: 2800000, guid: 97abd46c252dd2142b98e150f21d8bcd, type: 3}
+    cooldowns:
+    - 8.5
+    - 8
+    - 7.5
+    - 7
+    - 6.5
+    costs:
+    - 40
+    - 45
+    - 50
+    - 55
+    - 60
+  - name: Spell Thief
+    vrDescription: Collect glowing shards from fallen minions with your left hand or nearby W. W uses Heal, Flash or Ignite and launches three missiles.
+    icon: {fileID: 2800000, guid: ebdd5693cdc593944b5276832cf9966c, type: 3}
+    cooldowns:
+    - 0.25
+    - 0.25
+    - 0.25
+    - 0.25
+    - 0.25
+    costs:
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+  - name: Sleepy Trouble Bubble
+    vrDescription: 'Right primary: toss a bubble. The hit slows, then sleeps. Your next hit wakes it for bonus damage.'
+    icon: {fileID: 2800000, guid: 42d5c4683e730d042b19b3c08fe3826f, type: 3}
+    cooldowns:
+    - 18
+    - 17
+    - 16
+    - 15
+    - 14
+    costs:
+    - 80
+    - 80
+    - 80
+    - 80
+    - 80
+  - name: Portal Jump
+    vrDescription: 'Left trigger: aim at ground. Blink through a portal for one second, then return. Tracking orientation stays yours.'
+    icon: {fileID: 2800000, guid: 08e5f30f915875148881042c11163b4a, type: 3}
+    cooldowns:
+    - 11
+    - 8
+    - 5
+    costs:
+    - 40
+    - 40
+    - 40
+  model: {fileID: 3510200797719372563, guid: e5968321b6e648a41b6e3036084ad4e9, type: 3}
+  firstPerson: {fileID: 5971096291320711609, guid: 6b4fd6f0fee56a1478e3d4c21201eb10, type: 3}
+  idle: {fileID: -4018411851501446075, guid: 78b8c45a962c6af4bb8c332dab35ae5d, type: 3}
+  color: {r: 0.76, g: 0.39, b: 1, a: 1}
+  health: 630
+  healthGrowth: 106
+  armor: 21
+  armorGrowth: 4.7
+  magicResist: 30
+  magicResistGrowth: 1.3
+  mana: 425
+  manaGrowth: 25
+  attackDamage: 58
+  attackGrowth: 0
+  attackSpeed: 0.658
+  attackSpeedGrowth: 2.5
+  moveSpeed: 340
+  healthRegen: 7.5
+  manaRegen: 8
+  attackReach: 10
+  bodyHeight: 1.75

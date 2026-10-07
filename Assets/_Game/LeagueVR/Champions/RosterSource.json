@@ -1,0 +1,753 @@
+{
+  "champions": [
+    {
+      "id": 0,
+      "name": "Gwen",
+      "title": "The Hallowed Seamstress",
+      "role": "Fighter",
+      "passiveName": "A Thousand Cuts",
+      "passiveDescription": "A Thousand Cuts applies bonus max-health magic damage.",
+      "patch": "16.19.1",
+      "color": {
+        "r": 0.3,
+        "g": 0.9,
+        "b": 0.94,
+        "a": 1
+      },
+      "portrait": "Gwen.png",
+      "passiveIcon": "Gwen_Passive.png",
+      "attackReach": 2.4,
+      "spells": [
+        {
+          "name": "Snip Snip!",
+          "vrDescription": "Build snip stacks with hits; centre-line snips apply A Thousand Cuts.",
+          "icon": "GwenQ.png",
+          "cooldowns": [
+            6.5,
+            5.75,
+            5,
+            4.25,
+            3.5
+          ],
+          "costs": [
+            40,
+            40,
+            40,
+            40,
+            40
+          ]
+        },
+        {
+          "name": "Hallowed Mist",
+          "vrDescription": "Left primary: summon protective mist. Recast to move it once.",
+          "icon": "GwenW.png",
+          "cooldowns": [
+            22,
+            21,
+            20,
+            19,
+            18
+          ],
+          "costs": [
+            60,
+            60,
+            60,
+            60,
+            60
+          ]
+        },
+        {
+          "name": "Skip 'n Slash",
+          "vrDescription": "Right primary: a short collision-checked step; attacks gain speed and magic damage.",
+          "icon": "GwenE.png",
+          "cooldowns": [
+            13,
+            12.5,
+            12,
+            11.5,
+            11
+          ],
+          "costs": [
+            35,
+            35,
+            35,
+            35,
+            35
+          ]
+        },
+        {
+          "name": "Needlework",
+          "vrDescription": "Left trigger: aim and fire three escalating needle volleys.",
+          "icon": "GwenR.png",
+          "cooldowns": [
+            120,
+            100,
+            80
+          ],
+          "costs": [
+            100,
+            100,
+            100
+          ]
+        }
+      ],
+      "health": 620,
+      "healthGrowth": 115,
+      "armor": 39,
+      "armorGrowth": 4.9,
+      "magicResist": 32,
+      "magicResistGrowth": 2.05,
+      "mana": 330,
+      "manaGrowth": 40,
+      "attackDamage": 63,
+      "attackGrowth": 0,
+      "attackSpeed": 0.69,
+      "attackSpeedGrowth": 2.25,
+      "moveSpeed": 340,
+      "healthRegen": 9,
+      "manaRegen": 7.5
+    },
+    {
+      "id": 1,
+      "name": "Zoe",
+      "title": "the Aspect of Twilight",
+      "role": "Mage",
+      "passiveName": "More Sparkles!",
+      "passiveDescription": "Casting empowers the next attack with More Sparkles.",
+      "patch": "16.19.1",
+      "color": {
+        "r": 0.76,
+        "g": 0.39,
+        "b": 1,
+        "a": 1
+      },
+      "portrait": "Zoe.png",
+      "passiveIcon": "Zoe_P.png",
+      "attackReach": 10,
+      "spells": [
+        {
+          "name": "Paddle Star!",
+          "vrDescription": "Right secondary: launch a star. Press again within 1.25 seconds to redirect it. Distance increases damage.",
+          "icon": "ZoeQ.png",
+          "cooldowns": [
+            8.5,
+            8,
+            7.5,
+            7,
+            6.5
+          ],
+          "costs": [
+            40,
+            45,
+            50,
+            55,
+            60
+          ]
+        },
+        {
+          "name": "Spell Thief",
+          "vrDescription": "Collect glowing shards from fallen minions with your left hand or nearby W. W uses Heal, Flash or Ignite and launches three missiles.",
+          "icon": "ZoeW.png",
+          "cooldowns": [
+            0.25,
+            0.25,
+            0.25,
+            0.25,
+            0.25
+          ],
+          "costs": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "name": "Sleepy Trouble Bubble",
+          "vrDescription": "Right primary: toss a bubble. The hit slows, then sleeps. Your next hit wakes it for bonus damage.",
+          "icon": "ZoeE.png",
+          "cooldowns": [
+            18,
+            17,
+            16,
+            15,
+            14
+          ],
+          "costs": [
+            80,
+            80,
+            80,
+            80,
+            80
+          ]
+        },
+        {
+          "name": "Portal Jump",
+          "vrDescription": "Left trigger: aim at ground. Blink through a portal for one second, then return. Tracking orientation stays yours.",
+          "icon": "ZoeR.png",
+          "cooldowns": [
+            11,
+            8,
+            5
+          ],
+          "costs": [
+            40,
+            40,
+            40
+          ]
+        }
+      ],
+      "health": 630,
+      "healthGrowth": 106,
+      "armor": 21,
+      "armorGrowth": 4.7,
+      "magicResist": 30,
+      "magicResistGrowth": 1.3,
+      "mana": 425,
+      "manaGrowth": 25,
+      "attackDamage": 58,
+      "attackGrowth": 0,
+      "attackSpeed": 0.658,
+      "attackSpeedGrowth": 2.5,
+      "moveSpeed": 340,
+      "healthRegen": 7.5,
+      "manaRegen": 8
+    },
+    {
+      "id": 2,
+      "name": "Aatrox",
+      "title": "the Darkin Blade",
+      "role": "Fighter",
+      "passiveName": "Deathbringer Stance",
+      "passiveDescription": "Deathbringer hits heal; E heals on champion damage.",
+      "patch": "16.19.1",
+      "color": {
+        "r": 0.94,
+        "g": 0.16,
+        "b": 0.21,
+        "a": 1
+      },
+      "portrait": "Aatrox.png",
+      "passiveIcon": "Aatrox_Passive.png",
+      "attackReach": 2.4,
+      "spells": [
+        {
+          "name": "The Darkin Blade",
+          "vrDescription": "Right secondary: three aimed sword slams. Press again for the next shape. Sweet spots knock enemies off balance.",
+          "icon": "AatroxQ.png",
+          "cooldowns": [
+            14,
+            12,
+            10,
+            8,
+            6
+          ],
+          "costs": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "name": "Infernal Chains",
+          "vrDescription": "Aim your left hand and press left primary to launch chains. Enemies that stay inside are pulled back.",
+          "icon": "AatroxW.png",
+          "cooldowns": [
+            18,
+            16.5,
+            15,
+            13.5,
+            12
+          ],
+          "costs": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "name": "Umbral Dash",
+          "vrDescription": "Right primary: a collision-checked short step that resets your attack timer.",
+          "icon": "AatroxE.png",
+          "cooldowns": [
+            9,
+            8,
+            7,
+            6,
+            5
+          ],
+          "costs": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "name": "World Ender",
+          "vrDescription": "Left trigger: enter World Ender for ten seconds. Gain speed, empowered attacks and stronger champion healing.",
+          "icon": "AatroxR.png",
+          "cooldowns": [
+            120,
+            100,
+            80
+          ],
+          "costs": [
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "health": 650,
+      "healthGrowth": 114,
+      "armor": 38,
+      "armorGrowth": 4.8,
+      "magicResist": 32,
+      "magicResistGrowth": 2.05,
+      "mana": 0,
+      "manaGrowth": 0,
+      "attackDamage": 60,
+      "attackGrowth": 0,
+      "attackSpeed": 0.651,
+      "attackSpeedGrowth": 2.5,
+      "moveSpeed": 345,
+      "healthRegen": 3,
+      "manaRegen": 0
+    },
+    {
+      "id": 3,
+      "name": "Akshan",
+      "title": "the Rogue Sentinel",
+      "role": "Marksman / Assassin",
+      "passiveName": "Dirty Fighting",
+      "passiveDescription": "Three hits proc bonus damage and a champion shield; attacks fire twice.",
+      "patch": "16.19.1",
+      "color": {
+        "r": 1,
+        "g": 0.73,
+        "b": 0.25,
+        "a": 1
+      },
+      "portrait": "Akshan.png",
+      "passiveIcon": "akshan_p.png",
+      "attackReach": 10,
+      "spells": [
+        {
+          "name": "Avengerang",
+          "vrDescription": "Right secondary: throw a piercing boomerang that comes back to your hand.",
+          "icon": "AkshanQ.png",
+          "cooldowns": [
+            9,
+            8,
+            7,
+            6,
+            5
+          ],
+          "costs": [
+            60,
+            65,
+            70,
+            75,
+            80
+          ]
+        },
+        {
+          "name": "Going Rogue",
+          "vrDescription": "Left primary: camouflage for six seconds. Close champions and turrets reveal you. Scoundrel takedowns revive allied champions.",
+          "icon": "AkshanW.png",
+          "cooldowns": [
+            18,
+            14,
+            10,
+            6,
+            2
+          ],
+          "costs": [
+            40,
+            30,
+            20,
+            10,
+            0
+          ]
+        },
+        {
+          "name": "Heroic Swing",
+          "vrDescription": "Aim the right hand at terrain, then right primary. Grapple-step toward the anchor with a short shot; no forced orbit.",
+          "icon": "AkshanE.png",
+          "cooldowns": [
+            18,
+            16.5,
+            15,
+            13.5,
+            12
+          ],
+          "costs": [
+            70,
+            70,
+            70,
+            70,
+            70
+          ]
+        },
+        {
+          "name": "Comeuppance",
+          "vrDescription": "Aim at an enemy with the left hand and press trigger. Charge, then fire five interceptable homing shots.",
+          "icon": "AkshanR.png",
+          "cooldowns": [
+            100,
+            85,
+            70
+          ],
+          "costs": [
+            100,
+            100,
+            100
+          ]
+        }
+      ],
+      "health": 610,
+      "healthGrowth": 107,
+      "armor": 26,
+      "armorGrowth": 4.7,
+      "magicResist": 33,
+      "magicResistGrowth": 1.1,
+      "mana": 350,
+      "manaGrowth": 40,
+      "attackDamage": 52,
+      "attackGrowth": 0,
+      "attackSpeed": 0.638,
+      "attackSpeedGrowth": 4,
+      "moveSpeed": 330,
+      "healthRegen": 3.75,
+      "manaRegen": 8.2
+    },
+    {
+      "id": 4,
+      "name": "Brand",
+      "title": "the Burning Vengeance",
+      "role": "Mage / Support",
+      "passiveName": "Blaze",
+      "passiveDescription": "Spells stack a four-second burn; three stacks detonate champions and large monsters.",
+      "patch": "16.19.1",
+      "color": {
+        "r": 1,
+        "g": 0.35,
+        "b": 0.09,
+        "a": 1
+      },
+      "portrait": "Brand.png",
+      "passiveIcon": "BrandP.png",
+      "attackReach": 10,
+      "spells": [
+        {
+          "name": "Sear",
+          "vrDescription": "Right secondary: fire a bolt. Targets already burning are stunned.",
+          "icon": "BrandQ.png",
+          "cooldowns": [
+            8,
+            7.5,
+            7,
+            6.5,
+            6
+          ],
+          "costs": [
+            70,
+            70,
+            70,
+            70,
+            70
+          ]
+        },
+        {
+          "name": "Pillar of Flame",
+          "vrDescription": "Aim left hand at ground and press left primary. A delayed flame pillar hits harder against burning targets.",
+          "icon": "BrandW.png",
+          "cooldowns": [
+            10,
+            9.5,
+            9,
+            8.5,
+            8
+          ],
+          "costs": [
+            60,
+            70,
+            80,
+            90,
+            100
+          ]
+        },
+        {
+          "name": "Conflagration",
+          "vrDescription": "Aim right hand at an enemy and press right primary. Fire spreads; burning targets spread it further.",
+          "icon": "BrandE.png",
+          "cooldowns": [
+            13,
+            12,
+            11,
+            10,
+            9
+          ],
+          "costs": [
+            90,
+            90,
+            90,
+            90,
+            90
+          ]
+        },
+        {
+          "name": "Pyroclasm",
+          "vrDescription": "Left trigger: select an enemy for five bouncing fire hits. It may bounce through you without hurting you.",
+          "icon": "BrandR.png",
+          "cooldowns": [
+            100,
+            90,
+            80
+          ],
+          "costs": [
+            100,
+            100,
+            100
+          ]
+        }
+      ],
+      "health": 570,
+      "healthGrowth": 105,
+      "armor": 24,
+      "armorGrowth": 4.2,
+      "magicResist": 30,
+      "magicResistGrowth": 1.3,
+      "mana": 469,
+      "manaGrowth": 21,
+      "attackDamage": 57,
+      "attackGrowth": 0,
+      "attackSpeed": 0.681,
+      "attackSpeedGrowth": 2,
+      "moveSpeed": 340,
+      "healthRegen": 5.5,
+      "manaRegen": 11
+    },
+    {
+      "id": 5,
+      "name": "Pantheon",
+      "title": "the Unbreakable Spear",
+      "role": "Fighter / Assassin",
+      "passiveName": "Mortal Will",
+      "passiveDescription": "Five attacks or spells empower the next basic ability.",
+      "patch": "16.19.1",
+      "color": {
+        "r": 0.9,
+        "g": 0.79,
+        "b": 0.47,
+        "a": 1
+      },
+      "portrait": "Pantheon.png",
+      "passiveIcon": "Pantheon_Passive.png",
+      "attackReach": 2.4,
+      "spells": [
+        {
+          "name": "Comet Spear",
+          "vrDescription": "Right secondary: throw your spear. Five Mortal Will stacks empower it. Low-health enemies take extra damage.",
+          "icon": "PantheonQ.png",
+          "cooldowns": [
+            11,
+            10.25,
+            9.5,
+            8.75,
+            8
+          ],
+          "costs": [
+            25,
+            25,
+            25,
+            25,
+            25
+          ]
+        },
+        {
+          "name": "Shield Vault",
+          "vrDescription": "Aim left hand at a nearby enemy and press left primary. Step into range and stun them; empowered vault adds three hits.",
+          "icon": "PantheonW.png",
+          "cooldowns": [
+            13,
+            12,
+            11,
+            10,
+            9
+          ],
+          "costs": [
+            55,
+            55,
+            55,
+            55,
+            55
+          ]
+        },
+        {
+          "name": "Aegis Assault",
+          "vrDescription": "Right primary: raise Aegis Assault. Point the left shield toward incoming damage while your spear strikes. Turrets still hurt.",
+          "icon": "PantheonE.png",
+          "cooldowns": [
+            22,
+            21,
+            20,
+            19,
+            18
+          ],
+          "costs": [
+            80,
+            80,
+            80,
+            80,
+            80
+          ]
+        },
+        {
+          "name": "Grand Starfall",
+          "vrDescription": "Left trigger: aim at ground up to 24 metres. A one-second landing warning, then a comfortable blink and impact.",
+          "icon": "PantheonR.png",
+          "cooldowns": [
+            180,
+            165,
+            150
+          ],
+          "costs": [
+            100,
+            100,
+            100
+          ]
+        }
+      ],
+      "health": 650,
+      "healthGrowth": 109,
+      "armor": 40,
+      "armorGrowth": 4.95,
+      "magicResist": 28,
+      "magicResistGrowth": 2.05,
+      "mana": 317,
+      "manaGrowth": 31,
+      "attackDamage": 64,
+      "attackGrowth": 0,
+      "attackSpeed": 0.658,
+      "attackSpeedGrowth": 2.95,
+      "moveSpeed": 345,
+      "healthRegen": 6,
+      "manaRegen": 7.35
+    },
+    {
+      "id": 6,
+      "name": "Yunara",
+      "title": "the Unbroken Faith",
+      "role": "Marksman",
+      "passiveName": "Vow of the First Lands",
+      "passiveDescription": "Critical strikes deal bonus magic damage.",
+      "patch": "16.19.1",
+      "color": {
+        "r": 0.45,
+        "g": 0.91,
+        "b": 0.65,
+        "a": 1
+      },
+      "portrait": "Yunara.png",
+      "passiveIcon": "Yunara_Passive.png",
+      "attackReach": 10,
+      "spells": [
+        {
+          "name": "Cultivation of Spirit",
+          "vrDescription": "Land eight basic attacks for Spirit stacks. Right secondary spends them to gain attack speed and splash hits.",
+          "icon": "YunaraQ.png",
+          "cooldowns": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "costs": [
+            30,
+            30,
+            30,
+            30,
+            30
+          ]
+        },
+        {
+          "name": "Arc of Judgment | Arc of Ruin",
+          "vrDescription": "Left primary: aim a slowing bead. During Transcendence it becomes a piercing beam.",
+          "icon": "YunaraW.png",
+          "cooldowns": [
+            10,
+            10,
+            10,
+            10,
+            10
+          ],
+          "costs": [
+            60,
+            60,
+            60,
+            60,
+            60
+          ]
+        },
+        {
+          "name": "Kanmei's Steps | Untouchable Shadow",
+          "vrDescription": "Right primary: speed burst. During Transcendence it becomes a collision-checked short dash.",
+          "icon": "YunaraE.png",
+          "cooldowns": [
+            9,
+            9,
+            9,
+            9,
+            9
+          ],
+          "costs": [
+            40,
+            40,
+            40,
+            40,
+            40
+          ]
+        },
+        {
+          "name": "Transcend One's Self",
+          "vrDescription": "Left trigger: Transcend for twelve seconds. Q stays active, W becomes a beam, and E becomes a dash.",
+          "icon": "YunaraR.png",
+          "cooldowns": [
+            100,
+            90,
+            80
+          ],
+          "costs": [
+            100,
+            100,
+            100
+          ]
+        }
+      ],
+      "health": 590,
+      "healthGrowth": 110,
+      "armor": 25,
+      "armorGrowth": 4.4,
+      "magicResist": 33,
+      "magicResistGrowth": 1.1,
+      "mana": 275,
+      "manaGrowth": 45,
+      "attackDamage": 55,
+      "attackGrowth": 0,
+      "attackSpeed": 0.65,
+      "attackSpeedGrowth": 2,
+      "moveSpeed": 325,
+      "healthRegen": 4,
+      "manaRegen": 7.5
+    }
+  ]
+}

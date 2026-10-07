@@ -1,0 +1,11 @@
+from pathlib import Path
+P=Path(r'F:\Vr\VR quirky testing gpt astra\League of legends test\league vr imoport testing/Assets/_Game/LeagueVR')
+p=P/'Match/Runtime/RiftUI.cs';s=p.read_text(encoding='utf-8').replace('SetActive(weaponWasActive);','SetActive(weaponWasActive&&!match.player.OtherActive);');p.write_text(s,encoding='utf-8')
+p=P/'Match/Runtime/RiftItemRack.cs';s=p.read_text(encoding='utf-8').replace('public bool IsHolding =>','public bool IsHandHolding(int hand)=>hand>=0&&hand<2&&held[hand]!=null;\n        public bool IsHolding =>').replace('SetActive(scissorsWereActive || !IsHolding);','SetActive(avatar.enabled&&(scissorsWereActive || !IsHolding));').replace('SetActive(scissorsWereActive);','SetActive(scissorsWereActive&&avatar.enabled);');p.write_text(s,encoding='utf-8')
+p=P/'Champions/Runtime/ChampionVRAvatar.cs';s=p.read_text(encoding='utf-8')
+s=s.replace('Transform weapon,shield;Quaternion weaponAlign,shieldAlign;','Transform weapon,shield;Quaternion weaponAlign,shieldAlign;Vector3 weaponScale,shieldScale;')
+s=s.replace('if(d.id==ChampionId.Aatrox)weapon.localScale*=.72f;','if(d.id==ChampionId.Aatrox)weapon.localScale*=.72f;if(d.id==ChampionId.Pantheon)weapon.localScale*=.75f;weaponScale=weapon.localScale;')
+s=s.replace('shieldAlign=Quaternion.Inverse(Quaternion.LookRotation(normal,up))*shield.rotation;','shieldAlign=Quaternion.Inverse(Quaternion.LookRotation(normal,up))*shield.rotation;shield.localScale*=.55f;shieldScale=shield.localScale;')
+s=s.replace('if(weapon)weapon.SetPositionAndRotation','var rack=player.GetComponent<LeagueVR.Match.RiftItemRack>();if(weapon)weapon.localScale=rack&&rack.IsHandHolding(1)?Vector3.zero:weaponScale;if(shield)shield.localScale=rack&&rack.IsHandHolding(0)?Vector3.zero:shieldScale;\n            if(weapon)weapon.SetPositionAndRotation')
+s=s.replace('new Vector3(0,0,.07f)','new Vector3(-.06f,-.03f,.16f)');p.write_text(s,encoding='utf-8')
+print('Fixed menu/rack weapon restoration and shield/item hand interactions')

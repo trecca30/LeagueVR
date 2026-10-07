@@ -1,0 +1,2 @@
+from pathlib import Path
+p=Path(r'F:\Vr\VR quirky testing gpt astra\League of legends test\league vr imoport testing\Assets\_Game\LeagueVR\Champions\Editor\ChampionBuild.cs');s=p.read_text();old='if(existing){EditorUtility.CopySerialized(mesh,existing);Object.DestroyImmediate(mesh);mesh=existing;}';new='if(existing){existing.Clear();EditorUtility.CopySerialized(mesh,existing);existing.UploadMeshData(false);EditorUtility.SetDirty(existing);Object.DestroyImmediate(mesh);mesh=existing;}';assert old in s;s=s.replace(old,new);p.write_text(s,encoding='utf-8')

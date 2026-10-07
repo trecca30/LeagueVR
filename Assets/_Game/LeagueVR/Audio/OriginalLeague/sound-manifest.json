@@ -1,0 +1,2629 @@
+{
+  "events": [
+    {
+      "key": "Gwen.Attack",
+      "eventName": "Play_sfx_Gwen_GwenBasicAttack_Swipe_cast",
+      "bank": "gwen_base_sfx_events",
+      "eventId": 4188707306,
+      "layers": [
+        {
+          "clips": [
+            "gwen_base_sfx-869530993.wav",
+            "gwen_base_sfx-541742055.wav",
+            "gwen_base_sfx-611764951.wav",
+            "gwen_base_sfx-502470164.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gwen.AttackHit",
+      "eventName": "Play_sfx_Gwen_GwenBasicAttack_Swipe_hit",
+      "bank": "gwen_base_sfx_events",
+      "eventId": 3715259742,
+      "layers": [
+        {
+          "clips": [
+            "gwen_base_sfx-843161985.wav",
+            "gwen_base_sfx-38300093.wav",
+            "gwen_base_sfx-817087734.wav",
+            "gwen_base_sfx-803256852.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gwen.EmpoweredAttack",
+      "eventName": "Play_sfx_Gwen_GwenEEmpoweredAttack_Oncast",
+      "bank": "gwen_base_sfx_events",
+      "eventId": 2763443303,
+      "layers": [
+        {
+          "clips": [
+            "gwen_base_sfx-19656055.wav",
+            "gwen_base_sfx-867150210.wav",
+            "gwen_base_sfx-601170185.wav",
+            "gwen_base_sfx-319046308.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gwen.EmpoweredHit",
+      "eventName": "Play_sfx_Gwen_GwenEEmpoweredAttack_OnHitLocation",
+      "bank": "gwen_base_sfx_events",
+      "eventId": 1471509416,
+      "layers": [
+        {
+          "clips": [
+            "gwen_base_sfx-843161985.wav",
+            "gwen_base_sfx-38300093.wav",
+            "gwen_base_sfx-817087734.wav",
+            "gwen_base_sfx-803256852.wav"
+          ]
+        },
+        {
+          "clips": [
+            "gwen_base_sfx-607635932.wav",
+            "gwen_base_sfx-962599104.wav",
+            "gwen_base_sfx-742678364.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gwen.QCast",
+      "eventName": "Play_sfx_Gwen_GwenQ_OnCast",
+      "bank": "gwen_base_sfx_events",
+      "eventId": 1479871725,
+      "layers": [
+        {
+          "clips": [
+            "gwen_base_sfx-1005016882.wav",
+            "gwen_base_sfx-475827131.wav",
+            "gwen_base_sfx-127995763.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gwen.QFirst",
+      "eventName": "Play_sfx_Gwen_GwenQFirst_cast",
+      "bank": "gwen_base_sfx_events",
+      "eventId": 1117487748,
+      "layers": [
+        {
+          "clips": [
+            "gwen_base_sfx-53754217.wav",
+            "gwen_base_sfx-857225752.wav",
+            "gwen_base_sfx-568890440.wav",
+            "gwen_base_sfx-303928842.wav"
+          ]
+        },
+        {
+          "clips": [
+            "gwen_base_sfx-719286715.wav",
+            "gwen_base_sfx-164825511.wav",
+            "gwen_base_sfx-657779899.wav",
+            "gwen_base_sfx-429688416.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gwen.QMiddle",
+      "eventName": "Play_sfx_Gwen_GwenQMiddle_4stack_cast",
+      "bank": "gwen_base_sfx_events",
+      "eventId": 3203704756,
+      "layers": [
+        {
+          "clips": [
+            "gwen_base_sfx-719286715.wav",
+            "gwen_base_sfx-429688416.wav",
+            "gwen_base_sfx-657779899.wav",
+            "gwen_base_sfx-164825511.wav"
+          ]
+        },
+        {
+          "clips": [
+            "gwen_base_sfx-719286715.wav",
+            "gwen_base_sfx-429688416.wav",
+            "gwen_base_sfx-657779899.wav",
+            "gwen_base_sfx-164825511.wav"
+          ]
+        },
+        {
+          "clips": [
+            "gwen_base_sfx-719286715.wav",
+            "gwen_base_sfx-429688416.wav",
+            "gwen_base_sfx-657779899.wav",
+            "gwen_base_sfx-164825511.wav"
+          ]
+        },
+        {
+          "clips": [
+            "gwen_base_sfx-719286715.wav",
+            "gwen_base_sfx-429688416.wav",
+            "gwen_base_sfx-657779899.wav",
+            "gwen_base_sfx-164825511.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gwen.QLast",
+      "eventName": "Play_sfx_Gwen_GwenQLast_cast",
+      "bank": "gwen_base_sfx_events",
+      "eventId": 2146811922,
+      "layers": [
+        {
+          "clips": [
+            "gwen_base_sfx-904584095.wav",
+            "gwen_base_sfx-820524486.wav",
+            "gwen_base_sfx-676912506.wav",
+            "gwen_base_sfx-526051698.wav"
+          ]
+        },
+        {
+          "clips": [
+            "gwen_base_sfx-719286715.wav",
+            "gwen_base_sfx-164825511.wav",
+            "gwen_base_sfx-657779899.wav",
+            "gwen_base_sfx-429688416.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gwen.QHit",
+      "eventName": "Play_sfx_Gwen_GwenQFirst_hit",
+      "bank": "gwen_base_sfx_events",
+      "eventId": 88848300,
+      "layers": [
+        {
+          "clips": [
+            "gwen_base_sfx-115397365.wav",
+            "gwen_base_sfx-531174420.wav",
+            "gwen_base_sfx-887902542.wav",
+            "gwen_base_sfx-74812377.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gwen.QLastHit",
+      "eventName": "Play_sfx_Gwen_GwenQLast_hit",
+      "bank": "gwen_base_sfx_events",
+      "eventId": 1022951862,
+      "layers": [
+        {
+          "clips": [
+            "gwen_base_sfx-115397365.wav",
+            "gwen_base_sfx-531174420.wav",
+            "gwen_base_sfx-74812377.wav",
+            "gwen_base_sfx-887902542.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gwen.W",
+      "eventName": "Play_sfx_Gwen_GwenW_cast",
+      "bank": "gwen_base_sfx_events",
+      "eventId": 3236859832,
+      "layers": [
+        {
+          "clips": [
+            "gwen_base_sfx-258981711.wav",
+            "gwen_base_sfx-293766443.wav",
+            "gwen_base_sfx-188850940.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gwen.WRecast",
+      "eventName": "Play_sfx_Gwen_GwenWRecast_cast",
+      "bank": "gwen_base_sfx_events",
+      "eventId": 3022576962,
+      "layers": [
+        {
+          "clips": [
+            "gwen_base_sfx-993009397.wav",
+            "gwen_base_sfx-391325470.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gwen.WEnd",
+      "eventName": "Play_sfx_Gwen_GwenW_buffdeactivate",
+      "bank": "gwen_base_sfx_events",
+      "eventId": 3057272456,
+      "layers": [
+        {
+          "clips": [
+            "gwen_base_sfx-250909294.wav",
+            "gwen_base_sfx-370391358.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gwen.E",
+      "eventName": "Play_sfx_Gwen_GwenE_OnCast",
+      "bank": "gwen_base_sfx_events",
+      "eventId": 3447996489,
+      "layers": [
+        {
+          "clips": [
+            "gwen_base_sfx-6179490.wav",
+            "gwen_base_sfx-195809884.wav",
+            "gwen_base_sfx-757216157.wav",
+            "gwen_base_sfx-804849398.wav"
+          ]
+        },
+        {
+          "clips": [
+            "gwen_base_sfx-854509046.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gwen.R",
+      "eventName": "Play_sfx_Gwen_GwenR_OnCast",
+      "bank": "gwen_base_sfx_events",
+      "eventId": 2511582556,
+      "layers": [
+        {
+          "clips": [
+            "gwen_base_sfx-675991025.wav",
+            "gwen_base_sfx-546202851.wav",
+            "gwen_base_sfx-153392023.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gwen.RRecast",
+      "eventName": "Play_sfx_Gwen_GwenRRecast_OnCast",
+      "bank": "gwen_base_sfx_events",
+      "eventId": 552690690,
+      "layers": [
+        {
+          "clips": [
+            "gwen_base_sfx-675991025.wav",
+            "gwen_base_sfx-546202851.wav",
+            "gwen_base_sfx-153392023.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gwen.R1",
+      "eventName": "Play_sfx_Gwen_GwenR1_buffactivate",
+      "bank": "gwen_base_sfx_events",
+      "eventId": 2084724367,
+      "layers": [
+        {
+          "clips": [
+            "gwen_base_sfx-672471911.wav"
+          ]
+        },
+        {
+          "clips": [
+            "gwen_base_sfx-216274535.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gwen.R2",
+      "eventName": "Play_sfx_Gwen_GwenR2_buffactivate",
+      "bank": "gwen_base_sfx_events",
+      "eventId": 3680516654,
+      "layers": [
+        {
+          "clips": [
+            "gwen_base_sfx-995626320.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gwen.R3",
+      "eventName": "Play_sfx_Gwen_GwenR3_buffactivate",
+      "bank": "gwen_base_sfx_events",
+      "eventId": 596489861,
+      "layers": [
+        {
+          "clips": [
+            "gwen_base_sfx-71963115.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gwen.RHit",
+      "eventName": "Play_sfx_Gwen_GwenRMis_OnHitLocation",
+      "bank": "gwen_base_sfx_events",
+      "eventId": 2427689614,
+      "layers": [
+        {
+          "clips": [
+            "gwen_base_sfx-209986543.wav",
+            "gwen_base_sfx-79763486.wav",
+            "gwen_base_sfx-866506683.wav",
+            "gwen_base_sfx-154958803.wav",
+            "gwen_base_sfx-148450182.wav",
+            "gwen_base_sfx-952199572.wav",
+            "gwen_base_sfx-790165411.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gwen.Death",
+      "eventName": "Play_sfx_Gwen_Death3D_buffactivate",
+      "bank": "gwen_base_sfx_events",
+      "eventId": 3984708102,
+      "layers": [
+        {
+          "clips": [
+            "gwen_base_sfx-1004738873.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gwen.Respawn",
+      "eventName": "Play_sfx_Gwen_Respawn3D_buffactivate",
+      "bank": "gwen_base_sfx_events",
+      "eventId": 1492751692,
+      "layers": [
+        {
+          "clips": [
+            "gwen_base_sfx-623068303.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Turret.0.Minion.Cast",
+      "eventName": "Play_sfx_Env_map11_OrderTurretMinionBasicAttack_missilelaunch",
+      "bank": "env_global_buildings_sfx_events",
+      "eventId": 2427351139,
+      "layers": [
+        {
+          "clips": [
+            "env_global_buildings_sfx-398859396.wav",
+            "env_global_buildings_sfx-1033275819.wav",
+            "env_global_buildings_sfx-891240311.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Turret.0.Minion.Hit",
+      "eventName": "Play_sfx_Env_map11_OrderTurretMinionBasicAttack_hit",
+      "bank": "env_global_buildings_sfx_events",
+      "eventId": 3381914753,
+      "layers": [
+        {
+          "clips": [
+            "env_global_buildings_sfx-415415050.wav",
+            "env_global_buildings_sfx-321369288.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Turret.0.Champion.Cast",
+      "eventName": "Play_sfx_Env_map11_OrderTurretChampionBasicAttack_missilelaunch",
+      "bank": "env_global_buildings_sfx_events",
+      "eventId": 2506161650,
+      "layers": [
+        {
+          "clips": [
+            "env_global_buildings_sfx-799487828.wav",
+            "env_global_buildings_sfx-754260663.wav",
+            "env_global_buildings_sfx-805777099.wav",
+            "env_global_buildings_sfx-393628420.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Turret.0.Champion.Hit",
+      "eventName": "Play_sfx_Env_map11_OrderTurretChampionBasicAttack_hit",
+      "bank": "env_global_buildings_sfx_events",
+      "eventId": 1202828780,
+      "layers": [
+        {
+          "clips": [
+            "env_global_buildings_sfx-866239695.wav",
+            "env_global_buildings_sfx-386921938.wav",
+            "env_global_buildings_sfx-964081362.wav",
+            "env_global_buildings_sfx-744576278.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Turret.0.Death",
+      "eventName": "Play_sfx_Env_Turret_Death3D",
+      "bank": "env_global_buildings_sfx_events",
+      "eventId": 3898497694,
+      "layers": [
+        {
+          "clips": [
+            "env_global_buildings_sfx-312540545.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Inhibitor.0.Death",
+      "eventName": "Play_sfx_Env_sruap_order_inhibitor_dead",
+      "bank": "env_global_buildings_sfx_events",
+      "eventId": 3565354952,
+      "layers": [
+        {
+          "clips": [
+            "env_global_buildings_sfx-926711157.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Inhibitor.0.Respawn",
+      "eventName": "Play_sfx_Env_sruap_order_inhibitor_respawn_cast",
+      "bank": "env_global_buildings_sfx_events",
+      "eventId": 3919135264,
+      "layers": [
+        {
+          "clips": [
+            "env_global_buildings_sfx-77955736.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Nexus.0.Death",
+      "eventName": "Play_sfx_Env_Global_EoG_OrderNexus_death_oc",
+      "bank": "env_eog_sfx_events",
+      "eventId": 854049063,
+      "layers": [
+        {
+          "clips": [
+            "env_eog_sfx-535900553.wav"
+          ]
+        },
+        {
+          "clips": [
+            "env_eog_sfx-553224360.wav"
+          ]
+        },
+        {
+          "clips": [
+            "env_eog_sfx-570611662.wav"
+          ]
+        },
+        {
+          "clips": [
+            "env_eog_sfx-630446806.wav"
+          ]
+        },
+        {
+          "clips": [
+            "env_eog_sfx-848214419.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Minion.0.Melee.OnCast.0",
+      "eventName": "Play_sfx_SRU_OrderMinionMelee_SRU_OrderMinionMeleeBasicAttack_OnCast",
+      "bank": "npc_global_minions_ordermelee_sfx_events",
+      "eventId": 2999831236,
+      "layers": [
+        {
+          "clips": [
+            "npc_global_minions_ordermelee_sfx-987946124.wav",
+            "npc_global_minions_ordermelee_sfx-79153951.wav",
+            "npc_global_minions_ordermelee_sfx-20244531.wav",
+            "npc_global_minions_ordermelee_sfx-85101672.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Minion.0.Melee.OnCast.1",
+      "eventName": "Play_sfx_SRU_OrderMinionMelee_SRU_OrderMinionMeleeBasicAttack2_OnCast",
+      "bank": "npc_global_minions_ordermelee_sfx_events",
+      "eventId": 1729807580,
+      "layers": [
+        {
+          "clips": [
+            "npc_global_minions_ordermelee_sfx-1005004844.wav",
+            "npc_global_minions_ordermelee_sfx-229599323.wav",
+            "npc_global_minions_ordermelee_sfx-725881456.wav",
+            "npc_global_minions_ordermelee_sfx-209883648.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Minion.0.Melee.OnCast.2",
+      "eventName": "Play_sfx_SRU_OrderMinionMelee_SRU_OrderMinionMeleeBasicAttack3_OnCast",
+      "bank": "npc_global_minions_ordermelee_sfx_events",
+      "eventId": 3120296479,
+      "layers": [
+        {
+          "clips": [
+            "npc_global_minions_ordermelee_sfx-201255679.wav",
+            "npc_global_minions_ordermelee_sfx-749282956.wav",
+            "npc_global_minions_ordermelee_sfx-652469469.wav",
+            "npc_global_minions_ordermelee_sfx-373975055.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Minion.0.Melee.OnHit.0",
+      "eventName": "Play_sfx_SRU_OrderMinionMelee_SRU_OrderMinionMeleeBasicAttack_OnHit",
+      "bank": "npc_global_minions_ordermelee_sfx_events",
+      "eventId": 3351942892,
+      "layers": [
+        {
+          "clips": [
+            "npc_global_minions_ordermelee_sfx-455556863.wav",
+            "npc_global_minions_ordermelee_sfx-522168886.wav",
+            "npc_global_minions_ordermelee_sfx-488829941.wav",
+            "npc_global_minions_ordermelee_sfx-676098358.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Minion.0.Melee.OnHit.1",
+      "eventName": "Play_sfx_SRU_OrderMinionMelee_SRU_OrderMinionMeleeBasicAttack2_OnHit",
+      "bank": "npc_global_minions_ordermelee_sfx_events",
+      "eventId": 532994356,
+      "layers": [
+        {
+          "clips": [
+            "npc_global_minions_ordermelee_sfx-455556863.wav",
+            "npc_global_minions_ordermelee_sfx-522168886.wav",
+            "npc_global_minions_ordermelee_sfx-488829941.wav",
+            "npc_global_minions_ordermelee_sfx-676098358.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Minion.0.Melee.OnHit.2",
+      "eventName": "Play_sfx_SRU_OrderMinionMelee_SRU_OrderMinionMeleeBasicAttack3_OnHit",
+      "bank": "npc_global_minions_ordermelee_sfx_events",
+      "eventId": 943407117,
+      "layers": [
+        {
+          "clips": [
+            "npc_global_minions_ordermelee_sfx-1004793126.wav",
+            "npc_global_minions_ordermelee_sfx-1068770480.wav",
+            "npc_global_minions_ordermelee_sfx-649450405.wav",
+            "npc_global_minions_ordermelee_sfx-336981901.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Minion.0.Ranged.OnCast.0",
+      "eventName": "Play_sfx_SRU_OrderMinionRanged_SRU_OrderMinionRangedBasicAttack_OnCast",
+      "bank": "npc_global_minions_orderrange_sfx_events",
+      "eventId": 23741212,
+      "layers": [
+        {
+          "clips": [
+            "npc_global_minions_orderrange_sfx-298276329.wav",
+            "npc_global_minions_orderrange_sfx-1026653325.wav",
+            "npc_global_minions_orderrange_sfx-864552853.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Minion.0.Ranged.OnCast.1",
+      "eventName": "Play_sfx_SRU_OrderMinionRanged_SRU_OrderMinionRangedBasicAttack2_OnCast",
+      "bank": "npc_global_minions_orderrange_sfx_events",
+      "eventId": 2863652004,
+      "layers": [
+        {
+          "clips": [
+            "npc_global_minions_orderrange_sfx-298276329.wav",
+            "npc_global_minions_orderrange_sfx-1026653325.wav",
+            "npc_global_minions_orderrange_sfx-864552853.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Minion.0.Ranged.OnHit.0",
+      "eventName": "Play_sfx_SRU_OrderMinionRanged_SRU_OrderMinionRangedBasicAttack_OnHit",
+      "bank": "npc_global_minions_orderrange_sfx_events",
+      "eventId": 2828113780,
+      "layers": [
+        {
+          "clips": [
+            "npc_global_minions_orderrange_sfx-234939643.wav",
+            "npc_global_minions_orderrange_sfx-933238084.wav",
+            "npc_global_minions_orderrange_sfx-672380233.wav",
+            "npc_global_minions_orderrange_sfx-942773674.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Minion.0.Ranged.OnHit.1",
+      "eventName": "Play_sfx_SRU_OrderMinionRanged_SRU_OrderMinionRangedBasicAttack2_OnHit",
+      "bank": "npc_global_minions_orderrange_sfx_events",
+      "eventId": 2516427340,
+      "layers": [
+        {
+          "clips": [
+            "npc_global_minions_orderrange_sfx-234939643.wav",
+            "npc_global_minions_orderrange_sfx-933238084.wav",
+            "npc_global_minions_orderrange_sfx-672380233.wav",
+            "npc_global_minions_orderrange_sfx-942773674.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Minion.0.Siege.OnCast.0",
+      "eventName": "Play_sfx_SRU_OrderMinionSiege_SRU_OrderMinionSiegeBasicAttack_OnCast",
+      "bank": "npc_global_minions_ordersiege_sfx_events",
+      "eventId": 1828033034,
+      "layers": [
+        {
+          "clips": [
+            "npc_global_minions_ordersiege_sfx-478530291.wav",
+            "npc_global_minions_ordersiege_sfx-102902881.wav",
+            "npc_global_minions_ordersiege_sfx-959602084.wav",
+            "npc_global_minions_ordersiege_sfx-645432613.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Minion.0.Siege.OnHit.0",
+      "eventName": "Play_sfx_SRU_OrderMinionSiege_SRU_OrderMinionSiegeBasicAttack_OnHit",
+      "bank": "npc_global_minions_ordersiege_sfx_events",
+      "eventId": 2658307326,
+      "layers": [
+        {
+          "clips": [
+            "npc_global_minions_ordersiege_sfx-904299398.wav",
+            "npc_global_minions_ordersiege_sfx-555363738.wav",
+            "npc_global_minions_ordersiege_sfx-375781608.wav",
+            "npc_global_minions_ordersiege_sfx-127103123.wav",
+            "npc_global_minions_ordersiege_sfx-181874499.wav",
+            "npc_global_minions_ordersiege_sfx-357458628.wav",
+            "npc_global_minions_ordersiege_sfx-177876208.wav",
+            "npc_global_minions_ordersiege_sfx-254508219.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Minion.0.Super.OnCast.0",
+      "eventName": "Play_sfx_SRU_OrderMinionSuper_SRU_OrderMinionSuperBasicAttack_OnCast",
+      "bank": "npc_global_minions_ordersuper_sfx_events",
+      "eventId": 4287046350,
+      "layers": [
+        {
+          "clips": [
+            "npc_global_minions_ordersuper_sfx-296206528.wav",
+            "npc_global_minions_ordersuper_sfx-556331228.wav",
+            "npc_global_minions_ordersuper_sfx-774927191.wav",
+            "npc_global_minions_ordersuper_sfx-931964229.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Minion.0.Super.OnCast.1",
+      "eventName": "Play_sfx_SRU_OrderMinionSuper_SRU_OrderMinionSuperBasicAttack2_OnCast",
+      "bank": "npc_global_minions_ordersuper_sfx_events",
+      "eventId": 521526550,
+      "layers": [
+        {
+          "clips": [
+            "npc_global_minions_ordersuper_sfx-255122525.wav",
+            "npc_global_minions_ordersuper_sfx-548452169.wav",
+            "npc_global_minions_ordersuper_sfx-1054850674.wav",
+            "npc_global_minions_ordersuper_sfx-323728920.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Minion.0.Super.OnHit.0",
+      "eventName": "Play_sfx_SRU_OrderMinionSuper_SRU_OrderMinionSuperBasicAttack_OnHit",
+      "bank": "npc_global_minions_ordersuper_sfx_events",
+      "eventId": 927726618,
+      "layers": [
+        {
+          "clips": [
+            "npc_global_minions_ordersuper_sfx-965795940.wav",
+            "npc_global_minions_ordersuper_sfx-765723772.wav",
+            "npc_global_minions_ordersuper_sfx-460438271.wav",
+            "npc_global_minions_ordersuper_sfx-59568009.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Minion.0.Super.OnHit.1",
+      "eventName": "Play_sfx_SRU_OrderMinionSuper_SRU_OrderMinionSuperBasicAttack2_OnHit",
+      "bank": "npc_global_minions_ordersuper_sfx_events",
+      "eventId": 3537132338,
+      "layers": [
+        {
+          "clips": [
+            "npc_global_minions_ordersuper_sfx-965795940.wav",
+            "npc_global_minions_ordersuper_sfx-765723772.wav",
+            "npc_global_minions_ordersuper_sfx-460438271.wav",
+            "npc_global_minions_ordersuper_sfx-59568009.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Turret.1.Minion.Cast",
+      "eventName": "Play_sfx_Env_map11_ChaosTurretMinionBasicAttack_missilelaunch",
+      "bank": "env_global_buildings_sfx_events",
+      "eventId": 3600744219,
+      "layers": [
+        {
+          "clips": [
+            "env_global_buildings_sfx-988665057.wav",
+            "env_global_buildings_sfx-504466497.wav",
+            "env_global_buildings_sfx-201534931.wav",
+            "env_global_buildings_sfx-446045041.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Turret.1.Minion.Hit",
+      "eventName": "Play_sfx_Env_map11_ChaosTurretMinionBasicAttack_hit",
+      "bank": "env_global_buildings_sfx_events",
+      "eventId": 1256783657,
+      "layers": [
+        {
+          "clips": [
+            "env_global_buildings_sfx-835745104.wav",
+            "env_global_buildings_sfx-432513021.wav",
+            "env_global_buildings_sfx-672706197.wav",
+            "env_global_buildings_sfx-972133402.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Turret.1.Champion.Cast",
+      "eventName": "Play_sfx_Env_map11_ChaosTurretChampionBasicAttack_missilelaunch",
+      "bank": "env_global_buildings_sfx_events",
+      "eventId": 2333427194,
+      "layers": [
+        {
+          "clips": [
+            "env_global_buildings_sfx-805229884.wav",
+            "env_global_buildings_sfx-617593959.wav",
+            "env_global_buildings_sfx-301666220.wav",
+            "env_global_buildings_sfx-479442805.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Turret.1.Champion.Hit",
+      "eventName": "Play_sfx_Env_map11_ChaosTurretChampionBasicAttack_hit",
+      "bank": "env_global_buildings_sfx_events",
+      "eventId": 1878172676,
+      "layers": [
+        {
+          "clips": [
+            "env_global_buildings_sfx-113917317.wav",
+            "env_global_buildings_sfx-363961562.wav",
+            "env_global_buildings_sfx-961844460.wav",
+            "env_global_buildings_sfx-677937401.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Turret.1.Death",
+      "eventName": "Play_sfx_Env_Turret_Death3D",
+      "bank": "env_global_buildings_sfx_events",
+      "eventId": 3898497694,
+      "layers": [
+        {
+          "clips": [
+            "env_global_buildings_sfx-312540545.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Inhibitor.1.Death",
+      "eventName": "Play_sfx_Env_sruap_chaos_inhibitor_dead",
+      "bank": "env_global_buildings_sfx_events",
+      "eventId": 3407895080,
+      "layers": [
+        {
+          "clips": [
+            "env_global_buildings_sfx-35490003.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Inhibitor.1.Respawn",
+      "eventName": "Play_sfx_Env_sruap_chaos_inhibitor_respawn_cast",
+      "bank": "env_global_buildings_sfx_events",
+      "eventId": 1788546368,
+      "layers": [
+        {
+          "clips": [
+            "env_global_buildings_sfx-647038739.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Nexus.1.Death",
+      "eventName": "Play_sfx_Env_Global_EoG_ChaosNexus_death_cast",
+      "bank": "env_eog_sfx_events",
+      "eventId": 1773150868,
+      "layers": [
+        {
+          "clips": [
+            "env_eog_sfx-334071054.wav"
+          ]
+        },
+        {
+          "clips": [
+            "env_eog_sfx-754004643.wav"
+          ]
+        },
+        {
+          "clips": [
+            "env_eog_sfx-848214419.wav"
+          ]
+        },
+        {
+          "clips": [
+            "env_eog_sfx-485014584.wav"
+          ]
+        },
+        {
+          "clips": [
+            "env_eog_sfx-523028056.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Minion.1.Melee.OnCast.0",
+      "eventName": "Play_sfx_SRU_ChaosMinionMelee_SRU_ChaosMinionMeleeBasicAttack_OnCast",
+      "bank": "npc_global_minions_chaosmelee_sfx_events",
+      "eventId": 2456298340,
+      "layers": [
+        {
+          "clips": [
+            "npc_global_minions_chaosmelee_sfx-981426204.wav",
+            "npc_global_minions_chaosmelee_sfx-457464557.wav",
+            "npc_global_minions_chaosmelee_sfx-416699710.wav",
+            "npc_global_minions_chaosmelee_sfx-797432942.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Minion.1.Melee.OnCast.1",
+      "eventName": "Play_sfx_SRU_ChaosMinionMelee_SRU_ChaosMinionMeleeBasicAttack2_OnCast",
+      "bank": "npc_global_minions_chaosmelee_sfx_events",
+      "eventId": 3950242428,
+      "layers": [
+        {
+          "clips": [
+            "npc_global_minions_chaosmelee_sfx-979677881.wav",
+            "npc_global_minions_chaosmelee_sfx-384833560.wav",
+            "npc_global_minions_chaosmelee_sfx-493760156.wav",
+            "npc_global_minions_chaosmelee_sfx-81705707.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Minion.1.Melee.OnCast.2",
+      "eventName": "Play_sfx_SRU_ChaosMinionMelee_SRU_ChaosMinionMeleeBasicAttack3_OnCast",
+      "bank": "npc_global_minions_chaosmelee_sfx_events",
+      "eventId": 2232955455,
+      "layers": [
+        {
+          "clips": [
+            "npc_global_minions_chaosmelee_sfx-623322527.wav",
+            "npc_global_minions_chaosmelee_sfx-110715298.wav",
+            "npc_global_minions_chaosmelee_sfx-140983745.wav",
+            "npc_global_minions_chaosmelee_sfx-742412899.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Minion.1.Melee.OnHit.0",
+      "eventName": "Play_sfx_SRU_ChaosMinionMelee_SRU_ChaosMinionMeleeBasicAttack_OnHit",
+      "bank": "npc_global_minions_chaosmelee_sfx_events",
+      "eventId": 3828951820,
+      "layers": [
+        {
+          "clips": [
+            "npc_global_minions_chaosmelee_sfx-808681780.wav",
+            "npc_global_minions_chaosmelee_sfx-239995408.wav",
+            "npc_global_minions_chaosmelee_sfx-881928804.wav",
+            "npc_global_minions_chaosmelee_sfx-1061667902.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Minion.1.Melee.OnHit.1",
+      "eventName": "Play_sfx_SRU_ChaosMinionMelee_SRU_ChaosMinionMeleeBasicAttack2_OnHit",
+      "bank": "npc_global_minions_chaosmelee_sfx_events",
+      "eventId": 2519567700,
+      "layers": [
+        {
+          "clips": [
+            "npc_global_minions_chaosmelee_sfx-808681780.wav",
+            "npc_global_minions_chaosmelee_sfx-239995408.wav",
+            "npc_global_minions_chaosmelee_sfx-881928804.wav",
+            "npc_global_minions_chaosmelee_sfx-1061667902.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Minion.1.Melee.OnHit.2",
+      "eventName": "Play_sfx_SRU_ChaosMinionMelee_SRU_ChaosMinionMeleeBasicAttack3_OnHit",
+      "bank": "npc_global_minions_chaosmelee_sfx_events",
+      "eventId": 4291652781,
+      "layers": [
+        {
+          "clips": [
+            "npc_global_minions_chaosmelee_sfx-83227058.wav",
+            "npc_global_minions_chaosmelee_sfx-150405873.wav",
+            "npc_global_minions_chaosmelee_sfx-822908715.wav",
+            "npc_global_minions_chaosmelee_sfx-642046833.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Minion.1.Ranged.OnCast.0",
+      "eventName": "Play_sfx_SRU_ChaosMinionRanged_SRU_ChaosMinionRangedBasicAttack_OnCast",
+      "bank": "npc_global_minions_chaosrange_sfx_events",
+      "eventId": 3532837044,
+      "layers": [
+        {
+          "clips": [
+            "npc_global_minions_chaosrange_sfx-684869467.wav",
+            "npc_global_minions_chaosrange_sfx-516414628.wav",
+            "npc_global_minions_chaosrange_sfx-205813774.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Minion.1.Ranged.OnCast.1",
+      "eventName": "Play_sfx_SRU_ChaosMinionRanged_SRU_ChaosMinionRangedBasicAttack2_OnCast",
+      "bank": "npc_global_minions_chaosrange_sfx_events",
+      "eventId": 3881201356,
+      "layers": [
+        {
+          "clips": [
+            "npc_global_minions_chaosrange_sfx-684869467.wav",
+            "npc_global_minions_chaosrange_sfx-516414628.wav",
+            "npc_global_minions_chaosrange_sfx-205813774.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Minion.1.Ranged.OnCast.2",
+      "eventName": "Play_sfx_SRU_ChaosMinionRanged_SRU_ChaosMinionRangedBasicAttack3_OnCast",
+      "bank": "npc_global_minions_chaosrange_sfx_events",
+      "eventId": 1150949007,
+      "layers": [
+        {
+          "clips": [
+            "npc_global_minions_chaosrange_sfx-684869467.wav",
+            "npc_global_minions_chaosrange_sfx-516414628.wav",
+            "npc_global_minions_chaosrange_sfx-205813774.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Minion.1.Ranged.OnHit.0",
+      "eventName": "Play_sfx_SRU_ChaosMinionRanged_SRU_ChaosMinionRangedBasicAttack_OnHit",
+      "bank": "npc_global_minions_chaosrange_sfx_events",
+      "eventId": 2607933148,
+      "layers": [
+        {
+          "clips": [
+            "npc_global_minions_chaosrange_sfx-1008854294.wav",
+            "npc_global_minions_chaosrange_sfx-676519336.wav",
+            "npc_global_minions_chaosrange_sfx-692437932.wav",
+            "npc_global_minions_chaosrange_sfx-819822025.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Minion.1.Ranged.OnHit.1",
+      "eventName": "Play_sfx_SRU_ChaosMinionRanged_SRU_ChaosMinionRangedBasicAttack2_OnHit",
+      "bank": "npc_global_minions_chaosrange_sfx_events",
+      "eventId": 2396066020,
+      "layers": [
+        {
+          "clips": [
+            "npc_global_minions_chaosrange_sfx-1008854294.wav",
+            "npc_global_minions_chaosrange_sfx-676519336.wav",
+            "npc_global_minions_chaosrange_sfx-692437932.wav",
+            "npc_global_minions_chaosrange_sfx-819822025.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Minion.1.Ranged.OnHit.2",
+      "eventName": "Play_sfx_SRU_ChaosMinionRanged_SRU_ChaosMinionRangedBasicAttack3_OnHit",
+      "bank": "npc_global_minions_chaosrange_sfx_events",
+      "eventId": 2138179709,
+      "layers": [
+        {
+          "clips": [
+            "npc_global_minions_chaosrange_sfx-1008854294.wav",
+            "npc_global_minions_chaosrange_sfx-676519336.wav",
+            "npc_global_minions_chaosrange_sfx-692437932.wav",
+            "npc_global_minions_chaosrange_sfx-819822025.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Minion.1.Siege.OnCast.0",
+      "eventName": "Play_sfx_SRU_ChaosMinionSiege_SRU_ChaosMinionSiegeBasicAttack_OnMissileCast",
+      "bank": "npc_global_minions_chaossiege_sfx_events",
+      "eventId": 2858937692,
+      "layers": [
+        {
+          "clips": [
+            "npc_global_minions_chaossiege_sfx-265319268.wav",
+            "npc_global_minions_chaossiege_sfx-701531219.wav",
+            "npc_global_minions_chaossiege_sfx-339112310.wav",
+            "npc_global_minions_chaossiege_sfx-513282067.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Minion.1.Siege.OnHit.0",
+      "eventName": "Play_sfx_SRU_ChaosMinionSiege_SRU_ChaosMinionSiegeBasicAttack_OnHit",
+      "bank": "npc_global_minions_chaossiege_sfx_events",
+      "eventId": 2998416022,
+      "layers": [
+        {
+          "clips": [
+            "npc_global_minions_chaossiege_sfx-811444941.wav",
+            "npc_global_minions_chaossiege_sfx-928248863.wav",
+            "npc_global_minions_chaossiege_sfx-986079880.wav",
+            "npc_global_minions_chaossiege_sfx-264301615.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Minion.1.Super.OnCast.0",
+      "eventName": "Play_sfx_SRU_ChaosMinionSuper_SRU_ChaosMinionSuperBasicAttack_OnCast",
+      "bank": "npc_global_minions_chaossuper_sfx_events",
+      "eventId": 2342324534,
+      "layers": [
+        {
+          "clips": [
+            "npc_global_minions_chaossuper_sfx-267771522.wav",
+            "npc_global_minions_chaossuper_sfx-969969263.wav",
+            "npc_global_minions_chaossuper_sfx-166196009.wav",
+            "npc_global_minions_chaossuper_sfx-102090040.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Minion.1.Super.OnCast.1",
+      "eventName": "Play_sfx_SRU_ChaosMinionSuper_SRU_ChaosMinionSuperBasicAttack2_OnCast",
+      "bank": "npc_global_minions_chaossuper_sfx_events",
+      "eventId": 1347524046,
+      "layers": [
+        {
+          "clips": [
+            "npc_global_minions_chaossuper_sfx-693752645.wav",
+            "npc_global_minions_chaossuper_sfx-808954279.wav",
+            "npc_global_minions_chaossuper_sfx-882427249.wav",
+            "npc_global_minions_chaossuper_sfx-634067554.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Minion.1.Super.OnHit.0",
+      "eventName": "Play_sfx_SRU_ChaosMinionSuper_SRU_ChaosMinionSuperBasicAttack_OnHit",
+      "bank": "npc_global_minions_chaossuper_sfx_events",
+      "eventId": 2362665938,
+      "layers": [
+        {
+          "clips": [
+            "npc_global_minions_chaossuper_sfx-713565607.wav",
+            "npc_global_minions_chaossuper_sfx-665034686.wav",
+            "npc_global_minions_chaossuper_sfx-765116358.wav",
+            "npc_global_minions_chaossuper_sfx-931278533.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Minion.1.Super.OnHit.1",
+      "eventName": "Play_sfx_SRU_ChaosMinionSuper_SRU_ChaosMinionSuperBasicAttack2_OnHit",
+      "bank": "npc_global_minions_chaossuper_sfx_events",
+      "eventId": 4234911002,
+      "layers": [
+        {
+          "clips": [
+            "npc_global_minions_chaossuper_sfx-713565607.wav",
+            "npc_global_minions_chaossuper_sfx-665034686.wav",
+            "npc_global_minions_chaossuper_sfx-765116358.wav",
+            "npc_global_minions_chaossuper_sfx-931278533.wav"
+          ]
+        }
+      ]
+    }
+  ],
+  "media": [
+    {
+      "bank": "gwen_base_sfx_events",
+      "mediaId": 869530993,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\gwen_base\\869530993.wav",
+      "duration": 0.996938775510204,
+      "sourceWemSHA256": "7b3b901b7f69cee1cd299d8f2c864eb1aae09dcdd8bbd6d008f23c69c4f7a5eb"
+    },
+    {
+      "bank": "gwen_base_sfx_events",
+      "mediaId": 541742055,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\gwen_base\\541742055.wav",
+      "duration": 0.996938775510204,
+      "sourceWemSHA256": "fceaaf2edb0330d22e7793f137619d92d5cae5e22021169d24c364d319d7d3db"
+    },
+    {
+      "bank": "gwen_base_sfx_events",
+      "mediaId": 611764951,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\gwen_base\\611764951.wav",
+      "duration": 0.996938775510204,
+      "sourceWemSHA256": "18c00ce07750b3cd0d368537b7c46458f87adc07c90059f83eedf771b13ca3ce"
+    },
+    {
+      "bank": "gwen_base_sfx_events",
+      "mediaId": 502470164,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\gwen_base\\502470164.wav",
+      "duration": 0.996938775510204,
+      "sourceWemSHA256": "a5b5f70b246ec31239f65a910c7f657d25f7251855e7f1028772617f50be6232"
+    },
+    {
+      "bank": "gwen_base_sfx_events",
+      "mediaId": 843161985,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\gwen_base\\843161985.wav",
+      "duration": 1.0187301587301587,
+      "sourceWemSHA256": "6103a9d0eb0fd69ae461195da9b17f5a29e0d457b6e7568f168934641fd7e571"
+    },
+    {
+      "bank": "gwen_base_sfx_events",
+      "mediaId": 38300093,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\gwen_base\\38300093.wav",
+      "duration": 1.0187301587301587,
+      "sourceWemSHA256": "0d86a73d727263628b0e71707b26129640dfa23bfc45de2107cccdd004f0b2cf"
+    },
+    {
+      "bank": "gwen_base_sfx_events",
+      "mediaId": 817087734,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\gwen_base\\817087734.wav",
+      "duration": 1.0187301587301587,
+      "sourceWemSHA256": "d00127f0b7fb5f07769abc343ffd7fa01dbe5cd0fcbfd4fec7a39eef2e689593"
+    },
+    {
+      "bank": "gwen_base_sfx_events",
+      "mediaId": 803256852,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\gwen_base\\803256852.wav",
+      "duration": 1.0187301587301587,
+      "sourceWemSHA256": "8671caf6df39e04a783c3d3af80a3d8bf96bdbd6dc1e37cf40fa2f3256cf2b1c"
+    },
+    {
+      "bank": "gwen_base_sfx_events",
+      "mediaId": 19656055,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\gwen_base\\19656055.wav",
+      "duration": 0.5698866213151927,
+      "sourceWemSHA256": "c6c76745b77d5f6e4abfe212e99c4e5e8b4168ad1a402e3b75a75cacbe36b0e3"
+    },
+    {
+      "bank": "gwen_base_sfx_events",
+      "mediaId": 867150210,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\gwen_base\\867150210.wav",
+      "duration": 0.5698866213151927,
+      "sourceWemSHA256": "1f4828c876d19c1b83ee62e258fe2e3977086022b7d405a3060571b8d31fe8f6"
+    },
+    {
+      "bank": "gwen_base_sfx_events",
+      "mediaId": 601170185,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\gwen_base\\601170185.wav",
+      "duration": 0.5698866213151927,
+      "sourceWemSHA256": "e751e0a6962a8a843541780a0a9acb3d92fafb70525be8b45ea8c27577f9c867"
+    },
+    {
+      "bank": "gwen_base_sfx_events",
+      "mediaId": 319046308,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\gwen_base\\319046308.wav",
+      "duration": 0.5698866213151927,
+      "sourceWemSHA256": "488633e03c0918088b64c55b6423c5d08ec2c837a7596b89a0eceed21d490d7d"
+    },
+    {
+      "bank": "gwen_base_sfx_events",
+      "mediaId": 607635932,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\gwen_base\\607635932.wav",
+      "duration": 0.5798639455782313,
+      "sourceWemSHA256": "709919be856b7413891c5d977c3d2fb465b69e5bec6ca171a3d0ff592634c448"
+    },
+    {
+      "bank": "gwen_base_sfx_events",
+      "mediaId": 962599104,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\gwen_base\\962599104.wav",
+      "duration": 0.5798639455782313,
+      "sourceWemSHA256": "0aabad8c05bdd504aa5c2337a670534bb453299fc519d12e1c40ceb314674ac9"
+    },
+    {
+      "bank": "gwen_base_sfx_events",
+      "mediaId": 742678364,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\gwen_base\\742678364.wav",
+      "duration": 0.5798639455782313,
+      "sourceWemSHA256": "abc5e14c27b274895dfc8e1fedead6042771054eb0c0842031a76a96d8eb3cf6"
+    },
+    {
+      "bank": "gwen_base_sfx_events",
+      "mediaId": 1005016882,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\gwen_base\\1005016882.wav",
+      "duration": 1.4347165532879818,
+      "sourceWemSHA256": "10769a03fb888944493bd53fae5cdfed3484efdbd007e4f03a5bcf6fd43c8095"
+    },
+    {
+      "bank": "gwen_base_sfx_events",
+      "mediaId": 475827131,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\gwen_base\\475827131.wav",
+      "duration": 1.4347165532879818,
+      "sourceWemSHA256": "c01d6600a64ca9eaef874bd887104d8f98e51b0e524a30ed58b1884d78a67583"
+    },
+    {
+      "bank": "gwen_base_sfx_events",
+      "mediaId": 127995763,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\gwen_base\\127995763.wav",
+      "duration": 1.4347165532879818,
+      "sourceWemSHA256": "392d8ad636fdf4ef96bb72d7a0c876f05baef774b95117d7a71e375273c5d58f"
+    },
+    {
+      "bank": "gwen_base_sfx_events",
+      "mediaId": 53754217,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\gwen_base\\53754217.wav",
+      "duration": 1.0563945578231293,
+      "sourceWemSHA256": "879571bc9f8a05d50583edf5179349948969d049a811708353522c10952c5a15"
+    },
+    {
+      "bank": "gwen_base_sfx_events",
+      "mediaId": 857225752,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\gwen_base\\857225752.wav",
+      "duration": 1.0563945578231293,
+      "sourceWemSHA256": "608fcd9befe85470736b68b18392011e5345cd7267766544d4731a67c960264b"
+    },
+    {
+      "bank": "gwen_base_sfx_events",
+      "mediaId": 568890440,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\gwen_base\\568890440.wav",
+      "duration": 1.0563945578231293,
+      "sourceWemSHA256": "a27f2034edb984238f50690024f059db7cbc09fe911c8fe71e28edae910618e0"
+    },
+    {
+      "bank": "gwen_base_sfx_events",
+      "mediaId": 303928842,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\gwen_base\\303928842.wav",
+      "duration": 1.0563945578231293,
+      "sourceWemSHA256": "74ab1bc216179fcd206effc26d727fc1204e6f7bcb4110df8a00030ecaac324d"
+    },
+    {
+      "bank": "gwen_base_sfx_events",
+      "mediaId": 719286715,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\gwen_base\\719286715.wav",
+      "duration": 0.22941043083900226,
+      "sourceWemSHA256": "e6852f600bdaed870d16e19f8d290b10c204829f7690c2910b80ef8dec64d310"
+    },
+    {
+      "bank": "gwen_base_sfx_events",
+      "mediaId": 164825511,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\gwen_base\\164825511.wav",
+      "duration": 0.22941043083900226,
+      "sourceWemSHA256": "0b607691a062ac59d57c5dc750f1383e2862aec5c7cc59ae15d889b0993e64a3"
+    },
+    {
+      "bank": "gwen_base_sfx_events",
+      "mediaId": 657779899,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\gwen_base\\657779899.wav",
+      "duration": 0.22941043083900226,
+      "sourceWemSHA256": "b5b499bbf67fd5d2aa8cf2f236858b0878911e2fc5abf4574aca8e5856cc0558"
+    },
+    {
+      "bank": "gwen_base_sfx_events",
+      "mediaId": 429688416,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\gwen_base\\429688416.wav",
+      "duration": 0.22941043083900226,
+      "sourceWemSHA256": "758a42ce27daf740340c26dfba5f34681f75e03870bebf35b6059402e6362b00"
+    },
+    {
+      "bank": "gwen_base_sfx_events",
+      "mediaId": 904584095,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\gwen_base\\904584095.wav",
+      "duration": 2.0329478458049888,
+      "sourceWemSHA256": "f60507d07cc4592b1dfd37edc3e7419d3e7d3f4e4c3dc486608d781884947a51"
+    },
+    {
+      "bank": "gwen_base_sfx_events",
+      "mediaId": 820524486,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\gwen_base\\820524486.wav",
+      "duration": 2.0329478458049888,
+      "sourceWemSHA256": "058ca0cce98e83ba66d2cf0cf38ef03aabd3dbd87acb0a34b90dcc3257ec6491"
+    },
+    {
+      "bank": "gwen_base_sfx_events",
+      "mediaId": 676912506,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\gwen_base\\676912506.wav",
+      "duration": 2.0329478458049888,
+      "sourceWemSHA256": "a4e138d7a32fd20f670e65ab82ce0306e29c3f0c0c535de6a0e393e32f159e7e"
+    },
+    {
+      "bank": "gwen_base_sfx_events",
+      "mediaId": 526051698,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\gwen_base\\526051698.wav",
+      "duration": 2.0329478458049888,
+      "sourceWemSHA256": "6311ee5b28437c5ead17c0c696e805648776508142f6a0537b3f9cad4b06a844"
+    },
+    {
+      "bank": "gwen_base_sfx_events",
+      "mediaId": 115397365,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\gwen_base\\115397365.wav",
+      "duration": 0.5802947845804989,
+      "sourceWemSHA256": "6da9a4a076ed29165abb35291c9ef24d10271542abb3c761fbcff6c101013396"
+    },
+    {
+      "bank": "gwen_base_sfx_events",
+      "mediaId": 531174420,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\gwen_base\\531174420.wav",
+      "duration": 0.5802947845804989,
+      "sourceWemSHA256": "033988f862f92f54421b6933da1cfb5dab4926142b9cf42f60cc985aa78011c0"
+    },
+    {
+      "bank": "gwen_base_sfx_events",
+      "mediaId": 887902542,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\gwen_base\\887902542.wav",
+      "duration": 0.5802947845804989,
+      "sourceWemSHA256": "91a0a2010f659d0776c99d5454e055424e90f85850dcc154ea171b14943c653c"
+    },
+    {
+      "bank": "gwen_base_sfx_events",
+      "mediaId": 74812377,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\gwen_base\\74812377.wav",
+      "duration": 0.5802947845804989,
+      "sourceWemSHA256": "1c1689f4352cafc59b4f94ad6e2454a44a97c113033e6390d53c2630c882cb51"
+    },
+    {
+      "bank": "gwen_base_sfx_events",
+      "mediaId": 258981711,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\gwen_base\\258981711.wav",
+      "duration": 1.1320408163265305,
+      "sourceWemSHA256": "8e32e1022294612f53e1f088bb66a7e6bcad5af972f4fc5965a613ad10e7ccca"
+    },
+    {
+      "bank": "gwen_base_sfx_events",
+      "mediaId": 293766443,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\gwen_base\\293766443.wav",
+      "duration": 1.1320408163265305,
+      "sourceWemSHA256": "cc5ec0e706f85076e1905371c93960a39be93c5f1a4aa2addcccaaeb7b5e10f8"
+    },
+    {
+      "bank": "gwen_base_sfx_events",
+      "mediaId": 188850940,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\gwen_base\\188850940.wav",
+      "duration": 1.1320408163265305,
+      "sourceWemSHA256": "9b60831574e14573265419c3d223e52a63cc0a20413abd8c7737e847a302958f"
+    },
+    {
+      "bank": "gwen_base_sfx_events",
+      "mediaId": 993009397,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\gwen_base\\993009397.wav",
+      "duration": 1.7491836734693877,
+      "sourceWemSHA256": "9043ee8391a36e3bf8265bf70a6db306d1559f1ca8b68ccf2cb4888b5fc6676a"
+    },
+    {
+      "bank": "gwen_base_sfx_events",
+      "mediaId": 391325470,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\gwen_base\\391325470.wav",
+      "duration": 1.7491836734693877,
+      "sourceWemSHA256": "0b7e623378e8c117a3a92122308b6bf2c5eca57f11b42e577eb0680d5b802b69"
+    },
+    {
+      "bank": "gwen_base_sfx_events",
+      "mediaId": 250909294,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\gwen_base\\250909294.wav",
+      "duration": 3.131156462585034,
+      "sourceWemSHA256": "22295f3cc84e392ff94dbda5f504398c05801b6af8cf226c2f426ce6df3be0a1"
+    },
+    {
+      "bank": "gwen_base_sfx_events",
+      "mediaId": 370391358,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\gwen_base\\370391358.wav",
+      "duration": 2.967097505668934,
+      "sourceWemSHA256": "2c114ff148111df9ded4c37257946c5508108ff3563094745c4fdd41b811af94"
+    },
+    {
+      "bank": "gwen_base_sfx_events",
+      "mediaId": 6179490,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\gwen_base\\6179490.wav",
+      "duration": 1.7958956916099773,
+      "sourceWemSHA256": "ce9db16db5da3ae2c5369a5eb13bfaabd6ed6c4a320716c40bca4049586ab663"
+    },
+    {
+      "bank": "gwen_base_sfx_events",
+      "mediaId": 195809884,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\gwen_base\\195809884.wav",
+      "duration": 1.7958956916099773,
+      "sourceWemSHA256": "f3c4de13478c43c2f993d88b9782be36bc5205cc417aa1bc983ed839605c2beb"
+    },
+    {
+      "bank": "gwen_base_sfx_events",
+      "mediaId": 757216157,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\gwen_base\\757216157.wav",
+      "duration": 1.7958956916099773,
+      "sourceWemSHA256": "efb4bbcc8fadb4265109ab320d8a259ab347646036eb6d860322754458508585"
+    },
+    {
+      "bank": "gwen_base_sfx_events",
+      "mediaId": 804849398,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\gwen_base\\804849398.wav",
+      "duration": 1.7958956916099773,
+      "sourceWemSHA256": "07fd10966cca338b2954c41d7fb5a9f85673d820c7ca6de15da48f371679cd64"
+    },
+    {
+      "bank": "gwen_base_sfx_events",
+      "mediaId": 854509046,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\gwen_base\\854509046.wav",
+      "duration": 18.358208616780047,
+      "sourceWemSHA256": "453747a4f0afeb4585b0ad0c5e67046a598aa6ec11822bb82e7076c3965de03f"
+    },
+    {
+      "bank": "gwen_base_sfx_events",
+      "mediaId": 675991025,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\gwen_base\\675991025.wav",
+      "duration": 1.4172789115646258,
+      "sourceWemSHA256": "fcd68502618fe6728724c8f90fdcbe1586cef99d03251c988d734166dfdac58b"
+    },
+    {
+      "bank": "gwen_base_sfx_events",
+      "mediaId": 546202851,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\gwen_base\\546202851.wav",
+      "duration": 1.5097278911564627,
+      "sourceWemSHA256": "10394082faf887f3fd30b694c9c5ef360f082c6c93bbf1c7102565d14bce98ec"
+    },
+    {
+      "bank": "gwen_base_sfx_events",
+      "mediaId": 153392023,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\gwen_base\\153392023.wav",
+      "duration": 1.5394331065759637,
+      "sourceWemSHA256": "35c4e109554e00f754617062c90040566a89f3389eff1ea2c554c132973fdb18"
+    },
+    {
+      "bank": "gwen_base_sfx_events",
+      "mediaId": 672471911,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\gwen_base\\672471911.wav",
+      "duration": 2.409229024943311,
+      "sourceWemSHA256": "bb02b0eff73772114a9b231121e2fc95d09cb57c7f5a1ffeb9ee3a5ac89325d9"
+    },
+    {
+      "bank": "gwen_base_sfx_events",
+      "mediaId": 216274535,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\gwen_base\\216274535.wav",
+      "duration": 19.02360544217687,
+      "sourceWemSHA256": "8b26e248767aea24f94b04ca59f9a309a4d8d2d605ee7fd816b9c9f32452d353"
+    },
+    {
+      "bank": "gwen_base_sfx_events",
+      "mediaId": 995626320,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\gwen_base\\995626320.wav",
+      "duration": 1.9233106575963719,
+      "sourceWemSHA256": "f0c93b625ac1b00ee969045ec2bbcb5a293a3e7a81996bdcba9815ca1a03c3a2"
+    },
+    {
+      "bank": "gwen_base_sfx_events",
+      "mediaId": 71963115,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\gwen_base\\71963115.wav",
+      "duration": 1.9931292517006802,
+      "sourceWemSHA256": "46cc6478b6f34f00966a5356c0e2f5ffc355d16865245c037cc63d5325ddc326"
+    },
+    {
+      "bank": "gwen_base_sfx_events",
+      "mediaId": 209986543,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\gwen_base\\209986543.wav",
+      "duration": 1.0732879818594103,
+      "sourceWemSHA256": "d0a0a8cddc6924cb177618a019b5214052caa56dfc0d00c5f5af23eeef108fda"
+    },
+    {
+      "bank": "gwen_base_sfx_events",
+      "mediaId": 79763486,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\gwen_base\\79763486.wav",
+      "duration": 1.0732879818594103,
+      "sourceWemSHA256": "cb38a21afa149418a5178f9a1b61f70ec55b3cc44566f95c3989e5df6ec2bc97"
+    },
+    {
+      "bank": "gwen_base_sfx_events",
+      "mediaId": 866506683,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\gwen_base\\866506683.wav",
+      "duration": 1.0732879818594103,
+      "sourceWemSHA256": "30a5b1855c55701d5fe6c605a1688811b4e744b903aef6b921c967547ed809c8"
+    },
+    {
+      "bank": "gwen_base_sfx_events",
+      "mediaId": 154958803,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\gwen_base\\154958803.wav",
+      "duration": 1.0732879818594103,
+      "sourceWemSHA256": "883dffe0bc6b6744c466d8c0acc34f07bcda10218ab1df881d6c81c2d5678b2e"
+    },
+    {
+      "bank": "gwen_base_sfx_events",
+      "mediaId": 148450182,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\gwen_base\\148450182.wav",
+      "duration": 1.0732879818594103,
+      "sourceWemSHA256": "236dc59a2970965c2cedb7178c1ef9f5e62dec2fbf5328e77106be453eef9df3"
+    },
+    {
+      "bank": "gwen_base_sfx_events",
+      "mediaId": 952199572,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\gwen_base\\952199572.wav",
+      "duration": 1.0732879818594103,
+      "sourceWemSHA256": "c12545c282a433a0ee08aa23c4f5fb3e076a5a249f5086366263b1e8f37f9933"
+    },
+    {
+      "bank": "gwen_base_sfx_events",
+      "mediaId": 790165411,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\gwen_base\\790165411.wav",
+      "duration": 0.8831746031746032,
+      "sourceWemSHA256": "2a6cdef427a2220c15a024fbb478672a6428019cbb3e080ccf1a44340cbb9a94"
+    },
+    {
+      "bank": "gwen_base_sfx_events",
+      "mediaId": 1004738873,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\gwen_base\\1004738873.wav",
+      "duration": 3.408004535147392,
+      "sourceWemSHA256": "ac7652da0404423a3ce3859721d7432f9efe63de63c5a60eb7989a32ce7a9729"
+    },
+    {
+      "bank": "gwen_base_sfx_events",
+      "mediaId": 623068303,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\gwen_base\\623068303.wav",
+      "duration": 5.841224489795918,
+      "sourceWemSHA256": "d7777682c581853ff0c6dbd3faaeae56a98d5581f5610d686d84451d1d2ca758"
+    },
+    {
+      "bank": "env_global_buildings_sfx_events",
+      "mediaId": 398859396,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\env_global_buildings\\398859396.wav",
+      "duration": 1.9661678004535148,
+      "sourceWemSHA256": "f4cc4400cc274e76677221834e2e3507b931d03a121616f3c788703bfb87ede0"
+    },
+    {
+      "bank": "env_global_buildings_sfx_events",
+      "mediaId": 1033275819,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\env_global_buildings\\1033275819.wav",
+      "duration": 1.561814058956916,
+      "sourceWemSHA256": "9887c907b616576f10a8fe98df2e0bcbbc8e19de5d54a79b3f7effda0f7d5947"
+    },
+    {
+      "bank": "env_global_buildings_sfx_events",
+      "mediaId": 891240311,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\env_global_buildings\\891240311.wav",
+      "duration": 1.5462131519274376,
+      "sourceWemSHA256": "149d0d50d0ba98a6bb2870b2a9e2e813891b86fc75cbc7bcfbf55a54340490f8"
+    },
+    {
+      "bank": "env_global_buildings_sfx_events",
+      "mediaId": 415415050,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\env_global_buildings\\415415050.wav",
+      "duration": 1.3471201814058957,
+      "sourceWemSHA256": "b402c63a0c07f18d4230d668b98f7ff09445a9966badfb6e66f1adecb86ad1fd"
+    },
+    {
+      "bank": "env_global_buildings_sfx_events",
+      "mediaId": 321369288,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\env_global_buildings\\321369288.wav",
+      "duration": 1.2703628117913832,
+      "sourceWemSHA256": "6a05e49ff797cb1e32ed006103c0fe68f68fc343e58ba202105553f99788fbbd"
+    },
+    {
+      "bank": "env_global_buildings_sfx_events",
+      "mediaId": 799487828,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\env_global_buildings\\799487828.wav",
+      "duration": 1.8760090702947845,
+      "sourceWemSHA256": "3b6020b6880fbea3ef228bad4919eef627a066935a80ec800e07d07e8580ed30"
+    },
+    {
+      "bank": "env_global_buildings_sfx_events",
+      "mediaId": 754260663,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\env_global_buildings\\754260663.wav",
+      "duration": 2.028684807256236,
+      "sourceWemSHA256": "f2a427c7e2718db53ec266a3fe6c900a979c438e8d1c17def73e028b55106024"
+    },
+    {
+      "bank": "env_global_buildings_sfx_events",
+      "mediaId": 805777099,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\env_global_buildings\\805777099.wav",
+      "duration": 2.1386848072562357,
+      "sourceWemSHA256": "44b31b8ceee0dfcf3e2b90adc76b2ef18312e08b8dabcf095b3b34be4d109c6e"
+    },
+    {
+      "bank": "env_global_buildings_sfx_events",
+      "mediaId": 393628420,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\env_global_buildings\\393628420.wav",
+      "duration": 2.13734693877551,
+      "sourceWemSHA256": "e47229fcc0863348ca50c0a17dbd4227cf3a2038197d7422b4ea566256eff0ed"
+    },
+    {
+      "bank": "env_global_buildings_sfx_events",
+      "mediaId": 866239695,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\env_global_buildings\\866239695.wav",
+      "duration": 1.5319274376417233,
+      "sourceWemSHA256": "e3c800e68455ac3586fc940fb0a2cdbf5fa9303046f98d580e58be6642e047b2"
+    },
+    {
+      "bank": "env_global_buildings_sfx_events",
+      "mediaId": 386921938,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\env_global_buildings\\386921938.wav",
+      "duration": 1.519002267573696,
+      "sourceWemSHA256": "c1f3e27c786c4060f5cd43088d5f3a06fbcec2078d3baac23c918f9444303972"
+    },
+    {
+      "bank": "env_global_buildings_sfx_events",
+      "mediaId": 964081362,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\env_global_buildings\\964081362.wav",
+      "duration": 1.4633333333333334,
+      "sourceWemSHA256": "1a30b19d8230d017eee2a2f17874b452ea096a4e480bd625087b76940119a31f"
+    },
+    {
+      "bank": "env_global_buildings_sfx_events",
+      "mediaId": 744576278,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\env_global_buildings\\744576278.wav",
+      "duration": 1.613015873015873,
+      "sourceWemSHA256": "60794235eb9da894743e0358ad9ee5d6669e98e4ad2c7c2bfb49c34bb7115f37"
+    },
+    {
+      "bank": "env_global_buildings_sfx_events",
+      "mediaId": 312540545,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\env_global_buildings\\312540545.wav",
+      "duration": 5.64843537414966,
+      "sourceWemSHA256": "0505e22bf48b2ca79a7089ba2fab9984ca11f32dd52dc2b06dcbf9822b3ec4ee"
+    },
+    {
+      "bank": "env_global_buildings_sfx_events",
+      "mediaId": 926711157,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\env_global_buildings\\926711157.wav",
+      "duration": 28.448616780045352,
+      "sourceWemSHA256": "df1a46b78a5d9a7ab2fc888c94a7429516d1816d26664f470a324547e70e8fa1"
+    },
+    {
+      "bank": "env_global_buildings_sfx_events",
+      "mediaId": 77955736,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\env_global_buildings\\77955736.wav",
+      "duration": 11.216371882086168,
+      "sourceWemSHA256": "44d8ad7b6ad544c8b43963e145de2cec742393e0a8d2e8f3cea330f4a83e82cf"
+    },
+    {
+      "bank": "env_eog_sfx_events",
+      "mediaId": 535900553,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\env_eog\\535900553.wav",
+      "duration": 18.606848072562357,
+      "sourceWemSHA256": "a20a896873b3f8ccd0274cd8abcddd61310294bc80d1bf1b2b036cdf1169f4e7"
+    },
+    {
+      "bank": "env_eog_sfx_events",
+      "mediaId": 553224360,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\env_eog\\553224360.wav",
+      "duration": 4.389047619047619,
+      "sourceWemSHA256": "db9182166840c865e0b881bff691330789533128b6e546e497776da7b9c1814c"
+    },
+    {
+      "bank": "env_eog_sfx_events",
+      "mediaId": 570611662,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\env_eog\\570611662.wav",
+      "duration": 3.92421768707483,
+      "sourceWemSHA256": "286758ad03afc6808cd52150735c7c86616c516fc2c7d5b65e078a98335d9ce7"
+    },
+    {
+      "bank": "env_eog_sfx_events",
+      "mediaId": 630446806,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\env_eog\\630446806.wav",
+      "duration": 5.963786848072562,
+      "sourceWemSHA256": "c5ac2f7b558980773a02b2a271f64d65cf683c588fce9dae7fc312df57d97a20"
+    },
+    {
+      "bank": "env_eog_sfx_events",
+      "mediaId": 848214419,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\env_eog\\848214419.wav",
+      "duration": 3.9253741496598638,
+      "sourceWemSHA256": "64956d2331842ce639c8fca98fe58f69f2e5311844eb24fc80aa1c656ad9b362"
+    },
+    {
+      "bank": "npc_global_minions_ordermelee_sfx_events",
+      "mediaId": 987946124,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_ordermelee\\987946124.wav",
+      "duration": 0.5663038548752835,
+      "sourceWemSHA256": "6e05066796318742c0a48d1ebf6a7b951940dc7769639389f38ebb0212d3263d"
+    },
+    {
+      "bank": "npc_global_minions_ordermelee_sfx_events",
+      "mediaId": 79153951,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_ordermelee\\79153951.wav",
+      "duration": 0.6037414965986394,
+      "sourceWemSHA256": "4b96ebda70519624cbe01c0fdae451fb3c3d8cf7f6d8634b8a7dbd24da2ee83a"
+    },
+    {
+      "bank": "npc_global_minions_ordermelee_sfx_events",
+      "mediaId": 20244531,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_ordermelee\\20244531.wav",
+      "duration": 0.5849433106575964,
+      "sourceWemSHA256": "09bab26a2979a7a193f26afcdab0c7d1df6b6178840ff5fbb985c1a8f83da7aa"
+    },
+    {
+      "bank": "npc_global_minions_ordermelee_sfx_events",
+      "mediaId": 85101672,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_ordermelee\\85101672.wav",
+      "duration": 0.61,
+      "sourceWemSHA256": "727be0c951b8eed2d8915e9d341f129ea8b422d91aa8aab4b3a7795446120783"
+    },
+    {
+      "bank": "npc_global_minions_ordermelee_sfx_events",
+      "mediaId": 1005004844,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_ordermelee\\1005004844.wav",
+      "duration": 0.49179138321995464,
+      "sourceWemSHA256": "d9d8318ce59bd1f7455472052c36138b4173ac1238dda9eebc16d2aee1a18aa9"
+    },
+    {
+      "bank": "npc_global_minions_ordermelee_sfx_events",
+      "mediaId": 229599323,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_ordermelee\\229599323.wav",
+      "duration": 0.5282086167800454,
+      "sourceWemSHA256": "98a466bb963fbd017dfe4e8c3e8098a982b43c25e9116328cf64de8e68634df6"
+    },
+    {
+      "bank": "npc_global_minions_ordermelee_sfx_events",
+      "mediaId": 725881456,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_ordermelee\\725881456.wav",
+      "duration": 0.5591156462585034,
+      "sourceWemSHA256": "74b54d6f4e3a7599cd795b843f3dcfc790d3a1ff1b2ea87744ef369df4266aef"
+    },
+    {
+      "bank": "npc_global_minions_ordermelee_sfx_events",
+      "mediaId": 209883648,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_ordermelee\\209883648.wav",
+      "duration": 0.5242630385487528,
+      "sourceWemSHA256": "644af2eb337feb2c45ae63517867adc4ce971ff8efab35e33d46d08ddab4b2ac"
+    },
+    {
+      "bank": "npc_global_minions_ordermelee_sfx_events",
+      "mediaId": 201255679,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_ordermelee\\201255679.wav",
+      "duration": 0.528843537414966,
+      "sourceWemSHA256": "2ab7225b81b85c395bf4620d06f7ba25f6a04ff889be7f38fc98fa4bdafb8ebd"
+    },
+    {
+      "bank": "npc_global_minions_ordermelee_sfx_events",
+      "mediaId": 749282956,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_ordermelee\\749282956.wav",
+      "duration": 0.570702947845805,
+      "sourceWemSHA256": "ce6e604ee2d5788a1e21d200c31dad941465fe61f94d36417f04d24b15e2c3d1"
+    },
+    {
+      "bank": "npc_global_minions_ordermelee_sfx_events",
+      "mediaId": 652469469,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_ordermelee\\652469469.wav",
+      "duration": 0.5508390022675737,
+      "sourceWemSHA256": "1cdce77a7c48a565560a4a646b7c018e0a0f7ea2116de90aa2bbe4055ac07b9a"
+    },
+    {
+      "bank": "npc_global_minions_ordermelee_sfx_events",
+      "mediaId": 373975055,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_ordermelee\\373975055.wav",
+      "duration": 0.5298412698412699,
+      "sourceWemSHA256": "5c1b132c8bc969cdadaafc5c560b948641d9e98fe4f7ce2aa88032f8a09959ec"
+    },
+    {
+      "bank": "npc_global_minions_ordermelee_sfx_events",
+      "mediaId": 455556863,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_ordermelee\\455556863.wav",
+      "duration": 0.8302947845804989,
+      "sourceWemSHA256": "07135a117bd8df01d86a89907e10e646debe5addf6f57fdb805075a8b8438784"
+    },
+    {
+      "bank": "npc_global_minions_ordermelee_sfx_events",
+      "mediaId": 522168886,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_ordermelee\\522168886.wav",
+      "duration": 0.7792290249433107,
+      "sourceWemSHA256": "6b897121f56109070ccc748381579c8e654ba61e4565749496be3536d53b5a79"
+    },
+    {
+      "bank": "npc_global_minions_ordermelee_sfx_events",
+      "mediaId": 488829941,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_ordermelee\\488829941.wav",
+      "duration": 0.616031746031746,
+      "sourceWemSHA256": "3c21eb7253ece5a2c5640715e7531b8cd34776f5ccfb6b2449ef73775bd58f6d"
+    },
+    {
+      "bank": "npc_global_minions_ordermelee_sfx_events",
+      "mediaId": 676098358,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_ordermelee\\676098358.wav",
+      "duration": 0.5229251700680272,
+      "sourceWemSHA256": "bdf4288d779f33e06e2364599eab619ae835a6003369c6fe57fc5ac5038ed355"
+    },
+    {
+      "bank": "npc_global_minions_ordermelee_sfx_events",
+      "mediaId": 1004793126,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_ordermelee\\1004793126.wav",
+      "duration": 0.6270521541950114,
+      "sourceWemSHA256": "de724434e97b2ae7f77d3616bcffe4e080bb92a6d9fb513a763d128660de809e"
+    },
+    {
+      "bank": "npc_global_minions_ordermelee_sfx_events",
+      "mediaId": 1068770480,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_ordermelee\\1068770480.wav",
+      "duration": 0.6253514739229025,
+      "sourceWemSHA256": "a9259d6cdf6421cc8ff7aa4a9662b7a0f443b01d0774f6274bb3185acff66609"
+    },
+    {
+      "bank": "npc_global_minions_ordermelee_sfx_events",
+      "mediaId": 649450405,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_ordermelee\\649450405.wav",
+      "duration": 0.5792517006802721,
+      "sourceWemSHA256": "785454d65e3fdd4926f92ff73a60777704e30575dcea17a7467c98284eb6fa51"
+    },
+    {
+      "bank": "npc_global_minions_ordermelee_sfx_events",
+      "mediaId": 336981901,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_ordermelee\\336981901.wav",
+      "duration": 0.5640816326530612,
+      "sourceWemSHA256": "eea5ed2d5caebdcbce689530a8cc324a5b24fb000d4a39ff6dcd3ad6da1d6aef"
+    },
+    {
+      "bank": "npc_global_minions_orderrange_sfx_events",
+      "mediaId": 298276329,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_orderrange\\298276329.wav",
+      "duration": 1.7096371882086168,
+      "sourceWemSHA256": "8844857628bacca265adb19f634594bf418bed28f7d27f2b16d92adec8841e78"
+    },
+    {
+      "bank": "npc_global_minions_orderrange_sfx_events",
+      "mediaId": 1026653325,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_orderrange\\1026653325.wav",
+      "duration": 1.6226757369614513,
+      "sourceWemSHA256": "81c7bda3697614b35ce64a41783fed697ccbb1c1335a451ebdcc0688f81f5cd2"
+    },
+    {
+      "bank": "npc_global_minions_orderrange_sfx_events",
+      "mediaId": 864552853,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_orderrange\\864552853.wav",
+      "duration": 1.570702947845805,
+      "sourceWemSHA256": "5a0a754117660d321d7e99ade73f660b0dd84b79c30c9cbdf2da42bd3c6b7cbd"
+    },
+    {
+      "bank": "npc_global_minions_orderrange_sfx_events",
+      "mediaId": 234939643,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_orderrange\\234939643.wav",
+      "duration": 1.0649206349206348,
+      "sourceWemSHA256": "4367b2f160efc3230cec5e137d76f3900486f969af63d9595609ec0dcb6352f8"
+    },
+    {
+      "bank": "npc_global_minions_orderrange_sfx_events",
+      "mediaId": 933238084,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_orderrange\\933238084.wav",
+      "duration": 0.9073922902494331,
+      "sourceWemSHA256": "7f534ac129042952a83b5bed661ba6c73bc7c4a7127e9f65672a8200902a5180"
+    },
+    {
+      "bank": "npc_global_minions_orderrange_sfx_events",
+      "mediaId": 672380233,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_orderrange\\672380233.wav",
+      "duration": 1.0112471655328799,
+      "sourceWemSHA256": "e31c61f6a2de01faedeea02c3cc72d3d48216889ec9d5617f4ef596f540d67e3"
+    },
+    {
+      "bank": "npc_global_minions_orderrange_sfx_events",
+      "mediaId": 942773674,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_orderrange\\942773674.wav",
+      "duration": 0.9229251700680272,
+      "sourceWemSHA256": "2188b697bca819555f912738486a94ba19180c2a4b436a0bcacb9779824f51f9"
+    },
+    {
+      "bank": "npc_global_minions_ordersiege_sfx_events",
+      "mediaId": 478530291,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_ordersiege\\478530291.wav",
+      "duration": 2.338390022675737,
+      "sourceWemSHA256": "085fd08a8dcbc199eae98e6a594e1d179a23912f24dadaa198aea05419ff9d0f"
+    },
+    {
+      "bank": "npc_global_minions_ordersiege_sfx_events",
+      "mediaId": 102902881,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_ordersiege\\102902881.wav",
+      "duration": 2.2688208616780043,
+      "sourceWemSHA256": "d6015b07efc1fc38e812bb59104959667f780ba5a66728a476f07bf5fcf38918"
+    },
+    {
+      "bank": "npc_global_minions_ordersiege_sfx_events",
+      "mediaId": 959602084,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_ordersiege\\959602084.wav",
+      "duration": 2.4506349206349207,
+      "sourceWemSHA256": "fe3b89a29dac832f44f21f9b31706cbdec28844a99393194da47e35122371a3b"
+    },
+    {
+      "bank": "npc_global_minions_ordersiege_sfx_events",
+      "mediaId": 645432613,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_ordersiege\\645432613.wav",
+      "duration": 2.4884353741496597,
+      "sourceWemSHA256": "a8c49d7023a6085950c75343fda4ca58a580fd6330b2b9a2c654d8c4c9b27e92"
+    },
+    {
+      "bank": "npc_global_minions_ordersiege_sfx_events",
+      "mediaId": 904299398,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_ordersiege\\904299398.wav",
+      "duration": 2.142403628117914,
+      "sourceWemSHA256": "ffb1bcc4182701deb89558b1db87a608e8cbf790bd9bff28304eea16df2819b0"
+    },
+    {
+      "bank": "npc_global_minions_ordersiege_sfx_events",
+      "mediaId": 555363738,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_ordersiege\\555363738.wav",
+      "duration": 1.8763038548752835,
+      "sourceWemSHA256": "aacea438a390cc3f926f14bf5e7fda2381ba4bf0a7c601dd1d97e36b6b9fb520"
+    },
+    {
+      "bank": "npc_global_minions_ordersiege_sfx_events",
+      "mediaId": 375781608,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_ordersiege\\375781608.wav",
+      "duration": 1.9041950113378685,
+      "sourceWemSHA256": "fc7a482e321aaabea96454eb982ad2cf6714b2e4e65c1d44e447607dc82a94d0"
+    },
+    {
+      "bank": "npc_global_minions_ordersiege_sfx_events",
+      "mediaId": 127103123,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_ordersiege\\127103123.wav",
+      "duration": 1.633061224489796,
+      "sourceWemSHA256": "49875f7366b600f8e433950921c79bdfd6414f110443d71712651193670c4916"
+    },
+    {
+      "bank": "npc_global_minions_ordersiege_sfx_events",
+      "mediaId": 181874499,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_ordersiege\\181874499.wav",
+      "duration": 1.3475510204081633,
+      "sourceWemSHA256": "5d3c9f585e0f744ffe02263853f6fc8d7668c77df8657a1b58d19234fd68be5f"
+    },
+    {
+      "bank": "npc_global_minions_ordersiege_sfx_events",
+      "mediaId": 357458628,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_ordersiege\\357458628.wav",
+      "duration": 1.4201360544217687,
+      "sourceWemSHA256": "4fe44659708f891b484fae4c602a70104edb77cb1200ae041d4dae27167b1ce7"
+    },
+    {
+      "bank": "npc_global_minions_ordersiege_sfx_events",
+      "mediaId": 177876208,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_ordersiege\\177876208.wav",
+      "duration": 1.578639455782313,
+      "sourceWemSHA256": "fd29e38b1ab7d8859a65d43fffe83b13787f962d5edae70be1753d694b329e67"
+    },
+    {
+      "bank": "npc_global_minions_ordersiege_sfx_events",
+      "mediaId": 254508219,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_ordersiege\\254508219.wav",
+      "duration": 2.2007256235827666,
+      "sourceWemSHA256": "0bbb4490957efff35f4a57d39c6814c6bbbb4cecf7a721cc2e3b744548cc0b22"
+    },
+    {
+      "bank": "npc_global_minions_ordersuper_sfx_events",
+      "mediaId": 296206528,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_ordersuper\\296206528.wav",
+      "duration": 0.7672562358276644,
+      "sourceWemSHA256": "fcf99d91d4ff71ba2d99aaa03c1d999afae7e2ee975165743d40b8f87ba46e48"
+    },
+    {
+      "bank": "npc_global_minions_ordersuper_sfx_events",
+      "mediaId": 556331228,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_ordersuper\\556331228.wav",
+      "duration": 0.8246485260770975,
+      "sourceWemSHA256": "b488342a6eb7af52b37e65bc538bd4a1ed7defc1a849154a407ca5ea2936330e"
+    },
+    {
+      "bank": "npc_global_minions_ordersuper_sfx_events",
+      "mediaId": 774927191,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_ordersuper\\774927191.wav",
+      "duration": 0.7303854875283446,
+      "sourceWemSHA256": "1a964f324c61f2c6fd029485af8858404dc00e013a06ed5ee52e789a57dd52af"
+    },
+    {
+      "bank": "npc_global_minions_ordersuper_sfx_events",
+      "mediaId": 931964229,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_ordersuper\\931964229.wav",
+      "duration": 0.7662811791383219,
+      "sourceWemSHA256": "f95fda27f48fff9458b7ffd6793619b0aaac721b36f9bed79178f61e70468c41"
+    },
+    {
+      "bank": "npc_global_minions_ordersuper_sfx_events",
+      "mediaId": 255122525,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_ordersuper\\255122525.wav",
+      "duration": 2.5777551020408165,
+      "sourceWemSHA256": "14da4d959fd0985e7ecca37a45bc413190f6948e2fd3334d567f9c24937b93b8"
+    },
+    {
+      "bank": "npc_global_minions_ordersuper_sfx_events",
+      "mediaId": 548452169,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_ordersuper\\548452169.wav",
+      "duration": 2.5627437641723354,
+      "sourceWemSHA256": "0197ac6da148f12455d9e2fb2cb299c1c380ec8c3c612f21d11644dae583a859"
+    },
+    {
+      "bank": "npc_global_minions_ordersuper_sfx_events",
+      "mediaId": 1054850674,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_ordersuper\\1054850674.wav",
+      "duration": 2.0618367346938777,
+      "sourceWemSHA256": "618a0c83d892429aa9edea36abf49cbd6eb5a77b29a3512ed1fa6d276ebedc42"
+    },
+    {
+      "bank": "npc_global_minions_ordersuper_sfx_events",
+      "mediaId": 323728920,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_ordersuper\\323728920.wav",
+      "duration": 2.5056009070294785,
+      "sourceWemSHA256": "bcb5bb491f2799b32841f0ed115873784a5148010cc91e3c326bc33efd73283c"
+    },
+    {
+      "bank": "npc_global_minions_ordersuper_sfx_events",
+      "mediaId": 965795940,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_ordersuper\\965795940.wav",
+      "duration": 1.4078458049886622,
+      "sourceWemSHA256": "1a939c122b088120527c5a19e7a534746522bd602b057ab223362691d25a4196"
+    },
+    {
+      "bank": "npc_global_minions_ordersuper_sfx_events",
+      "mediaId": 765723772,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_ordersuper\\765723772.wav",
+      "duration": 1.4720408163265306,
+      "sourceWemSHA256": "ebd8f6895c47ae64a9719adc3bcf40437ccdd7ba98c48f2852c94acf92efcaae"
+    },
+    {
+      "bank": "npc_global_minions_ordersuper_sfx_events",
+      "mediaId": 460438271,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_ordersuper\\460438271.wav",
+      "duration": 1.4167120181405897,
+      "sourceWemSHA256": "d9c8e521fca52c2579f5cac866b9a2556797829f33dd235ae61ddc74732b69ff"
+    },
+    {
+      "bank": "npc_global_minions_ordersuper_sfx_events",
+      "mediaId": 59568009,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_ordersuper\\59568009.wav",
+      "duration": 1.3344671201814058,
+      "sourceWemSHA256": "ea6570d1f522468f5b98418aca8c2aafda84d424da40d6b84dc9c81917ee332c"
+    },
+    {
+      "bank": "env_global_buildings_sfx_events",
+      "mediaId": 988665057,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\env_global_buildings\\988665057.wav",
+      "duration": 2.0058503401360546,
+      "sourceWemSHA256": "d822504ea9641bdcee481cfaa47b6707cc28f7629dac19f39003ac0bb95b8c38"
+    },
+    {
+      "bank": "env_global_buildings_sfx_events",
+      "mediaId": 504466497,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\env_global_buildings\\504466497.wav",
+      "duration": 1.8391836734693878,
+      "sourceWemSHA256": "67e1c94c309db626984fc9fb325667493e135944968bea6dfaed523988b5c3a6"
+    },
+    {
+      "bank": "env_global_buildings_sfx_events",
+      "mediaId": 201534931,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\env_global_buildings\\201534931.wav",
+      "duration": 1.8123356009070295,
+      "sourceWemSHA256": "c1e8d35967f442029ebe21da2227743f6d88fac159ede9cff2c6e7ce03c99a17"
+    },
+    {
+      "bank": "env_global_buildings_sfx_events",
+      "mediaId": 446045041,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\env_global_buildings\\446045041.wav",
+      "duration": 2.054671201814059,
+      "sourceWemSHA256": "fa7897872269105dae2223c6d78370e7a8e81c9108a85c34cae1056091efc415"
+    },
+    {
+      "bank": "env_global_buildings_sfx_events",
+      "mediaId": 835745104,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\env_global_buildings\\835745104.wav",
+      "duration": 1.9726757369614512,
+      "sourceWemSHA256": "7f5d359ba11f8a1a821b8dc019da6d73dfea24da3a3583829ad5986918899e82"
+    },
+    {
+      "bank": "env_global_buildings_sfx_events",
+      "mediaId": 432513021,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\env_global_buildings\\432513021.wav",
+      "duration": 1.8681179138321995,
+      "sourceWemSHA256": "72052490789264d4d0543ed96c335b35cd27f27436465a1e18373ddbf073586e"
+    },
+    {
+      "bank": "env_global_buildings_sfx_events",
+      "mediaId": 672706197,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\env_global_buildings\\672706197.wav",
+      "duration": 2.0768480725623584,
+      "sourceWemSHA256": "ad6f96bf2b31241f9d9cc03c8e1f6569f1174b233cc98f002cb0a611f4fda42a"
+    },
+    {
+      "bank": "env_global_buildings_sfx_events",
+      "mediaId": 972133402,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\env_global_buildings\\972133402.wav",
+      "duration": 2.0241043083900228,
+      "sourceWemSHA256": "6c2552d40bb60ae3926fe52c1105e325573936c8a0c3652c1eeda1148979695c"
+    },
+    {
+      "bank": "env_global_buildings_sfx_events",
+      "mediaId": 805229884,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\env_global_buildings\\805229884.wav",
+      "duration": 2.0533333333333332,
+      "sourceWemSHA256": "f4259228009bec63dcc2b444639d43267ad6bdf9316831ad9fc831e8f346ddaa"
+    },
+    {
+      "bank": "env_global_buildings_sfx_events",
+      "mediaId": 617593959,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\env_global_buildings\\617593959.wav",
+      "duration": 2.2120181405895694,
+      "sourceWemSHA256": "918f6f1011bd7741f82d3951e2f89b98fd8bbcf9e3b38d4fcc2bd654fb6a2035"
+    },
+    {
+      "bank": "env_global_buildings_sfx_events",
+      "mediaId": 301666220,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\env_global_buildings\\301666220.wav",
+      "duration": 2.5150113378684806,
+      "sourceWemSHA256": "ea03cc928036428b2cc9814784ff3141ab4b83930bd080102cf053aec9c9cd3f"
+    },
+    {
+      "bank": "env_global_buildings_sfx_events",
+      "mediaId": 479442805,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\env_global_buildings\\479442805.wav",
+      "duration": 2.649342403628118,
+      "sourceWemSHA256": "7e1274b43360c9b240c610efca63c77a2e234902e175c177854d39dae91289a4"
+    },
+    {
+      "bank": "env_global_buildings_sfx_events",
+      "mediaId": 113917317,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\env_global_buildings\\113917317.wav",
+      "duration": 2.2650113378684806,
+      "sourceWemSHA256": "c29c39154b492bc321878d4cad99dc8e86a0f2152765abf910d6e17ad3e1f5c4"
+    },
+    {
+      "bank": "env_global_buildings_sfx_events",
+      "mediaId": 363961562,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\env_global_buildings\\363961562.wav",
+      "duration": 2.1663492063492065,
+      "sourceWemSHA256": "d7c8f97ffae7408f19c148a427a74ad473087cf8b82f7bcd92e78d4580c60a0c"
+    },
+    {
+      "bank": "env_global_buildings_sfx_events",
+      "mediaId": 961844460,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\env_global_buildings\\961844460.wav",
+      "duration": 2.188140589569161,
+      "sourceWemSHA256": "406373af91764813789ef774cde788cc756eb432849e4e52c88b3de0a246d5a9"
+    },
+    {
+      "bank": "env_global_buildings_sfx_events",
+      "mediaId": 677937401,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\env_global_buildings\\677937401.wav",
+      "duration": 1.9416780045351474,
+      "sourceWemSHA256": "8f1fb214f438f640559b5e46294322037719b586b151032560b5f8bedc08aa30"
+    },
+    {
+      "bank": "env_global_buildings_sfx_events",
+      "mediaId": 35490003,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\env_global_buildings\\35490003.wav",
+      "duration": 27.958820861678003,
+      "sourceWemSHA256": "df8ac73d3abaac3d99f80a724f8733e8554a973021417a091a848a6755d600e2"
+    },
+    {
+      "bank": "env_global_buildings_sfx_events",
+      "mediaId": 647038739,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\env_global_buildings\\647038739.wav",
+      "duration": 12.902471655328798,
+      "sourceWemSHA256": "4a54be294ff9ee06f93d401246485cb1d72766b375fd4685390a2b7da59c70e0"
+    },
+    {
+      "bank": "env_eog_sfx_events",
+      "mediaId": 334071054,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\env_eog\\334071054.wav",
+      "duration": 5.875895691609977,
+      "sourceWemSHA256": "3077c0b6c7ce3ef97afb059c2a6c412ee072c58f2cfd8ffa28505c99d3ef5364"
+    },
+    {
+      "bank": "env_eog_sfx_events",
+      "mediaId": 754004643,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\env_eog\\754004643.wav",
+      "duration": 4.564172335600907,
+      "sourceWemSHA256": "88618642ec75ec5a2b9375eb0de905256ecf36a4a2852feef39d114278417082"
+    },
+    {
+      "bank": "env_eog_sfx_events",
+      "mediaId": 485014584,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\env_eog\\485014584.wav",
+      "duration": 8.06546485260771,
+      "sourceWemSHA256": "4f479b966a16f90bdd12615b72028b735b205790b45e84fdf065a8b6b5102cb7"
+    },
+    {
+      "bank": "env_eog_sfx_events",
+      "mediaId": 523028056,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\env_eog\\523028056.wav",
+      "duration": 3.7097732426303853,
+      "sourceWemSHA256": "b8e21339ee62f7edb4762d1f629d04a1674dd6e7d4a8359bdc197ee53d49a13f"
+    },
+    {
+      "bank": "npc_global_minions_chaosmelee_sfx_events",
+      "mediaId": 981426204,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_chaosmelee\\981426204.wav",
+      "duration": 0.7436054421768707,
+      "sourceWemSHA256": "91bfa0b5d4990ca5e0d9ebb68d5621c0660a8b6e47827358d9126cf3dd90633d"
+    },
+    {
+      "bank": "npc_global_minions_chaosmelee_sfx_events",
+      "mediaId": 457464557,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_chaosmelee\\457464557.wav",
+      "duration": 0.8480045351473923,
+      "sourceWemSHA256": "2da038f11cb15d683097db15f66adcd38d6e98c7ede12cbe4c5ee5c0578d84e2"
+    },
+    {
+      "bank": "npc_global_minions_chaosmelee_sfx_events",
+      "mediaId": 416699710,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_chaosmelee\\416699710.wav",
+      "duration": 0.7618140589569161,
+      "sourceWemSHA256": "0ecccadec734c5ddf42d918e8a70e8f5c4c4b6a0fb23c123d7989f3081f096e7"
+    },
+    {
+      "bank": "npc_global_minions_chaosmelee_sfx_events",
+      "mediaId": 797432942,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_chaosmelee\\797432942.wav",
+      "duration": 0.6317460317460317,
+      "sourceWemSHA256": "d319cfef3bc67f9d1a88b62d41d30a70738fe95c1024ecbdcdba6838ffce73ef"
+    },
+    {
+      "bank": "npc_global_minions_chaosmelee_sfx_events",
+      "mediaId": 979677881,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_chaosmelee\\979677881.wav",
+      "duration": 0.8109977324263039,
+      "sourceWemSHA256": "26fa751cc001720bd325eb79900d2d31f699c69d01e656038950a6eaf103f672"
+    },
+    {
+      "bank": "npc_global_minions_chaosmelee_sfx_events",
+      "mediaId": 384833560,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_chaosmelee\\384833560.wav",
+      "duration": 0.6890022675736961,
+      "sourceWemSHA256": "ad7ffd6122a8329ef48af5433c72dce58e6e241b1e2b599f4631e5d25dc53982"
+    },
+    {
+      "bank": "npc_global_minions_chaosmelee_sfx_events",
+      "mediaId": 493760156,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_chaosmelee\\493760156.wav",
+      "duration": 0.7082766439909297,
+      "sourceWemSHA256": "369be47873c1182971f3c2f4bfb7c0bcfce1f73e156859ef4603ddd04684b80f"
+    },
+    {
+      "bank": "npc_global_minions_chaosmelee_sfx_events",
+      "mediaId": 81705707,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_chaosmelee\\81705707.wav",
+      "duration": 0.881859410430839,
+      "sourceWemSHA256": "08027abaeb256c2f9a8d5b203b6a1fc356e0965ed0e7874bf598a6c7e5900c15"
+    },
+    {
+      "bank": "npc_global_minions_chaosmelee_sfx_events",
+      "mediaId": 623322527,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_chaosmelee\\623322527.wav",
+      "duration": 0.9640136054421768,
+      "sourceWemSHA256": "be82e8032ddd623b78a41778b8c061089a36c9d1a1cdb04c7b5975fe95d6d7ed"
+    },
+    {
+      "bank": "npc_global_minions_chaosmelee_sfx_events",
+      "mediaId": 110715298,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_chaosmelee\\110715298.wav",
+      "duration": 0.8986848072562358,
+      "sourceWemSHA256": "14a2a00128cc021e73e06075a14817ea53c2041787105b04744f9d024c3762b4"
+    },
+    {
+      "bank": "npc_global_minions_chaosmelee_sfx_events",
+      "mediaId": 140983745,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_chaosmelee\\140983745.wav",
+      "duration": 0.9068707482993197,
+      "sourceWemSHA256": "fb9294d22fd49bfe57f8cd89a387a5c258ffd04d120578cc65cdb2c4f39b9846"
+    },
+    {
+      "bank": "npc_global_minions_chaosmelee_sfx_events",
+      "mediaId": 742412899,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_chaosmelee\\742412899.wav",
+      "duration": 0.8096145124716553,
+      "sourceWemSHA256": "b7d917c71d227012a6f594240dcd36e39f0cda0b18f886de950267d4cd7a3b3d"
+    },
+    {
+      "bank": "npc_global_minions_chaosmelee_sfx_events",
+      "mediaId": 808681780,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_chaosmelee\\808681780.wav",
+      "duration": 0.43247165532879817,
+      "sourceWemSHA256": "b6a1faba85bf020b5ea052b7c94e48239e1de42bf862e54e6ecd6553bfa380ef"
+    },
+    {
+      "bank": "npc_global_minions_chaosmelee_sfx_events",
+      "mediaId": 239995408,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_chaosmelee\\239995408.wav",
+      "duration": 0.40210884353741494,
+      "sourceWemSHA256": "eedc5169817097925c4f48f8d8de97af96e26a6eeececc3385757636047b9361"
+    },
+    {
+      "bank": "npc_global_minions_chaosmelee_sfx_events",
+      "mediaId": 881928804,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_chaosmelee\\881928804.wav",
+      "duration": 0.47374149659863946,
+      "sourceWemSHA256": "ba82686c96633653a72d2a4e5280f867f505b5531924500df0fe5a5f13b71c61"
+    },
+    {
+      "bank": "npc_global_minions_chaosmelee_sfx_events",
+      "mediaId": 1061667902,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_chaosmelee\\1061667902.wav",
+      "duration": 0.424875283446712,
+      "sourceWemSHA256": "9f89d0c99c93c120fb1028956a6fa5cf73136d8b1fb65f6daee7cf5d9ed2ea1f"
+    },
+    {
+      "bank": "npc_global_minions_chaosmelee_sfx_events",
+      "mediaId": 83227058,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_chaosmelee\\83227058.wav",
+      "duration": 0.5705668934240363,
+      "sourceWemSHA256": "2ea59767f528fe37ba0807499f5461bdcf58f856addaaa0abb3d7ebb48d1d07e"
+    },
+    {
+      "bank": "npc_global_minions_chaosmelee_sfx_events",
+      "mediaId": 150405873,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_chaosmelee\\150405873.wav",
+      "duration": 0.58437641723356,
+      "sourceWemSHA256": "f73b9365612115ec2a47c903adb7bff011453332c080a561ef22c38abadf86ee"
+    },
+    {
+      "bank": "npc_global_minions_chaosmelee_sfx_events",
+      "mediaId": 822908715,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_chaosmelee\\822908715.wav",
+      "duration": 0.6660090702947846,
+      "sourceWemSHA256": "1357e08e521a66eeb7109cf11b5a88f801a65f67891b963d8a26fbdf775c8177"
+    },
+    {
+      "bank": "npc_global_minions_chaosmelee_sfx_events",
+      "mediaId": 642046833,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_chaosmelee\\642046833.wav",
+      "duration": 0.620249433106576,
+      "sourceWemSHA256": "c47aad87869c95a065ded737541448a0186613e9f7e6a0c23ad8b14350f92bdc"
+    },
+    {
+      "bank": "npc_global_minions_chaosrange_sfx_events",
+      "mediaId": 684869467,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_chaosrange\\684869467.wav",
+      "duration": 1.3128798185941044,
+      "sourceWemSHA256": "920d1af5d6b8f4d257b554c8bd5227d218db55bc876b3aaccb83576d38e0b84b"
+    },
+    {
+      "bank": "npc_global_minions_chaosrange_sfx_events",
+      "mediaId": 516414628,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_chaosrange\\516414628.wav",
+      "duration": 1.4667120181405895,
+      "sourceWemSHA256": "29642c0208a2c4c624e00c8da1dee49038804a09ae3c8aa30831af3ac070595e"
+    },
+    {
+      "bank": "npc_global_minions_chaosrange_sfx_events",
+      "mediaId": 205813774,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_chaosrange\\205813774.wav",
+      "duration": 1.3740362811791382,
+      "sourceWemSHA256": "8ecad44d57584311da4c2277e7b0403bfd12bcb4e8423ab4a3254d747a9de191"
+    },
+    {
+      "bank": "npc_global_minions_chaosrange_sfx_events",
+      "mediaId": 1008854294,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_chaosrange\\1008854294.wav",
+      "duration": 0.9225396825396825,
+      "sourceWemSHA256": "3d70d4f450e69e28654da4935c4a24cd8d59e56c2c7ee2b53b9e903c1a7a6aa9"
+    },
+    {
+      "bank": "npc_global_minions_chaosrange_sfx_events",
+      "mediaId": 676519336,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_chaosrange\\676519336.wav",
+      "duration": 0.9235600907029479,
+      "sourceWemSHA256": "fb45d710c9ed0ccf39529cd5a38bc527683930a5b9bb758979b6be6d9a69418d"
+    },
+    {
+      "bank": "npc_global_minions_chaosrange_sfx_events",
+      "mediaId": 692437932,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_chaosrange\\692437932.wav",
+      "duration": 1.0565759637188208,
+      "sourceWemSHA256": "99f574a8009dbb3c94d7611185b12cd63aff9a8257b8fd4bcbff7d334abe44b8"
+    },
+    {
+      "bank": "npc_global_minions_chaosrange_sfx_events",
+      "mediaId": 819822025,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_chaosrange\\819822025.wav",
+      "duration": 0.7402721088435374,
+      "sourceWemSHA256": "18124367b224a23fc5772fa223bc22cb59cc5debb04e1b34846a2a48c2fed362"
+    },
+    {
+      "bank": "npc_global_minions_chaossiege_sfx_events",
+      "mediaId": 265319268,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_chaossiege\\265319268.wav",
+      "duration": 1.2183673469387755,
+      "sourceWemSHA256": "cf71c7df7d8d57034735b82b690f677b9d774a76a5a7fe416139736142382b8d"
+    },
+    {
+      "bank": "npc_global_minions_chaossiege_sfx_events",
+      "mediaId": 701531219,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_chaossiege\\701531219.wav",
+      "duration": 1.7741950113378684,
+      "sourceWemSHA256": "b330faa05f2df9bae7d435d0218f0b32b4c5e805b4f411dbcc97bee2a47b8385"
+    },
+    {
+      "bank": "npc_global_minions_chaossiege_sfx_events",
+      "mediaId": 339112310,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_chaossiege\\339112310.wav",
+      "duration": 1.372018140589569,
+      "sourceWemSHA256": "f46c63adef5f52bbcb1438892ecd961b65335023c0fecec84ad98ef4ee564aad"
+    },
+    {
+      "bank": "npc_global_minions_chaossiege_sfx_events",
+      "mediaId": 513282067,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_chaossiege\\513282067.wav",
+      "duration": 1.5973242630385487,
+      "sourceWemSHA256": "ed9d41f341623530e957c0d8af839454052f53697fa2e9c6b6ad1a84e2ddea5c"
+    },
+    {
+      "bank": "npc_global_minions_chaossiege_sfx_events",
+      "mediaId": 811444941,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_chaossiege\\811444941.wav",
+      "duration": 1.167142857142857,
+      "sourceWemSHA256": "a7d2a2e3491cfd5db1be37a445a4a47d6301bacf7fe5676795e0a1a163b60fa0"
+    },
+    {
+      "bank": "npc_global_minions_chaossiege_sfx_events",
+      "mediaId": 928248863,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_chaossiege\\928248863.wav",
+      "duration": 1.121609977324263,
+      "sourceWemSHA256": "267920806f91009e25026861682b7b6e2bf0ba4ac1cc203062b951b213202bcc"
+    },
+    {
+      "bank": "npc_global_minions_chaossiege_sfx_events",
+      "mediaId": 986079880,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_chaossiege\\986079880.wav",
+      "duration": 0.8940136054421769,
+      "sourceWemSHA256": "4f4f99ab65d6b171ec9dbfb1c5d16a636a5cfd8b6076627ae6e8464b478856af"
+    },
+    {
+      "bank": "npc_global_minions_chaossiege_sfx_events",
+      "mediaId": 264301615,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_chaossiege\\264301615.wav",
+      "duration": 1.0946031746031746,
+      "sourceWemSHA256": "8eb84420d868ceeb3f015e7a7b8ad04af64e44489d22615609e8bf8318fe229c"
+    },
+    {
+      "bank": "npc_global_minions_chaossuper_sfx_events",
+      "mediaId": 267771522,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_chaossuper\\267771522.wav",
+      "duration": 0.9231065759637188,
+      "sourceWemSHA256": "f3969b3c0e136e102771cd353b0f012a5acd3e31fed7876052b07a295725ce31"
+    },
+    {
+      "bank": "npc_global_minions_chaossuper_sfx_events",
+      "mediaId": 969969263,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_chaossuper\\969969263.wav",
+      "duration": 0.9557596371882087,
+      "sourceWemSHA256": "43bbef8ac145a2c53c5c6b4b12dbfbe962da595f3f6cc1028b12cba50aab4653"
+    },
+    {
+      "bank": "npc_global_minions_chaossuper_sfx_events",
+      "mediaId": 166196009,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_chaossuper\\166196009.wav",
+      "duration": 0.8357596371882087,
+      "sourceWemSHA256": "7d2b99254e151249866672e583e9fbf3d447868efe7656bb20aa26ae0fd2a119"
+    },
+    {
+      "bank": "npc_global_minions_chaossuper_sfx_events",
+      "mediaId": 102090040,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_chaossuper\\102090040.wav",
+      "duration": 0.9024489795918368,
+      "sourceWemSHA256": "7f7f7399f5afd0c63773b41d8905962fdc0d4efa1e2780d36090b42459e97b05"
+    },
+    {
+      "bank": "npc_global_minions_chaossuper_sfx_events",
+      "mediaId": 693752645,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_chaossuper\\693752645.wav",
+      "duration": 1.4482312925170069,
+      "sourceWemSHA256": "2c926faf1ac33e9ae24abea925d3e924535fe65cead3c0b65b4a6478eb4e20e2"
+    },
+    {
+      "bank": "npc_global_minions_chaossuper_sfx_events",
+      "mediaId": 808954279,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_chaossuper\\808954279.wav",
+      "duration": 0.9358049886621315,
+      "sourceWemSHA256": "b22d14387e2c30e46cc8cb08395c066821d25eea20d1ca6dafb0a9bacd57165c"
+    },
+    {
+      "bank": "npc_global_minions_chaossuper_sfx_events",
+      "mediaId": 882427249,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_chaossuper\\882427249.wav",
+      "duration": 1.3275283446712018,
+      "sourceWemSHA256": "e7fa968f4135ed4ea3f97ddabf854508948fca122da586d1ad8fd8887f3e2503"
+    },
+    {
+      "bank": "npc_global_minions_chaossuper_sfx_events",
+      "mediaId": 634067554,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_chaossuper\\634067554.wav",
+      "duration": 1.079591836734694,
+      "sourceWemSHA256": "24e973d497437a0b3f6d7c01b6643615d7e1b33cd5a7bd6a6fb0d1087a2f7d9a"
+    },
+    {
+      "bank": "npc_global_minions_chaossuper_sfx_events",
+      "mediaId": 713565607,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_chaossuper\\713565607.wav",
+      "duration": 1.2017913832199547,
+      "sourceWemSHA256": "350c5a1ff3f0cc4b530b9938120f085ace4bfb5570929018a95ad0ff2ebe602a"
+    },
+    {
+      "bank": "npc_global_minions_chaossuper_sfx_events",
+      "mediaId": 665034686,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_chaossuper\\665034686.wav",
+      "duration": 1.3468707482993196,
+      "sourceWemSHA256": "6b7cc19a5a8646e11f1944a74c3882362b0f76fd29c024bfae02a8be3d0e9edf"
+    },
+    {
+      "bank": "npc_global_minions_chaossuper_sfx_events",
+      "mediaId": 765116358,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_chaossuper\\765116358.wav",
+      "duration": 1.4586621315192745,
+      "sourceWemSHA256": "0d441b16afadc548cbfed1ed664fe42def1e9fae5512f196c0c7aa4bc6a19ac3"
+    },
+    {
+      "bank": "npc_global_minions_chaossuper_sfx_events",
+      "mediaId": 931278533,
+      "wav": "C:\\Users\\Kakad\\AppData\\Local\\Temp\\LeagueVRPolish\\Audio\\npc_global_minions_chaossuper\\931278533.wav",
+      "duration": 1.123628117913832,
+      "sourceWemSHA256": "b2c3e320c9c1ca5b520806307308ab4075225c142782416ef96ee0f187e604a0"
+    }
+  ],
+  "notes": "Decoded unchanged original Wwise media from the local League installation. Event mapping follows verified bank event IDs and Play action container lineage. Unity mixes the selected original layers; Wwise RTPC/filter/delay processing is not recreated."
+}

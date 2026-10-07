@@ -1,0 +1,100 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1507f9c1fc5ee634f85448889214c929, type: 3}
+  m_Name: Pantheon
+  m_EditorClassIdentifier: Assembly-CSharp::LeagueVR.Champions.ChampionDefinition
+  id: 5
+  title: the Unbreakable Spear
+  role: Fighter / Assassin
+  passiveName: Mortal Will
+  passiveDescription: Five attacks or spells empower the next basic ability.
+  patch: 16.19.1
+  portrait: {fileID: 2800000, guid: 083cbf077ab6e694ba9694626abc15d9, type: 3}
+  passiveIcon: {fileID: 2800000, guid: a632cc498124225469be25935e475166, type: 3}
+  spells:
+  - name: Comet Spear
+    vrDescription: 'Right secondary: throw your spear. Five Mortal Will stacks empower it. Low-health enemies take extra damage.'
+    icon: {fileID: 2800000, guid: f4e536dd880308149bc8cb438c381507, type: 3}
+    cooldowns:
+    - 11
+    - 10.25
+    - 9.5
+    - 8.75
+    - 8
+    costs:
+    - 25
+    - 25
+    - 25
+    - 25
+    - 25
+  - name: Shield Vault
+    vrDescription: Aim left hand at a nearby enemy and press left primary. Step into range and stun them; empowered vault adds three hits.
+    icon: {fileID: 2800000, guid: b1db46c3d1b405241b9dfae1f6867878, type: 3}
+    cooldowns:
+    - 13
+    - 12
+    - 11
+    - 10
+    - 9
+    costs:
+    - 55
+    - 55
+    - 55
+    - 55
+    - 55
+  - name: Aegis Assault
+    vrDescription: 'Right primary: raise Aegis Assault. Point the left shield toward incoming damage while your spear strikes. Turrets still hurt.'
+    icon: {fileID: 2800000, guid: 40c82e2dae3e15d48822a9e77a0d249a, type: 3}
+    cooldowns:
+    - 22
+    - 21
+    - 20
+    - 19
+    - 18
+    costs:
+    - 80
+    - 80
+    - 80
+    - 80
+    - 80
+  - name: Grand Starfall
+    vrDescription: 'Left trigger: aim at ground up to 24 metres. A one-second landing warning, then a comfortable blink and impact.'
+    icon: {fileID: 2800000, guid: 6cb65621056916e408f2c51a49232cf6, type: 3}
+    cooldowns:
+    - 180
+    - 165
+    - 150
+    costs:
+    - 100
+    - 100
+    - 100
+  model: {fileID: 7206090696476241464, guid: 04f49735a947668419e9cf1c54aa22c4, type: 3}
+  firstPerson: {fileID: 4789725191403550057, guid: 4bdcb546c12d50744bedbb0d4781d3b7, type: 3}
+  idle: {fileID: -3020990790245188044, guid: 9ca665c9748336a439e579558c95e8ce, type: 3}
+  color: {r: 0.9, g: 0.79, b: 0.47, a: 1}
+  health: 650
+  healthGrowth: 109
+  armor: 40
+  armorGrowth: 4.95
+  magicResist: 28
+  magicResistGrowth: 2.05
+  mana: 317
+  manaGrowth: 31
+  attackDamage: 64
+  attackGrowth: 0
+  attackSpeed: 0.658
+  attackSpeedGrowth: 2.95
+  moveSpeed: 345
+  healthRegen: 6
+  manaRegen: 7.35
+  attackReach: 2.4
+  bodyHeight: 1.75

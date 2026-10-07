@@ -1,0 +1,8 @@
+from pathlib import Path
+T=Path(r'C:\Users\Kakad\AppData\Local\Temp\LeagueChampions')
+p=T/'finish_report.py';s=p.read_text()
+s=s.replace("Brand's arm-twist weights and Yunara's wrist-twist/bracelet weights are included to close the wrist gaps found in captures.","Brand's flame hands and Yunara's gloves use floating-hand views after their imported arm skinning produced visible wrist gaps. The other champions keep tracked arms and weapons. This avoids showing broken forearm seams in the two affected first-person views.")
+s=s.replace('- Restored missing wrist skinning after final visual review. A separate focused hand capture verifies the resulting meshes and controller pose alignment.', '- Reviewed wrist gaps in source and first-person captures. Selected floating-hand views for Brand and Yunara, preserving their original hand geometry and textures. A separate focused check verifies all six final hand views across 120 poses each, with less than 0.001 m palm error and no camera rotation.')
+s=s.replace('| Focused post-run repair verification | 59 | 0 | Rechecked the failing gameplay paths, Gwen weapon restoration, potion handling and Akshan\'s terrain selection after correcting them. |', '| Focused post-run repair verification | 59 | 0 | Rechecked the failing gameplay paths, Gwen weapon restoration, potion handling and Akshan\'s terrain selection after correcting them. |\n| Final hand view check | 6 | 0 | 120 controlled poses for each new champion; six final first-person captures reviewed. |')
+p.write_text(s)
+print('Updated report for the final hand presentation and verification.')

@@ -1,0 +1,5620 @@
+{
+  "patch": "16.19.1",
+  "researchedOn": "2026-10-03",
+  "source": "Riot Data Dragon 16.19.1 and pinned CommunityDragon 16.19 client metadata",
+  "items": [
+    {
+      "id": 1001,
+      "name": "Boots",
+      "description": "25 Move Speed\n\n",
+      "statText": "25 Move Speed",
+      "requiredChampion": "",
+      "price": 300,
+      "sell": 210,
+      "recipe": [],
+      "tags": [
+        "Boots"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "moveSpeed": 25.0
+    },
+    {
+      "id": 1004,
+      "name": "Faerie Charm",
+      "description": "50% Base Mana Regen\n\n",
+      "statText": "50% Base Mana Regen",
+      "requiredChampion": "",
+      "price": 200,
+      "sell": 140,
+      "recipe": [],
+      "tags": [
+        "ManaRegen"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "manaRegen": 0.5
+    },
+    {
+      "id": 1006,
+      "name": "Rejuvenation Bead",
+      "description": "100% Base Health Regen\n\n",
+      "statText": "100% Base Health Regen",
+      "requiredChampion": "",
+      "price": 300,
+      "sell": 120,
+      "recipe": [],
+      "tags": [
+        "HealthRegen"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "healthRegen": 1.0
+    },
+    {
+      "id": 1011,
+      "name": "Giant's Belt",
+      "description": "350 Health\n\n",
+      "statText": "350 Health",
+      "requiredChampion": "",
+      "price": 900,
+      "sell": 630,
+      "recipe": [
+        1028
+      ],
+      "tags": [
+        "Health"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "health": 350.0
+    },
+    {
+      "id": 1018,
+      "name": "Cloak of Agility",
+      "description": "15% Critical Strike Chance\n\n",
+      "statText": "15% Critical Strike Chance",
+      "requiredChampion": "",
+      "price": 600,
+      "sell": 420,
+      "recipe": [],
+      "tags": [
+        "CriticalStrike"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "criticalChance": 0.15
+    },
+    {
+      "id": 1026,
+      "name": "Blasting Wand",
+      "description": "45 Ability Power\n\n",
+      "statText": "45 Ability Power",
+      "requiredChampion": "",
+      "price": 850,
+      "sell": 595,
+      "recipe": [],
+      "tags": [
+        "SpellDamage"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "abilityPower": 45.0
+    },
+    {
+      "id": 1027,
+      "name": "Sapphire Crystal",
+      "description": "300 Mana\n\n",
+      "statText": "300 Mana",
+      "requiredChampion": "",
+      "price": 300,
+      "sell": 210,
+      "recipe": [],
+      "tags": [
+        "Mana"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "mana": 300.0
+    },
+    {
+      "id": 1028,
+      "name": "Ruby Crystal",
+      "description": "150 Health\n\n",
+      "statText": "150 Health",
+      "requiredChampion": "",
+      "price": 400,
+      "sell": 280,
+      "recipe": [],
+      "tags": [
+        "Health"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "health": 150.0
+    },
+    {
+      "id": 1029,
+      "name": "Cloth Armor",
+      "description": "15 Armor\n\n",
+      "statText": "15 Armor",
+      "requiredChampion": "",
+      "price": 300,
+      "sell": 210,
+      "recipe": [],
+      "tags": [
+        "Armor"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "armor": 15.0
+    },
+    {
+      "id": 1031,
+      "name": "Chain Vest",
+      "description": "40 Armor\n\n",
+      "statText": "40 Armor",
+      "requiredChampion": "",
+      "price": 800,
+      "sell": 560,
+      "recipe": [
+        1029
+      ],
+      "tags": [
+        "Armor"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "armor": 40.0
+    },
+    {
+      "id": 1033,
+      "name": "Null-Magic Mantle",
+      "description": "20 Magic Resist\n\n",
+      "statText": "20 Magic Resist",
+      "requiredChampion": "",
+      "price": 400,
+      "sell": 280,
+      "recipe": [],
+      "tags": [
+        "SpellBlock"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "magicResistance": 20.0
+    },
+    {
+      "id": 1036,
+      "name": "Long Sword",
+      "description": "10 Attack Damage\n\n",
+      "statText": "10 Attack Damage",
+      "requiredChampion": "",
+      "price": 350,
+      "sell": 245,
+      "recipe": [],
+      "tags": [
+        "Damage",
+        "Lane"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "attackDamage": 10.0
+    },
+    {
+      "id": 1037,
+      "name": "Pickaxe",
+      "description": "25 Attack Damage\n\n",
+      "statText": "25 Attack Damage",
+      "requiredChampion": "",
+      "price": 875,
+      "sell": 613,
+      "recipe": [],
+      "tags": [
+        "Damage"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "attackDamage": 25.0
+    },
+    {
+      "id": 1038,
+      "name": "B. F. Sword",
+      "description": "40 Attack Damage\n\n",
+      "statText": "40 Attack Damage",
+      "requiredChampion": "",
+      "price": 1300,
+      "sell": 910,
+      "recipe": [],
+      "tags": [
+        "Damage"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "attackDamage": 40.0
+    },
+    {
+      "id": 1042,
+      "name": "Dagger",
+      "description": "10% Attack Speed\n\n",
+      "statText": "10% Attack Speed",
+      "requiredChampion": "",
+      "price": 250,
+      "sell": 175,
+      "recipe": [],
+      "tags": [
+        "AttackSpeed"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "attackSpeed": 0.1
+    },
+    {
+      "id": 1043,
+      "name": "Recurve Bow",
+      "description": "15% Attack Speed\n\nSting\nAttacks deal 15 bonus physical damage On-Hit.",
+      "statText": "15% Attack Speed",
+      "requiredChampion": "",
+      "price": 700,
+      "sell": 490,
+      "recipe": [
+        1042
+      ],
+      "tags": [
+        "OnHit",
+        "AttackSpeed"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "attackSpeed": 0.15
+    },
+    {
+      "id": 1052,
+      "name": "Amplifying Tome",
+      "description": "20 Ability Power\n\n",
+      "statText": "20 Ability Power",
+      "requiredChampion": "",
+      "price": 400,
+      "sell": 280,
+      "recipe": [],
+      "tags": [
+        "SpellDamage"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "abilityPower": 20.0
+    },
+    {
+      "id": 1053,
+      "name": "Vampiric Scepter",
+      "description": "15 Attack Damage\n7% Life Steal\n\n",
+      "statText": "15 Attack Damage\n7% Life Steal",
+      "requiredChampion": "",
+      "price": 900,
+      "sell": 630,
+      "recipe": [
+        1036
+      ],
+      "tags": [
+        "Damage",
+        "LifeSteal"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "attackDamage": 15.0,
+      "lifesteal": 0.07
+    },
+    {
+      "id": 1054,
+      "name": "Doran's Shield",
+      "description": "110 Health\n\nEnduring Focus\nRestore 4 Health every 5 seconds. \nAfter taking damage from a champion, restore Health over 8 seconds.\n\nHelping Hand\nAttacks deal 5 bonus physical damage to minions.",
+      "statText": "110 Health",
+      "requiredChampion": "",
+      "price": 450,
+      "sell": 180,
+      "recipe": [],
+      "tags": [
+        "HealthRegen",
+        "Health",
+        "Lane"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "health": 110.0
+    },
+    {
+      "id": 1055,
+      "name": "Doran's Blade",
+      "description": "10 Attack Damage\n80 Health\n2.5% Omnivamp\n\n",
+      "statText": "10 Attack Damage\n80 Health\n2.5% Omnivamp",
+      "requiredChampion": "",
+      "price": 450,
+      "sell": 180,
+      "recipe": [],
+      "tags": [
+        "Lane",
+        "Damage",
+        "SpellVamp",
+        "Health",
+        "LifeSteal"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "attackDamage": 10.0,
+      "health": 80.0,
+      "omnivamp": 0.025
+    },
+    {
+      "id": 1056,
+      "name": "Doran's Ring",
+      "description": "18 Ability Power\n90 Health\n\nDrain\nRestore 1 Mana every second, increased to 2 Mana per second for 5 seconds after dealing damage to an enemy champion. If you can't gain Mana, heal for 45% of this value instead.\n\nHelping Hand\nAttacks deal 5 bonus physical damage to minions.",
+      "statText": "18 Ability Power\n90 Health",
+      "requiredChampion": "",
+      "price": 400,
+      "sell": 160,
+      "recipe": [],
+      "tags": [
+        "ManaRegen",
+        "SpellDamage",
+        "Health",
+        "Lane"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "abilityPower": 18.0,
+      "health": 90.0
+    },
+    {
+      "id": 1057,
+      "name": "Negatron Cloak",
+      "description": "45 Magic Resist\n\n",
+      "statText": "45 Magic Resist",
+      "requiredChampion": "",
+      "price": 850,
+      "sell": 595,
+      "recipe": [
+        1033
+      ],
+      "tags": [
+        "SpellBlock"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "magicResistance": 45.0
+    },
+    {
+      "id": 1058,
+      "name": "Needlessly Large Rod",
+      "description": "65 Ability Power\n\n",
+      "statText": "65 Ability Power",
+      "requiredChampion": "",
+      "price": 1200,
+      "sell": 840,
+      "recipe": [],
+      "tags": [
+        "SpellDamage"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "abilityPower": 65.0
+    },
+    {
+      "id": 1082,
+      "name": "Dark Seal",
+      "description": "15 Ability Power\n50 Health\n\nGlory\nTakedowns grant Glory, up to 10. 5 Glory is lost on death.\nGain 4 Ability Power per Glory.",
+      "statText": "15 Ability Power\n50 Health",
+      "requiredChampion": "",
+      "price": 350,
+      "sell": 140,
+      "recipe": [],
+      "tags": [
+        "SpellDamage",
+        "Health",
+        "Lane"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "abilityPower": 15.0,
+      "health": 50.0
+    },
+    {
+      "id": 1083,
+      "name": "Cull",
+      "description": "7 Attack Damage\n\nReap\nRestore 3 Health On-Hit.\nKilling minions grants 1 gold, up to 100. Reaching the limit grants another 350 gold.\n",
+      "statText": "7 Attack Damage",
+      "requiredChampion": "",
+      "price": 450,
+      "sell": 180,
+      "recipe": [],
+      "tags": [
+        "OnHit",
+        "Damage",
+        "Lane"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "attackDamage": 7.0
+    },
+    {
+      "id": 1086,
+      "name": "Doran's Bow",
+      "description": "8 Attack Damage\n15% Attack Speed\n1.5% Omnivamp\n\n",
+      "statText": "8 Attack Damage\n15% Attack Speed\n1.5% Omnivamp",
+      "requiredChampion": "",
+      "price": 400,
+      "sell": 160,
+      "recipe": [],
+      "tags": [
+        "SpellVamp",
+        "AttackSpeed",
+        "Damage",
+        "Lane"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "attackDamage": 8.0,
+      "attackSpeed": 0.15,
+      "omnivamp": 0.015
+    },
+    {
+      "id": 1101,
+      "name": "Scorchclaw Pup",
+      "description": "\n\nJungle Companions\nSummon a Scorchclaw that assists you against monsters.\n\nThe companion grows as you hunt monsters, empowering your Smite. When fully grown, it completes your Jungle Quest and periodically imbues your next Attack or Ability to burn enemies and Slow them. Killing large monsters readies this immediately.",
+      "statText": "",
+      "requiredChampion": "",
+      "price": 450,
+      "sell": 0,
+      "recipe": [],
+      "tags": [
+        "Jungle"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0
+    },
+    {
+      "id": 1102,
+      "name": "Gustwalker Hatchling",
+      "description": "\n\nJungle Companions\nSummon a Gustwalker that assists you against monsters.\n\nThe companion grows as you hunt monsters, empowering your Smite. When fully grown, it completes your Jungle Quest and grants Move Speed upon entering brush, increased when killing large monsters.",
+      "statText": "",
+      "requiredChampion": "",
+      "price": 450,
+      "sell": 0,
+      "recipe": [],
+      "tags": [
+        "Jungle"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0
+    },
+    {
+      "id": 1103,
+      "name": "Mosstomper Seedling",
+      "description": "\n\nJungle Companions\nSummon a Mosstomper that assists you against monsters.\n\nThe companion grows as you hunt monsters, empowering your Smite. When fully grown, it completes your Jungle Quest and grants a Shield while out of combat and after killing large monsters.",
+      "statText": "",
+      "requiredChampion": "",
+      "price": 450,
+      "sell": 0,
+      "recipe": [],
+      "tags": [
+        "Jungle"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0
+    },
+    {
+      "id": 1120,
+      "name": "Doran's Helm",
+      "description": "150 Health\n8 Armor\n8 Magic Resist\n\nHelping Hand\nAttacks deal 5 bonus physical damage to minions.",
+      "statText": "150 Health\n8 Armor\n8 Magic Resist",
+      "requiredChampion": "",
+      "price": 450,
+      "sell": 180,
+      "recipe": [],
+      "tags": [
+        "Armor",
+        "SpellBlock",
+        "Health",
+        "Lane"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "health": 150.0,
+      "armor": 8.0,
+      "magicResistance": 8.0
+    },
+    {
+      "id": 2003,
+      "name": "Health Potion",
+      "description": "\n\nConsume\nRestores 120 Health over 15 seconds.",
+      "statText": "",
+      "requiredChampion": "",
+      "price": 50,
+      "sell": 20,
+      "recipe": [],
+      "tags": [
+        "HealthRegen",
+        "Jungle",
+        "Consumable",
+        "Lane"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": true,
+      "stackLimit": 5,
+      "active": 1,
+      "activeCooldown": 0
+    },
+    {
+      "id": 2019,
+      "name": "Steel Sigil",
+      "description": "15 Attack Damage\n30 Armor\n\n",
+      "statText": "15 Attack Damage\n30 Armor",
+      "requiredChampion": "",
+      "price": 1100,
+      "sell": 770,
+      "recipe": [
+        1029,
+        1036,
+        1029
+      ],
+      "tags": [
+        "Damage",
+        "Armor"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "attackDamage": 15.0,
+      "armor": 30.0
+    },
+    {
+      "id": 2020,
+      "name": "The Brutalizer",
+      "description": "25 Attack Damage\n10 Ability Haste\n5 Lethality\n\n",
+      "statText": "25 Attack Damage\n10 Ability Haste\n5 Lethality",
+      "requiredChampion": "",
+      "price": 1337,
+      "sell": 936,
+      "recipe": [
+        2022,
+        1037
+      ],
+      "tags": [
+        "CooldownReduction",
+        "ArmorPenetration",
+        "Damage"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "attackDamage": 25.0,
+      "abilityHaste": 10.0,
+      "lethality": 5.0
+    },
+    {
+      "id": 2021,
+      "name": "Tunneler",
+      "description": "15 Attack Damage\n250 Health\n\n",
+      "statText": "15 Attack Damage\n250 Health",
+      "requiredChampion": "",
+      "price": 1150,
+      "sell": 805,
+      "recipe": [
+        1036,
+        1028
+      ],
+      "tags": [
+        "Damage",
+        "Health"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "attackDamage": 15.0,
+      "health": 250.0
+    },
+    {
+      "id": 2022,
+      "name": "Glowing Mote",
+      "description": "5 Ability Haste\n\n",
+      "statText": "5 Ability Haste",
+      "requiredChampion": "",
+      "price": 250,
+      "sell": 175,
+      "recipe": [],
+      "tags": [
+        "CooldownReduction"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "abilityHaste": 5.0
+    },
+    {
+      "id": 2031,
+      "name": "Refillable Potion",
+      "description": "\n\nActive (2 charges)\nRestores 100 Health over 12 seconds. \nRefills upon visiting the shop.",
+      "statText": "",
+      "requiredChampion": "",
+      "price": 150,
+      "sell": 60,
+      "recipe": [],
+      "tags": [
+        "Lane",
+        "Jungle",
+        "HealthRegen",
+        "Active",
+        "Consumable"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 2,
+      "activeCooldown": 0
+    },
+    {
+      "id": 2055,
+      "name": "Control Ward",
+      "description": "\n\nConsume\nPlaces a Control Ward that grants vision and reveals enemy Stealth Wards, traps and Camouflaged enemies.",
+      "statText": "",
+      "requiredChampion": "",
+      "price": 75,
+      "sell": 30,
+      "recipe": [],
+      "tags": [
+        "Vision",
+        "Stealth",
+        "Consumable",
+        "Lane"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": true,
+      "stackLimit": 2,
+      "active": 5,
+      "activeCooldown": 0
+    },
+    {
+      "id": 2065,
+      "name": "Shurelya's Battlesong",
+      "description": "50 Ability Power\n15 Ability Haste\n4% Move Speed\n125% Base Mana Regen\n\nInspiring Speech\nGrant nearby allies 30% Move Speed for 4 seconds.",
+      "statText": "50 Ability Power\n15 Ability Haste\n4% Move Speed\n125% Base Mana Regen",
+      "requiredChampion": "",
+      "price": 2200,
+      "sell": 1540,
+      "recipe": [
+        3113,
+        4642
+      ],
+      "tags": [
+        "CooldownReduction",
+        "NonbootsMovement",
+        "Active",
+        "SpellDamage",
+        "ManaRegen",
+        "AbilityHaste"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 11,
+      "activeCooldown": 75,
+      "abilityPower": 50.0,
+      "abilityHaste": 15.0,
+      "movePercent": 0.04,
+      "manaRegen": 1.25
+    },
+    {
+      "id": 2138,
+      "name": "Elixir of Iron",
+      "description": "\n\nConsume\nGrants 300 Health, 25% Tenacity and increased size for 3 minutes. While active, you leave a path behind that boosts allied champions' Move Speed by 15%.",
+      "statText": "",
+      "requiredChampion": "",
+      "price": 500,
+      "sell": 200,
+      "recipe": [],
+      "tags": [
+        "Tenacity",
+        "NonbootsMovement",
+        "Consumable",
+        "Health"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": true,
+      "stackLimit": 1,
+      "active": 8,
+      "activeCooldown": 0
+    },
+    {
+      "id": 2139,
+      "name": "Elixir of Sorcery",
+      "description": "\n\nConsume\nGrants 50 Ability Power and 15% Mana Regen for 3 minutes. While active, damaging a champion or turret deals 25 bonus true damage (5s against champions).",
+      "statText": "",
+      "requiredChampion": "",
+      "price": 500,
+      "sell": 200,
+      "recipe": [],
+      "tags": [
+        "ManaRegen",
+        "Consumable",
+        "SpellDamage"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": true,
+      "stackLimit": 1,
+      "active": 9,
+      "activeCooldown": 0
+    },
+    {
+      "id": 2140,
+      "name": "Elixir of Wrath",
+      "description": "\n\nConsume\nGrants 30 Attack Damage and 12% Physical Vamp against champions for 3 minutes.",
+      "statText": "",
+      "requiredChampion": "",
+      "price": 500,
+      "sell": 200,
+      "recipe": [],
+      "tags": [
+        "SpellVamp",
+        "Damage",
+        "Consumable",
+        "LifeSteal"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": true,
+      "stackLimit": 1,
+      "active": 10,
+      "activeCooldown": 0
+    },
+    {
+      "id": 2420,
+      "name": "Seeker's Armguard",
+      "description": "40 Ability Power\n25 Armor\n\nTime Stop (Single use)\nEnter Stasis for 2.5 seconds.",
+      "statText": "40 Ability Power\n25 Armor",
+      "requiredChampion": "",
+      "price": 1600,
+      "sell": 640,
+      "recipe": [
+        1052,
+        1029,
+        1052
+      ],
+      "tags": [
+        "Active",
+        "Armor",
+        "SpellDamage"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 4,
+      "activeCooldown": 120,
+      "abilityPower": 40.0,
+      "armor": 25.0
+    },
+    {
+      "id": 2421,
+      "name": "Shattered Armguard",
+      "description": "40 Ability Power\n25 Armor\n\nShattered Time\nArmguard is broken, but can still be upgraded.\n\nAfter breaking one Armguard, the shopkeeper will only sell you Shattered Armguard.\n\n",
+      "statText": "40 Ability Power\n25 Armor",
+      "requiredChampion": "",
+      "price": 1600,
+      "sell": 640,
+      "recipe": [
+        1052,
+        1029,
+        1052
+      ],
+      "tags": [],
+      "showInShop": false,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "abilityPower": 40.0,
+      "armor": 25.0
+    },
+    {
+      "id": 2501,
+      "name": "Overlord's Bloodmail",
+      "description": "30 Attack Damage\n550 Health\n\nTyranny\nGain 2.5% of your bonus Health as Attack Damage. \n\nRetribution\nGain up to 12% increased Attack Damage based on your percent missing Health. ",
+      "statText": "30 Attack Damage\n550 Health",
+      "requiredChampion": "",
+      "price": 3300,
+      "sell": 2310,
+      "recipe": [
+        2021,
+        2021
+      ],
+      "tags": [
+        "Damage",
+        "Health"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "attackDamage": 30.0,
+      "health": 550.0
+    },
+    {
+      "id": 2502,
+      "name": "Unending Despair",
+      "description": "400 Health\n50 Armor\n15 Ability Haste\n\nAnguish\nEvery 4 seconds while in combat with champions, deal magic damage to nearby enemy champions and heal for 250% of the damage dealt.",
+      "statText": "400 Health\n50 Armor\n15 Ability Haste",
+      "requiredChampion": "",
+      "price": 2800,
+      "sell": 1960,
+      "recipe": [
+        1031,
+        3067,
+        1028
+      ],
+      "tags": [
+        "CooldownReduction",
+        "AbilityHaste",
+        "Armor",
+        "Health"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "health": 400.0,
+      "armor": 50.0,
+      "abilityHaste": 15.0
+    },
+    {
+      "id": 2503,
+      "name": "Blackfire Torch",
+      "description": "80 Ability Power\n600 Mana\n20 Ability Haste\n\nBaleful Blaze\nDamaging Abilities deals bonus magic damage for 3 seconds.\n\nBlackfire\nFor each enemy champion, epic and large monster affected by your Baleful Blaze, gain 4% Ability Power. ",
+      "statText": "80 Ability Power\n600 Mana\n20 Ability Haste",
+      "requiredChampion": "",
+      "price": 2800,
+      "sell": 1960,
+      "recipe": [
+        3802,
+        2508
+      ],
+      "tags": [
+        "CooldownReduction",
+        "Mana",
+        "AbilityHaste",
+        "SpellDamage"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "abilityPower": 80.0,
+      "mana": 600.0,
+      "abilityHaste": 20.0
+    },
+    {
+      "id": 2504,
+      "name": "Kaenic Rookern",
+      "description": "400 Health\n80 Magic Resist\n100% Base Health Regen\n\nMagebane\nAfter not taking magic damage for 15 seconds, gain a magic shield. ",
+      "statText": "400 Health\n80 Magic Resist\n100% Base Health Regen",
+      "requiredChampion": "",
+      "price": 2900,
+      "sell": 2030,
+      "recipe": [
+        3211,
+        1057
+      ],
+      "tags": [
+        "HealthRegen",
+        "SpellBlock",
+        "Health"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "health": 400.0,
+      "magicResistance": 80.0,
+      "healthRegen": 1.0
+    },
+    {
+      "id": 2508,
+      "name": "Fated Ashes",
+      "description": "30 Ability Power\n\nInflame\nDamaging Abilities deal 15 bonus magic damage over 3 seconds.\nDeals an additional 45 magic damage to monsters.",
+      "statText": "30 Ability Power",
+      "requiredChampion": "",
+      "price": 900,
+      "sell": 630,
+      "recipe": [
+        1052
+      ],
+      "tags": [
+        "SpellDamage"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "abilityPower": 30.0
+    },
+    {
+      "id": 2510,
+      "name": "Dusk and Dawn",
+      "description": "300 Health\n60 Ability Power\n20 Ability Haste\n20% Attack Speed\n\nSpellblade (0s)\nAfter using an Ability, your next Attack deals  bonus magic damage and heals you for  On-Hit and then applies On-Hit effects an additional time.",
+      "statText": "300 Health\n60 Ability Power\n20 Ability Haste\n20% Attack Speed",
+      "requiredChampion": "",
+      "price": 3100,
+      "sell": 2170,
+      "recipe": [
+        3057,
+        1026,
+        3067,
+        1042
+      ],
+      "tags": [
+        "AttackSpeed",
+        "OnHit",
+        "SpellDamage",
+        "Health",
+        "AbilityHaste"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "health": 300.0,
+      "abilityPower": 60.0,
+      "abilityHaste": 20.0,
+      "attackSpeed": 0.2
+    },
+    {
+      "id": 2512,
+      "name": "Fiendhunter Bolts",
+      "description": "45% Attack Speed\n25% Critical Strike Chance\n4% Move Speed\n\nNight Vigil\nGain 30 Ultimate Ability Haste.\n\nOpening Barrage\nAfter casting your Ultimate, your next 3 basic attacks gain 50% Attack Speed and Critically Strike for 80% of your normal Critical Strike damage for 8 seconds. If an attack would already Critically Strike, instead it deals 15% bonus true damage.",
+      "statText": "45% Attack Speed\n25% Critical Strike Chance\n4% Move Speed",
+      "requiredChampion": "",
+      "price": 2650,
+      "sell": 1855,
+      "recipe": [
+        3086,
+        3144
+      ],
+      "tags": [
+        "CriticalStrike",
+        "AttackSpeed",
+        "NonbootsMovement",
+        "AbilityHaste"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "attackSpeed": 0.45,
+      "criticalChance": 0.25,
+      "movePercent": 0.04
+    },
+    {
+      "id": 2517,
+      "name": "Endless Hunger",
+      "description": "65 Attack Damage\n5% Omnivamp\n20% Tenacity\n\nFamine\nGain Ability Haste based on your Bonus AD.\n\nFeast\nWhen a champion that you damaged recently dies, gain Omnivamp for a moderate duration. ",
+      "statText": "65 Attack Damage\n5% Omnivamp\n20% Tenacity",
+      "requiredChampion": "",
+      "price": 3100,
+      "sell": 2170,
+      "recipe": [
+        3133,
+        1037,
+        1036
+      ],
+      "tags": [
+        "Damage",
+        "SpellVamp",
+        "LifeSteal",
+        "Tenacity",
+        "AbilityHaste"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "attackDamage": 65.0,
+      "omnivamp": 0.05,
+      "tenacity": 0.2
+    },
+    {
+      "id": 2520,
+      "name": "Bastionbreaker",
+      "description": "55 Attack Damage\n22 Lethality\n15 Ability Haste\n\nShaped Charge (0s)\nDealing Ability damage to a Champion or Epic Monster deals an additional  true damage.\n\nSabotage\nTaking down a champion within 3 seconds of damaging them grants Sabotage for 90 seconds. While you have Sabotage, your next Attack against an Epic Monster or Turret deals an additional  true damage over 3 seconds. ",
+      "statText": "55 Attack Damage\n22 Lethality\n15 Ability Haste",
+      "requiredChampion": "",
+      "price": 3000,
+      "sell": 2100,
+      "recipe": [
+        2020,
+        3134
+      ],
+      "tags": [
+        "ArmorPenetration",
+        "Damage",
+        "AbilityHaste"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "attackDamage": 55.0,
+      "lethality": 22.0,
+      "abilityHaste": 15.0
+    },
+    {
+      "id": 2522,
+      "name": "Actualizer",
+      "description": "90 Ability Power\n300 Mana\n10 Ability Haste\n\nMana Made Real (0s)\nFor 8 seconds, your mana is Empowered. While Empowered, your spells cost 100% more Mana, you gain  increased Ability damage, Shielding, and Healing, and your basic ability cooldowns progress 30% faster.",
+      "statText": "90 Ability Power\n300 Mana\n10 Ability Haste",
+      "requiredChampion": "",
+      "price": 2800,
+      "sell": 1960,
+      "recipe": [
+        3802,
+        1026
+      ],
+      "tags": [
+        "Mana",
+        "AbilityHaste",
+        "SpellDamage"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 12,
+      "activeCooldown": 60,
+      "abilityPower": 90.0,
+      "mana": 300.0,
+      "abilityHaste": 10.0
+    },
+    {
+      "id": 2523,
+      "name": "Hexoptics C44",
+      "description": "55 Attack Damage\n25% Critical Strike Chance\n\nMagnification\nDeal up to 10% increased damage with Attacks, based on how far away the enemy is (max damage at 500 range).\n\nArcane Aim\nWhen a champion that you damaged within 3 seconds dies, gain 100 additional attack range for 8 seconds. ",
+      "statText": "55 Attack Damage\n25% Critical Strike Chance",
+      "requiredChampion": "",
+      "price": 2800,
+      "sell": 1960,
+      "recipe": [
+        1037,
+        6670,
+        1036
+      ],
+      "tags": [
+        "CriticalStrike",
+        "Damage"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "attackDamage": 55.0,
+      "criticalChance": 0.25
+    },
+    {
+      "id": 2524,
+      "name": "Bandlepipes",
+      "description": "200 Health\n15 Ability Haste\n20 Armor\n20 Magic Resist\n\nFanfare\nSlowing or Immobilizing an enemy champion grants Fanfare for  seconds. Fanfare grants you 20 Move Speed. While you have Fanfare, nearby allies, including yourself, gain  Attack Speed.",
+      "statText": "200 Health\n15 Ability Haste\n20 Armor\n20 Magic Resist",
+      "requiredChampion": "",
+      "price": 2300,
+      "sell": 1610,
+      "recipe": [
+        3067,
+        1029,
+        1033
+      ],
+      "tags": [
+        "Armor",
+        "AttackSpeed",
+        "NonbootsMovement",
+        "SpellBlock",
+        "Health",
+        "AbilityHaste"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "health": 200.0,
+      "abilityHaste": 15.0,
+      "armor": 20.0,
+      "magicResistance": 20.0
+    },
+    {
+      "id": 2525,
+      "name": "Protoplasm Harness",
+      "description": "600 Health\n20 Ability Haste\n\nLifeline (0s)\nTaking damage that would reduce your Health below 30% causes you to gain  maximum Health for 5 seconds, then heal  Health over the duration. While regenerating Health, you gain 15% increased Size, 10% Move Speed, and 25% Tenacity. ",
+      "statText": "600 Health\n20 Ability Haste",
+      "requiredChampion": "",
+      "price": 2600,
+      "sell": 1820,
+      "recipe": [
+        3067,
+        1011
+      ],
+      "tags": [
+        "Tenacity",
+        "AbilityHaste",
+        "NonbootsMovement",
+        "Health"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "health": 600.0,
+      "abilityHaste": 20.0
+    },
+    {
+      "id": 2526,
+      "name": "Whispering Circlet",
+      "description": "200 Health\n8% Heal and Shield Power\n75% Base Mana Regen\n300 Mana\n\nHarmony\nGain % Heal and Shield Power.\n\nManaflow (8s, max 5 charges)\nLanding Abilities grants 4 max Mana (doubled vs. champions).\nTransforms into Diadem of Songs at 360 max Mana.",
+      "statText": "200 Health\n8% Heal and Shield Power\n75% Base Mana Regen\n300 Mana",
+      "requiredChampion": "",
+      "price": 2250,
+      "sell": 1575,
+      "recipe": [
+        3114,
+        1028,
+        3070
+      ],
+      "tags": [
+        "ManaRegen",
+        "Mana",
+        "Health"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "health": 200.0,
+      "healShieldPower": 0.08,
+      "manaRegen": 0.75,
+      "mana": 300.0
+    },
+    {
+      "id": 3003,
+      "name": "Archangel's Staff",
+      "description": "70 Ability Power\n600 Mana\n25 Ability Haste\n\nAwe\nGain Ability Power equal to 1% bonus Mana.\n\nManaflow (8s, max 5 charges)\nLanding Abilities grants 5 max Mana (doubled vs. champions).\nTransforms into Seraph's Embrace at 360 max Mana.",
+      "statText": "70 Ability Power\n600 Mana\n25 Ability Haste",
+      "requiredChampion": "",
+      "price": 2900,
+      "sell": 2030,
+      "recipe": [
+        3070,
+        3802,
+        3108
+      ],
+      "tags": [
+        "Mana",
+        "AbilityHaste",
+        "SpellDamage"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "abilityPower": 70.0,
+      "mana": 600.0,
+      "abilityHaste": 25.0
+    },
+    {
+      "id": 3004,
+      "name": "Manamune",
+      "description": "35 Attack Damage\n500 Mana\n15 Ability Haste\n\nAwe\nGain  bonus Attack Damage.\n\nManaflow (8s, max 4 charges)\nLanding Attacks and Abilities grants 3 max Mana (doubled vs. champions).\nTransforms into Muramana at 360 max Mana.",
+      "statText": "35 Attack Damage\n500 Mana\n15 Ability Haste",
+      "requiredChampion": "",
+      "price": 2900,
+      "sell": 2030,
+      "recipe": [
+        3070,
+        3133,
+        1036
+      ],
+      "tags": [
+        "CooldownReduction",
+        "Damage",
+        "OnHit",
+        "Mana",
+        "AbilityHaste"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "attackDamage": 35.0,
+      "mana": 500.0,
+      "abilityHaste": 15.0
+    },
+    {
+      "id": 3006,
+      "name": "Berserker's Greaves",
+      "description": "30% Attack Speed\n45 Move Speed\n\n",
+      "statText": "30% Attack Speed\n45 Move Speed",
+      "requiredChampion": "",
+      "price": 1100,
+      "sell": 770,
+      "recipe": [
+        1001,
+        1042,
+        1042
+      ],
+      "tags": [
+        "Boots",
+        "AttackSpeed"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "attackSpeed": 0.3,
+      "moveSpeed": 45.0
+    },
+    {
+      "id": 3008,
+      "name": "Gluttonous Greaves",
+      "description": "45 Move Speed\n4% Omnivamp\n\nSlay\nGain 0.6% Omnivamp on Champion takedown, stacking up to 10 times.",
+      "statText": "45 Move Speed\n4% Omnivamp",
+      "requiredChampion": "",
+      "price": 1000,
+      "sell": 700,
+      "recipe": [
+        1001
+      ],
+      "tags": [
+        "Boots",
+        "SpellVamp",
+        "LifeSteal"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "moveSpeed": 45.0,
+      "omnivamp": 0.04
+    },
+    {
+      "id": 3009,
+      "name": "Boots of Swiftness",
+      "description": "55 Move Speed\n\nFleetfooted\nReduce the effectiveness of Slows by 25%.",
+      "statText": "55 Move Speed",
+      "requiredChampion": "",
+      "price": 1000,
+      "sell": 700,
+      "recipe": [
+        1001
+      ],
+      "tags": [
+        "Boots"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "moveSpeed": 55.0
+    },
+    {
+      "id": 3020,
+      "name": "Sorcerer's Shoes",
+      "description": "12 Magic Penetration\n45 Move Speed\n\n",
+      "statText": "12 Magic Penetration\n45 Move Speed",
+      "requiredChampion": "",
+      "price": 1100,
+      "sell": 770,
+      "recipe": [
+        1001
+      ],
+      "tags": [
+        "Boots",
+        "MagicPenetration"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "magicPen": 12.0,
+      "moveSpeed": 45.0
+    },
+    {
+      "id": 3024,
+      "name": "Glacial Buckler",
+      "description": "25 Armor\n300 Mana\n10 Ability Haste\n\n",
+      "statText": "25 Armor\n300 Mana\n10 Ability Haste",
+      "requiredChampion": "",
+      "price": 900,
+      "sell": 630,
+      "recipe": [
+        1029,
+        1027,
+        2022
+      ],
+      "tags": [
+        "CooldownReduction",
+        "Mana",
+        "Armor",
+        "AbilityHaste"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "armor": 25.0,
+      "mana": 300.0,
+      "abilityHaste": 10.0
+    },
+    {
+      "id": 3026,
+      "name": "Guardian Angel",
+      "description": "55 Attack Damage\n45 Armor\n\nRebirth\nUpon taking lethal damage, restores 50% base Health and 100% max Mana after 4 seconds of Stasis.",
+      "statText": "55 Attack Damage\n45 Armor",
+      "requiredChampion": "",
+      "price": 3200,
+      "sell": 1280,
+      "recipe": [
+        2019,
+        1038
+      ],
+      "tags": [
+        "Damage",
+        "Armor"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "attackDamage": 55.0,
+      "armor": 45.0
+    },
+    {
+      "id": 3031,
+      "name": "Infinity Edge",
+      "description": "75 Attack Damage\n25% Critical Strike Chance\n30% Critical Strike Damage\n\n",
+      "statText": "75 Attack Damage\n25% Critical Strike Chance\n30% Critical Strike Damage",
+      "requiredChampion": "",
+      "price": 3500,
+      "sell": 2450,
+      "recipe": [
+        1038,
+        1037,
+        1018
+      ],
+      "tags": [
+        "CriticalStrike",
+        "Damage"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "attackDamage": 75.0,
+      "criticalChance": 0.25,
+      "criticalDamage": 0.3
+    },
+    {
+      "id": 3032,
+      "name": "Yun Tal Wildarrows",
+      "description": "50 Attack Damage\n45% Attack Speed\n0% Critical Strike Chance\n\nPractice Makes Lethal\nOn-Attack, gain Critical Strike Chance permanently up to 25%.\n\nFlurry\nOn-Attacking an enemy champion, gain 30% Attack Speed for 6 seconds (30 second cooldown). \nAttacks reduce this cooldown by 1 second, increased to 2 seconds for Critical Strikes.",
+      "statText": "50 Attack Damage\n45% Attack Speed\n0% Critical Strike Chance",
+      "requiredChampion": "",
+      "price": 3000,
+      "sell": 2100,
+      "recipe": [
+        1038,
+        3144,
+        1036
+      ],
+      "tags": [
+        "CriticalStrike",
+        "AttackSpeed",
+        "Damage"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "attackDamage": 50.0,
+      "attackSpeed": 0.45,
+      "criticalChance": 0.0
+    },
+    {
+      "id": 3033,
+      "name": "Mortal Reminder",
+      "description": "35 Attack Damage\n30% Armor Penetration\n25% Critical Strike Chance\n\nGrievous Wounds\nDealing physical damage applies 40% Wounds to enemy champions for 3 seconds.",
+      "statText": "35 Attack Damage\n30% Armor Penetration\n25% Critical Strike Chance",
+      "requiredChampion": "",
+      "price": 3000,
+      "sell": 2100,
+      "recipe": [
+        3123,
+        3035,
+        1018
+      ],
+      "tags": [
+        "CriticalStrike",
+        "ArmorPenetration",
+        "Damage"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "attackDamage": 35.0,
+      "armorPen": 0.3,
+      "criticalChance": 0.25
+    },
+    {
+      "id": 3035,
+      "name": "Last Whisper",
+      "description": "20 Attack Damage\n18% Armor Penetration\n\n",
+      "statText": "20 Attack Damage\n18% Armor Penetration",
+      "requiredChampion": "",
+      "price": 1450,
+      "sell": 1015,
+      "recipe": [
+        1036,
+        1036
+      ],
+      "tags": [
+        "ArmorPenetration",
+        "Damage"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "attackDamage": 20.0,
+      "armorPen": 0.18
+    },
+    {
+      "id": 3036,
+      "name": "Lord Dominik's Regards",
+      "description": "35 Attack Damage\n35% Armor Penetration\n25% Critical Strike Chance\n\nGiant Slayer\nDeal up to 15% bonus damage against champions based on their bonus Health. Maximum damage bonus reached at 1500 bonus Health.",
+      "statText": "35 Attack Damage\n35% Armor Penetration\n25% Critical Strike Chance",
+      "requiredChampion": "",
+      "price": 3300,
+      "sell": 2310,
+      "recipe": [
+        3035,
+        6670
+      ],
+      "tags": [
+        "CriticalStrike",
+        "ArmorPenetration",
+        "Damage"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "attackDamage": 35.0,
+      "armorPen": 0.35,
+      "criticalChance": 0.25
+    },
+    {
+      "id": 3040,
+      "name": "Seraph's Embrace",
+      "description": "70 Ability Power\n1000 Mana\n25 Ability Haste\n\nAwe\nGain  Ability Power.\n\nLifeline (0s)\nTaking damage that would reduce your Health below 30% grants a  Shield for 3 seconds.",
+      "statText": "70 Ability Power\n1000 Mana\n25 Ability Haste",
+      "requiredChampion": "",
+      "price": 2900,
+      "sell": 2030,
+      "recipe": [],
+      "tags": [
+        "Mana",
+        "AbilityHaste",
+        "SpellDamage"
+      ],
+      "showInShop": false,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "abilityPower": 70.0,
+      "mana": 1000.0,
+      "abilityHaste": 25.0
+    },
+    {
+      "id": 3041,
+      "name": "Mejai's Soulstealer",
+      "description": "20 Ability Power\n100 Health\n\nGlory\nTakedowns grant Glory, up to 25. 10 Glory is lost on death.\nGain 5 Ability Power per Glory and 10% Move Speed at 10 or higher Glory.",
+      "statText": "20 Ability Power\n100 Health",
+      "requiredChampion": "",
+      "price": 1500,
+      "sell": 1050,
+      "recipe": [
+        1082
+      ],
+      "tags": [
+        "SpellDamage",
+        "NonbootsMovement",
+        "Health"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "abilityPower": 20.0,
+      "health": 100.0
+    },
+    {
+      "id": 3042,
+      "name": "Muramana",
+      "description": "35 Attack Damage\n1000 Mana\n15 Ability Haste\n\nAwe\nGain 2% max Mana as bonus Attack Damage.\n\nShock\nAttacks against champions deal 1.2% max Mana as bonus physical damage On-Hit. \nDamaging Abilities against champions deal 3% - 4% max Mana as bonus physical damage.",
+      "statText": "35 Attack Damage\n1000 Mana\n15 Ability Haste",
+      "requiredChampion": "",
+      "price": 2900,
+      "sell": 2030,
+      "recipe": [],
+      "tags": [
+        "CooldownReduction",
+        "ArmorPenetration",
+        "Damage",
+        "OnHit",
+        "Mana"
+      ],
+      "showInShop": false,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "attackDamage": 35.0,
+      "mana": 1000.0,
+      "abilityHaste": 15.0
+    },
+    {
+      "id": 3044,
+      "name": "Phage",
+      "description": "15 Attack Damage\n200 Health\n\nRage\nAttacking grants Move Speed for 2 seconds.",
+      "statText": "15 Attack Damage\n200 Health",
+      "requiredChampion": "",
+      "price": 1100,
+      "sell": 770,
+      "recipe": [
+        1028,
+        1036
+      ],
+      "tags": [
+        "NonbootsMovement",
+        "Damage",
+        "Health"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "attackDamage": 15.0,
+      "health": 200.0
+    },
+    {
+      "id": 3046,
+      "name": "Phantom Dancer",
+      "description": "65% Attack Speed\n25% Critical Strike Chance\n10% Move Speed\n\nSpectral Waltz\nBecome Ghosted.",
+      "statText": "65% Attack Speed\n25% Critical Strike Chance\n10% Move Speed",
+      "requiredChampion": "",
+      "price": 2650,
+      "sell": 1855,
+      "recipe": [
+        1042,
+        3086,
+        1042
+      ],
+      "tags": [
+        "CriticalStrike",
+        "AttackSpeed",
+        "NonbootsMovement"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "attackSpeed": 0.65,
+      "criticalChance": 0.25,
+      "movePercent": 0.1
+    },
+    {
+      "id": 3047,
+      "name": "Plated Steelcaps",
+      "description": "25 Armor\n45 Move Speed\n\nPlating\nReduces incoming damage from Attacks by 10%.",
+      "statText": "25 Armor\n45 Move Speed",
+      "requiredChampion": "",
+      "price": 1200,
+      "sell": 840,
+      "recipe": [
+        1001,
+        1029
+      ],
+      "tags": [
+        "Boots",
+        "Armor"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "armor": 25.0,
+      "moveSpeed": 45.0
+    },
+    {
+      "id": 3050,
+      "name": "Zeke's Convergence",
+      "description": "300 Health\n25 Armor\n25 Magic Resist\n10 Ability Haste\n\nFrostfire Tempest\nCasting your Ultimate summons a storm around you for 5 seconds. The storm deals 30 magic damage per second to enemy champions and Slows them by 30%.",
+      "statText": "300 Health\n25 Armor\n25 Magic Resist\n10 Ability Haste",
+      "requiredChampion": "",
+      "price": 2200,
+      "sell": 1540,
+      "recipe": [
+        3067,
+        1029,
+        1033
+      ],
+      "tags": [
+        "Armor",
+        "AbilityHaste",
+        "SpellBlock",
+        "Health"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "health": 300.0,
+      "armor": 25.0,
+      "magicResistance": 25.0,
+      "abilityHaste": 10.0
+    },
+    {
+      "id": 3051,
+      "name": "Hearthbound Axe",
+      "description": "20 Attack Damage\n20% Attack Speed\n\n",
+      "statText": "20 Attack Damage\n20% Attack Speed",
+      "requiredChampion": "",
+      "price": 1200,
+      "sell": 840,
+      "recipe": [
+        1036,
+        1042,
+        1036
+      ],
+      "tags": [
+        "AttackSpeed",
+        "Damage"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "attackDamage": 20.0,
+      "attackSpeed": 0.2
+    },
+    {
+      "id": 3053,
+      "name": "Sterak's Gage",
+      "description": "400 Health\n20% Tenacity\n\nThe Claws that Catch\nGain bonus Attack Damage.\n\nLifeline\nTaking damage that would reduce your Health below 30% grants a decaying Shield for 4.5 seconds.",
+      "statText": "400 Health\n20% Tenacity",
+      "requiredChampion": "",
+      "price": 3200,
+      "sell": 2240,
+      "recipe": [
+        1037,
+        2021,
+        1028
+      ],
+      "tags": [
+        "Tenacity",
+        "Damage",
+        "Health"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "health": 400.0,
+      "tenacity": 0.2
+    },
+    {
+      "id": 3057,
+      "name": "Sheen",
+      "description": "10 Ability Haste\n\nSpellblade\nAfter using an Ability, your next Attack deals bonus physical damage On-Hit.\n",
+      "statText": "10 Ability Haste",
+      "requiredChampion": "",
+      "price": 900,
+      "sell": 630,
+      "recipe": [
+        2022
+      ],
+      "tags": [
+        "OnHit",
+        "AbilityHaste"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "abilityHaste": 10.0
+    },
+    {
+      "id": 3065,
+      "name": "Spirit Visage",
+      "description": "400 Health\n50 Magic Resist\n10 Ability Haste\n100% Base Health Regen\n\nBoundless Vitality\nHeals and Shields on you are increased by 25%.",
+      "statText": "400 Health\n50 Magic Resist\n10 Ability Haste\n100% Base Health Regen",
+      "requiredChampion": "",
+      "price": 2700,
+      "sell": 1890,
+      "recipe": [
+        3211,
+        3067
+      ],
+      "tags": [
+        "CooldownReduction",
+        "HealthRegen",
+        "SpellBlock",
+        "Health",
+        "AbilityHaste"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "health": 400.0,
+      "magicResistance": 50.0,
+      "abilityHaste": 10.0,
+      "healthRegen": 1.0
+    },
+    {
+      "id": 3066,
+      "name": "Winged Moonplate",
+      "description": "200 Health\n4% Move Speed\n\n",
+      "statText": "200 Health\n4% Move Speed",
+      "requiredChampion": "",
+      "price": 800,
+      "sell": 560,
+      "recipe": [
+        1028
+      ],
+      "tags": [
+        "NonbootsMovement",
+        "Health"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "health": 200.0,
+      "movePercent": 0.04
+    },
+    {
+      "id": 3067,
+      "name": "Kindlegem",
+      "description": "200 Health\n10 Ability Haste\n\n",
+      "statText": "200 Health\n10 Ability Haste",
+      "requiredChampion": "",
+      "price": 800,
+      "sell": 560,
+      "recipe": [
+        1028,
+        2022
+      ],
+      "tags": [
+        "CooldownReduction",
+        "AbilityHaste",
+        "Health"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "health": 200.0,
+      "abilityHaste": 10.0
+    },
+    {
+      "id": 3068,
+      "name": "Sunfire Aegis",
+      "description": "350 Health\n50 Armor\n10 Ability Haste\n\nImmolate\nAfter taking or dealing damage, deal magic damage per second to nearby enemies for 3 seconds. ",
+      "statText": "350 Health\n50 Armor\n10 Ability Haste",
+      "requiredChampion": "",
+      "price": 2800,
+      "sell": 1960,
+      "recipe": [
+        6660,
+        1031,
+        1028
+      ],
+      "tags": [
+        "Aura",
+        "AbilityHaste",
+        "Armor",
+        "Health"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "health": 350.0,
+      "armor": 50.0,
+      "abilityHaste": 10.0
+    },
+    {
+      "id": 3070,
+      "name": "Tear of the Goddess",
+      "description": "240 Mana\n\nManaflow (8s, max 4 charges)\nLanding Abilities grants 3 max Mana (doubled vs. champions), up to 360.\n\nHelping Hand\nAttacks deal an additional 5 physical damage to minions.",
+      "statText": "240 Mana",
+      "requiredChampion": "",
+      "price": 400,
+      "sell": 280,
+      "recipe": [],
+      "tags": [
+        "ManaRegen",
+        "Mana"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "mana": 240.0
+    },
+    {
+      "id": 3071,
+      "name": "Black Cleaver",
+      "description": "45 Attack Damage\n400 Health\n20 Ability Haste\n\nCarve\nDealing physical damage to champions reduces the target's Armor by 6% for 6 seconds. (stacks 5 times).\n\nFervor\nDealing physical damage grants  Move Speed for 2 seconds.",
+      "statText": "45 Attack Damage\n400 Health\n20 Ability Haste",
+      "requiredChampion": "",
+      "price": 3000,
+      "sell": 2100,
+      "recipe": [
+        3044,
+        3067,
+        1037
+      ],
+      "tags": [
+        "CooldownReduction",
+        "ArmorPenetration",
+        "NonbootsMovement",
+        "Damage",
+        "OnHit",
+        "Health",
+        "AbilityHaste"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "attackDamage": 45.0,
+      "health": 400.0,
+      "abilityHaste": 20.0
+    },
+    {
+      "id": 3072,
+      "name": "Bloodthirster",
+      "description": "80 Attack Damage\n15% Life Steal\n\nIchorshield\nConvert excess healing from your Lifesteal to a Shield.",
+      "statText": "80 Attack Damage\n15% Life Steal",
+      "requiredChampion": "",
+      "price": 3400,
+      "sell": 2380,
+      "recipe": [
+        1038,
+        1037,
+        1053
+      ],
+      "tags": [
+        "Damage",
+        "LifeSteal"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "attackDamage": 80.0,
+      "lifesteal": 0.15
+    },
+    {
+      "id": 3073,
+      "name": "Experimental Hexplate",
+      "description": "40 Attack Damage\n20% Attack Speed\n450 Health\n\nHexcharged\nGain 30 Ultimate Ability Haste.\n\nOverdrive\nAfter casting your Ultimate, gain % Attack Speed and % Move Speed for 8 seconds. ",
+      "statText": "40 Attack Damage\n20% Attack Speed\n450 Health",
+      "requiredChampion": "",
+      "price": 3000,
+      "sell": 2100,
+      "recipe": [
+        2021,
+        1042,
+        3044
+      ],
+      "tags": [
+        "CooldownReduction",
+        "AttackSpeed",
+        "NonbootsMovement",
+        "Damage",
+        "Health",
+        "AbilityHaste"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "attackDamage": 40.0,
+      "attackSpeed": 0.2,
+      "health": 450.0
+    },
+    {
+      "id": 3074,
+      "name": "Ravenous Hydra",
+      "description": "65 Attack Damage\n15 Ability Haste\n12% Life Steal\n\nCleave\nAttacks deal physical damage to nearby enemies.Ravenous Crescent\nDeal physical damage to enemies around you. \nYour Life Steal applies to this damage.",
+      "statText": "65 Attack Damage\n15 Ability Haste\n12% Life Steal",
+      "requiredChampion": "",
+      "price": 3300,
+      "sell": 2310,
+      "recipe": [
+        3077,
+        1053,
+        3133
+      ],
+      "tags": [
+        "CooldownReduction",
+        "Damage",
+        "OnHit",
+        "LifeSteal",
+        "AbilityHaste"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 14,
+      "activeCooldown": 10,
+      "attackDamage": 65.0,
+      "abilityHaste": 15.0,
+      "lifesteal": 0.12
+    },
+    {
+      "id": 3075,
+      "name": "Thornmail",
+      "description": "150 Health\n75 Armor\n\nThorns\nWhen struck by an Attack, deal magic damage to the attacker and apply 40% Wounds for 3 seconds if they are a champion.",
+      "statText": "150 Health\n75 Armor",
+      "requiredChampion": "",
+      "price": 2450,
+      "sell": 1715,
+      "recipe": [
+        3076,
+        1031,
+        1028
+      ],
+      "tags": [
+        "Armor",
+        "Health"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "health": 150.0,
+      "armor": 75.0
+    },
+    {
+      "id": 3076,
+      "name": "Bramble Vest",
+      "description": "30 Armor\n\nThorns\nWhen hit by an Attack, deal  magic damage to the attacker and apply 40% Wounds for 3 seconds if they are a champion.",
+      "statText": "30 Armor",
+      "requiredChampion": "",
+      "price": 800,
+      "sell": 560,
+      "recipe": [
+        1029,
+        1029
+      ],
+      "tags": [
+        "Armor"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "armor": 30.0
+    },
+    {
+      "id": 3077,
+      "name": "Tiamat",
+      "description": "25 Attack Damage\n\nCleave\nAttacks deal physical damage to nearby enemies.\nCrescent\nDeal physical damage to enemies around you.",
+      "statText": "25 Attack Damage",
+      "requiredChampion": "",
+      "price": 1200,
+      "sell": 840,
+      "recipe": [
+        1036,
+        1036
+      ],
+      "tags": [
+        "OnHit",
+        "Damage"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 13,
+      "activeCooldown": 10,
+      "attackDamage": 25.0
+    },
+    {
+      "id": 3078,
+      "name": "Trinity Force",
+      "description": "36 Attack Damage\n30% Attack Speed\n333 Health\n15 Ability Haste\n\nSpellblade\nAfter using an Ability, your next Attack deals bonus physical damage On-Hit.\n \nQuicken\nAttacking grants 20 Move Speed for 2 seconds.",
+      "statText": "36 Attack Damage\n30% Attack Speed\n333 Health\n15 Ability Haste",
+      "requiredChampion": "",
+      "price": 3333,
+      "sell": 2333,
+      "recipe": [
+        3057,
+        3044,
+        3051
+      ],
+      "tags": [
+        "CooldownReduction",
+        "AttackSpeed",
+        "Damage",
+        "NonbootsMovement",
+        "OnHit",
+        "Health",
+        "AbilityHaste"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "attackDamage": 36.0,
+      "attackSpeed": 0.3,
+      "health": 333.0,
+      "abilityHaste": 15.0
+    },
+    {
+      "id": 3082,
+      "name": "Warden's Mail",
+      "description": "40 Armor\n\nRock Solid\nReduce incoming damage from Attacks.",
+      "statText": "40 Armor",
+      "requiredChampion": "",
+      "price": 1000,
+      "sell": 700,
+      "recipe": [
+        1029,
+        1029
+      ],
+      "tags": [
+        "Armor"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "armor": 40.0
+    },
+    {
+      "id": 3083,
+      "name": "Warmog's Armor",
+      "description": "1000 Health\n100% Base Health Regen\n\nWarmog's Heart \nIf you have 2000 bonus Health and have not taken damage within 8 seconds, restore  Health per second.\n\nWarmog's Vitality\nGain bonus Health equal to 12% of your Item Health (0).",
+      "statText": "1000 Health\n100% Base Health Regen",
+      "requiredChampion": "",
+      "price": 3100,
+      "sell": 2170,
+      "recipe": [
+        1011,
+        1011,
+        3801
+      ],
+      "tags": [
+        "HealthRegen",
+        "Health"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "health": 1000.0,
+      "healthRegen": 1.0
+    },
+    {
+      "id": 3084,
+      "name": "Heartsteel",
+      "description": "900 Health\n100% Base Health Regen\n\nColossal Consumption (0s) per target\nIf an enemy champion is nearby for a few seconds, your next Attack against them deals 70 plus 6% of your max Health as bonus physical damage and grants 10% of the damage as max Health.\n\nGoliath\nFor each 1000 max Health, gain 3% increased size, up to 30%. ",
+      "statText": "900 Health\n100% Base Health Regen",
+      "requiredChampion": "",
+      "price": 3000,
+      "sell": 2100,
+      "recipe": [
+        1011,
+        3801,
+        1011
+      ],
+      "tags": [
+        "HealthRegen",
+        "Health"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "health": 900.0,
+      "healthRegen": 1.0
+    },
+    {
+      "id": 3085,
+      "name": "Runaan's Hurricane",
+      "description": "40% Attack Speed\n25% Critical Strike Chance\n5% Move Speed\n\nWind's Fury\nAttacks fire bolts at 2 additional enemies near the target.\nEach bolt deals physical damage and applies On-Hit effects.",
+      "statText": "40% Attack Speed\n25% Critical Strike Chance\n5% Move Speed",
+      "requiredChampion": "",
+      "price": 2650,
+      "sell": 1855,
+      "recipe": [
+        3086,
+        3144
+      ],
+      "tags": [
+        "CriticalStrike",
+        "AttackSpeed",
+        "NonbootsMovement",
+        "OnHit"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "attackSpeed": 0.4,
+      "criticalChance": 0.25,
+      "movePercent": 0.05
+    },
+    {
+      "id": 3086,
+      "name": "Zeal",
+      "description": "15% Attack Speed\n15% Critical Strike Chance\n4% Move Speed\n\n",
+      "statText": "15% Attack Speed\n15% Critical Strike Chance\n4% Move Speed",
+      "requiredChampion": "",
+      "price": 1200,
+      "sell": 840,
+      "recipe": [
+        1018,
+        1042
+      ],
+      "tags": [
+        "CriticalStrike",
+        "AttackSpeed",
+        "NonbootsMovement"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "attackSpeed": 0.15,
+      "criticalChance": 0.15,
+      "movePercent": 0.04
+    },
+    {
+      "id": 3087,
+      "name": "Statikk Shiv",
+      "description": "45 Attack Damage\n45 Ability Power\n30% Attack Speed\n4% Move Speed\n\nElectrospark\nYour Energized Attacks fire chain lightning, applying On-Hit effects and dealing magic damage to nearby targets.\n\nElectroshock \nBasic Attacks grant extra Energized stacks.",
+      "statText": "45 Attack Damage\n45 Ability Power\n30% Attack Speed\n4% Move Speed",
+      "requiredChampion": "",
+      "price": 3000,
+      "sell": 2100,
+      "recipe": [
+        3144,
+        3113,
+        1037
+      ],
+      "tags": [
+        "AttackSpeed",
+        "NonbootsMovement",
+        "Damage",
+        "OnHit",
+        "SpellDamage"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "attackDamage": 45.0,
+      "abilityPower": 45.0,
+      "attackSpeed": 0.3,
+      "movePercent": 0.04
+    },
+    {
+      "id": 3089,
+      "name": "Rabadon's Deathcap",
+      "description": "130 Ability Power\n\nMagical Opus\nIncreases your total Ability Power by 30%.",
+      "statText": "130 Ability Power",
+      "requiredChampion": "",
+      "price": 3500,
+      "sell": 2450,
+      "recipe": [
+        1058,
+        1058
+      ],
+      "tags": [
+        "SpellDamage"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "abilityPower": 130.0
+    },
+    {
+      "id": 3091,
+      "name": "Wit's End",
+      "description": "50% Attack Speed\n45 Magic Resist\n20% Tenacity\n\nFray\nAttacks deal bonus magic damage On-Hit.",
+      "statText": "50% Attack Speed\n45 Magic Resist\n20% Tenacity",
+      "requiredChampion": "",
+      "price": 2800,
+      "sell": 1960,
+      "recipe": [
+        1043,
+        1057,
+        1043
+      ],
+      "tags": [
+        "Tenacity",
+        "OnHit",
+        "AttackSpeed",
+        "SpellBlock"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "attackSpeed": 0.5,
+      "magicResistance": 45.0,
+      "tenacity": 0.2
+    },
+    {
+      "id": 3094,
+      "name": "Rapid Firecannon",
+      "description": "35% Attack Speed\n25% Critical Strike Chance\n4% Move Speed\n\nSharpshooter\nYour Energized Attack deals 40 bonus magic damage and gains 35% bonus Attack Range.",
+      "statText": "35% Attack Speed\n25% Critical Strike Chance\n4% Move Speed",
+      "requiredChampion": "",
+      "price": 2650,
+      "sell": 1855,
+      "recipe": [
+        3086,
+        3144
+      ],
+      "tags": [
+        "CriticalStrike",
+        "AttackSpeed",
+        "NonbootsMovement"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "attackSpeed": 0.35,
+      "criticalChance": 0.25,
+      "movePercent": 0.04
+    },
+    {
+      "id": 3095,
+      "name": "Stormrazor",
+      "description": "50 Attack Damage\n25% Attack Speed\n25% Critical Strike Chance\n\nEnergized\nMoving and Attacking generates an Energized Attack.\n\nBolt\nYour Energized Attack applies  bonus magic damage and grants 45% Movement Speed for 1.5 seconds.\n",
+      "statText": "50 Attack Damage\n25% Attack Speed\n25% Critical Strike Chance",
+      "requiredChampion": "",
+      "price": 3200,
+      "sell": 2240,
+      "recipe": [
+        1038,
+        1018,
+        3144
+      ],
+      "tags": [
+        "CriticalStrike",
+        "AttackSpeed",
+        "Damage",
+        "NonbootsMovement"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "attackDamage": 50.0,
+      "attackSpeed": 0.25,
+      "criticalChance": 0.25
+    },
+    {
+      "id": 3100,
+      "name": "Lich Bane",
+      "description": "100 Ability Power\n6% Move Speed\n10 Ability Haste\n\nSpellblade\nAfter using an Ability, your next Attack deals bonus magic damage On-Hit.",
+      "statText": "100 Ability Power\n6% Move Speed\n10 Ability Haste",
+      "requiredChampion": "",
+      "price": 2900,
+      "sell": 2030,
+      "recipe": [
+        3057,
+        3113,
+        1026
+      ],
+      "tags": [
+        "OnHit",
+        "AbilityHaste",
+        "NonbootsMovement",
+        "SpellDamage"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "abilityPower": 100.0,
+      "movePercent": 0.06,
+      "abilityHaste": 10.0
+    },
+    {
+      "id": 3102,
+      "name": "Banshee's Veil",
+      "description": "105 Ability Power\n40 Magic Resist\n\nAnnul\nGrants a Spell Shield that blocks the next enemy Ability.",
+      "statText": "105 Ability Power\n40 Magic Resist",
+      "requiredChampion": "",
+      "price": 3000,
+      "sell": 2100,
+      "recipe": [
+        1058,
+        4632
+      ],
+      "tags": [
+        "SpellBlock",
+        "SpellDamage"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "abilityPower": 105.0,
+      "magicResistance": 40.0
+    },
+    {
+      "id": 3107,
+      "name": "Redemption",
+      "description": "30 Ability Power\n15 Ability Haste\n100% Base Mana Regen\n10% Heal and Shield Power\n\nIntervention\nRestore 150 - 350 Health to allied units and deal 10% max Health true damage to enemy champions after 2.5 seconds.",
+      "statText": "30 Ability Power\n15 Ability Haste\n100% Base Mana Regen\n10% Heal and Shield Power",
+      "requiredChampion": "",
+      "price": 2300,
+      "sell": 1610,
+      "recipe": [
+        3108,
+        3114
+      ],
+      "tags": [
+        "ManaRegen",
+        "AbilityHaste",
+        "CooldownReduction",
+        "SpellDamage"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 18,
+      "activeCooldown": 90,
+      "abilityPower": 30.0,
+      "abilityHaste": 15.0,
+      "manaRegen": 1.0,
+      "healShieldPower": 0.1
+    },
+    {
+      "id": 3108,
+      "name": "Fiendish Codex",
+      "description": "25 Ability Power\n10 Ability Haste\n\n",
+      "statText": "25 Ability Power\n10 Ability Haste",
+      "requiredChampion": "",
+      "price": 850,
+      "sell": 595,
+      "recipe": [
+        1052,
+        2022
+      ],
+      "tags": [
+        "CooldownReduction",
+        "AbilityHaste",
+        "SpellDamage"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "abilityPower": 25.0,
+      "abilityHaste": 10.0
+    },
+    {
+      "id": 3109,
+      "name": "Knight's Vow",
+      "description": "200 Health\n40 Armor\n10 Ability Haste\n100% Base Health Regen\n\nSacrifice\nWhile near your Worthy ally, take 14% of the damage they receive and heal for 12% of the damage they deal to champions.Pledge (0s)\nDesignate an ally as Worthy.",
+      "statText": "200 Health\n40 Armor\n10 Ability Haste\n100% Base Health Regen",
+      "requiredChampion": "",
+      "price": 2300,
+      "sell": 1610,
+      "recipe": [
+        3067,
+        1031,
+        1006
+      ],
+      "tags": [
+        "CooldownReduction",
+        "Armor",
+        "HealthRegen",
+        "Active",
+        "Aura",
+        "Health",
+        "AbilityHaste"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 19,
+      "activeCooldown": 60,
+      "health": 200.0,
+      "armor": 40.0,
+      "abilityHaste": 10.0,
+      "healthRegen": 1.0
+    },
+    {
+      "id": 3110,
+      "name": "Frozen Heart",
+      "description": "75 Armor\n400 Mana\n20 Ability Haste\n\nWinter's Caress\nReduce the Attack Speed of nearby champions by 20%.",
+      "statText": "75 Armor\n400 Mana\n20 Ability Haste",
+      "requiredChampion": "",
+      "price": 2500,
+      "sell": 1750,
+      "recipe": [
+        3082,
+        3024
+      ],
+      "tags": [
+        "CooldownReduction",
+        "Armor",
+        "Aura",
+        "Mana",
+        "AbilityHaste"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "armor": 75.0,
+      "mana": 400.0,
+      "abilityHaste": 20.0
+    },
+    {
+      "id": 3111,
+      "name": "Mercury's Treads",
+      "description": "20 Magic Resist\n45 Move Speed\n30% Tenacity\n\n",
+      "statText": "20 Magic Resist\n45 Move Speed\n30% Tenacity",
+      "requiredChampion": "",
+      "price": 1250,
+      "sell": 875,
+      "recipe": [
+        1001,
+        1033
+      ],
+      "tags": [
+        "Boots",
+        "SpellBlock",
+        "Tenacity"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "magicResistance": 20.0,
+      "moveSpeed": 45.0,
+      "tenacity": 0.3
+    },
+    {
+      "id": 3113,
+      "name": "Aether Wisp",
+      "description": "30 Ability Power\n4% Move Speed\n\n",
+      "statText": "30 Ability Power\n4% Move Speed",
+      "requiredChampion": "",
+      "price": 900,
+      "sell": 630,
+      "recipe": [
+        1052
+      ],
+      "tags": [
+        "NonbootsMovement",
+        "SpellDamage"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "abilityPower": 30.0,
+      "movePercent": 0.04
+    },
+    {
+      "id": 3114,
+      "name": "Forbidden Idol",
+      "description": "50% Base Mana Regen\n8% Heal and Shield Power\n\n",
+      "statText": "50% Base Mana Regen\n8% Heal and Shield Power",
+      "requiredChampion": "",
+      "price": 600,
+      "sell": 420,
+      "recipe": [
+        1004
+      ],
+      "tags": [
+        "ManaRegen"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "manaRegen": 0.5,
+      "healShieldPower": 0.08
+    },
+    {
+      "id": 3115,
+      "name": "Nashor's Tooth",
+      "description": "80 Ability Power\n50% Attack Speed\n15 Ability Haste\n\nIcathian Bite\nAttacks deal bonus magic damage On-Hit.",
+      "statText": "80 Ability Power\n50% Attack Speed\n15 Ability Haste",
+      "requiredChampion": "",
+      "price": 2900,
+      "sell": 2030,
+      "recipe": [
+        1043,
+        1026,
+        3108
+      ],
+      "tags": [
+        "OnHit",
+        "AttackSpeed",
+        "AbilityHaste",
+        "SpellDamage"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "abilityPower": 80.0,
+      "attackSpeed": 0.5,
+      "abilityHaste": 15.0
+    },
+    {
+      "id": 3116,
+      "name": "Rylai's Crystal Scepter",
+      "description": "65 Ability Power\n400 Health\n\nRimefrost\nDamaging Abilities Slow enemies by 30% for 1 second.",
+      "statText": "65 Ability Power\n400 Health",
+      "requiredChampion": "",
+      "price": 2600,
+      "sell": 1820,
+      "recipe": [
+        1026,
+        1011,
+        1052
+      ],
+      "tags": [
+        "SpellDamage",
+        "Slow",
+        "Health"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "abilityPower": 65.0,
+      "health": 400.0
+    },
+    {
+      "id": 3118,
+      "name": "Malignance",
+      "description": "90 Ability Power\n600 Mana\n15 Ability Haste\n\nScorn\nGain 20 Ultimate Ability Haste.\n\nHatefog\nDamaging a champion with your Ultimate burns the ground beneath them for 3s, dealing magic damage per second and reducing their Magic Resist. \n",
+      "statText": "90 Ability Power\n600 Mana\n15 Ability Haste",
+      "requiredChampion": "",
+      "price": 2700,
+      "sell": 1890,
+      "recipe": [
+        3802,
+        1026
+      ],
+      "tags": [
+        "Mana",
+        "AbilityHaste",
+        "SpellDamage"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "abilityPower": 90.0,
+      "mana": 600.0,
+      "abilityHaste": 15.0
+    },
+    {
+      "id": 3119,
+      "name": "Winter's Approach",
+      "description": "550 Health\n500 Mana\n15 Ability Haste\n\nAwe\nGain  Health.\n\nManaflow (8s, max 4 charges)\nLanding Attacks and Abilities grant 3 max Mana (doubled vs. champions).\nTransforms into Fimbulwinter at 360 max Mana.",
+      "statText": "550 Health\n500 Mana\n15 Ability Haste",
+      "requiredChampion": "",
+      "price": 2400,
+      "sell": 1680,
+      "recipe": [
+        3070,
+        1011,
+        3067
+      ],
+      "tags": [
+        "Mana",
+        "AbilityHaste",
+        "Health"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "health": 550.0,
+      "mana": 500.0,
+      "abilityHaste": 15.0
+    },
+    {
+      "id": 3121,
+      "name": "Fimbulwinter",
+      "description": "550 Health\n1000 Mana\n15 Ability Haste\n\nAwe\nGain  Health.\n\nEverlasting (0s)\nImmobilizing or Slowing (Melee only) an enemy champion grants a Shield for 3 seconds. \nThe Shield is increased by 80% if more than one enemy is nearby.",
+      "statText": "550 Health\n1000 Mana\n15 Ability Haste",
+      "requiredChampion": "",
+      "price": 2400,
+      "sell": 1680,
+      "recipe": [],
+      "tags": [
+        "Mana",
+        "AbilityHaste",
+        "Health"
+      ],
+      "showInShop": false,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "health": 550.0,
+      "mana": 1000.0,
+      "abilityHaste": 15.0
+    },
+    {
+      "id": 3123,
+      "name": "Executioner's Calling",
+      "description": "15 Attack Damage\n\nGrievous Wounds\nDealing physical damage to champions applies 40% Wounds for 3 seconds.",
+      "statText": "15 Attack Damage",
+      "requiredChampion": "",
+      "price": 800,
+      "sell": 560,
+      "recipe": [
+        1036
+      ],
+      "tags": [
+        "Damage"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "attackDamage": 15.0
+    },
+    {
+      "id": 3124,
+      "name": "Guinsoo's Rageblade",
+      "description": "30 Attack Damage\n30 Ability Power\n25% Attack Speed\n\nWrath\nAttacks deal 30 bonus magic damage On-Hit.\n\nSeething Strike\nAttacks grant 8% Attack Speed for 4 seconds. (stacks 4 times). \nWhile fully stacked, every third Attack applies On-Hit effects twice.",
+      "statText": "30 Attack Damage\n30 Ability Power\n25% Attack Speed",
+      "requiredChampion": "",
+      "price": 3000,
+      "sell": 2100,
+      "recipe": [
+        1052,
+        1043,
+        1037
+      ],
+      "tags": [
+        "OnHit",
+        "AttackSpeed",
+        "Damage",
+        "SpellDamage"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "attackDamage": 30.0,
+      "abilityPower": 30.0,
+      "attackSpeed": 0.25
+    },
+    {
+      "id": 3133,
+      "name": "Caulfield's Warhammer",
+      "description": "20 Attack Damage\n10 Ability Haste\n\n",
+      "statText": "20 Attack Damage\n10 Ability Haste",
+      "requiredChampion": "",
+      "price": 1050,
+      "sell": 735,
+      "recipe": [
+        1036,
+        2022,
+        1036
+      ],
+      "tags": [
+        "CooldownReduction",
+        "Damage",
+        "AbilityHaste"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "attackDamage": 20.0,
+      "abilityHaste": 10.0
+    },
+    {
+      "id": 3134,
+      "name": "Serrated Dirk",
+      "description": "20 Attack Damage\n10 Lethality\n\n",
+      "statText": "20 Attack Damage\n10 Lethality",
+      "requiredChampion": "",
+      "price": 1000,
+      "sell": 700,
+      "recipe": [
+        1036,
+        1036
+      ],
+      "tags": [
+        "ArmorPenetration",
+        "Damage"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "attackDamage": 20.0,
+      "lethality": 10.0
+    },
+    {
+      "id": 3135,
+      "name": "Void Staff",
+      "description": "95 Ability Power\n40% Magic Penetration\n\n",
+      "statText": "95 Ability Power\n40% Magic Penetration",
+      "requiredChampion": "",
+      "price": 3000,
+      "sell": 2100,
+      "recipe": [
+        4630,
+        1026
+      ],
+      "tags": [
+        "SpellDamage",
+        "MagicPenetration"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "abilityPower": 95.0,
+      "magicPenPercent": 0.4
+    },
+    {
+      "id": 3137,
+      "name": "Cryptbloom",
+      "description": "75 Ability Power\n30% Magic Penetration\n20 Ability Haste\n\nLife from Death\nWhen a champion that you damaged within 3 seconds dies, a nova spreads from their corpse that heals.",
+      "statText": "75 Ability Power\n30% Magic Penetration\n20 Ability Haste",
+      "requiredChampion": "",
+      "price": 3000,
+      "sell": 2100,
+      "recipe": [
+        4630,
+        3108,
+        3108
+      ],
+      "tags": [
+        "AbilityHaste",
+        "MagicPenetration",
+        "SpellDamage"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "abilityPower": 75.0,
+      "magicPenPercent": 0.3,
+      "abilityHaste": 20.0
+    },
+    {
+      "id": 3139,
+      "name": "Mercurial Scimitar",
+      "description": "50 Attack Damage\n35 Magic Resist\n10% Life Steal\n\n\n\nACTIVE\nQuicksilver\nRemoves all crowd control debuffs (excluding Airborne) and grants Move Speed.",
+      "statText": "50 Attack Damage\n35 Magic Resist\n10% Life Steal",
+      "requiredChampion": "",
+      "price": 3200,
+      "sell": 2240,
+      "recipe": [
+        3140,
+        1037,
+        1053
+      ],
+      "tags": [
+        "NonbootsMovement",
+        "Damage",
+        "Active",
+        "SpellBlock",
+        "LifeSteal",
+        "Tenacity"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 21,
+      "activeCooldown": 90,
+      "attackDamage": 50.0,
+      "magicResistance": 35.0,
+      "lifesteal": 0.1
+    },
+    {
+      "id": 3140,
+      "name": "Quicksilver Sash",
+      "description": "30 Magic Resist\n\nQuicksilver\nRemove all crowd control debuffs (excluding Airborne).",
+      "statText": "30 Magic Resist",
+      "requiredChampion": "",
+      "price": 1300,
+      "sell": 910,
+      "recipe": [
+        1033
+      ],
+      "tags": [
+        "Active",
+        "SpellBlock"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 20,
+      "activeCooldown": 90,
+      "magicResistance": 30.0
+    },
+    {
+      "id": 3142,
+      "name": "Youmuu's Ghostblade",
+      "description": "55 Attack Damage\n18 Lethality\n4% Move Speed\n\nHaunt \nGain  Move Speed while out of combat.\n\nWraith Step\nGain Move Speed and Ghosting for  seconds.",
+      "statText": "55 Attack Damage\n18 Lethality\n4% Move Speed",
+      "requiredChampion": "",
+      "price": 2800,
+      "sell": 1960,
+      "recipe": [
+        3134,
+        6690,
+        1036
+      ],
+      "tags": [
+        "Active",
+        "ArmorPenetration",
+        "Damage",
+        "NonbootsMovement"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 22,
+      "activeCooldown": 45,
+      "attackDamage": 55.0,
+      "lethality": 18.0,
+      "movePercent": 0.04
+    },
+    {
+      "id": 3143,
+      "name": "Randuin's Omen",
+      "description": "350 Health\n75 Armor\n\nResilience\nReceive 30% less damage from Critical Strikes.\nHumility\nSlow nearby enemies by 70% for 2 seconds.",
+      "statText": "350 Health\n75 Armor",
+      "requiredChampion": "",
+      "price": 2700,
+      "sell": 1890,
+      "recipe": [
+        3082,
+        1011
+      ],
+      "tags": [
+        "Active",
+        "Armor",
+        "Health",
+        "Slow"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 23,
+      "activeCooldown": 90,
+      "health": 350.0,
+      "armor": 75.0
+    },
+    {
+      "id": 3144,
+      "name": "Scout's Slingshot",
+      "description": "20% Attack Speed\n\nBullseye\nDamaging a champion deals bonus magic damage. \nAttacks reduce this cooldown by 1 second.",
+      "statText": "20% Attack Speed",
+      "requiredChampion": "",
+      "price": 600,
+      "sell": 420,
+      "recipe": [
+        1042,
+        1042
+      ],
+      "tags": [
+        "AttackSpeed"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "attackSpeed": 0.2
+    },
+    {
+      "id": 3145,
+      "name": "Hextech Alternator",
+      "description": "45 Ability Power\n\nRevved\nDamaging a champion deals bonus magic damage.",
+      "statText": "45 Ability Power",
+      "requiredChampion": "",
+      "price": 1100,
+      "sell": 770,
+      "recipe": [
+        1052,
+        1052
+      ],
+      "tags": [
+        "SpellDamage"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "abilityPower": 45.0
+    },
+    {
+      "id": 3146,
+      "name": "Hextech Gunblade",
+      "description": "80 Ability Power\n40 Attack Damage\n10% Omnivamp\n\n\n\nACTIVE (0s)\nLightning Bolt\nShocks the target enemy champion, dealing  magic damage and slowing them by 25% for 1.5 seconds.",
+      "statText": "80 Ability Power\n40 Attack Damage\n10% Omnivamp",
+      "requiredChampion": "",
+      "price": 3000,
+      "sell": 2100,
+      "recipe": [
+        1053,
+        3145,
+        1052
+      ],
+      "tags": [
+        "Damage",
+        "SpellVamp",
+        "Active",
+        "SpellDamage",
+        "LifeSteal"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 24,
+      "activeCooldown": 60,
+      "abilityPower": 80.0,
+      "attackDamage": 40.0,
+      "omnivamp": 0.1
+    },
+    {
+      "id": 3147,
+      "name": "Haunting Guise",
+      "description": "30 Ability Power\n200 Health\n\nMadness\nFor each second in combat with enemy champions, deal 2% bonus damage, up to 6%. ",
+      "statText": "30 Ability Power\n200 Health",
+      "requiredChampion": "",
+      "price": 1300,
+      "sell": 910,
+      "recipe": [
+        1052,
+        1028
+      ],
+      "tags": [
+        "SpellDamage",
+        "Health"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "abilityPower": 30.0,
+      "health": 200.0
+    },
+    {
+      "id": 3152,
+      "name": "Hextech Rocketbelt",
+      "description": "60 Ability Power\n350 Health\n20 Ability Haste\n\nSupersonic\nDash in target direction, unleashing missiles that deal magic damage.",
+      "statText": "60 Ability Power\n350 Health\n20 Ability Haste",
+      "requiredChampion": "",
+      "price": 2650,
+      "sell": 1855,
+      "recipe": [
+        3145,
+        3067,
+        1028
+      ],
+      "tags": [
+        "CooldownReduction",
+        "NonbootsMovement",
+        "Active",
+        "SpellDamage",
+        "Health",
+        "AbilityHaste"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 25,
+      "activeCooldown": 40,
+      "abilityPower": 60.0,
+      "health": 350.0,
+      "abilityHaste": 20.0
+    },
+    {
+      "id": 3153,
+      "name": "Blade of The Ruined King",
+      "description": "40 Attack Damage\n25% Attack Speed\n10% Life Steal\n\nMist's Edge\nAttacks deal a percentage of enemy's current Health as bonus physical damage On-Hit.\n\nClawing Shadows\nAttacking a champion 3 times Slows them by 30% for 1 second.",
+      "statText": "40 Attack Damage\n25% Attack Speed\n10% Life Steal",
+      "requiredChampion": "",
+      "price": 3200,
+      "sell": 2240,
+      "recipe": [
+        1053,
+        1043,
+        1037
+      ],
+      "tags": [
+        "AttackSpeed",
+        "Damage",
+        "OnHit",
+        "LifeSteal",
+        "Slow"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "attackDamage": 40.0,
+      "attackSpeed": 0.25,
+      "lifesteal": 0.1
+    },
+    {
+      "id": 3155,
+      "name": "Hexdrinker",
+      "description": "25 Attack Damage\n25 Magic Resist\n\nLifeline\nTaking magic damage that would reduce your Health below 30% grants a magic damage Shield for 2.5 seconds.",
+      "statText": "25 Attack Damage\n25 Magic Resist",
+      "requiredChampion": "",
+      "price": 1300,
+      "sell": 910,
+      "recipe": [
+        1036,
+        1033,
+        1036
+      ],
+      "tags": [
+        "Damage",
+        "SpellBlock"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "attackDamage": 25.0,
+      "magicResistance": 25.0
+    },
+    {
+      "id": 3156,
+      "name": "Maw of Malmortius",
+      "description": "60 Attack Damage\n15 Ability Haste\n40 Magic Resist\n\nLifeline\nTaking magic damage that would reduce your Health below 30% grants a magic damage Shield for 3 seconds and 10% Omnivamp until end of combat.",
+      "statText": "60 Attack Damage\n15 Ability Haste\n40 Magic Resist",
+      "requiredChampion": "",
+      "price": 3100,
+      "sell": 2170,
+      "recipe": [
+        3155,
+        3133
+      ],
+      "tags": [
+        "Damage",
+        "SpellVamp",
+        "SpellBlock",
+        "LifeSteal",
+        "AbilityHaste"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "attackDamage": 60.0,
+      "abilityHaste": 15.0,
+      "magicResistance": 40.0
+    },
+    {
+      "id": 3157,
+      "name": "Zhonya's Hourglass",
+      "description": "105 Ability Power\n50 Armor\n\n\n\nTime Stop\nEnter Stasis for 2.5 seconds.",
+      "statText": "105 Ability Power\n50 Armor",
+      "requiredChampion": "",
+      "price": 3250,
+      "sell": 2275,
+      "recipe": [
+        1058,
+        2420
+      ],
+      "tags": [
+        "Active",
+        "Armor",
+        "SpellDamage"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 3,
+      "activeCooldown": 120,
+      "abilityPower": 105.0,
+      "armor": 50.0
+    },
+    {
+      "id": 3158,
+      "name": "Ionian Boots of Lucidity",
+      "description": "10 Ability Haste\n45 Move Speed\n\nIonian Insight\nGain 10 Summoner Spell Haste.\n\n",
+      "statText": "10 Ability Haste\n45 Move Speed",
+      "requiredChampion": "",
+      "price": 900,
+      "sell": 630,
+      "recipe": [
+        1001,
+        2022
+      ],
+      "tags": [
+        "Boots",
+        "CooldownReduction"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "abilityHaste": 10.0,
+      "moveSpeed": 45.0
+    },
+    {
+      "id": 3161,
+      "name": "Spear of Shojin",
+      "description": "45 Attack Damage\n450 Health\n\nDragonforce \nGain 25 Basic Ability Haste.\n\nFocused Will \nDealing damage with Abilities increases your Champion's Ability and Passive damage by 3% for 6 seconds. (stacks 4 times).",
+      "statText": "45 Attack Damage\n450 Health",
+      "requiredChampion": "",
+      "price": 3100,
+      "sell": 2170,
+      "recipe": [
+        1037,
+        2021,
+        1028
+      ],
+      "tags": [
+        "AbilityHaste",
+        "Damage",
+        "Health"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "attackDamage": 45.0,
+      "health": 450.0
+    },
+    {
+      "id": 3165,
+      "name": "Morellonomicon",
+      "description": "75 Ability Power\n350 Health\n15 Ability Haste\n\nGrievous Wounds\nDealing magic damage to champions applies 40% Wounds for 3 seconds.",
+      "statText": "75 Ability Power\n350 Health\n15 Ability Haste",
+      "requiredChampion": "",
+      "price": 2850,
+      "sell": 1995,
+      "recipe": [
+        3916,
+        1026,
+        3067
+      ],
+      "tags": [
+        "CooldownReduction",
+        "SpellDamage",
+        "AbilityHaste",
+        "Health"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "abilityPower": 75.0,
+      "health": 350.0,
+      "abilityHaste": 15.0
+    },
+    {
+      "id": 3168,
+      "name": "Immortal Path",
+      "description": "45 Move Speed\n4% Omnivamp\n\nSlay\nGain 0.6% Omnivamp on Champion takedown, stacking up to 10 times.\n\nNow and Forever\nWhile above half Health, deal 4% increased damage. \n\nWhile below half Health, gain 12% increased healing, shielding, and regeneration.",
+      "statText": "45 Move Speed\n4% Omnivamp",
+      "requiredChampion": "",
+      "price": 1000,
+      "sell": 700,
+      "recipe": [
+        3008
+      ],
+      "tags": [
+        "Boots",
+        "SpellVamp",
+        "LifeSteal"
+      ],
+      "showInShop": true,
+      "questUpgrade": true,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "moveSpeed": 45.0,
+      "omnivamp": 0.04,
+      "effectNotes": "Quest upgrade: boots require 1500 combat quest gold; support rewards require Bounty of Worlds."
+    },
+    {
+      "id": 3170,
+      "name": "Swiftmarch",
+      "description": "65 Move Speed\n\nFleetfooted\nReduce the effectiveness of Slows by 25%.\n\nNoxian Fervor\nGain 5% of your Move Speed as Adaptive Force.",
+      "statText": "65 Move Speed",
+      "requiredChampion": "",
+      "price": 1000,
+      "sell": 700,
+      "recipe": [
+        3009
+      ],
+      "tags": [
+        "Boots"
+      ],
+      "showInShop": true,
+      "questUpgrade": true,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "moveSpeed": 65.0,
+      "effectNotes": "Quest upgrade: boots require 1500 combat quest gold; support rewards require Bounty of Worlds."
+    },
+    {
+      "id": 3171,
+      "name": "Crimson Lucidity",
+      "description": "20 Ability Haste\n45 Move Speed\n\nIonian Insight\nGain 20 Summoner Spell Haste.\n\nNoxian Haste\nEmpowering or protecting allies with abilities, dealing damage to enemy Champions with abilities, or casting a Summoner Spell grants  Move Speed for 4 seconds.\n\nNoxian Haste can only be triggered once per Ability cast.",
+      "statText": "20 Ability Haste\n45 Move Speed",
+      "requiredChampion": "",
+      "price": 900,
+      "sell": 630,
+      "recipe": [
+        3158
+      ],
+      "tags": [
+        "CooldownReduction",
+        "Boots"
+      ],
+      "showInShop": true,
+      "questUpgrade": true,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "abilityHaste": 20.0,
+      "moveSpeed": 45.0,
+      "effectNotes": "Quest upgrade: boots require 1500 combat quest gold; support rewards require Bounty of Worlds."
+    },
+    {
+      "id": 3172,
+      "name": "Gunmetal Greaves",
+      "description": "45% Attack Speed\n45 Move Speed\n5% Life Steal\n\n",
+      "statText": "45% Attack Speed\n45 Move Speed\n5% Life Steal",
+      "requiredChampion": "",
+      "price": 1100,
+      "sell": 770,
+      "recipe": [
+        3006
+      ],
+      "tags": [
+        "AttackSpeed",
+        "NonbootsMovement",
+        "LifeSteal"
+      ],
+      "showInShop": true,
+      "questUpgrade": true,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "attackSpeed": 0.45,
+      "moveSpeed": 45.0,
+      "lifesteal": 0.05,
+      "effectNotes": "Quest upgrade: boots require 1500 combat quest gold; support rewards require Bounty of Worlds."
+    },
+    {
+      "id": 3173,
+      "name": "Chainlaced Crushers",
+      "description": "25 Magic Resist\n45 Move Speed\n30% Tenacity\n\nNoxian Persistence (0s)\nAfter taking magic damage from a Champion, gain a  magic shield for 5 seconds.",
+      "statText": "25 Magic Resist\n45 Move Speed\n30% Tenacity",
+      "requiredChampion": "",
+      "price": 1250,
+      "sell": 875,
+      "recipe": [
+        3111
+      ],
+      "tags": [
+        "Boots",
+        "MagicResist",
+        "SpellBlock",
+        "Tenacity"
+      ],
+      "showInShop": true,
+      "questUpgrade": true,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "magicResistance": 25.0,
+      "moveSpeed": 45.0,
+      "tenacity": 0.3,
+      "effectNotes": "Quest upgrade: boots require 1500 combat quest gold; support rewards require Bounty of Worlds."
+    },
+    {
+      "id": 3174,
+      "name": "Armored Advance",
+      "description": "35 Armor\n45 Move Speed\n\nPlating\nReduces incoming damage from Attacks by 10%.\n\nNoxian Endurance (0s)\nAfter taking physical damage from a Champion, gain a  physical shield for 5 seconds.",
+      "statText": "35 Armor\n45 Move Speed",
+      "requiredChampion": "",
+      "price": 1200,
+      "sell": 840,
+      "recipe": [
+        3047
+      ],
+      "tags": [
+        "Boots",
+        "Armor"
+      ],
+      "showInShop": true,
+      "questUpgrade": true,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "armor": 35.0,
+      "moveSpeed": 45.0,
+      "effectNotes": "Quest upgrade: boots require 1500 combat quest gold; support rewards require Bounty of Worlds."
+    },
+    {
+      "id": 3175,
+      "name": "Spellslinger's Shoes",
+      "description": "20 Magic Penetration\n8% Magic Penetration\n45 Move Speed\n\n",
+      "statText": "20 Magic Penetration\n8% Magic Penetration\n45 Move Speed",
+      "requiredChampion": "",
+      "price": 1100,
+      "sell": 770,
+      "recipe": [
+        3020
+      ],
+      "tags": [
+        "Boots",
+        "MagicPenetration"
+      ],
+      "showInShop": true,
+      "questUpgrade": true,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "magicPen": 20.0,
+      "magicPenPercent": 0.08,
+      "moveSpeed": 45.0,
+      "effectNotes": "Quest upgrade: boots require 1500 combat quest gold; support rewards require Bounty of Worlds."
+    },
+    {
+      "id": 3179,
+      "name": "Umbral Glaive",
+      "description": "60 Attack Damage\n18 Lethality\n15 Ability Haste\n\nNightstalker\nAfter being unseen by enemies briefly, your next attack against a champion deals an additional true damage.\n\nBlackout\nWhen you are near enemy Stealth Wards and traps, reveal them briefly. While revealing wards, your attacks deal bonus damage to them.",
+      "statText": "60 Attack Damage\n18 Lethality\n15 Ability Haste",
+      "requiredChampion": "",
+      "price": 2800,
+      "sell": 1960,
+      "recipe": [
+        3134,
+        3133
+      ],
+      "tags": [
+        "CooldownReduction",
+        "Vision",
+        "ArmorPenetration",
+        "Damage",
+        "AbilityHaste"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "attackDamage": 60.0,
+      "lethality": 18.0,
+      "abilityHaste": 15.0
+    },
+    {
+      "id": 3181,
+      "name": "Hullbreaker",
+      "description": "40 Attack Damage\n500 Health\n4% Move Speed\n\nSkipper\nEvery fifth Attack against champions and epic monsters deals bonus physical damage, increased against Structures.\n\nBoarding Party\nNearby allied siege and super minions gain Armor and Magic Resist.",
+      "statText": "40 Attack Damage\n500 Health\n4% Move Speed",
+      "requiredChampion": "",
+      "price": 3000,
+      "sell": 2100,
+      "recipe": [
+        2021,
+        3066,
+        1037
+      ],
+      "tags": [
+        "NonbootsMovement",
+        "Damage",
+        "Health"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "attackDamage": 40.0,
+      "health": 500.0,
+      "movePercent": 0.04
+    },
+    {
+      "id": 3190,
+      "name": "Locket of the Iron Solari",
+      "description": "200 Health\n30 Armor\n30 Magic Resist\n10 Ability Haste\n\nDevotion\nGrant nearby allies a 290 - 360 Shield that decays over 2.5 seconds.",
+      "statText": "200 Health\n30 Armor\n30 Magic Resist\n10 Ability Haste",
+      "requiredChampion": "",
+      "price": 2200,
+      "sell": 1540,
+      "recipe": [
+        3067,
+        1029,
+        1033
+      ],
+      "tags": [
+        "Armor",
+        "MagicResist",
+        "Active",
+        "Aura",
+        "SpellBlock",
+        "Health",
+        "AbilityHaste"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 26,
+      "activeCooldown": 90,
+      "health": 200.0,
+      "armor": 30.0,
+      "magicResistance": 30.0,
+      "abilityHaste": 10.0
+    },
+    {
+      "id": 3211,
+      "name": "Spectre's Cowl",
+      "description": "200 Health\n35 Magic Resist\n100% Base Health Regen\n\n",
+      "statText": "200 Health\n35 Magic Resist\n100% Base Health Regen",
+      "requiredChampion": "",
+      "price": 1250,
+      "sell": 875,
+      "recipe": [
+        1028,
+        1033,
+        1006
+      ],
+      "tags": [
+        "HealthRegen",
+        "SpellBlock",
+        "Health"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "health": 200.0,
+      "magicResistance": 35.0,
+      "healthRegen": 1.0
+    },
+    {
+      "id": 3222,
+      "name": "Mikael's Blessing",
+      "description": "250 Health\n100% Base Mana Regen\n12% Heal and Shield Power\n15 Ability Haste\n\nPurify\nRemove all crowd control debuffs (excluding Airborne and Suppression) from an ally champion and restore 100 - 250 Health.",
+      "statText": "250 Health\n100% Base Mana Regen\n12% Heal and Shield Power\n15 Ability Haste",
+      "requiredChampion": "",
+      "price": 2300,
+      "sell": 1610,
+      "recipe": [
+        3067,
+        3114
+      ],
+      "tags": [
+        "CooldownReduction",
+        "Active",
+        "Health",
+        "Tenacity",
+        "ManaRegen",
+        "AbilityHaste"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 27,
+      "activeCooldown": 120,
+      "health": 250.0,
+      "manaRegen": 1.0,
+      "healShieldPower": 0.12,
+      "abilityHaste": 15.0
+    },
+    {
+      "id": 3302,
+      "name": "Terminus",
+      "description": "30 Attack Damage\n35% Attack Speed\n\nShadow\nAttacks deal  bonus magic damage On-Hit.\n\nJuxtaposition\nAlternate between Light and Dark Attacks against champions: Light Attacks grant Armor and Magic Resist for 5s. Dark Attacks grant 10% Armor Penetration and Magic Penetration for 5s. ",
+      "statText": "30 Attack Damage\n35% Attack Speed",
+      "requiredChampion": "",
+      "price": 3000,
+      "sell": 2100,
+      "recipe": [
+        3051,
+        1043
+      ],
+      "tags": [
+        "AttackSpeed",
+        "ArmorPenetration",
+        "Damage",
+        "MagicPenetration",
+        "OnHit"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "attackDamage": 30.0,
+      "attackSpeed": 0.35
+    },
+    {
+      "id": 3330,
+      "name": "Scarecrow Effigy",
+      "description": "\n\nCannot be sold\n\nActive - Trinket: Places an effigy that lasts for  seconds and appears exactly as Fiddlesticks does to enemies. Stores one charge every  seconds, up to maximum 2 charges.\n\nEnemy champions approaching an effigy will activate it, causing the effigy to fake a random action, after which the effigy will fall apart.",
+      "statText": "",
+      "requiredChampion": "FiddleSticks",
+      "price": 0,
+      "sell": 0,
+      "recipe": [],
+      "tags": [
+        "Lane",
+        "Vision",
+        "Jungle",
+        "Active",
+        "Trinket"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 30,
+      "activeCooldown": 120
+    },
+    {
+      "id": 3340,
+      "name": "Stealth Ward",
+      "description": "\n\nActive (210 - 90s, max 2 charges)\nPlaces an Invisible Stealth Ward that grants vision for 90-120 seconds.",
+      "statText": "",
+      "requiredChampion": "",
+      "price": 0,
+      "sell": 0,
+      "recipe": [],
+      "tags": [
+        "Lane",
+        "Vision",
+        "Jungle",
+        "Active",
+        "Trinket"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 5,
+      "activeCooldown": 210
+    },
+    {
+      "id": 3363,
+      "name": "Farsight Alteration",
+      "description": "\n\nActive (198 - 99s)\nReveals a distant area for 2 seconds and leaves a Ward that expires upon spotting an enemy champion.",
+      "statText": "",
+      "requiredChampion": "",
+      "price": 0,
+      "sell": 0,
+      "recipe": [],
+      "tags": [
+        "Vision",
+        "Active",
+        "Trinket"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 6,
+      "activeCooldown": 198
+    },
+    {
+      "id": 3364,
+      "name": "Oracle Lens",
+      "description": "\n\nActive (160 - 100s, max 2 charges)\nReveals enemy Stealth Wards and traps around you for 8 seconds.",
+      "statText": "",
+      "requiredChampion": "",
+      "price": 0,
+      "sell": 0,
+      "recipe": [],
+      "tags": [
+        "Vision",
+        "Active",
+        "Trinket"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 7,
+      "activeCooldown": 160
+    },
+    {
+      "id": 3504,
+      "name": "Ardent Censer",
+      "description": "45 Ability Power\n10% Heal and Shield Power\n125% Base Mana Regen\n4% Move Speed\n\nSanctify\nHealing or Shielding an ally enhances you both for 6 seconds, granting 25% Attack Speed and 20 magic damage On-Hit.",
+      "statText": "45 Ability Power\n10% Heal and Shield Power\n125% Base Mana Regen\n4% Move Speed",
+      "requiredChampion": "",
+      "price": 2200,
+      "sell": 1540,
+      "recipe": [
+        3113,
+        3114
+      ],
+      "tags": [
+        "ManaRegen",
+        "AttackSpeed",
+        "NonbootsMovement",
+        "SpellDamage"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "abilityPower": 45.0,
+      "healShieldPower": 0.1,
+      "manaRegen": 1.25,
+      "movePercent": 0.04
+    },
+    {
+      "id": 3508,
+      "name": "Essence Reaver",
+      "description": "50 Attack Damage\n20 Ability Haste\n25% Critical Strike Chance\n\nSpellblade\nAfter using an Ability, your next Attack deals bonus physical damage and grants Mana On-Hit.",
+      "statText": "50 Attack Damage\n20 Ability Haste\n25% Critical Strike Chance",
+      "requiredChampion": "",
+      "price": 3050,
+      "sell": 2135,
+      "recipe": [
+        3057,
+        3133,
+        1018
+      ],
+      "tags": [
+        "CooldownReduction",
+        "Damage",
+        "OnHit",
+        "ManaRegen",
+        "CriticalStrike",
+        "AbilityHaste"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "attackDamage": 50.0,
+      "abilityHaste": 20.0,
+      "criticalChance": 0.25
+    },
+    {
+      "id": 3599,
+      "name": "Kalista's Black Spear",
+      "description": "\n\nActive - Consume: Bind with an ally for the remainder of the game, becoming Oathsworn Allies. Oathsworn empowers you both while near one another.",
+      "statText": "",
+      "requiredChampion": "Kalista",
+      "price": 0,
+      "sell": 0,
+      "recipe": [],
+      "tags": [
+        "Consumable"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 29,
+      "activeCooldown": 0
+    },
+    {
+      "id": 3600,
+      "name": "Kalista's Black Spear",
+      "description": "\n\nActive - Consume: Bind with an ally for the remainder of the game, becoming Oathsworn Allies. Oathsworn empowers you both while near one another.\n\nRequired to use Kalista's Ultimate Ability.",
+      "statText": "",
+      "requiredChampion": "Sylas",
+      "price": 0,
+      "sell": 0,
+      "recipe": [],
+      "tags": [
+        "Consumable"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 29,
+      "activeCooldown": 0
+    },
+    {
+      "id": 3742,
+      "name": "Dead Man's Plate",
+      "description": "350 Health\n55 Armor\n4% Move Speed\n\nShipwrecker\nWhile moving, build up to 20 bonus Move Speed. Your next Attack discharges built up Move Speed to deal bonus physical damage.\n\nUnsinkable\nReduce the effectiveness of Slows by 15%.",
+      "statText": "350 Health\n55 Armor\n4% Move Speed",
+      "requiredChampion": "",
+      "price": 2900,
+      "sell": 2030,
+      "recipe": [
+        3066,
+        1028,
+        1031
+      ],
+      "tags": [
+        "NonbootsMovement",
+        "Armor",
+        "Health",
+        "Slow"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "health": 350.0,
+      "armor": 55.0,
+      "movePercent": 0.04
+    },
+    {
+      "id": 3748,
+      "name": "Titanic Hydra",
+      "description": "40 Attack Damage\n600 Health\n\nCleave\nAttacks deal physical damage on-hit and to enemies behind the target.\nTitanic Crescent\nEmpower your next Cleave to deal bonus physical damage On-Hit and deal bonus physical damage to enemies behind the target.",
+      "statText": "40 Attack Damage\n600 Health",
+      "requiredChampion": "",
+      "price": 3300,
+      "sell": 2310,
+      "recipe": [
+        3077,
+        2021,
+        1011
+      ],
+      "tags": [
+        "HealthRegen",
+        "OnHit",
+        "Damage",
+        "Health"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 15,
+      "activeCooldown": 10,
+      "attackDamage": 40.0,
+      "health": 600.0
+    },
+    {
+      "id": 3801,
+      "name": "Crystalline Bracer",
+      "description": "200 Health\n100% Base Health Regen\n\n",
+      "statText": "200 Health\n100% Base Health Regen",
+      "requiredChampion": "",
+      "price": 800,
+      "sell": 560,
+      "recipe": [
+        1028,
+        1006
+      ],
+      "tags": [
+        "HealthRegen",
+        "Health"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "health": 200.0,
+      "healthRegen": 1.0
+    },
+    {
+      "id": 3802,
+      "name": "Lost Chapter",
+      "description": "40 Ability Power\n300 Mana\n10 Ability Haste\n\nEnlighten\nLevelling up restores 20% max Mana over 3 seconds.",
+      "statText": "40 Ability Power\n300 Mana\n10 Ability Haste",
+      "requiredChampion": "",
+      "price": 1200,
+      "sell": 840,
+      "recipe": [
+        1052,
+        1027,
+        2022
+      ],
+      "tags": [
+        "CooldownReduction",
+        "SpellDamage",
+        "ManaRegen",
+        "Mana",
+        "AbilityHaste"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "abilityPower": 40.0,
+      "mana": 300.0,
+      "abilityHaste": 10.0
+    },
+    {
+      "id": 3803,
+      "name": "Catalyst of Aeons",
+      "description": "300 Health\n375 Mana\n\nEternity\nRestores 10% of the damage taken from champions as Mana. \nCasting an Ability heals for 25% of Mana spent.",
+      "statText": "300 Health\n375 Mana",
+      "requiredChampion": "",
+      "price": 1300,
+      "sell": 910,
+      "recipe": [
+        1028,
+        1028,
+        1027
+      ],
+      "tags": [
+        "HealthRegen",
+        "Mana",
+        "Health",
+        "ManaRegen"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "health": 300.0,
+      "mana": 375.0
+    },
+    {
+      "id": 3814,
+      "name": "Edge of Night",
+      "description": "50 Attack Damage\n15 Lethality\n250 Health\n\nAnnul\nGrants a Spell Shield that blocks the next enemy Ability.",
+      "statText": "50 Attack Damage\n15 Lethality\n250 Health",
+      "requiredChampion": "",
+      "price": 3000,
+      "sell": 2100,
+      "recipe": [
+        3134,
+        2021
+      ],
+      "tags": [
+        "ArmorPenetration",
+        "Damage",
+        "Health"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "attackDamage": 50.0,
+      "lethality": 15.0,
+      "health": 250.0
+    },
+    {
+      "id": 3865,
+      "name": "World Atlas",
+      "description": "",
+      "statText": "",
+      "requiredChampion": "",
+      "price": 400,
+      "sell": 160,
+      "recipe": [],
+      "tags": [
+        "Lane",
+        "Vision",
+        "Health",
+        "GoldPer",
+        "ManaRegen"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "effectNotes": "Support quest progresses by earning gold through combat. Upgrades at 500 / 1000 support quest gold."
+    },
+    {
+      "id": 3866,
+      "name": "Runic Compass",
+      "description": "60 Health\n75% Base Health Regen\n50% Base Mana Regen\n5 Gold Per 10 Seconds\n\nSupport Quest\nEarn 0 gold from this item to transform it into Bounty of Worlds. \n\nShared Riches (0s, max 0 charges)\nWhile near an ally champion, damage enemy champions or kill minions to gain gold.Active (3 charges)\nPlaces an Invisible Stealth Ward that grants vision.",
+      "statText": "60 Health\n75% Base Health Regen\n50% Base Mana Regen\n5 Gold Per 10 Seconds",
+      "requiredChampion": "",
+      "price": 400,
+      "sell": 160,
+      "recipe": [],
+      "tags": [
+        "Lane",
+        "Vision",
+        "SpellDamage",
+        "GoldPer",
+        "ManaRegen"
+      ],
+      "showInShop": false,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "health": 60.0,
+      "healthRegen": 0.75,
+      "manaRegen": 0.5,
+      "goldPer10": 5.0
+    },
+    {
+      "id": 3867,
+      "name": "Bounty of Worlds",
+      "description": "5 Gold Per 10 Seconds\n75% Base Health Regen\n75% Base Mana Regen\n200 Health\n\nUpgrade \nThis item can be upgraded into Bloodsong, Celestial Opposition, Dream Maker, Zaz'Zak's Realmspike, or Solstice Sleigh for free.Active (4 charges)\nPlaces an Invisible Stealth Ward that grants vision.",
+      "statText": "5 Gold Per 10 Seconds\n75% Base Health Regen\n75% Base Mana Regen\n200 Health",
+      "requiredChampion": "",
+      "price": 400,
+      "sell": 160,
+      "recipe": [],
+      "tags": [
+        "Lane",
+        "Vision",
+        "SpellDamage",
+        "GoldPer",
+        "ManaRegen"
+      ],
+      "showInShop": false,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "goldPer10": 5.0,
+      "healthRegen": 0.75,
+      "manaRegen": 0.75,
+      "health": 200.0
+    },
+    {
+      "id": 3869,
+      "name": "Celestial Opposition",
+      "description": "200 Health\n75% Base Health Regen\n75% Base Mana Regen\n9 Gold Per 10 Seconds\n\nBlessing of the Mountain\nReduce incoming champion damage for 2 seconds after taking damage from a champion. When the effect ends, slow nearby enemies by 50% for 1.5 seconds.\nActive (4 charges)\nPlaces an Invisible Stealth Ward that grants vision.",
+      "statText": "200 Health\n75% Base Health Regen\n75% Base Mana Regen\n9 Gold Per 10 Seconds",
+      "requiredChampion": "",
+      "price": 400,
+      "sell": 160,
+      "recipe": [
+        3867
+      ],
+      "tags": [
+        "Lane",
+        "Vision",
+        "HealthRegen",
+        "Health",
+        "GoldPer",
+        "ManaRegen"
+      ],
+      "showInShop": true,
+      "questUpgrade": true,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 28,
+      "activeCooldown": 0,
+      "health": 200.0,
+      "healthRegen": 0.75,
+      "manaRegen": 0.75,
+      "goldPer10": 9.0,
+      "effectNotes": "Quest upgrade: boots require 1500 combat quest gold; support rewards require Bounty of Worlds."
+    },
+    {
+      "id": 3870,
+      "name": "Dream Maker",
+      "description": "200 Health\n75% Base Health Regen\n75% Base Mana Regen\n9 Gold Per 10 Seconds\n\nDream Maker\nHealing or Shielding another ally blows Dream Bubbles to them for 3 seconds. Their next Attack deals bonus magic damage On-Hit and the next damage they take is reduced.Active (4 charges)\nPlaces an Invisible Stealth Ward that grants vision.",
+      "statText": "200 Health\n75% Base Health Regen\n75% Base Mana Regen\n9 Gold Per 10 Seconds",
+      "requiredChampion": "",
+      "price": 400,
+      "sell": 160,
+      "recipe": [
+        3867
+      ],
+      "tags": [
+        "Lane",
+        "Vision",
+        "HealthRegen",
+        "Health",
+        "GoldPer",
+        "ManaRegen"
+      ],
+      "showInShop": true,
+      "questUpgrade": true,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 28,
+      "activeCooldown": 0,
+      "health": 200.0,
+      "healthRegen": 0.75,
+      "manaRegen": 0.75,
+      "goldPer10": 9.0,
+      "effectNotes": "Quest upgrade: boots require 1500 combat quest gold; support rewards require Bounty of Worlds."
+    },
+    {
+      "id": 3871,
+      "name": "Zaz'Zak's Realmspike",
+      "description": "200 Health\n75% Base Health Regen\n75% Base Mana Regen\n9 Gold Per 10 Seconds\n\nVoid Explosion\nDealing Ability damage to a champion causes an explosion that deals magic damage.\n\nActive (4 charges)\nPlaces an Invisible Stealth Ward that grants vision.",
+      "statText": "200 Health\n75% Base Health Regen\n75% Base Mana Regen\n9 Gold Per 10 Seconds",
+      "requiredChampion": "",
+      "price": 400,
+      "sell": 160,
+      "recipe": [
+        3867
+      ],
+      "tags": [
+        "Lane",
+        "Vision",
+        "HealthRegen",
+        "Health",
+        "GoldPer",
+        "ManaRegen"
+      ],
+      "showInShop": true,
+      "questUpgrade": true,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 28,
+      "activeCooldown": 0,
+      "health": 200.0,
+      "healthRegen": 0.75,
+      "manaRegen": 0.75,
+      "goldPer10": 9.0,
+      "effectNotes": "Quest upgrade: boots require 1500 combat quest gold; support rewards require Bounty of Worlds."
+    },
+    {
+      "id": 3876,
+      "name": "Solstice Sleigh",
+      "description": "200 Health\n75% Base Health Regen\n75% Base Mana Regen\n9 Gold Per 10 Seconds\n\nGoing Sledding\nSlowing or Immobilizing an enemy champion near allies restores Health and grants 20% decaying Move Speed for 2.5 seconds to you and a nearby ally. Active (4 charges)\nPlaces an Invisible Stealth Ward that grants vision.",
+      "statText": "200 Health\n75% Base Health Regen\n75% Base Mana Regen\n9 Gold Per 10 Seconds",
+      "requiredChampion": "",
+      "price": 400,
+      "sell": 160,
+      "recipe": [
+        3867
+      ],
+      "tags": [
+        "Lane",
+        "Vision",
+        "HealthRegen",
+        "Health",
+        "GoldPer",
+        "ManaRegen"
+      ],
+      "showInShop": true,
+      "questUpgrade": true,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 28,
+      "activeCooldown": 0,
+      "health": 200.0,
+      "healthRegen": 0.75,
+      "manaRegen": 0.75,
+      "goldPer10": 9.0,
+      "effectNotes": "Quest upgrade: boots require 1500 combat quest gold; support rewards require Bounty of Worlds."
+    },
+    {
+      "id": 3877,
+      "name": "Bloodsong",
+      "description": "200 Health\n75% Base Health Regen\n75% Base Mana Regen\n9 Gold Per 10 Seconds\n\nSpellblade\nAfter using an Ability, your next Attack deals bonus physical damage On-Hit. If the target is a champion, they take increased damage for 4 seconds.Active (4 charges)\nPlaces an Invisible Stealth Ward that grants vision.",
+      "statText": "200 Health\n75% Base Health Regen\n75% Base Mana Regen\n9 Gold Per 10 Seconds",
+      "requiredChampion": "",
+      "price": 400,
+      "sell": 160,
+      "recipe": [
+        3867
+      ],
+      "tags": [
+        "Lane",
+        "Vision",
+        "HealthRegen",
+        "Health",
+        "GoldPer",
+        "ManaRegen"
+      ],
+      "showInShop": true,
+      "questUpgrade": true,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 28,
+      "activeCooldown": 0,
+      "health": 200.0,
+      "healthRegen": 0.75,
+      "manaRegen": 0.75,
+      "goldPer10": 9.0,
+      "effectNotes": "Quest upgrade: boots require 1500 combat quest gold; support rewards require Bounty of Worlds."
+    },
+    {
+      "id": 3916,
+      "name": "Oblivion Orb",
+      "description": "25 Ability Power\n\nGrievous Wounds\nDealing magic damage to champions applies 40% Wounds for 3 seconds.",
+      "statText": "25 Ability Power",
+      "requiredChampion": "",
+      "price": 800,
+      "sell": 560,
+      "recipe": [
+        1052
+      ],
+      "tags": [
+        "SpellDamage"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "abilityPower": 25.0
+    },
+    {
+      "id": 4005,
+      "name": "Imperial Mandate",
+      "description": "60 Ability Power\n15 Ability Haste\n150% Base Mana Regen\n\nControl\nGain 20 Ability Haste for your abilities with Immobilizing effects.\n\nCommand\nOn Immobilizing an enemy champion, mark them as 7% Vulnerable for 4 seconds.\n",
+      "statText": "60 Ability Power\n15 Ability Haste\n150% Base Mana Regen",
+      "requiredChampion": "",
+      "price": 2400,
+      "sell": 1680,
+      "recipe": [
+        1052,
+        4642,
+        1052
+      ],
+      "tags": [
+        "ManaRegen",
+        "AbilityHaste",
+        "CooldownReduction",
+        "SpellDamage"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "abilityPower": 60.0,
+      "abilityHaste": 15.0,
+      "manaRegen": 1.5
+    },
+    {
+      "id": 4401,
+      "name": "Force of Nature",
+      "description": "400 Health\n55 Magic Resist\n4% Move Speed\n\nSteadfast\nGain 70 Magic Resist and 6% bonus Move Speed after taking magic damage from Champions 8 times.",
+      "statText": "400 Health\n55 Magic Resist\n4% Move Speed",
+      "requiredChampion": "",
+      "price": 2800,
+      "sell": 1960,
+      "recipe": [
+        1057,
+        1028,
+        3066
+      ],
+      "tags": [
+        "NonbootsMovement",
+        "SpellBlock",
+        "Health"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "health": 400.0,
+      "magicResistance": 55.0,
+      "movePercent": 0.04
+    },
+    {
+      "id": 4628,
+      "name": "Horizon Focus",
+      "description": "75 Ability Power\n25 Ability Haste\n\nHypershot\nDealing Ability damage to champions at 600 range or greater Reveals them for 6 seconds. \n\nFocus\nWhen Hypershot is triggered, Reveal all other enemy champions within 1400 range of them for 3 seconds.",
+      "statText": "75 Ability Power\n25 Ability Haste",
+      "requiredChampion": "",
+      "price": 2700,
+      "sell": 1890,
+      "recipe": [
+        3108,
+        3108,
+        1052
+      ],
+      "tags": [
+        "AbilityHaste",
+        "SpellDamage"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "abilityPower": 75.0,
+      "abilityHaste": 25.0
+    },
+    {
+      "id": 4629,
+      "name": "Cosmic Drive",
+      "description": "70 Ability Power\n350 Health\n25 Ability Haste\n4% Move Speed\n\nSpelldance\nDealing magic or true damage to champions grants Move Speed for 4 seconds. ",
+      "statText": "70 Ability Power\n350 Health\n25 Ability Haste\n4% Move Speed",
+      "requiredChampion": "",
+      "price": 3000,
+      "sell": 2100,
+      "recipe": [
+        3067,
+        3113,
+        3108
+      ],
+      "tags": [
+        "SpellDamage",
+        "AbilityHaste",
+        "NonbootsMovement",
+        "Health"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "abilityPower": 70.0,
+      "health": 350.0,
+      "abilityHaste": 25.0,
+      "movePercent": 0.04
+    },
+    {
+      "id": 4630,
+      "name": "Blighting Jewel",
+      "description": "25 Ability Power\n13% Magic Penetration\n\n",
+      "statText": "25 Ability Power\n13% Magic Penetration",
+      "requiredChampion": "",
+      "price": 1100,
+      "sell": 770,
+      "recipe": [
+        1052
+      ],
+      "tags": [
+        "SpellDamage",
+        "MagicPenetration"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "abilityPower": 25.0,
+      "magicPenPercent": 0.13
+    },
+    {
+      "id": 4632,
+      "name": "Verdant Barrier",
+      "description": "40 Ability Power\n25 Magic Resist\n\nAnnul\nGrants a Spell Shield that blocks the next enemy Ability.",
+      "statText": "40 Ability Power\n25 Magic Resist",
+      "requiredChampion": "",
+      "price": 1600,
+      "sell": 1120,
+      "recipe": [
+        1052,
+        1033,
+        1052
+      ],
+      "tags": [
+        "SpellBlock",
+        "SpellDamage"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "abilityPower": 40.0,
+      "magicResistance": 25.0
+    },
+    {
+      "id": 4633,
+      "name": "Riftmaker",
+      "description": "70 Ability Power\n350 Health\n15 Ability Haste\n\nVoid Corruption\nFor each second in combat with enemy champions, deal 2% bonus damage, up to 8%. At maximum strength, gain Omnivamp.\n\nVoid Infusion\nGain 2% of your bonus Health as Ability Power.",
+      "statText": "70 Ability Power\n350 Health\n15 Ability Haste",
+      "requiredChampion": "",
+      "price": 3100,
+      "sell": 2170,
+      "recipe": [
+        3147,
+        3108
+      ],
+      "tags": [
+        "CooldownReduction",
+        "SpellDamage",
+        "SpellVamp",
+        "Health"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "abilityPower": 70.0,
+      "health": 350.0,
+      "abilityHaste": 15.0
+    },
+    {
+      "id": 4642,
+      "name": "Bandleglass Mirror",
+      "description": "20 Ability Power\n100% Base Mana Regen\n10 Ability Haste\n\n",
+      "statText": "20 Ability Power\n100% Base Mana Regen\n10 Ability Haste",
+      "requiredChampion": "",
+      "price": 900,
+      "sell": 630,
+      "recipe": [
+        1004,
+        1052,
+        2022
+      ],
+      "tags": [
+        "ManaRegen",
+        "AbilityHaste",
+        "CooldownReduction",
+        "SpellDamage"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "abilityPower": 20.0,
+      "manaRegen": 1.0,
+      "abilityHaste": 10.0
+    },
+    {
+      "id": 4645,
+      "name": "Shadowflame",
+      "description": "110 Ability Power\n15 Magic Penetration\n\nCinderbloom\nMagic and true damage Critically Strike enemies below 40% Health, dealing 20% increased damage. ",
+      "statText": "110 Ability Power\n15 Magic Penetration",
+      "requiredChampion": "",
+      "price": 3200,
+      "sell": 2240,
+      "recipe": [
+        3145,
+        1058
+      ],
+      "tags": [
+        "MagicPenetration",
+        "SpellDamage"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "abilityPower": 110.0,
+      "magicPen": 15.0
+    },
+    {
+      "id": 4646,
+      "name": "Stormsurge",
+      "description": "90 Ability Power\n15 Magic Penetration\n6% Move Speed\n\nStormraider\nDealing 25% of a champion's maximum Health within 2.5s applies Squall to them.\n\nSquall\nAfter 2 seconds, deal magic damage. If the target dies before Squall triggers, it damages nearby enemies.",
+      "statText": "90 Ability Power\n15 Magic Penetration\n6% Move Speed",
+      "requiredChampion": "",
+      "price": 2800,
+      "sell": 1960,
+      "recipe": [
+        3145,
+        3113
+      ],
+      "tags": [
+        "NonbootsMovement",
+        "MagicPenetration",
+        "SpellDamage",
+        "GoldPer"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "abilityPower": 90.0,
+      "magicPen": 15.0,
+      "movePercent": 0.06
+    },
+    {
+      "id": 6333,
+      "name": "Death's Dance",
+      "description": "60 Attack Damage\n50 Armor\n15 Ability Haste\n\nIgnore Pain\nA percentage of damage taken is dealt to you over 3 seconds instead.\n\nDefy\nWhen a champion that you damaged within 3 seconds dies, cleanse Ignore Pain's remaining damage and restore Health over 2 seconds.",
+      "statText": "60 Attack Damage\n50 Armor\n15 Ability Haste",
+      "requiredChampion": "",
+      "price": 3300,
+      "sell": 2310,
+      "recipe": [
+        2019,
+        1037,
+        3133
+      ],
+      "tags": [
+        "Damage",
+        "Armor",
+        "AbilityHaste"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "attackDamage": 60.0,
+      "armor": 50.0,
+      "abilityHaste": 15.0
+    },
+    {
+      "id": 6609,
+      "name": "Chempunk Chainsword",
+      "description": "45 Attack Damage\n450 Health\n15 Ability Haste\n\nHackshorn\nDealing physical damage applies 40% Wounds to enemy champions for 3 seconds.",
+      "statText": "45 Attack Damage\n450 Health\n15 Ability Haste",
+      "requiredChampion": "",
+      "price": 3000,
+      "sell": 2100,
+      "recipe": [
+        3123,
+        1011,
+        3133
+      ],
+      "tags": [
+        "CooldownReduction",
+        "AbilityHaste",
+        "Damage",
+        "Health"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "attackDamage": 45.0,
+      "health": 450.0,
+      "abilityHaste": 15.0
+    },
+    {
+      "id": 6610,
+      "name": "Sundered Sky",
+      "description": "40 Attack Damage\n400 Health\n10 Ability Haste\n\nLightshield Strike\nYour first Attack against a champion Critically Strikes and restores Health.",
+      "statText": "40 Attack Damage\n400 Health\n10 Ability Haste",
+      "requiredChampion": "",
+      "price": 3100,
+      "sell": 2170,
+      "recipe": [
+        2021,
+        3133
+      ],
+      "tags": [
+        "CooldownReduction",
+        "AbilityHaste",
+        "Damage",
+        "Health"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "attackDamage": 40.0,
+      "health": 400.0,
+      "abilityHaste": 10.0
+    },
+    {
+      "id": 6616,
+      "name": "Staff of Flowing Water",
+      "description": "35 Ability Power\n10% Heal and Shield Power\n125% Base Mana Regen\n10 Ability Haste\n\nRapids\nHealing or Shielding an ally grants you both 40 Ability Power and 15 Ability Haste for 6 seconds.",
+      "statText": "35 Ability Power\n10% Heal and Shield Power\n125% Base Mana Regen\n10 Ability Haste",
+      "requiredChampion": "",
+      "price": 2250,
+      "sell": 1575,
+      "recipe": [
+        3108,
+        3114
+      ],
+      "tags": [
+        "ManaRegen",
+        "AbilityHaste",
+        "CooldownReduction",
+        "SpellDamage"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "abilityPower": 35.0,
+      "healShieldPower": 0.1,
+      "manaRegen": 1.25,
+      "abilityHaste": 10.0
+    },
+    {
+      "id": 6617,
+      "name": "Moonstone Renewer",
+      "description": "25 Ability Power\n200 Health\n20 Ability Haste\n125% Base Mana Regen\n\nStarlit Grace\nHealing or shielding an ally chains the effect to another ally (excluding yourself), healing 30% or shielding 35% of the original amount.",
+      "statText": "25 Ability Power\n200 Health\n20 Ability Haste\n125% Base Mana Regen",
+      "requiredChampion": "",
+      "price": 2200,
+      "sell": 1540,
+      "recipe": [
+        3067,
+        4642
+      ],
+      "tags": [
+        "CooldownReduction",
+        "SpellDamage",
+        "Health",
+        "ManaRegen",
+        "AbilityHaste"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "abilityPower": 25.0,
+      "health": 200.0,
+      "abilityHaste": 20.0,
+      "manaRegen": 1.25
+    },
+    {
+      "id": 6620,
+      "name": "Echoes of Helia",
+      "description": "35 Ability Power\n200 Health\n20 Ability Haste\n125% Base Mana Regen\n\nSoul Siphon\nGain 30% of pre-mitigation damage dealt to champions as Soul Charges. Healing or Shielding an ally consumes all Soul Charges to restore Health.",
+      "statText": "35 Ability Power\n200 Health\n20 Ability Haste\n125% Base Mana Regen",
+      "requiredChampion": "",
+      "price": 2200,
+      "sell": 1540,
+      "recipe": [
+        3067,
+        4642
+      ],
+      "tags": [
+        "CooldownReduction",
+        "SpellDamage",
+        "Health",
+        "ManaRegen",
+        "AbilityHaste"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "abilityPower": 35.0,
+      "health": 200.0,
+      "abilityHaste": 20.0,
+      "manaRegen": 1.25
+    },
+    {
+      "id": 6621,
+      "name": "Dawncore",
+      "description": "45 Ability Power\n16% Heal and Shield Power\n100% Base Mana Regen\n\nFirst Light\nGain 2% Heal and Shield Power and 10 Ability Power per 100% Base Mana Regen.",
+      "statText": "45 Ability Power\n16% Heal and Shield Power\n100% Base Mana Regen",
+      "requiredChampion": "",
+      "price": 2500,
+      "sell": 1750,
+      "recipe": [
+        1026,
+        3114,
+        3114
+      ],
+      "tags": [
+        "ManaRegen",
+        "SpellDamage"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "abilityPower": 45.0,
+      "healShieldPower": 0.16,
+      "manaRegen": 1.0
+    },
+    {
+      "id": 6631,
+      "name": "Stridebreaker",
+      "description": "40 Attack Damage\n25% Attack Speed\n450 Health\n\nCleave\nAttacks deal physical damage to nearby enemies.\nBreaking Shockwave\nDeal physical damage and Slow nearby enemies by 35%.\nGain 35% decaying Move Speed per champion hit for 3 seconds.",
+      "statText": "40 Attack Damage\n25% Attack Speed\n450 Health",
+      "requiredChampion": "",
+      "price": 3300,
+      "sell": 2310,
+      "recipe": [
+        3077,
+        3044,
+        1042
+      ],
+      "tags": [
+        "AttackSpeed",
+        "Damage",
+        "Slow",
+        "Health"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 16,
+      "activeCooldown": 15,
+      "attackDamage": 40.0,
+      "attackSpeed": 0.25,
+      "health": 450.0
+    },
+    {
+      "id": 6653,
+      "name": "Liandry's Torment",
+      "description": "60 Ability Power\n300 Health\n\nTorment\nDamaging Abilities burn enemies for 2% max Health magic damage per second for 3 seconds.\n\nSuffering\nFor each second in combat with enemy champions, deal 2% bonus damage, up to 6%.",
+      "statText": "60 Ability Power\n300 Health",
+      "requiredChampion": "",
+      "price": 3000,
+      "sell": 2100,
+      "recipe": [
+        3147,
+        2508
+      ],
+      "tags": [
+        "SpellDamage",
+        "Health"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "abilityPower": 60.0,
+      "health": 300.0
+    },
+    {
+      "id": 6655,
+      "name": "Luden's Echo",
+      "description": "100 Ability Power\n600 Mana\n10 Ability Haste\n\nEcho\nDamaging Abilities fire 6 Echoes that deal bonus magic damage to the target and nearby enemies. Remaining Echoes fire on the primary target, dealing 20% damage.\n",
+      "statText": "100 Ability Power\n600 Mana\n10 Ability Haste",
+      "requiredChampion": "",
+      "price": 2750,
+      "sell": 1925,
+      "recipe": [
+        3802,
+        3145
+      ],
+      "tags": [
+        "CooldownReduction",
+        "Mana",
+        "AbilityHaste",
+        "SpellDamage"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "abilityPower": 100.0,
+      "mana": 600.0,
+      "abilityHaste": 10.0
+    },
+    {
+      "id": 6657,
+      "name": "Rod of Ages",
+      "description": "45 Ability Power\n350 Health\n500 Mana\n\nTimeless\nThis item gains 10 Health, 30 Mana and 3 Ability Power every 60 seconds up to 10 times. Upon reaching max stacks, gain a level.\n\nEternity\nTaking damage from champions restores 10% of the damage as Mana. \nCasting an ability heals for 25% of Mana spent.",
+      "statText": "45 Ability Power\n350 Health\n500 Mana",
+      "requiredChampion": "",
+      "price": 2600,
+      "sell": 1820,
+      "recipe": [
+        1026,
+        3803
+      ],
+      "tags": [
+        "HealthRegen",
+        "SpellDamage",
+        "Health",
+        "ManaRegen",
+        "Mana"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "abilityPower": 45.0,
+      "health": 350.0,
+      "mana": 500.0
+    },
+    {
+      "id": 6660,
+      "name": "Bami's Cinder",
+      "description": "150 Health\n5 Ability Haste\n\nImmolate\nAfter taking or dealing damage, deal magic damage to nearby enemies for 3 seconds.",
+      "statText": "150 Health\n5 Ability Haste",
+      "requiredChampion": "",
+      "price": 900,
+      "sell": 630,
+      "recipe": [
+        1028,
+        2022
+      ],
+      "tags": [
+        "AbilityHaste",
+        "Health"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "health": 150.0,
+      "abilityHaste": 5.0
+    },
+    {
+      "id": 6662,
+      "name": "Iceborn Gauntlet",
+      "description": "300 Health\n50 Armor\n15 Ability Haste\n\nSpellblade\nAfter using an Ability, your next Attack deals bonus physical damage On-Hit and creates a frost field for 2s that Slows.",
+      "statText": "300 Health\n50 Armor\n15 Ability Haste",
+      "requiredChampion": "",
+      "price": 2900,
+      "sell": 2030,
+      "recipe": [
+        3057,
+        1028,
+        1031
+      ],
+      "tags": [
+        "CooldownReduction",
+        "Armor",
+        "OnHit",
+        "Health",
+        "Slow",
+        "AbilityHaste"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "health": 300.0,
+      "armor": 50.0,
+      "abilityHaste": 15.0
+    },
+    {
+      "id": 6664,
+      "name": "Hollow Radiance",
+      "description": "400 Health\n40 Magic Resist\n10 Ability Haste\n100% Base Health Regen\n\nImmolate\nAfter taking or dealing damage, deal magic damage per second to nearby enemies for 3 seconds. \n\nDesolate\nKilling an enemy deals magic damage around them.",
+      "statText": "400 Health\n40 Magic Resist\n10 Ability Haste\n100% Base Health Regen",
+      "requiredChampion": "",
+      "price": 2800,
+      "sell": 1960,
+      "recipe": [
+        6660,
+        3211
+      ],
+      "tags": [
+        "MagicResist",
+        "HealthRegen",
+        "Aura",
+        "SpellBlock",
+        "Health",
+        "AbilityHaste"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "health": 400.0,
+      "magicResistance": 40.0,
+      "abilityHaste": 10.0,
+      "healthRegen": 1.0
+    },
+    {
+      "id": 6665,
+      "name": "Jak'Sho, The Protean",
+      "description": "350 Health\n45 Armor\n45 Magic Resist\n\nVoidborn Resilience\nAfter 5 seconds of champion combat, increase your bonus Armor and Magic Resist by 30% until end of combat.\n\n",
+      "statText": "350 Health\n45 Armor\n45 Magic Resist",
+      "requiredChampion": "",
+      "price": 3200,
+      "sell": 2240,
+      "recipe": [
+        1011,
+        1031,
+        1057
+      ],
+      "tags": [
+        "MagicResist",
+        "Armor",
+        "SpellBlock",
+        "Health"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "health": 350.0,
+      "armor": 45.0,
+      "magicResistance": 45.0
+    },
+    {
+      "id": 6670,
+      "name": "Noonquiver",
+      "description": "15 Attack Damage\n20% Critical Strike Chance\n\n",
+      "statText": "15 Attack Damage\n20% Critical Strike Chance",
+      "requiredChampion": "",
+      "price": 1300,
+      "sell": 910,
+      "recipe": [
+        1036,
+        1018
+      ],
+      "tags": [
+        "CriticalStrike",
+        "Damage"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "attackDamage": 15.0,
+      "criticalChance": 0.2
+    },
+    {
+      "id": 6672,
+      "name": "Kraken Slayer",
+      "description": "45 Attack Damage\n40% Attack Speed\n4% Move Speed\n\nBring It Down\nEvery third Attack deals bonus physical damage On-Hit, increased based on their missing Health.",
+      "statText": "45 Attack Damage\n40% Attack Speed\n4% Move Speed",
+      "requiredChampion": "",
+      "price": 3000,
+      "sell": 2100,
+      "recipe": [
+        6690,
+        3051,
+        1043
+      ],
+      "tags": [
+        "OnHit",
+        "AttackSpeed",
+        "Damage",
+        "NonbootsMovement"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "attackDamage": 45.0,
+      "attackSpeed": 0.4,
+      "movePercent": 0.04
+    },
+    {
+      "id": 6673,
+      "name": "Immortal Shieldbow",
+      "description": "55 Attack Damage\n25% Critical Strike Chance\n\nLifeline\nTaking damage that would reduce your Health below 30% grants a Shield for 3 seconds.",
+      "statText": "55 Attack Damage\n25% Critical Strike Chance",
+      "requiredChampion": "",
+      "price": 3000,
+      "sell": 2100,
+      "recipe": [
+        1037,
+        6670
+      ],
+      "tags": [
+        "CriticalStrike",
+        "Damage"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "attackDamage": 55.0,
+      "criticalChance": 0.25
+    },
+    {
+      "id": 6675,
+      "name": "Navori Flickerblade",
+      "description": "40% Attack Speed\n25% Critical Strike Chance\n4% Move Speed\n\nTranscendence\nAttacks reduce Basic Ability cooldowns by 15% of their remaining cooldown.",
+      "statText": "40% Attack Speed\n25% Critical Strike Chance\n4% Move Speed",
+      "requiredChampion": "",
+      "price": 2650,
+      "sell": 1855,
+      "recipe": [
+        1042,
+        3086,
+        1042
+      ],
+      "tags": [
+        "CriticalStrike",
+        "AttackSpeed",
+        "NonbootsMovement"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "attackSpeed": 0.4,
+      "criticalChance": 0.25,
+      "movePercent": 0.04
+    },
+    {
+      "id": 6676,
+      "name": "The Collector",
+      "description": "50 Attack Damage\n10 Lethality\n25% Critical Strike Chance\n\nDeath\nYour damage executes champions that are below 5% Health.\n\nTaxes\nChampion kills grant 25 bonus gold.",
+      "statText": "50 Attack Damage\n10 Lethality\n25% Critical Strike Chance",
+      "requiredChampion": "",
+      "price": 3000,
+      "sell": 2100,
+      "recipe": [
+        1037,
+        3134,
+        1018
+      ],
+      "tags": [
+        "CriticalStrike",
+        "ArmorPenetration",
+        "Damage"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "attackDamage": 50.0,
+      "lethality": 10.0,
+      "criticalChance": 0.25
+    },
+    {
+      "id": 6690,
+      "name": "Rectrix",
+      "description": "15 Attack Damage\n4% Move Speed\n\n",
+      "statText": "15 Attack Damage\n4% Move Speed",
+      "requiredChampion": "",
+      "price": 775,
+      "sell": 543,
+      "recipe": [
+        1036
+      ],
+      "tags": [
+        "NonbootsMovement",
+        "Damage"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "attackDamage": 15.0,
+      "movePercent": 0.04
+    },
+    {
+      "id": 6692,
+      "name": "Eclipse",
+      "description": "60 Attack Damage\n15 Ability Haste\n\nEver Rising Moon\nHitting a champion with 2 separate Attacks or Abilities within 2 seconds grants you a Shield for 2 seconds.",
+      "statText": "60 Attack Damage\n15 Ability Haste",
+      "requiredChampion": "",
+      "price": 2900,
+      "sell": 2030,
+      "recipe": [
+        3133,
+        1037,
+        1036
+      ],
+      "tags": [
+        "CooldownReduction",
+        "Damage",
+        "AbilityHaste"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "attackDamage": 60.0,
+      "abilityHaste": 15.0
+    },
+    {
+      "id": 6694,
+      "name": "Serylda's Grudge",
+      "description": "45 Attack Damage\n35% Armor Penetration\n15 Ability Haste\n\nBitter Cold\nDamaging Abilities Slow enemies below 50% Health by 30% for 1 second.",
+      "statText": "45 Attack Damage\n35% Armor Penetration\n15 Ability Haste",
+      "requiredChampion": "",
+      "price": 3000,
+      "sell": 2100,
+      "recipe": [
+        3133,
+        3035
+      ],
+      "tags": [
+        "CooldownReduction",
+        "ArmorPenetration",
+        "Damage",
+        "AbilityHaste"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "attackDamage": 45.0,
+      "armorPen": 0.35,
+      "abilityHaste": 15.0
+    },
+    {
+      "id": 6695,
+      "name": "Serpent's Fang",
+      "description": "55 Attack Damage\n15 Lethality\n\nShield Reaver\nDamaging an enemy champion reduces Shields they gain by % for 3 seconds. \nIf they were not already affected by Shield Reaver, reduce Shields on them by %.",
+      "statText": "55 Attack Damage\n15 Lethality",
+      "requiredChampion": "",
+      "price": 2500,
+      "sell": 1750,
+      "recipe": [
+        3134,
+        1037
+      ],
+      "tags": [
+        "ArmorPenetration",
+        "Damage"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "attackDamage": 55.0,
+      "lethality": 15.0
+    },
+    {
+      "id": 6696,
+      "name": "Axiom Arc",
+      "description": "55 Attack Damage\n18 Lethality\n20 Ability Haste\n\nFlux\nWhen a champion that you damaged within 3 seconds dies, refund some of your Ultimate Ability's total cooldown.",
+      "statText": "55 Attack Damage\n18 Lethality\n20 Ability Haste",
+      "requiredChampion": "",
+      "price": 2750,
+      "sell": 1925,
+      "recipe": [
+        2020,
+        3133
+      ],
+      "tags": [
+        "ArmorPenetration",
+        "Damage",
+        "AbilityHaste"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "attackDamage": 55.0,
+      "lethality": 18.0,
+      "abilityHaste": 20.0
+    },
+    {
+      "id": 6697,
+      "name": "Hubris",
+      "description": "55 Attack Damage\n18 Lethality\n10 Ability Haste\n\nEminence\nWhen a champion that you damaged within 3 seconds dies, gain 12 Attack Damage plus 3 per champion killed for 90 seconds.",
+      "statText": "55 Attack Damage\n18 Lethality\n10 Ability Haste",
+      "requiredChampion": "",
+      "price": 2800,
+      "sell": 1960,
+      "recipe": [
+        3134,
+        3133
+      ],
+      "tags": [
+        "CooldownReduction",
+        "ArmorPenetration",
+        "Damage",
+        "Active",
+        "AbilityHaste"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "attackDamage": 55.0,
+      "lethality": 18.0,
+      "abilityHaste": 10.0
+    },
+    {
+      "id": 6698,
+      "name": "Profane Hydra",
+      "description": "55 Attack Damage\n18 Lethality\n10 Ability Haste\n\nCleave\nAttacks deal physical damage to nearby enemies.\nHeretical Cleave\nDeal physical damage around you.",
+      "statText": "55 Attack Damage\n18 Lethality\n10 Ability Haste",
+      "requiredChampion": "",
+      "price": 2850,
+      "sell": 1995,
+      "recipe": [
+        3077,
+        2020
+      ],
+      "tags": [
+        "CooldownReduction",
+        "ArmorPenetration",
+        "Damage",
+        "Active",
+        "AbilityHaste"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 17,
+      "activeCooldown": 10,
+      "attackDamage": 55.0,
+      "lethality": 18.0,
+      "abilityHaste": 10.0
+    },
+    {
+      "id": 6699,
+      "name": "Voltaic Cyclosword",
+      "description": "55 Attack Damage\n10 Lethality\n10 Ability Haste\n\nGalvanize\nDamaging an Enemy Champions with an ability triggers Energized if it is ready.\n\nFirmament\nYour Energized Attack deals % target's Current Health as bonus physical damage and grants you bonus Lethality for 4 seconds.",
+      "statText": "55 Attack Damage\n10 Lethality\n10 Ability Haste",
+      "requiredChampion": "",
+      "price": 3000,
+      "sell": 2100,
+      "recipe": [
+        2020,
+        1036,
+        1036
+      ],
+      "tags": [
+        "CooldownReduction",
+        "ArmorPenetration",
+        "Damage",
+        "Active",
+        "AbilityHaste"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "attackDamage": 55.0,
+      "lethality": 10.0,
+      "abilityHaste": 10.0
+    },
+    {
+      "id": 8010,
+      "name": "Bloodletter's Curse",
+      "description": "65 Ability Power\n400 Health\n15 Ability Haste\n\nVile Decay\nDealing magic damage with abilities or passives to champions reduces their Magic Resist by 7.5% for 6 seconds. (Stacks 4 times).",
+      "statText": "65 Ability Power\n400 Health\n15 Ability Haste",
+      "requiredChampion": "",
+      "price": 2900,
+      "sell": 2030,
+      "recipe": [
+        3147,
+        3108
+      ],
+      "tags": [
+        "CooldownReduction",
+        "SpellDamage",
+        "MagicPenetration",
+        "Health"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "abilityPower": 65.0,
+      "health": 400.0,
+      "abilityHaste": 15.0
+    },
+    {
+      "id": 8020,
+      "name": "Abyssal Mask",
+      "description": "350 Health\n45 Magic Resist\n15 Ability Haste\n\nUnmake\nNearby enemy champions take 12% more magic damage.",
+      "statText": "350 Health\n45 Magic Resist\n15 Ability Haste",
+      "requiredChampion": "",
+      "price": 2650,
+      "sell": 1855,
+      "recipe": [
+        3067,
+        1057
+      ],
+      "tags": [
+        "CooldownReduction",
+        "MagicResist",
+        "SpellBlock",
+        "Health",
+        "AbilityHaste"
+      ],
+      "showInShop": true,
+      "questUpgrade": false,
+      "consumable": false,
+      "stackLimit": 1,
+      "active": 0,
+      "activeCooldown": 0,
+      "health": 350.0,
+      "magicResistance": 45.0,
+      "abilityHaste": 15.0
+    }
+  ]
+}

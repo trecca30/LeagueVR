@@ -1,0 +1,100 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1507f9c1fc5ee634f85448889214c929, type: 3}
+  m_Name: Akshan
+  m_EditorClassIdentifier: Assembly-CSharp::LeagueVR.Champions.ChampionDefinition
+  id: 3
+  title: the Rogue Sentinel
+  role: Marksman / Assassin
+  passiveName: Dirty Fighting
+  passiveDescription: Three hits proc bonus damage and a champion shield; attacks fire twice.
+  patch: 16.19.1
+  portrait: {fileID: 2800000, guid: 6b60287f0ff80934a9094aa7bb1d2c40, type: 3}
+  passiveIcon: {fileID: 2800000, guid: 1d471c9ac80369148a9c791148b0bd39, type: 3}
+  spells:
+  - name: Avengerang
+    vrDescription: 'Right secondary: throw a piercing boomerang that comes back to your hand.'
+    icon: {fileID: 2800000, guid: f2b81dbbf98e77f44a4969a17ba6d3ac, type: 3}
+    cooldowns:
+    - 9
+    - 8
+    - 7
+    - 6
+    - 5
+    costs:
+    - 60
+    - 65
+    - 70
+    - 75
+    - 80
+  - name: Going Rogue
+    vrDescription: 'Left primary: camouflage for six seconds. Close champions and turrets reveal you. Scoundrel takedowns revive allied champions.'
+    icon: {fileID: 2800000, guid: 672ebbceed4fbdd4f86a174ff8392bfa, type: 3}
+    cooldowns:
+    - 18
+    - 14
+    - 10
+    - 6
+    - 2
+    costs:
+    - 40
+    - 30
+    - 20
+    - 10
+    - 0
+  - name: Heroic Swing
+    vrDescription: Aim the right hand at terrain, then right primary. Grapple-step toward the anchor with a short shot; no forced orbit.
+    icon: {fileID: 2800000, guid: 76f64824f44f32845915de1718da9e68, type: 3}
+    cooldowns:
+    - 18
+    - 16.5
+    - 15
+    - 13.5
+    - 12
+    costs:
+    - 70
+    - 70
+    - 70
+    - 70
+    - 70
+  - name: Comeuppance
+    vrDescription: Aim at an enemy with the left hand and press trigger. Charge, then fire five interceptable homing shots.
+    icon: {fileID: 2800000, guid: fd3207dc9f6db7c429b656340b9457c0, type: 3}
+    cooldowns:
+    - 100
+    - 85
+    - 70
+    costs:
+    - 100
+    - 100
+    - 100
+  model: {fileID: 6294333798132210566, guid: 0ecaf7ff0176f6445816c01df0f19a9b, type: 3}
+  firstPerson: {fileID: 993102268192495020, guid: 580d2a57d762c13408eb51d7810ee0cd, type: 3}
+  idle: {fileID: -4018411851501446075, guid: 48bf2c2b7c47c59418b92bd8f986867f, type: 3}
+  color: {r: 1, g: 0.73, b: 0.25, a: 1}
+  health: 610
+  healthGrowth: 107
+  armor: 26
+  armorGrowth: 4.7
+  magicResist: 33
+  magicResistGrowth: 1.1
+  mana: 350
+  manaGrowth: 40
+  attackDamage: 52
+  attackGrowth: 0
+  attackSpeed: 0.638
+  attackSpeedGrowth: 4
+  moveSpeed: 330
+  healthRegen: 3.75
+  manaRegen: 8.2
+  attackReach: 10
+  bodyHeight: 1.75

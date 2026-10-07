@@ -1,0 +1,9 @@
+{
+  "sampleCount": 45792,
+  "known": 29481,
+  "filled": 6867,
+  "visibleTriangles": 71858,
+  "collisionTriangles": 71858,
+  "step": 0.75,
+  "originalVisiblePatchTriangles": 15144
+}

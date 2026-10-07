@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c4553984f9555646bc9e61530877018, type: 3}
+  m_Name: Rift Rules
+  m_EditorClassIdentifier: Assembly-CSharp::LeagueVR.Match.RiftRules
+  patch: 16.19.1 / 26.19
+  researchedOn: 2026-10-02
+  metresPerLeagueUnit: 0.01
+  firstWave: 30
+  earlyWaveInterval: 30
+  midWaveTime: 840
+  midWaveInterval: 25
+  lateWaveTime: 1800
+  lateWaveInterval: 20
+  minionSpawnSpacing: 0.792
+  minionSpeed: 350
+  inhibitorRespawn: 300
+  nexusTurretRespawn: 180
+  fountainRadius: 5.5
+  fountainHealingPercentPerSecond: 0.084
+  fountainHealingFlatPerSecond: 24
+  startingGold: 10000
+  passiveGoldStart: 65
+  passiveGoldPerSecond: 2.04

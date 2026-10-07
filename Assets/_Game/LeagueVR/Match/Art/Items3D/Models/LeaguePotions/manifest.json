@@ -1,0 +1,86 @@
+{
+  "models": [
+    {
+      "id": 2003,
+      "groups": [
+        "Cork",
+        "Glass",
+        "Leather",
+        "Liquid",
+        "Silver"
+      ],
+      "triangles": 2864,
+      "tip": [
+        -0.015,
+        0.102,
+        0
+      ]
+    },
+    {
+      "id": 2031,
+      "groups": [
+        "Cork",
+        "Glass",
+        "Gold",
+        "Liquid"
+      ],
+      "triangles": 1204,
+      "tip": [
+        0,
+        0.109,
+        0
+      ]
+    },
+    {
+      "id": 2138,
+      "groups": [
+        "Cork",
+        "Gem",
+        "Glass",
+        "Gold",
+        "Liquid",
+        "Silver"
+      ],
+      "triangles": 2180,
+      "tip": [
+        0,
+        0.12,
+        0
+      ]
+    },
+    {
+      "id": 2139,
+      "groups": [
+        "Cork",
+        "Gem",
+        "Glass",
+        "Gold",
+        "Liquid",
+        "Silver"
+      ],
+      "triangles": 2180,
+      "tip": [
+        0,
+        0.12,
+        0
+      ]
+    },
+    {
+      "id": 2140,
+      "groups": [
+        "Cork",
+        "Gem",
+        "Glass",
+        "Iron",
+        "Liquid",
+        "Silver"
+      ],
+      "triangles": 2180,
+      "tip": [
+        0,
+        0.12,
+        0
+      ]
+    }
+  ]
+}

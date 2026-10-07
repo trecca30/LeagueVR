@@ -1,0 +1,100 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1507f9c1fc5ee634f85448889214c929, type: 3}
+  m_Name: Yunara
+  m_EditorClassIdentifier: Assembly-CSharp::LeagueVR.Champions.ChampionDefinition
+  id: 6
+  title: the Unbroken Faith
+  role: Marksman
+  passiveName: Vow of the First Lands
+  passiveDescription: Critical strikes deal bonus magic damage.
+  patch: 16.19.1
+  portrait: {fileID: 2800000, guid: 761361f79214a5b4f8fb00fed653c672, type: 3}
+  passiveIcon: {fileID: 2800000, guid: a07abbabd794d7945ba9a69f8c7fad89, type: 3}
+  spells:
+  - name: Cultivation of Spirit
+    vrDescription: Land eight basic attacks for Spirit stacks. Right secondary spends them to gain attack speed and splash hits.
+    icon: {fileID: 2800000, guid: 150ca12b24c35ef48accf32a2f4c6f06, type: 3}
+    cooldowns:
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    costs:
+    - 30
+    - 30
+    - 30
+    - 30
+    - 30
+  - name: Arc of Judgment | Arc of Ruin
+    vrDescription: 'Left primary: aim a slowing bead. During Transcendence it becomes a piercing beam.'
+    icon: {fileID: 2800000, guid: 0a6c1ecde23258640950ef7b7c01754d, type: 3}
+    cooldowns:
+    - 10
+    - 10
+    - 10
+    - 10
+    - 10
+    costs:
+    - 60
+    - 60
+    - 60
+    - 60
+    - 60
+  - name: Kanmei's Steps | Untouchable Shadow
+    vrDescription: 'Right primary: speed burst. During Transcendence it becomes a collision-checked short dash.'
+    icon: {fileID: 2800000, guid: b2c80c91b13985e4b9630607b744ce40, type: 3}
+    cooldowns:
+    - 9
+    - 9
+    - 9
+    - 9
+    - 9
+    costs:
+    - 40
+    - 40
+    - 40
+    - 40
+    - 40
+  - name: Transcend One's Self
+    vrDescription: 'Left trigger: Transcend for twelve seconds. Q stays active, W becomes a beam, and E becomes a dash.'
+    icon: {fileID: 2800000, guid: 11270f48463713641b0f78cc0634c039, type: 3}
+    cooldowns:
+    - 100
+    - 90
+    - 80
+    costs:
+    - 100
+    - 100
+    - 100
+  model: {fileID: 2025983343718010883, guid: cfe72bb98c7c6e147b792a17bb68ce5e, type: 3}
+  firstPerson: {fileID: 4943758385606211382, guid: dfa0962c37c1c35428bbdfb4c6377545, type: 3}
+  idle: {fileID: -3020990790245188044, guid: c1ab1eea81b70cd4b8efc0d56d79d45d, type: 3}
+  color: {r: 0.45, g: 0.91, b: 0.65, a: 1}
+  health: 590
+  healthGrowth: 110
+  armor: 25
+  armorGrowth: 4.4
+  magicResist: 33
+  magicResistGrowth: 1.1
+  mana: 275
+  manaGrowth: 45
+  attackDamage: 55
+  attackGrowth: 0
+  attackSpeed: 0.65
+  attackSpeedGrowth: 2
+  moveSpeed: 325
+  healthRegen: 4
+  manaRegen: 7.5
+  attackReach: 10
+  bodyHeight: 1.75
