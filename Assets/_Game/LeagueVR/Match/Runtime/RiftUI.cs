@@ -85,6 +85,8 @@ namespace LeagueVR.Match
             ray.enabled = false;
             if (!GetComponent<RiftVRHUD>())
                 gameObject.AddComponent<RiftVRHUD>().match = match;
+            if (!match.player.GetComponent<SpectatorCamera>())
+                match.player.gameObject.AddComponent<SpectatorCamera>().player = match.player;
             ComfortSettings.ApplyVignette();
         }
 
@@ -319,7 +321,7 @@ namespace LeagueVR.Match
             shopScreen = false;
             Screen("Comfort & audio", true);
             Text(root, "GAME VOLUME", -720, 340, 1400, 55, 30, cyan);
-            Text(root, $"{AudioListener.volume * 100:0}%  ·  {(!AudioListener.pause ? "Audio enabled" : "Audio paused")}", -720, 280, 1400, 50, 26, white);
+            Text(root, $"{AudioListener.volume * 100:0}%  ·  {(!AudioListener.pause ? "Audio enabled" : "Audio paused")}  ·  plays on the headset device your VR runtime selects", -720, 280, 1400, 50, 26, white);
             Button(root, "QUIETER", -720, 200, 400, 72, () =>
             {
                 AudioListener.pause = false;
@@ -369,9 +371,22 @@ namespace LeagueVR.Match
                 Settings();
             }, "skyview-toggle");
 
-            Text(root, "WRIST DISPLAY", -720, -330, 1400, 55, 30, cyan);
-            Text(root, "Raise your left wrist and look at it. Menus stay where you open them; reopen to recenter.\nHeadset sound uses the playback device selected by your VR runtime.", -720, -390, 1410, 90, 23, white);
-            Button(root, "BACK", -240, -470, 480, 75, OpenMenu);
+            // Stream view: what friends see when the desktop window is shared (Discord, OBS). F8 cycles it in game.
+            int stream = ComfortSettings.StreamView;
+            Text(root, "STREAM VIEW", -720, -330, 1400, 55, 30, cyan);
+            Text(root, $"Desktop window: <color=#E5C478>{ComfortSettings.StreamViewNames[stream]}</color>  ·  what friends see when you share the game window (F8 switches)", -720, -380, 1400, 45, 22, white);
+            for (int i = 0; i < ComfortSettings.StreamViewNames.Length; i++)
+            {
+                int value = i;
+                var b = Button(root, ComfortSettings.StreamViewNames[i], -720 + i * 330, -445, 310, 64, () =>
+                {
+                    ComfortSettings.StreamView = value;
+                    Settings();
+                }, "stream-" + i);
+                b.selected = stream == i;
+                b.Hover(false);
+            }
+            Button(root, "BACK", 330, -445, 300, 64, OpenMenu, "back");
         }
 
         string AbilityName(int slot)
@@ -387,10 +402,10 @@ namespace LeagueVR.Match
             Text(root, "RIGHT HAND", -735, 295, 700, 50, 32, cyan);
             Text(root, "Swing your weapon through enemies   Attack\nHold trigger   Auto-attack in front\nB   Q: " + AbilityName(0) + "\nA   E: " + AbilityName(2) + "\nStick press   Menu", -735, 160, 705, 220, 24, white);
             Text(root, "LEFT HAND", 40, 295, 700, 50, 32, cyan);
-            Text(root, "Trigger (hold, throw to release)   R: " + AbilityName(3) + "\nX   W: " + AbilityName(1) + "\nY   Shop at your fountain\nStick press   Recall / cancel\nStick   Move (abilities dash where you walk)", 40, 160, 705, 220, 24, white);
+            Text(root, "Trigger (hold, throw to release)   R: " + AbilityName(3) + "\nX   W: " + AbilityName(1) + "\nY   Shop at your fountain\nStick press   Recall / cancel\nStick   Move (abilities dash where you walk)\nRaise wrist   Wrist display (menus stay put; reopen to recenter)", 40, 160, 705, 220, 24, white);
             Text(root, "WEARABLE ITEMS", -735, -10, 1470, 50, 31, gold);
             Text(root, "Reach to a hip, shoulder or back slot and hold grip to grab.\nAim with the item and press trigger to activate. Release grip to holster.\nLift a potion to your mouth to drink. Trinket: centre of your back.", -735, -120, 1470, 170, 26, white);
-            Text(root, "Desktop: hold Tab to inspect wrist / WASD / right mouse look / Q F E R abilities / P shop / B recall\n1–6: equip items  ·  7: equip trinket  ·  left mouse: use held item  ·  Backspace: return", -735, -285, 1470, 100, 21, muted);
+            Text(root, "Desktop: hold Tab to inspect wrist / WASD / right mouse look / Q F E R abilities / P shop / B recall\n1–6: equip items  ·  7: equip trinket  ·  left mouse: use held item  ·  Backspace: return  ·  F8: stream view", -735, -285, 1470, 100, 21, muted);
             Button(root, "BACK", -210, -410, 420, 75, OpenMenu);
         }
 

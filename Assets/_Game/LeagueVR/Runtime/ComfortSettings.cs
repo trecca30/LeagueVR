@@ -23,6 +23,23 @@ namespace LeagueVR
             }
         }
 
+        const string StreamViewKey = "LeagueVR.StreamView";
+        public static readonly string[] StreamViewNames = { "HEADSET", "SMOOTH", "SHOULDER" };
+
+        /// <summary>
+        /// What the desktop window shows for viewers (Discord, OBS): the raw headset view, a smoothed first-person view,
+        /// or an over-the-shoulder view of the whole champion. See <c>SpectatorCamera</c>.
+        /// </summary>
+        public static int StreamView
+        {
+            get => Mathf.Clamp(PlayerPrefs.GetInt(StreamViewKey, 0), 0, StreamViewNames.Length - 1);
+            set
+            {
+                PlayerPrefs.SetInt(StreamViewKey, (value % StreamViewNames.Length + StreamViewNames.Length) % StreamViewNames.Length);
+                PlayerPrefs.Save();
+            }
+        }
+
         public static readonly string[] VignetteNames = { "OFF", "VERY LIGHT", "LIGHT", "MEDIUM", "STRONG" };
         // Aperture is the diameter of the clear circle (bigger = less black); "STRONG" is the XR template's default.
         static readonly float[] Aperture = { 2f, 1.35f, 1.1f, .9f, .7f };

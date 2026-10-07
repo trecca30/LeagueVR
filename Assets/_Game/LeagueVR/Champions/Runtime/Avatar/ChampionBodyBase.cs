@@ -139,6 +139,33 @@ namespace LeagueVR.Champions
             Skin.updateWhenOffscreen = true;
         }
 
+        /// <summary>
+        /// For a camera outside the head (the stream's shoulder view): shows the complete champion, head included,
+        /// instead of the headless first-person mesh. Call again with false after that camera has rendered.
+        /// </summary>
+        public void ShowFullBody(bool full)
+        {
+            if (!Skin || !shadowObject || !shadowObject.TryGetComponent<SkinnedMeshRenderer>(out var shadow))
+                return;
+            if (full)
+            {
+                // The first-person mesh is hidden while the champion is dead; so is the full body.
+                fullBodyShown = !Skin.forceRenderingOff;
+                if (!fullBodyShown)
+                    return;
+                Skin.forceRenderingOff = true;
+                shadow.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+            }
+            else if (fullBodyShown)
+            {
+                fullBodyShown = false;
+                Skin.forceRenderingOff = false;
+                shadow.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
+            }
+        }
+
+        bool fullBodyShown;
+
         /// <summary>A snapshot of the visible body as a mesh in world space units (afterimages, ghosts).</summary>
         public Mesh BakeBody()
         {
