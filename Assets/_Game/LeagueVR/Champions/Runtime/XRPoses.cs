@@ -17,6 +17,12 @@ namespace LeagueVR.Champions
             return device.isTracked.isPressed && (device.trackingState.ReadValue() & 3) == 3;
         }
 
+        /// <summary>
+        /// Approximate grip orientation for a pointing (aim) orientation on Touch-style controllers: the handle leans
+        /// about 55 degrees up from the pointing direction. Used for the desktop fallback and simulated poses.
+        /// </summary>
+        public static Quaternion GripFromAim(Quaternion aim) => aim * Quaternion.Euler(-55, 0, 0);
+
         /// <summary>World-space grip pose, or the aim transform when the device is unavailable.</summary>
         public static Pose Grip(PlayerChampion player, bool left)
         {

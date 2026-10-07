@@ -1,115 +1,131 @@
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.LowLevel;
+using UnityEngine.InputSystem.XR;
 using UnityEngine.Serialization;
 using UnityEngine.XR;
+
 namespace LeagueVR.Champions
 {
-    /// <summary>Gwen's first-person body: tracked arms, finger curl and the animated scissors.</summary>
+    /// <summary>
+    /// Gwen's first-person body. Her own idle and run clips animate the legs and hips, a <see cref="BodyRig"/> turns,
+    /// leans and crouches the body with the headset, the arms and fingers follow the controllers, the giant scissors sit
+    /// in the right fist and open on every cut, and a full-body shadow grounds her on the Rift.
+    /// Poses are applied in LateUpdate and again right before rendering with the freshest tracking data.
+    /// </summary>
     [DefaultExecutionOrder(220)]
     public class GwenAvatar : MonoBehaviour
     {
         [FormerlySerializedAs("champion")] public PlayerChampion player;
-        public Transform visualRoot, scissorsRoot, bladeA, bladeB, leftUpper, leftLower, leftPalm, rightUpper, rightLower, rightPalm;
+        public Transform visualRoot, scissorsRoot, bladeA, bladeB;
         public Animation animationPlayer;
-        public GwenHandPoses handPoses;
-        [Range(1.2f, 2.1f)] public float avatarHeight = 1.65f;
-        public Vector3 leftGripOffset = new(0, -.025f, -.015f), rightGripOffset = new(0, -.025f, -.015f);
-        ArmPose leftPose, rightPose;
-        Quaternion leftAlignment, rightAlignment, bladeARest, bladeBRest;
-        float scissorUntil;
-        bool ready;
-        Renderer[] bodyRenderers, weaponRenderers;
-        float leftCurl, rightCurl;
-        Vector3 lastBodyForward;
+        [Tooltip("Gwen's complete mesh (with head) used only to cast her shadow.")]
+        public Mesh shadowSource;
+        public string idleClip = "Idle.anm", runClip = "Run.anm";
 
-        struct ArmPose
-        {
-            Quaternion upper, lower, palm;
-            Vector3 a, b, c;
+        [Header("Scissors")]
+        [Range(.4f, 1.2f)] public float scissorsScale = .6f;
+        [Tooltip("Point on the scissors (model space) that sits in the fist.")]
+        public Vector3 scissorsHandle = new(0, -.06f, -.40f);
+        [Tooltip("Blade angle relative to the grip (whose forward runs up the handle): pitch, yaw, roll.")]
+        public Vector3 scissorsTilt = new(12, 0, 0);
 
-            public ArmPose(Transform u, Transform l, Transform p)
-            {
-                upper = u.localRotation;
-                lower = l.localRotation;
-                palm = p.localRotation;
-                a = u.localPosition;
-                b = l.localPosition;
-                c = p.localPosition;
-            }
+        public BodyRig Rig { get; private set; }
 
-            public void Restore(Transform u, Transform l, Transform p)
-            {
-                u.SetLocalPositionAndRotation(a, upper);
-                l.SetLocalPositionAndRotation(b, lower);
-                p.SetLocalPositionAndRotation(c, palm);
-            }
-        }
-        readonly List<(Transform bone, Quaternion rest, Quaternion holding, bool left)> fingers = new();
-        public Quaternion WeaponRotation => player.DesktopMode ? player.head.transform.rotation : XRPoses.Grip(player, false).rotation * (handPoses ? handPoses.weaponGripAlignment : Quaternion.identity);
+        Quaternion bladeARest, bladeBRest;
+        float snipUntil;
+        Vector3 lastOrigin, locomotion;
+        float lastYaw, rigTurn;
+        bool haveOrigin, subscribed;
+        TrailRenderer trail;
+        Transform tip;
+        SkinnedMeshRenderer skin;
+        Renderer[] bodyRenderers;
 
         void Awake()
         {
-            if (animationPlayer && animationPlayer["Idle.anm"] != null)
-            {
-                animationPlayer.Play("Idle.anm");
-                animationPlayer["Idle.anm"].time = 0;
-                animationPlayer.Sample();
-            }
-            // The first-person skeleton has one writer; animations cannot overwrite tracked arms.
+            skin = visualRoot.GetComponentInChildren<SkinnedMeshRenderer>(true);
             if (animationPlayer)
             {
-                animationPlayer.Stop();
-                animationPlayer.enabled = false;
+                animationPlayer.enabled = true;
+                animationPlayer.cullingType = AnimationCullingType.AlwaysAnimate;
+                animationPlayer.playAutomatically = false;
+                foreach (var clip in new[] { idleClip, runClip })
+                    if (animationPlayer[clip] != null)
+                    {
+                        var state = animationPlayer[clip];
+                        state.wrapMode = WrapMode.Loop;
+                        state.layer = 0;
+                        state.enabled = true;
+                        state.weight = clip == idleClip ? 1 : 0;
+                    }
+                animationPlayer.Sample();
             }
-            visualRoot.localScale = Vector3.one * (avatarHeight / 1.53f);
-            leftPose = new ArmPose(leftUpper, leftLower, leftPalm);
-            rightPose = new ArmPose(rightUpper, rightLower, rightPalm);
-            leftAlignment = handPoses ? handPoses.leftGripAlignment : GripAlignment(leftPalm);
-            rightAlignment = handPoses ? handPoses.rightGripAlignment : GripAlignment(rightPalm);
+            Rig = new BodyRig(visualRoot, skin);
             bladeARest = bladeA ? bladeA.localRotation : Quaternion.identity;
             bladeBRest = bladeB ? bladeB.localRotation : Quaternion.identity;
             bodyRenderers = visualRoot.GetComponentsInChildren<Renderer>(true);
-            weaponRenderers = scissorsRoot.GetComponentsInChildren<Renderer>(true);
-            CacheFingers(leftPalm, true);
-            CacheFingers(rightPalm, false);
-            ready = true;
+            CreateShadow();
+            CreateTrail();
+            foreach (var r in scissorsRoot.GetComponentsInChildren<Renderer>(true))
+                r.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
         }
 
-        static Quaternion GripAlignment(Transform palm)
+        void CreateShadow()
         {
-            Transform middle = null, index = null, pinky = null;
-            foreach (Transform t in palm)
+            if (!shadowSource || !skin)
+                return;
+            // Only the body submesh casts the shadow; the model's own copies of the scissors, needle and doll stay hidden.
+            var mesh = Instantiate(shadowSource);
+            mesh.name = "Gwen shadow body";
+            for (int i = 0; i < mesh.subMeshCount; i++)
+                if (i != mesh.subMeshCount - 1)
+                    mesh.SetTriangles(System.Array.Empty<int>(), i);
+            var go = new GameObject("Gwen body shadow");
+            go.transform.SetParent(skin.transform.parent, false);
+            go.transform.SetLocalPositionAndRotation(skin.transform.localPosition, skin.transform.localRotation);
+            var shadow = go.AddComponent<SkinnedMeshRenderer>();
+            shadow.sharedMesh = mesh;
+            shadow.bones = skin.bones;
+            shadow.rootBone = skin.rootBone;
+            shadow.sharedMaterials = skin.sharedMaterials;
+            shadow.updateWhenOffscreen = true;
+            shadow.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
+            shadow.receiveShadows = false;
+            // The first-person mesh has no head, so it stops casting and the complete shadow takes over.
+            skin.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+            skin.updateWhenOffscreen = true;
+        }
+
+        void CreateTrail()
+        {
+            tip = new GameObject("Scissors tip").transform;
+            tip.SetParent(scissorsRoot, false);
+            tip.localPosition = new Vector3(0, 0, .9f);
+            trail = tip.gameObject.AddComponent<TrailRenderer>();
+            trail.time = .14f;
+            trail.minVertexDistance = .03f;
+            trail.widthCurve = new AnimationCurve(new Keyframe(0, .09f), new Keyframe(1, 0));
+            var cyan = new Color(.45f, .95f, 1f, .85f);
+            trail.colorGradient = new Gradient
             {
-                if (t.name.Contains("Middle1"))
-                    middle = t;
-                if (t.name.Contains("Index1"))
-                    index = t;
-                if (t.name.Contains("Pinky1"))
-                    pinky = t;
-            }
-            if (!middle || !index || !pinky)
-                return Quaternion.identity;
-            Vector3 forward = (middle.position - palm.position).normalized, normal = Vector3.Cross(index.position - pinky.position, forward).normalized;
-            if (Vector3.Dot(normal, Vector3.up) < 0)
-                normal = -normal;
-            return Quaternion.Inverse(Quaternion.LookRotation(forward, normal)) * palm.rotation;
-        }
-
-        void CacheFingers(Transform palm, bool left)
-        {
-            foreach (var t in palm.GetComponentsInChildren<Transform>())
-                if (t.name.Contains("Index") || t.name.Contains("Middle") || t.name.Contains("Ring") || t.name.Contains("Pinky") || t.name.Contains("Thumb"))
-                {
-                    var pose = handPoses && handPoses.joints != null ? System.Array.Find(handPoses.joints, j => j.name == t.name) : default;
-                    fingers.Add((t, pose.name != null ? pose.relaxed : t.localRotation, pose.name != null ? pose.holding : t.localRotation, left));
-                }
+                colorKeys = new[] { new GradientColorKey(cyan, 0), new GradientColorKey(Color.white, 1) },
+                alphaKeys = new[] { new GradientAlphaKey(.8f, 0), new GradientAlphaKey(0, 1) },
+            };
+            trail.sharedMaterial = AbilityFx.Material(cyan);
+            trail.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+            trail.emitting = false;
         }
 
         void OnEnable()
         {
             player.Cast += OnCast;
             player.WeaponPose = WeaponPose;
-            Application.onBeforeRender += BeforeRender;
+            if (!subscribed)
+            {
+                InputSystem.onAfterUpdate += OnAfterInputUpdate;
+                subscribed = true;
+            }
         }
 
         void OnDisable()
@@ -117,14 +133,11 @@ namespace LeagueVR.Champions
             player.Cast -= OnCast;
             if (player.WeaponPose == WeaponPose)
                 player.WeaponPose = null;
-            Application.onBeforeRender -= BeforeRender;
-        }
-
-        /// <summary>The scissors' grip pose; melee sweeps start at the visible blade.</summary>
-        Pose WeaponPose()
-        {
-            var grip = XRPoses.Grip(player, false);
-            return new Pose(grip.position + grip.rotation * rightGripOffset, WeaponRotation);
+            if (subscribed)
+            {
+                InputSystem.onAfterUpdate -= OnAfterInputUpdate;
+                subscribed = false;
+            }
         }
 
         /// <summary>Shows or hides Gwen's body and scissors when she is (un)equipped.</summary>
@@ -137,99 +150,164 @@ namespace LeagueVR.Champions
                 scissorsRoot.gameObject.SetActive(visible);
         }
 
-        void OnCast(string kind, Vector3 p, Vector3 d)
+        void OnCast(string signal, Vector3 position, Vector3 direction)
         {
-            if (kind == "Snip" || kind == "Attack1")
-                scissorUntil = Time.time + .12f;
+            if (signal == "Snip" || signal == "Attack1")
+                snipUntil = Time.time + .14f;
+        }
+
+        // ---------- Poses ----------
+
+        /// <summary>The scissors' pose in the right fist; melee sweeps start here.</summary>
+        Pose WeaponPose()
+        {
+            var grip = RightGrip();
+            return new Pose(grip.position, grip.rotation * Quaternion.Euler(scissorsTilt));
+        }
+
+        Pose Head()
+        {
+            var camera = player.head.transform;
+            if (!player.DesktopMode)
+            {
+                // Read the headset directly so the body uses the same input update as the controllers.
+                var hmd = InputSystem.GetDevice<XRHMD>();
+                if (hmd != null && hmd.isTracked.isPressed && camera.parent)
+                    return new Pose(camera.parent.TransformPoint(hmd.centerEyePosition.ReadValue()), camera.parent.rotation * hmd.centerEyeRotation.ReadValue());
+            }
+            return new Pose(camera.position, camera.rotation);
+        }
+
+        Pose RightGrip()
+        {
+            if (player.DesktopMode)
+            {
+                var head = player.head.transform;
+                return new Pose(head.TransformPoint(new Vector3(.22f, -.32f, .38f)), XRPoses.GripFromAim(head.rotation * Quaternion.Euler(10, -8, 0)));
+            }
+            return XRPoses.Grip(player, false);
+        }
+
+        Pose LeftGrip()
+        {
+            if (player.DesktopMode)
+            {
+                var head = player.head.transform;
+                return new Pose(head.TransformPoint(new Vector3(-.24f, -.36f, .30f)), XRPoses.GripFromAim(head.rotation * Quaternion.Euler(20, 12, 0)));
+            }
+            return XRPoses.Grip(player, true);
+        }
+
+        static HandCurl ReadCurl(XRNode node)
+        {
+            var device = UnityEngine.XR.InputDevices.GetDeviceAtXRNode(node);
+            if (!device.isValid)
+                return new HandCurl(.15f, .2f, .2f);
+            device.TryGetFeatureValue(UnityEngine.XR.CommonUsages.trigger, out float trigger);
+            device.TryGetFeatureValue(UnityEngine.XR.CommonUsages.grip, out float grip);
+            bool thumb = device.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primaryTouch, out bool a) && a
+                || device.TryGetFeatureValue(UnityEngine.XR.CommonUsages.secondaryTouch, out bool b) && b
+                || device.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primary2DAxisTouch, out bool s) && s;
+            return new HandCurl(trigger, grip, thumb ? .85f : .3f);
+        }
+
+        BodyFrame Frame()
+        {
+            bool armed = scissorsRoot && scissorsRoot.gameObject.activeInHierarchy;
+            var right = player.DesktopMode ? new HandCurl(.55f, .9f, .7f) : ReadCurl(XRNode.RightHand);
+            if (armed)
+                right = right.AtLeast(new HandCurl(.55f, .92f, .75f));
+            var left = player.DesktopMode ? new HandCurl(.15f, .25f, .2f) : ReadCurl(XRNode.LeftHand);
+            return new BodyFrame
+            {
+                head = Head(),
+                leftGrip = LeftGrip(),
+                rightGrip = RightGrip(),
+                floorY = player.origin.transform.position.y,
+                deltaTime = Time.deltaTime,
+                locomotion = locomotion,
+                rigTurn = rigTurn,
+                leftCurl = left,
+                rightCurl = right,
+            };
         }
 
         void LateUpdate()
         {
-            UpdateTrackedVisuals();
-        }
-
-        [BeforeRenderOrder(150)]
-        void BeforeRender()
-        {
-            if (!player.DesktopMode)
-                UpdateTrackedVisuals();
-        }
-
-        public void UpdateTrackedVisuals()
-        {
-            if (!ready)
+            if (Rig == null || !Rig.Valid)
                 return;
-            var head = player.head.transform;
-            Vector3 flat = Vector3.ProjectOnPlane(head.forward, Vector3.up);
-            // Avoid a 180 degree body flip when the wearer looks straight up/down.
-            Vector3 forward = flat.sqrMagnitude > .04f ? flat.normalized : (lastBodyForward.sqrMagnitude > .01f ? lastBodyForward : visualRoot.forward);
-            lastBodyForward = forward;
-            visualRoot.rotation = Quaternion.LookRotation(forward);
-            // Crouching moves the shoulders with eye height; head tracking itself is never changed.
-            visualRoot.position = new Vector3(head.position.x, head.position.y - (avatarHeight - .1f), head.position.z) - forward * .12f;
-            Pose rightGripPose = XRPoses.Grip(player, false), leftGripPose = XRPoses.Grip(player, true);
-            Quaternion rightRotation = player.DesktopMode ? head.rotation : rightGripPose.rotation, leftRotation = player.DesktopMode ? head.rotation : leftGripPose.rotation;
-            Vector3 rightTarget = player.DesktopMode ? head.TransformPoint(new Vector3(.23f, -.30f, .40f)) : rightGripPose.position + rightRotation * rightGripOffset;
-            Vector3 leftTarget = player.DesktopMode ? head.TransformPoint(new Vector3(-.23f, -.30f, .36f)) : leftGripPose.position + leftRotation * leftGripOffset;
-            leftPose.Restore(leftUpper, leftLower, leftPalm);
-            rightPose.Restore(rightUpper, rightLower, rightPalm);
-            SolveArm(rightUpper, rightLower, rightPalm, rightTarget, visualRoot.right * .65f - Vector3.up);
-            SolveArm(leftUpper, leftLower, leftPalm, leftTarget, -visualRoot.right * .65f - Vector3.up);
-            rightPalm.rotation = rightRotation * rightAlignment;
-            leftPalm.rotation = leftRotation * leftAlignment;
-            float leftGrip = 0, rightGrip = scissorsRoot && scissorsRoot.gameObject.activeSelf ? .55f : 0;
-            InputDevices.GetDeviceAtXRNode(XRNode.LeftHand).TryGetFeatureValue(CommonUsages.grip, out leftGrip);
-            if (InputDevices.GetDeviceAtXRNode(XRNode.RightHand).TryGetFeatureValue(CommonUsages.grip, out float grip))
-                rightGrip = Mathf.Max(rightGrip, grip);
-            // Only curl is smoothed. Tracking remains immediate and is updated again before rendering.
-            float smoothing = 1 - Mathf.Exp(-18 * Time.deltaTime);
-            leftCurl = Mathf.Lerp(leftCurl, leftGrip, smoothing);
-            rightCurl = Mathf.Lerp(rightCurl, rightGrip, smoothing);
-            foreach (var f in fingers)
-                f.bone.localRotation = Quaternion.Slerp(f.rest, f.holding, f.left ? leftCurl : rightCurl);
-            if (scissorsRoot)
-            {
-                Quaternion rotation = WeaponRotation;
-                scissorsRoot.SetPositionAndRotation(rightTarget, rotation);
-                float open = Time.time < scissorUntil ? Mathf.Sin((scissorUntil - Time.time) / .12f * Mathf.PI) * 12 : 2;
-                if (bladeA)
-                    bladeA.localRotation = bladeARest * Quaternion.AngleAxis(open, Vector3.right);
-                if (bladeB)
-                    bladeB.localRotation = bladeBRest * Quaternion.AngleAxis(-open, Vector3.right);
-            }
-            bool tracked = player.DesktopMode || (XRPoses.Tracked(true) && XRPoses.Tracked(false));
+            TrackLocomotion();
+            DriveAnimation();
+            Rig.CaptureAnimatedPose();
+            Rig.Solve(Frame(), true);
+            PoseScissors();
+            bool alive = player.Health && player.Health.IsAlive;
             foreach (var r in bodyRenderers)
                 if (r)
-                    r.forceRenderingOff = !tracked;
-            foreach (var r in weaponRenderers)
-                if (r)
-                    r.forceRenderingOff = !player.DesktopMode && !XRPoses.Tracked(false);
+                    r.forceRenderingOff = !alive;
         }
 
-        static void SolveArm(Transform upper, Transform lower, Transform palm, Vector3 target, Vector3 pole)
+        void OnAfterInputUpdate()
         {
-            if (!upper || !lower || !palm)
+            // Re-solve with the poses the frame will actually be rendered with: hands can never lag the head.
+            if (InputState.currentUpdateType != InputUpdateType.BeforeRender || !isActiveAndEnabled || player.DesktopMode || Rig == null || !Rig.Valid)
                 return;
-            Vector3 root = upper.position, delta = target - root;
-            float a = Vector3.Distance(root, lower.position), b = Vector3.Distance(lower.position, palm.position);
-            if (a < .001f || b < .001f || delta.sqrMagnitude < .000001f)
+            Rig.Solve(Frame(), false);
+            PoseScissors();
+        }
+
+        void TrackLocomotion()
+        {
+            Vector3 origin = player.origin.transform.position;
+            float yaw = player.origin.transform.eulerAngles.y;
+            rigTurn = 0;
+            if (haveOrigin && Time.deltaTime > 0)
+            {
+                Vector3 step = Geo.Flat(origin - lastOrigin);
+                rigTurn = Mathf.DeltaAngle(lastYaw, yaw);
+                // Teleports, blinks, respawns and snap turns (which swing the rig around the head) are not walking.
+                Vector3 velocity = step.magnitude > .6f || Mathf.Abs(rigTurn) > 5 ? Vector3.zero : step / Time.deltaTime;
+                locomotion = Vector3.Lerp(locomotion, velocity, 1 - Mathf.Exp(-10 * Time.deltaTime));
+            }
+            lastOrigin = origin;
+            lastYaw = yaw;
+            haveOrigin = true;
+        }
+
+        void DriveAnimation()
+        {
+            if (!animationPlayer)
                 return;
-            float stretch = Mathf.Clamp(delta.magnitude / (a + b) * 1.003f, 1, 1.45f);
-            lower.localPosition *= stretch;
-            palm.localPosition *= stretch;
-            a *= stretch;
-            b *= stretch;
-            float d = Mathf.Clamp(delta.magnitude, Mathf.Abs(a - b) + .001f, a + b - .001f);
-            Vector3 dir = delta.normalized, bend = Vector3.ProjectOnPlane(pole, dir);
-            if (bend.sqrMagnitude < .0001f)
-                bend = Vector3.ProjectOnPlane(Vector3.back, dir);
-            if (bend.sqrMagnitude < .0001f)
-                bend = Vector3.Cross(dir, Vector3.right);
-            float along = (a * a - b * b + d * d) / (2 * d), across = Mathf.Sqrt(Mathf.Max(0, a * a - along * along));
-            Vector3 elbow = root + dir * along + bend.normalized * across;
-            upper.rotation = Quaternion.FromToRotation(lower.position - root, elbow - root) * upper.rotation;
-            lower.rotation = Quaternion.FromToRotation(palm.position - lower.position, root + dir * d - lower.position) * lower.rotation;
-            palm.position = target;
+            var idle = animationPlayer[idleClip];
+            var run = animationPlayer[runClip];
+            if (idle == null || run == null)
+                return;
+            float speed = locomotion.magnitude;
+            float runWeight = Mathf.SmoothStep(0, 1, Mathf.InverseLerp(.25f, 1.6f, speed));
+            idle.enabled = run.enabled = true;
+            idle.weight = 1 - runWeight;
+            run.weight = runWeight;
+            run.speed = Mathf.Clamp(speed / 3.2f, .55f, 1.6f);
+        }
+
+        void PoseScissors()
+        {
+            if (!scissorsRoot || !scissorsRoot.gameObject.activeInHierarchy)
+            {
+                if (trail)
+                    trail.emitting = false;
+                return;
+            }
+            var weapon = WeaponPose();
+            scissorsRoot.localScale = Vector3.one * scissorsScale * Rig.Scale;
+            scissorsRoot.SetPositionAndRotation(weapon.position - weapon.rotation * (scissorsHandle * scissorsScale * Rig.Scale), weapon.rotation);
+            float open = Time.time < snipUntil ? Mathf.Sin((snipUntil - Time.time) / .14f * Mathf.PI) * 14 : 2;
+            if (bladeA)
+                bladeA.localRotation = bladeARest * Quaternion.AngleAxis(open, Vector3.right);
+            if (bladeB)
+                bladeB.localRotation = bladeBRest * Quaternion.AngleAxis(-open, Vector3.right);
+            if (trail)
+                trail.emitting = Time.time < snipUntil + .1f;
         }
     }
 }

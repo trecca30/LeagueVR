@@ -180,13 +180,18 @@ namespace LeagueVR.Champions
             return true;
         }
 
+        /// <summary>
+        /// Casts an ability. A kit that is merely busy (for example Gwen's Q snips) still allows its other abilities;
+        /// only kits that report <see cref="ChampionKit.BlocksCasts"/> (channels, leaps) lock every slot.
+        /// </summary>
         public bool CastSlot(int slot)
         {
             if (!CanAct)
                 return false;
-            if (Busy && !Kit.CanRecast(slot))
+            bool recast = Kit.CanRecast(slot);
+            if (Kit.BlocksCasts && !recast)
                 return false;
-            if (Cooldown(slot) > 0 && !Kit.CanRecast(slot))
+            if (Cooldown(slot) > 0 && !recast)
                 return false;
             return Kit.Cast(slot);
         }

@@ -43,7 +43,8 @@ namespace LeagueVR.Match
         public string CurrentScreen { get; private set; }
         public int SelectedItem => selected;
         public IEnumerable<RiftUIButton> Buttons => panel ? panel.GetComponentsInChildren<RiftUIButton>() : Array.Empty<RiftUIButton>();
-        public static bool BlocksCombat => RiftMatch.Instance && (!RiftMatch.Instance.Running || RiftMatch.Instance.ui.IsOpen || RiftMatch.Instance.economy.Stasis || RiftItemRack.Holding || RiftItemRack.InputConsumedThisFrame);
+        /// <summary>Menus, stasis and a stopped match block combat. Held items only occupy their own hand (see ChampionInput).</summary>
+        public static bool BlocksCombat => RiftMatch.Instance && (!RiftMatch.Instance.Running || RiftMatch.Instance.ui.IsOpen || RiftMatch.Instance.economy.Stasis);
         GameObject panel;
         RectTransform root;
         TMP_Text status, goldText, buyReason;

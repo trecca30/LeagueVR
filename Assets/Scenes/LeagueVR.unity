@@ -27103,17 +27103,13 @@ MonoBehaviour:
   scissorsRoot: {fileID: 681263949}
   bladeA: {fileID: 951748055}
   bladeB: {fileID: 519231947}
-  leftUpper: {fileID: 2418837273074037829}
-  leftLower: {fileID: 4164032075458429442}
-  leftPalm: {fileID: 126770889201708653}
-  rightUpper: {fileID: 4687311201340147918}
-  rightLower: {fileID: 2207262291008778944}
-  rightPalm: {fileID: 8114231795366821087}
   animationPlayer: {fileID: 2199343179243681304}
-  handPoses: {fileID: 11400000, guid: f0799cde8117435418b8ab594124d198, type: 2}
-  avatarHeight: 1.65
-  leftGripOffset: {x: 0, y: -0.025, z: -0.015}
-  rightGripOffset: {x: 0, y: -0.025, z: -0.015}
+  shadowSource: {fileID: 1050908021570271116, guid: fff25c76a1c516047b1ff6d4660ad051, type: 3}
+  idleClip: Idle.anm
+  runClip: Run.anm
+  scissorsScale: 0.72
+  scissorsHandle: {x: 0, y: -0.06, z: -0.4}
+  scissorsTilt: {x: -18, y: 0, z: 0}
 --- !u!114 &1373153118
 MonoBehaviour:
   m_ObjectHideFlags: 0

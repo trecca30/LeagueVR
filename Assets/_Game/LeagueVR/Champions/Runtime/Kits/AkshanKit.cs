@@ -15,6 +15,7 @@ namespace LeagueVR.Champions
         float stealthUntil, busyUntil;
 
         public override bool Busy => Time.time < busyUntil;
+        public override bool BlocksCasts => Busy;
         public override string StateText => Camouflaged ? "CAMOUFLAGED" : "DIRTY FIGHTING";
         public override string SlotStatus(int slot) => slot == 1 && Camouflaged ? $"ROGUE {stealthUntil - Time.time:0}s" : null;
 

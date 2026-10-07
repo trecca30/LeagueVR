@@ -41,7 +41,8 @@ namespace LeagueVR.Match
         }
         readonly List<Slot> slots = new();
         readonly Slot[] held = new Slot[2];
-        readonly float[] mouthTime = new float[2];
+        readonly float[] mouthTime = new float[2], handSpeed = new float[2];
+        readonly Vector3[] lastHandLocal = new Vector3[2];
         readonly InputAction[] grips = new InputAction[2], triggers = new InputAction[2];
         Transform harness;
         string signature = "";
@@ -167,6 +168,10 @@ namespace LeagueVR.Match
             Sync();
             for (int h = 0; h < 2; h++)
             {
+                // Hand speed relative to the head (ignores locomotion), used to reject grabs mid-swing.
+                Vector3 local = economy.match.player.head.transform.InverseTransformPoint(Hand(h).position);
+                handSpeed[h] = Time.deltaTime > 0 ? (local - lastHandLocal[h]).magnitude / Time.deltaTime : 0;
+                lastHandLocal[h] = local;
                 if (!economy.match.Running || !economy.match.player.Health.IsAlive)
                 {
                     ReturnHeld(h);
@@ -233,10 +238,16 @@ namespace LeagueVR.Match
                 }
         }
 
+        /// <summary>
+        /// Grabs the closest wearable item within reach. Grip presses during a fast swing never grab, so a scissor
+        /// swing past the hip cannot accidentally pull out a potion and lock that hand.
+        /// </summary>
         public bool TryGrab(int hand)
         {
+            if (handSpeed[hand] > 1.1f)
+                return false;
             Slot closest = null;
-            float distance = .32f;
+            float distance = .24f;
             foreach (var slot in slots)
             {
                 if (!slot.model || held[1 - hand] == slot)

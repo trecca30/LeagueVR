@@ -49,7 +49,10 @@ namespace LeagueVR.Champions
         /// <summary>True while a recast window lets the slot be used again without waiting for its cooldown.</summary>
         public virtual bool CanRecast(int slot) => false;
 
+        /// <summary>True while an action occupies the champion: basic attacks wait until it ends.</summary>
         public virtual bool Busy => false;
+        /// <summary>True while every ability is locked (channels, leaps). Defaults to false so abilities can be woven together.</summary>
+        public virtual bool BlocksCasts => false;
         public virtual float BonusAttackSpeed => 0;
         public virtual float BonusAttackRange => 0;
         public virtual bool Blocks(DamageHit hit) => false;

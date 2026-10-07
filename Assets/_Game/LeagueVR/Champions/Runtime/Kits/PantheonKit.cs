@@ -15,6 +15,7 @@ namespace LeagueVR.Champions
 
         public bool Guarding => Time.time < guardUntil;
         public override bool Busy => Time.time < busyUntil;
+        public override bool BlocksCasts => Busy;
         public override string StateText => Guarding ? "AEGIS ASSAULT" : will >= 5 ? "MORTAL WILL READY" : $"MORTAL WILL {will}/5";
         public override string SlotStatus(int slot) => slot == 2 && Guarding ? "SHIELDING" : null;
 

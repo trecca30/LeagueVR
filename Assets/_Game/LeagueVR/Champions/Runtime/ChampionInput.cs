@@ -9,6 +9,7 @@ namespace LeagueVR.Champions
     /// <summary>
     /// Maps VR controllers (and a desktop fallback) to the champion's attack and QWER abilities.
     /// Right trigger or a grip-held swing attacks; B = Q, X = W, A = E, left trigger = R.
+    /// Each hand is independent: tracking loss, an aimed teleport or a held item on one hand never blocks the other.
     /// </summary>
     [DefaultExecutionOrder(100)]
     public class ChampionInput : MonoBehaviour
@@ -23,7 +24,8 @@ namespace LeagueVR.Champions
         Vector3 previousHand;
         bool swingArmed = true, xrSessionSeen, havePreviousPose, wasDesktop;
         float yaw, pitch;
-        Transform[] teleportRays;
+        GameObject leftTeleport, rightTeleport;
+        RiftItemRack rack;
 
         public bool IsDesktop => player.DesktopMode;
 
@@ -39,7 +41,14 @@ namespace LeagueVR.Champions
             r = combatActions.FindAction("Combat/R", true);
             combatActions.Enable();
             ResetSwing();
-            teleportRays = System.Array.FindAll(player.origin.GetComponentsInChildren<Transform>(true), t => t.name == "Teleport Interactor");
+            foreach (var t in player.origin.GetComponentsInChildren<Transform>(true))
+                if (t.name == "Teleport Interactor" && t.parent)
+                {
+                    if (t.parent.name.StartsWith("Left"))
+                        leftTeleport = t.gameObject;
+                    else if (t.parent.name.StartsWith("Right"))
+                        rightTeleport = t.gameObject;
+                }
         }
 
         void OnDisable()
@@ -56,43 +65,39 @@ namespace LeagueVR.Champions
                 xrSessionSeen = true;
             player.DesktopMode = enableDesktopFallback && !xrSessionSeen && !hmd.isValid && !XRSettings.isDeviceActive;
             var match = RiftMatch.Instance;
-            if ((match && (!match.Running || match.ui.IsOpen || match.economy.Stasis)) || RiftItemRack.InputConsumedThisFrame)
+            if (match && (!match.Running || match.ui.IsOpen || match.economy.Stasis))
             {
                 ResetSwing();
                 return;
             }
+            if (!rack && match && match.economy)
+                rack = match.economy.Rack;
             if (player.DesktopMode)
             {
                 DesktopInput();
                 return;
             }
             wasDesktop = false;
-            if (RiftItemRack.Holding || !XRPoses.Tracked(false) || !XRPoses.Tracked(true) || TeleportAiming())
-            {
-                ResetSwing();
-                return;
-            }
-            if (attack != null && attack.IsPressed())
-                player.BasicAttack();
+
+            // A hand that holds an item or aims a teleport keeps its trigger for that; its face buttons still cast.
+            bool usedItem = RiftItemRack.InputConsumedThisFrame;
+            bool rightOccupied = (rack && rack.IsHandHolding(1)) || (rightTeleport && rightTeleport.activeInHierarchy) || usedItem;
+            bool leftOccupied = (rack && rack.IsHandHolding(0)) || (leftTeleport && leftTeleport.activeInHierarchy) || usedItem;
+
             if (q != null && q.WasPressedThisFrame())
                 player.CastQ();
-            if (w != null && w.WasPressedThisFrame())
-                player.CastW();
             if (e != null && e.WasPressedThisFrame())
                 player.CastE();
-            if (r != null && r.WasPressedThisFrame())
+            if (w != null && w.WasPressedThisFrame())
+                player.CastW();
+            if (!leftOccupied && r != null && r.WasPressedThisFrame())
                 player.CastR();
-            UpdateSwing();
-        }
-
-        bool TeleportAiming()
-        {
-            if (teleportRays == null)
-                return false;
-            foreach (var t in teleportRays)
-                if (t && t.gameObject.activeInHierarchy)
-                    return true;
-            return false;
+            if (!rightOccupied && attack != null && attack.IsPressed())
+                player.BasicAttack();
+            if (!rightOccupied && XRPoses.Tracked(false))
+                UpdateSwing();
+            else
+                ResetSwing();
         }
 
         void UpdateSwing()
@@ -130,7 +135,7 @@ namespace LeagueVR.Champions
             var m = Mouse.current;
             if (k == null || !player.Health.IsAlive)
                 return;
-            if (m != null && m.leftButton.isPressed && !RiftItemRack.Holding)
+            if (m != null && m.leftButton.isPressed && !RiftItemRack.Holding && !RiftItemRack.InputConsumedThisFrame)
                 player.BasicAttack();
             if (k.qKey.wasPressedThisFrame)
                 player.CastQ();
