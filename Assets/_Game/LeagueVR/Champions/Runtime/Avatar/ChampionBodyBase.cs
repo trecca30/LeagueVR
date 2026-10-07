@@ -9,9 +9,10 @@ using UnityEngine.XR;
 namespace LeagueVR.Champions
 {
     /// <summary>
-    /// Shared first-person body for every champion: the champion's own idle and run clips animate the legs, a
-    /// <see cref="BodyRig"/> turns, leans and crouches the body with the headset, the arms and fingers follow the
-    /// controllers, and a complete shadow (head included) grounds the player. Subclasses add weapons and kit tells.
+    /// Shared first-person body for every champion: a still frame of the champion's idle is the base pose, a
+    /// <see cref="BodyRig"/> turns, leans and crouches the body with the headset, steps the feet, makes the arms and
+    /// fingers follow the controllers, and a complete shadow (head included) grounds the player. Subclasses add
+    /// weapons and kit tells.
     /// Poses are applied in LateUpdate and again in the Input System's before-render update with the freshest tracking.
     /// </summary>
     public abstract class ChampionBodyBase : MonoBehaviour
@@ -25,7 +26,7 @@ namespace LeagueVR.Champions
         public event Action Posed;
 
         protected Animation clips;
-        protected AnimationState idleState, runState;
+        protected AnimationState idleState;
         protected Renderer[] bodyRenderers = Array.Empty<Renderer>();
         protected GameObject shadowObject;
 
@@ -63,11 +64,15 @@ namespace LeagueVR.Champions
             }
         }
 
-        /// <summary>Starts the champion's idle and run loops; the legs blend between them with walking speed.</summary>
-        protected void SetupAnimation(Animation animation, string idle, string run)
+        /// <summary>
+        /// Holds the champion's idle on its first frame as the body's base pose. Nothing plays on its own: run cycles bob
+        /// the hips, which looks like a glitch from inside the body. The rig moves the spine, arms and fingers, and the
+        /// legs step procedurally (see <see cref="BodyRig"/>).
+        /// </summary>
+        protected void SetupAnimation(Animation animation, string idle)
         {
             clips = animation;
-            idleState = runState = null;
+            idleState = null;
             if (!clips)
                 return;
             clips.enabled = true;
@@ -75,15 +80,15 @@ namespace LeagueVR.Champions
             clips.playAutomatically = false;
             clips.Stop();
             idleState = FindClip(idle, "Idle1_Base", "Idle1", "Idle.anm", "Idle");
-            runState = FindClip(run, "Run01", "Run_Base", "Run.anm", "Run");
-            foreach (var state in new[] { idleState, runState })
-                if (state != null)
-                {
-                    state.wrapMode = WrapMode.Loop;
-                    state.layer = 0;
-                    state.enabled = true;
-                    state.weight = state == idleState ? 1 : 0;
-                }
+            if (idleState != null)
+            {
+                idleState.wrapMode = WrapMode.ClampForever;
+                idleState.layer = 0;
+                idleState.enabled = true;
+                idleState.weight = 1;
+                idleState.time = 0;
+                idleState.speed = 0;
+            }
             clips.Sample();
         }
 
@@ -236,7 +241,6 @@ namespace LeagueVR.Champions
             if (!Ready || Rig == null || !Rig.Valid)
                 return;
             TrackLocomotion();
-            DriveAnimation();
             Rig.CaptureAnimatedPose();
             Rig.Solve(Frame(), true);
             AfterSolve();
@@ -275,16 +279,5 @@ namespace LeagueVR.Champions
             haveOrigin = true;
         }
 
-        void DriveAnimation()
-        {
-            if (idleState == null || runState == null)
-                return;
-            float speed = locomotion.magnitude;
-            float runWeight = Mathf.SmoothStep(0, 1, Mathf.InverseLerp(.25f, 1.6f, speed));
-            idleState.enabled = runState.enabled = true;
-            idleState.weight = 1 - runWeight;
-            runState.weight = runWeight;
-            runState.speed = Mathf.Clamp(speed / 3.2f, .55f, 1.6f);
-        }
     }
 }

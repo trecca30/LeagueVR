@@ -14,7 +14,7 @@ namespace LeagueVR.Champions
         public Animation animationPlayer;
         [Tooltip("Gwen's complete mesh (with head) used only to cast her shadow.")]
         public Mesh shadowSource;
-        public string idleClip = "Idle.anm", runClip = "Run.anm";
+        public string idleClip = "Idle.anm";
 
         [Header("Scissors")]
         [Range(.4f, 1.2f)] public float scissorsScale = .6f;
@@ -42,7 +42,7 @@ namespace LeagueVR.Champions
         void Awake()
         {
             Skin = visualRoot.GetComponentInChildren<SkinnedMeshRenderer>(true);
-            SetupAnimation(animationPlayer, idleClip, runClip);
+            SetupAnimation(animationPlayer, idleClip);
             Rig = new BodyRig(visualRoot, Skin);
             bladeARest = bladeA ? bladeA.localRotation : Quaternion.identity;
             bladeBRest = bladeB ? bladeB.localRotation : Quaternion.identity;

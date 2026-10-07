@@ -6,8 +6,8 @@ namespace LeagueVR.Champions
 {
     /// <summary>
     /// First-person body for champions built from a prefab (Zoe, Pantheon and the other imported champions). The
-    /// champion's first-person model (its own mesh without the head) gets the shared full-body rig, its idle and run
-    /// clips and a complete shadow. Weapons are fitted to the controllers: a weapon runs along the right grip, a shield
+    /// champion's first-person model (its own mesh without the head) gets the shared full-body rig on its idle pose
+    /// and a complete shadow. Weapons are fitted to the controllers: a weapon runs along the right grip, a shield
     /// faces where the left fist punches.
     /// </summary>
     [DefaultExecutionOrder(225)]
@@ -100,7 +100,7 @@ namespace LeagueVR.Champions
             if (animator)
                 animator.enabled = false;
             Skin = Instance.GetComponentInChildren<SkinnedMeshRenderer>(true);
-            SetupAnimation(Instance.GetComponentInChildren<Animation>(true), null, null);
+            SetupAnimation(Instance.GetComponentInChildren<Animation>(true), null);
             // Props are posed by hand, so their bones must not follow the hand's animated pose; build them from the
             // animated rest pose before the rig takes over.
             SetupProps(definition);
@@ -291,7 +291,8 @@ namespace LeagueVR.Champions
         protected override HandCurl HeldCurl(bool left)
         {
             var prop = left ? Shield : Weapon;
-            return prop != null && prop.Visible ? new HandCurl(.6f, .95f, .8f) : default;
+            // Closed around a spear shaft or a shield grip: firm, not crushed through the handle.
+            return prop != null && prop.Visible ? new HandCurl(.62f, .82f, .72f) : default;
         }
 
         protected override void AfterSolve()

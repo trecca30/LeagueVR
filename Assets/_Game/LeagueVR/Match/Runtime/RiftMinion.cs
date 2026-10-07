@@ -270,6 +270,21 @@ namespace LeagueVR.Match
                 }
                 push += away / d * Mathf.Min(maxPush, (min - d) * .3f);
             }
+            // Structures are solid: anyone inside a base (pushed by the wave, chasing a target) is moved out of it.
+            var match = RiftMatch.Instance;
+            if (match)
+                foreach (var structure in match.structures)
+                {
+                    if (!structure || !structure.health.IsAlive)
+                        continue;
+                    Vector3 away = Geo.Flat(transform.position - structure.transform.position);
+                    float min = structure.Footprint + radius;
+                    float d2 = away.sqrMagnitude;
+                    if (d2 >= min * min)
+                        continue;
+                    float d = Mathf.Sqrt(d2);
+                    push += (d > .001f ? away / d : transform.right) * Mathf.Min(speed * Time.deltaTime * 1.5f, min - d);
+                }
             return push;
         }
 

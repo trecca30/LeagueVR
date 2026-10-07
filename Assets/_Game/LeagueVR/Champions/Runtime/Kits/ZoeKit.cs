@@ -193,6 +193,7 @@ namespace LeagueVR.Champions
                         Player.Emit("Hit", t.AimPosition, (t.AimPosition - at).normalized);
                 }
             Burst(at, Gold, StarBlast * .6f, 40 + (int)(40 * StarGrowth(from.Travelled)));
+            Player.Emit("StarBurst", at, Vector3.up);
             Player.Track(AbilityFx.Ring(new Vector3(at.x, from.GroundY, at.z), StarBlast, .45f, Gold, .06f));
         }
 
@@ -484,6 +485,7 @@ namespace LeagueVR.Champions
             if (dealt > 0 && target.countsAsChampion)
                 Player.RefundCooldown(2, ByRank(2, .16f, .195f, .23f, .265f, .3f));
             Burst(at, Pink, .6f, 36);
+            Player.Emit("Pop", at, Vector3.up);
             Player.StartCoroutine(Drowsy(target, damage));
         }
 
@@ -505,6 +507,7 @@ namespace LeagueVR.Champions
             // Asleep: the next damage wakes it with bonus damage up to the bubble's damage; magic resist is shredded meanwhile.
             target.ApplySleep(2.25f, damage, Health);
             target.ShredMagicResistance(.3f, 1, 2.25f);
+            Player.Emit("Sleep", target.AimPosition, Vector3.up);
             if (fx)
                 fx.Sleep();
         }
@@ -634,6 +637,7 @@ namespace LeagueVR.Champions
                 return;
             Player.ComfortBlink(.14f);
             Player.MoveFeet(portalFrom);
+            Player.Emit("PortalBack", Player.Feet, Vector3.up);
         }
 
         // ---------- Casting ----------

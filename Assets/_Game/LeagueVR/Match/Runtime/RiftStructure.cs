@@ -12,6 +12,12 @@ namespace LeagueVR.Match
         public float RespawnAt { get; private set; }
         public float BonusResistance => 0;
         public bool IsTurret => kind != StructureKind.Inhibitor && kind != StructureKind.Nexus;
+
+        /// <summary>
+        /// Ground radius of the visible base (turret plinth, inhibitor crystal ring, Nexus platform). Units path around
+        /// it and attackers stand at its edge, so nothing walks through the model.
+        /// </summary>
+        public float Footprint => kind == StructureKind.Nexus ? 3.6f : kind == StructureKind.Inhibitor ? 1.8f : 1.4f;
         /// <summary>What this turret is currently shooting (minions use it for "turret attacking an ally" aggro).</summary>
         public RiftActor Target => target;
 
@@ -45,6 +51,12 @@ namespace LeagueVR.Match
         {
             base.Awake();
             structure = true;
+            // Attack ranges are measured to the edge of the base, like League's structure radius, and the collider
+            // covers the whole base so weapons and the player's body meet the model where it is drawn.
+            radius = Footprint;
+            var body = GetComponentInChildren<CapsuleCollider>(true);
+            if (body)
+                body.radius = Footprint / Mathf.Max(.01f, Mathf.Max(body.transform.lossyScale.x, body.transform.lossyScale.z));
             health.onDeath.AddListener(Die);
             health.Damaged += (h, a) => lastHit = h;
             health.RefreshGuards();

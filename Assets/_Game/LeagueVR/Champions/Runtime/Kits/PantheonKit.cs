@@ -35,6 +35,7 @@ namespace LeagueVR.Champions
         const float StarfallRange = 52, StarfallRadius = 5, SkyHeight = 16, ThrowSpeed = 1.6f;
 
         int will;
+        float lastBlockCue;
         bool holdingQ, aimingVault, aimingStarfall, aegisEmpowered;
         float qHoldStart, tripleUntil, aegisUntil, nextStrike, resistUntil, spearBackAt;
         Combatant vaultTarget;
@@ -148,7 +149,16 @@ namespace LeagueVR.Champions
 
         // ---------- Passive: Mortal Will ----------
 
-        protected override void OnAttackHit(Combatant target, float dealt) => will = Mathf.Min(5, will + 1);
+        protected override void OnAttackHit(Combatant target, float dealt) => SetWill(will + 1);
+
+        /// <summary>Mortal Will stacks; reaching five rings the shield.</summary>
+        void SetWill(int value)
+        {
+            value = Mathf.Clamp(value, 0, 5);
+            if (value == 5 && will < 5 && Player.Health.IsAlive)
+                Player.Emit("Will", ShieldCentre(), Vector3.up);
+            will = value;
+        }
 
         /// <summary>Casting spends five stacks for an empowered spell, otherwise adds one.</summary>
         bool SpendWill()
@@ -158,7 +168,7 @@ namespace LeagueVR.Champions
                 will = 0;
                 return true;
             }
-            will = Mathf.Min(5, will + 1);
+            SetWill(will + 1);
             return false;
         }
 
@@ -376,6 +386,7 @@ namespace LeagueVR.Champions
             Player.Hit(target, damage, DamageKind.Physical, "W", false, landing);
             target.ApplyStun(1);
             Player.Emit("Hit", target.AimPosition, -toFeet);
+            Player.Emit("Bash", target.AimPosition, -toFeet);
             Flash(target.AimPosition, Gold, .7f, 36);
             Player.Track(AbilityFx.Ring(target.transform.position, 1.2f, .4f, Gold, .06f));
             if (empowered)
@@ -462,6 +473,7 @@ namespace LeagueVR.Champions
             }
             Shockwave(feet, front, SlamRange, SlamHalfAngle);
             Flash(ShieldCentre(), Gold, .8f, 40);
+            Player.Emit("Slam", ShieldCentre(), front);
             if (aegisEmpowered)
             {
                 resistUntil = Time.time + 4;
@@ -479,7 +491,13 @@ namespace LeagueVR.Champions
                 return false;
             Vector3 from = hit.source ? hit.source.AimPosition : hit.origin;
             Vector3 to = Geo.Flat(from - Player.Feet);
-            return to.sqrMagnitude > 1e-4f && Vector3.Angle(ShieldFront(), to) <= BlockHalfAngle;
+            bool blocked = to.sqrMagnitude > 1e-4f && Vector3.Angle(ShieldFront(), to) <= BlockHalfAngle;
+            if (blocked && Time.time - lastBlockCue > .15f)
+            {
+                lastBlockCue = Time.time;
+                Player.Emit("Block", ShieldCentre(), -to.normalized);
+            }
+            return blocked;
         }
 
         public override bool HiddenFrom(Combatant attacker) => leap == Leap.Air;
@@ -667,7 +685,8 @@ namespace LeagueVR.Champions
             }
             Shockwave(at, Vector3.forward, StarfallRadius, 180);
             Flash(at + Vector3.up * .5f, Gold, 2f, 90);
-            will = 5;
+            Player.Emit("Crash", at, Vector3.up);
+            SetWill(5);
             EndLeap(true);
         }
 

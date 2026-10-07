@@ -32,10 +32,10 @@ namespace LeagueVR.Champions
     }
 
     /// <summary>
-    /// Full-body first-person rig for League champion skeletons. Clips animate the legs and hips; on top of that the
-    /// body turns with the player, the spine leans toward the headset, the legs bend to keep the feet on the floor
-    /// when crouching, two-bone arms reach the controller grip poses with natural elbows, the wrist twist is shared
-    /// with the forearm, and the fingers follow grip and trigger.
+    /// Full-body first-person rig for League champion skeletons, starting from a still idle pose: the body turns with
+    /// the player, the spine leans toward the headset, the feet step procedurally and the legs bend when crouching,
+    /// two-bone arms reach the controller grip poses with natural elbows, the wrist twist is shared with the forearm,
+    /// and the fingers follow grip and trigger. The hips never bob.
     /// </summary>
     public class BodyRig
     {
@@ -48,6 +48,21 @@ namespace LeagueVR.Champions
             public float endHeight;
         }
 
+        /// <summary>A procedurally stepping foot: planted on the floor, or moving from one spot to the next.</summary>
+        class Foot
+        {
+            public Limb leg;
+            /// <summary>Rest position (root space, unscaled, on the floor) and rotation of the foot.</summary>
+            public Vector3 restOffset;
+            public Quaternion restRotation;
+            public Vector3 planted, from, to;
+            public Quaternion plantedRotation, fromRotation, toRotation;
+            public float progress = 1, duration = .3f, lift;
+            public bool placed;
+
+            public bool Stepping => progress < 1;
+        }
+
         class Finger
         {
             public Transform[] joints;
@@ -57,6 +72,9 @@ namespace LeagueVR.Champions
             public float[] relaxed;
             public int hand; // 0 left, 1 right
             public int kind; // 0 thumb, 1 index, 2 other
+            /// <summary>Knuckle joint only: how far the finger fans out from the middle finger (degrees) and the axis it fans about.</summary>
+            public float splay;
+            public Vector3 spreadAxis;
         }
 
         // OpenXR grip pose in Unity space: +Z runs up the handle from little finger to thumb, +X is the palm normal
@@ -76,6 +94,7 @@ namespace LeagueVR.Champions
         readonly Transform hips, spine1, spine2, chest, neck, leftClavicle, rightClavicle;
         /// <summary>The spine bones this skeleton has, from the hips up.</summary>
         readonly Transform[] spineChain;
+        readonly Foot[] feet = Array.Empty<Foot>();
         readonly List<Finger> fingers = new();
         readonly Transform[] driven;
         readonly Quaternion[] capturedRot;
@@ -119,12 +138,19 @@ namespace LeagueVR.Champions
             // Idles that hunch (Pantheon's battle stance) are measured with the spine straightened: the player stands upright.
             uprightNeck = Mathf.Max(neckRest.y, hipsRest.y + Vector3.Distance(hipsRest, neckRest) * .97f);
             eyeRest = uprightNeck + .15f;
-            if (LeftLeg.end)
-                LeftLeg.endHeight = root.InverseTransformPoint(LeftLeg.end.position).y;
-            if (RightLeg.end)
-                RightLeg.endHeight = root.InverseTransformPoint(RightLeg.end.position).y;
+            var feetFound = new List<Foot>();
+            foreach (var leg in new[] { LeftLeg, RightLeg })
+            {
+                if (!leg.upper || !leg.lower || !leg.end)
+                    continue;
+                Vector3 local = root.InverseTransformPoint(leg.end.position);
+                leg.endHeight = local.y;
+                feetFound.Add(new Foot { leg = leg, restOffset = new Vector3(local.x, 0, local.z), restRotation = Quaternion.Inverse(root.rotation) * leg.end.rotation });
+            }
+            feet = feetFound.ToArray();
 
             var bindWorld = BindPose(skin);
+            skinned = SkinnedVertexCounts(skin);
             SetupHand(LeftArm, Bone, bindWorld, 0, "L_");
             SetupHand(RightArm, Bone, bindWorld, 1, "R_");
 
@@ -137,6 +163,32 @@ namespace LeagueVR.Champions
             driven = list.ToArray();
             capturedRot = new Quaternion[driven.Length];
             capturedPos = new Vector3[driven.Length];
+        }
+
+        Dictionary<Transform, int> skinned = new();
+
+        /// <summary>How many vertices each bone moves noticeably (weight of at least 0.3).</summary>
+        static Dictionary<Transform, int> SkinnedVertexCounts(SkinnedMeshRenderer skin)
+        {
+            var counts = new Dictionary<Transform, int>();
+            if (!skin || !skin.sharedMesh)
+                return counts;
+            var bones = skin.bones;
+            void Add(int index, float weight)
+            {
+                if (weight < .3f || index < 0 || index >= bones.Length || !bones[index])
+                    return;
+                counts.TryGetValue(bones[index], out int c);
+                counts[bones[index]] = c + 1;
+            }
+            foreach (var w in skin.sharedMesh.boneWeights)
+            {
+                Add(w.boneIndex0, w.weight0);
+                Add(w.boneIndex1, w.weight1);
+                Add(w.boneIndex2, w.weight2);
+                Add(w.boneIndex3, w.weight3);
+            }
+            return counts;
         }
 
         /// <summary>World-space bind pose of every skinned bone (mesh space mapped through the root).</summary>
@@ -212,9 +264,28 @@ namespace LeagueVR.Champions
                     if (Vector3.Dot(Quaternion.AngleAxis(30, axis) * along, toward) < Vector3.Dot(along, toward))
                         axis = -axis;
                     finger.axes[i] = Quaternion.Inverse(BindRot(j)) * axis;
-                    finger.maxAngles[i] = kind == 0 ? new[] { 22f, 38f, 48f }[Mathf.Min(i, 2)] : i == 0 ? 80f : 100f;
-                    finger.relaxed[i] = kind == 0 ? 6 : i == 0 ? 14 : 20;
+                    // Two-joint fingers (Zoe, Pantheon) fold the middle and tip phalanges as one; they bend a little less.
+                    // The thumb folds across the palm far enough to close over a handle; a two-joint thumb bends more per joint.
+                    finger.maxAngles[i] = kind == 0
+                        ? (joints.Count == 2 ? new[] { 42f, 66f } : new[] { 34f, 50f, 60f })[Mathf.Min(i, joints.Count - 1)]
+                        : i == 0 ? 80f : joints.Count == 2 ? 88f : 100f;
+                    finger.relaxed[i] = kind == 0 ? 10 : i == 0 ? 14 : 20;
+                    if (i == 0 && kind != 0)
+                    {
+                        // Fingers fanned out in the bind pose come together as the hand closes, so a fist never crosses them.
+                        Vector3 inPlane = Vector3.ProjectOnPlane(along, bindNormal), forward = Vector3.ProjectOnPlane(bf, bindNormal);
+                        finger.splay = inPlane.sqrMagnitude > 1e-6f && forward.sqrMagnitude > 1e-6f ? Vector3.SignedAngle(forward, inPlane, bindNormal) : 0;
+                        finger.spreadAxis = Quaternion.Inverse(BindRot(j)) * bindNormal;
+                    }
                 }
+                // A joint that moves no vertices (Zoe's thumb tip is skinned to its base) passes its bend to the joint
+                // before it, so the visible finger still closes.
+                for (int i = joints.Count - 1; i > 0; i--)
+                    if (!skinned.TryGetValue(joints[i], out int moved) || moved < 4)
+                    {
+                        finger.maxAngles[i - 1] += finger.maxAngles[i] * .7f;
+                        finger.relaxed[i - 1] += finger.relaxed[i] * .7f;
+                    }
                 fingers.Add(finger);
             }
             AddFinger("Thumb", 3, 0);
@@ -332,7 +403,7 @@ namespace LeagueVR.Champions
 
             LeanSpine(neckTarget);
             TwistChest(Mathf.Clamp(Mathf.DeltaAngle(bodyYaw, headYaw), -55, 55));
-            PlantFeet(frame.floorY);
+            StepFeet(frame, yaw, advanceState, dt);
             SolveArm(LeftArm, leftClavicle, frame.leftGrip);
             SolveArm(RightArm, rightClavicle, frame.rightGrip);
             CurlFingers(frame.leftCurl, frame.rightCurl);
@@ -368,22 +439,99 @@ namespace LeagueVR.Champions
                 spineChain[top].rotation = Quaternion.AngleAxis(headTwist * .45f, Vector3.up) * spineChain[top].rotation;
         }
 
-        void PlantFeet(float floorY)
+        /// <summary>
+        /// Procedural legs. Each foot stays planted on the floor until it falls too far behind where it belongs under
+        /// the body (or the body turns away from it); then it takes a step, lifted in a small arc, landing a little ahead
+        /// when walking. One foot steps at a time. No clip moves the hips, so the body never bobs in first person.
+        /// </summary>
+        void StepFeet(BodyFrame frame, Quaternion yaw, bool advance, float dt)
         {
-            foreach (var leg in new[] { LeftLeg, RightLeg })
+            if (feet.Length == 0)
+                return;
+            Vector3 velocity = Geo.Flat(frame.locomotion);
+            float pace = Mathf.InverseLerp(.5f, 3.5f, velocity.magnitude);
+            bool moving = velocity.magnitude > .25f;
+            float duration = moving ? Mathf.Lerp(.34f, .22f, pace) : .3f;
+            float threshold = (moving ? Mathf.Lerp(.16f, .3f, pace) : .2f) * Scale;
+            Vector3 hips = new(root.position.x, frame.floorY, root.position.z);
+
+            if (advance)
             {
-                if (!leg.upper || !leg.lower || !leg.end)
-                    continue;
-                Vector3 foot = leg.end.position;
-                float minY = floorY + leg.endHeight * Scale;
-                if (foot.y >= minY - .005f)
-                    continue;
-                var footRotation = leg.end.rotation;
-                Vector3 target = new(foot.x, minY, foot.z);
-                Vector3 pole = root.forward + Vector3.up * .1f + root.right * leg.side * .1f;
-                TwoBone(leg.upper, leg.lower, leg.end, target, pole, 1f);
-                leg.end.rotation = footRotation;
+                Foot due = null;
+                float dueScore = 1;
+                bool anyStepping = false;
+                foreach (var f in feet)
+                {
+                    Vector3 home = Home(f, hips, yaw);
+                    Quaternion homeRotation = yaw * f.restRotation;
+                    if (!f.placed || Geo.FlatDistance(f.planted, home) > 1.4f * Scale)
+                    {
+                        // First frame, teleports, blinks and dashes: the feet simply land under the body.
+                        f.planted = f.from = f.to = home;
+                        f.plantedRotation = f.fromRotation = f.toRotation = homeRotation;
+                        f.progress = 1;
+                        f.placed = true;
+                        continue;
+                    }
+                    anyStepping |= f.Stepping;
+                    if (f.Stepping)
+                        continue;
+                    float score = Mathf.Max(Geo.FlatDistance(f.planted, home + velocity * duration * .5f) / threshold, Quaternion.Angle(f.plantedRotation, homeRotation) / 40);
+                    if (score > dueScore)
+                    {
+                        due = f;
+                        dueScore = score;
+                    }
+                }
+                if (due != null && !anyStepping)
+                {
+                    due.from = due.planted;
+                    due.fromRotation = due.plantedRotation;
+                    due.to = Home(due, hips, yaw) + velocity * duration * .9f;
+                    due.toRotation = yaw * due.restRotation;
+                    due.duration = duration;
+                    due.lift = (moving ? Mathf.Lerp(.07f, .13f, pace) : .05f) * Scale;
+                    due.progress = 0;
+                }
+                foreach (var f in feet)
+                    if (f.Stepping)
+                    {
+                        f.progress = Mathf.Min(1, f.progress + dt / f.duration);
+                        if (!f.Stepping)
+                        {
+                            f.planted = f.to;
+                            f.plantedRotation = f.toRotation;
+                        }
+                    }
             }
+
+            foreach (var f in feet)
+            {
+                Vector3 position = f.planted;
+                Quaternion rotation = f.plantedRotation;
+                if (f.Stepping)
+                {
+                    float t = f.progress, s = t * t * (3 - 2 * t);
+                    position = Vector3.Lerp(f.from, f.to, s);
+                    rotation = Quaternion.Slerp(f.fromRotation, f.toRotation, s);
+                    position.y = frame.floorY + Mathf.Sin(t * Mathf.PI) * f.lift;
+                }
+                else
+                    position.y = frame.floorY;
+                Vector3 ankle = position + Vector3.up * f.leg.endHeight * Scale;
+                Vector3 pole = yaw * (Vector3.forward + Vector3.right * f.leg.side * .15f) + Vector3.up * .1f;
+                TwoBone(f.leg.upper, f.leg.lower, f.leg.end, ankle, pole, 1.02f);
+                f.leg.end.rotation = rotation;
+            }
+        }
+
+        /// <summary>Where a foot belongs under the body: its own stance width, nearly side by side.</summary>
+        Vector3 Home(Foot f, Vector3 hips, Quaternion yaw)
+        {
+            float side = f.restOffset.x != 0 ? Mathf.Sign(f.restOffset.x) : f.leg.side;
+            float lateral = side * Mathf.Clamp(Mathf.Abs(f.restOffset.x), .08f, .2f);
+            float forward = Mathf.Clamp(f.restOffset.z, -.08f, .08f);
+            return hips + yaw * new Vector3(lateral, 0, forward) * Scale;
         }
 
         void SolveArm(Limb arm, Transform clavicle, Pose grip)
@@ -472,7 +620,10 @@ namespace LeagueVR.Champions
                 for (int i = 0; i < f.joints.Length; i++)
                 {
                     float angle = Mathf.Lerp(f.relaxed[i], f.maxAngles[i], Mathf.Clamp01(amount));
-                    f.joints[i].localRotation = f.bind[i] * Quaternion.AngleAxis(angle, f.axes[i]);
+                    var flex = Quaternion.AngleAxis(angle, f.axes[i]);
+                    if (i == 0 && f.kind != 0)
+                        flex = Quaternion.AngleAxis(-f.splay * .75f * Mathf.Clamp01(amount), f.spreadAxis) * flex;
+                    f.joints[i].localRotation = f.bind[i] * flex;
                 }
             }
         }

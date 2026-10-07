@@ -70,7 +70,65 @@ namespace LeagueVR.Match
                 result[i] = chosen;
             }
             Smooth(result);
+            // Bend around turret and inhibitor bases; a second pass after smoothing keeps the detour round.
+            AvoidStructures(match, result, side);
+            Smooth(result);
+            AvoidStructures(match, result, side);
             return result;
+        }
+
+        /// <summary>
+        /// Moves path points out of every turret and inhibitor base (plus a minion's width). Each column keeps to its
+        /// own side of the structure so a wave flows past it; the centre column takes the side with room.
+        /// </summary>
+        static void AvoidStructures(RiftMatch match, Vector3[] points, int side)
+        {
+            const float Clearance = .55f;
+            foreach (var structure in match.structures)
+            {
+                if (!structure || structure.kind == StructureKind.Nexus)
+                    continue;
+                Vector3 centre = structure.transform.position;
+                float reach = structure.Footprint + Clearance;
+                int pass = side;
+                for (int i = 0; i < points.Length; i++)
+                {
+                    Vector3 away = Geo.Flat(points[i] - centre);
+                    if (away.sqrMagnitude >= reach * reach)
+                        continue;
+                    Vector3 tangent = Geo.Flat(points[Mathf.Min(i + 1, points.Length - 1)] - points[Mathf.Max(0, i - 1)]);
+                    Vector3 lateral = Vector3.Cross(Vector3.up, tangent.sqrMagnitude > 1e-4f ? tangent.normalized : Vector3.forward);
+                    if (pass == 0)
+                        pass = RoomierSide(match, centre, lateral, reach, Vector3.Dot(away, lateral));
+                    // Mirror points that sit on the wrong side of the structure, then push them out to its edge.
+                    float offset = Vector3.Dot(away, lateral);
+                    if (offset * pass < 0)
+                        away -= 2 * offset * lateral;
+                    if (Mathf.Abs(Vector3.Dot(away, lateral)) < .05f)
+                        away += lateral * pass * .05f;
+                    Vector3 pushed = centre + away.normalized * reach;
+                    pushed.y = points[i].y;
+                    if (match.Ground(pushed + Vector3.up * .3f, out var ground) && Mathf.Abs(ground.y - points[i].y) < .6f)
+                        pushed = ground;
+                    if (!Physics.CheckSphere(pushed + Vector3.up * .55f, .22f, match.WorldMask, QueryTriggerInteraction.Ignore))
+                        points[i] = pushed;
+                }
+            }
+        }
+
+        /// <summary>1 or -1: the side of a structure (along <paramref name="lateral"/>) with walkable ground clear of walls.</summary>
+        static int RoomierSide(RiftMatch match, Vector3 centre, Vector3 lateral, float reach, float current)
+        {
+            bool Clear(int s)
+            {
+                Vector3 probe = centre + lateral * s * (reach + .3f);
+                return match.Ground(probe + Vector3.up * .3f, out var ground) && Mathf.Abs(ground.y - centre.y) < .8f
+                    && !Physics.CheckSphere(ground + Vector3.up * .55f, .4f, match.WorldMask, QueryTriggerInteraction.Ignore);
+            }
+            int preferred = current >= 0 ? 1 : -1;
+            if (Clear(preferred))
+                return preferred;
+            return Clear(-preferred) ? -preferred : preferred;
         }
 
         /// <summary>Removes single-point zigzags where one sample had to narrow more than its neighbours.</summary>

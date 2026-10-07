@@ -43,6 +43,20 @@ namespace LeagueVR.Champions
                 case "R":
                     Haptic(XRNode.LeftHand, .3f, .08f);
                     break;
+                case "Block":
+                case "Bash":
+                case "Slam":
+                    // The shield arm feels what the shield takes.
+                    Haptic(XRNode.LeftHand, signal == "Block" ? .6f : .8f, signal == "Block" ? .06f : .12f);
+                    break;
+                case "Crash":
+                    Haptic(XRNode.LeftHand, 1, .25f);
+                    Haptic(XRNode.RightHand, 1, .25f);
+                    break;
+                case "StarBurst":
+                case "Pop":
+                    Haptic(XRNode.RightHand, .3f, .05f);
+                    break;
             }
         }
 
