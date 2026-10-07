@@ -1,8 +1,13 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using LeagueVR.Champions;
+
 namespace LeagueVR.Match
 {
+    /// <summary>
+    /// A lane minion. Marches in one of three formation columns along a precomputed lane path, picks targets with
+    /// League's aggro priorities (sticky targets, call for help) and fights with the original attack timings.
+    /// </summary>
     public class RiftMinion : RiftActor
     {
         public MinionKind kind;
@@ -10,12 +15,22 @@ namespace LeagueVR.Match
         public Vector3[] route;
         public MinionStats stats;
         public int lane;
+
+        /// <summary>All living minions per lane; neighbour checks only look at the same lane.</summary>
+        public static readonly List<RiftMinion>[] ByLane = { new(), new(), new() };
+
+        const float AcquisitionRange = 7f, CorridorLimit = 3.8f, CallForHelpRange = 10f, ThinkInterval = .25f;
+        static int thinkSlot;
+
         public int FormationIndex { get; private set; }
         public int Waypoint => waypoint;
         public float MarchAt { get; private set; }
-        static readonly float[] Widths = { 1.15f, .9f, .65f, .45f, 0f }, Turns = { 0f, -25f, 25f, -50f, 50f, -80f, 80f, -110f, 110f, -140f, 140f, 180f };
-        int waypoint = 1;
-        float nextThink, nextAttack, born;
+        public RiftActor Target => target;
+        public bool Moving { get; private set; }
+
+        Vector3[] path;
+        int waypoint = 1, groundPhase;
+        float nextThink, nextAttack, born, targetTier = 99;
         RiftActor target;
         DamageHit lastHit;
         RiftMinionMotion motion;
@@ -29,16 +44,36 @@ namespace LeagueVR.Match
             audio = GetComponent<LeagueUnitAudio>();
             health.onDeath.AddListener(Die);
             health.Damaged += (hit, amount) => lastHit = hit;
+            groundPhase = thinkSlot++ % 4;
+        }
+
+        protected override void OnEnable()
+        {
+            base.OnEnable();
+            if (lane >= 0 && lane < ByLane.Length && !ByLane[lane].Contains(this))
+                ByLane[lane].Add(this);
+        }
+
+        protected override void OnDisable()
+        {
+            base.OnDisable();
+            foreach (var list in ByLane)
+                list.Remove(this);
         }
 
         public void Initialize(RiftMatch match, int team, int lane, MinionKind kind, Vector3[] route, int member = 1)
         {
+            foreach (var list in ByLane)
+                list.Remove(this);
             this.kind = kind;
             this.lane = lane;
             this.route = route;
             FormationIndex = Mathf.Clamp(member, 0, 2);
+            path = match.LanePaths != null ? match.LanePaths.Path(lane, team, FormationIndex) : route;
             waypoint = 1;
+            // Melee lead, casters follow: the back of the column waits a beat before marching.
             MarchAt = Time.time + ((kind == MinionKind.Melee || kind == MinionKind.Caster) ? (2 - FormationIndex) * match.rules.minionSpawnSpacing : 0);
+            nextThink = Time.time + (thinkSlot++ % 8) * ThinkInterval / 8;
             stats = match.rules.Stats(kind, match.Seconds);
             health.team = team;
             health.countsAsChampion = false;
@@ -46,206 +81,230 @@ namespace LeagueVR.Match
             health.armor = stats.armor;
             health.magicResistance = stats.magicResistance;
             health.ResetHealth();
+            if (lane >= 0 && lane < ByLane.Length)
+                ByLane[lane].Add(this);
         }
 
-        Vector3 FormationPoint(int index)
+        // ---------- Target selection ----------
+
+        /// <summary>
+        /// League's minion priority (lower is more important): 1 champion hitting an allied champion, 2 minion hitting an
+        /// allied champion, 3 minion hitting an allied minion, 4 turret hitting an allied minion, 5 champion hitting an
+        /// allied minion, 6 nearest minion, 7 nearest champion, 8 structures.
+        /// </summary>
+        float Tier(RiftActor actor)
         {
-            Vector3 tangent = route[Mathf.Min(index + 1, route.Length - 1)] - route[Mathf.Max(0, index - 1)];
-            tangent.y = 0;
-            Vector3 side = Vector3.Cross(Vector3.up, tangent.normalized);
-            var match = RiftMatch.Instance;
-            float width = 1.15f;
-            foreach (float candidate in Widths)
+            int team = health.team;
+            if (actor.health.countsAsChampion)
             {
-                var offset = route[index] + side * (FormationIndex - 1) * candidate;
-                if (match.Ground(offset, out var g) && Mathf.Abs(g.y - route[index].y) < .5f && !Physics.CheckSphere(g + Vector3.up * .55f, .22f, match.player.worldMask, QueryTriggerInteraction.Ignore))
-                {
-                    width = candidate;
-                    break;
-                }
+                var victim = actor.health.LastHitTarget;
+                bool recent = Time.time - actor.health.LastHitTime < 2f && victim && victim.team == team;
+                if (recent && victim.countsAsChampion)
+                    return 1;
+                if (recent && victim.GetComponent<RiftMinion>() && Geo.FlatDistance(victim.transform.position, transform.position) < CallForHelpRange)
+                    return 5;
+                return 7;
             }
-            return route[index] + side * (FormationIndex - 1) * width;
+            if (actor is RiftMinion minion)
+            {
+                var victim = minion.target ? minion.target.health : null;
+                if (victim && victim.team == team)
+                    return victim.countsAsChampion ? 2 : 3;
+                return 6;
+            }
+            if (actor is RiftStructure turret && turret.Target is RiftMinion attacked && attacked.health.team == team)
+                return 4;
+            return 8;
         }
 
-        public static float CorridorDistance(Vector3 point, Vector3[] path)
+        bool Eligible(RiftActor actor, out float distance)
+        {
+            distance = 0;
+            if (!actor || actor == this || actor.neutral || actor.health.team == health.team || !actor.Targetable || !actor.health.IsTargetableBy(health))
+                return false;
+            if (actor is RiftMinion minion && minion.lane != lane)
+                return false;
+            if (actor is RiftStructure structure && structure.lane >= 0 && structure.lane != lane)
+                return false;
+            distance = Geo.FlatDistance(transform.position, actor.transform.position) - actor.radius;
+            if (distance > AcquisitionRange)
+                return false;
+            // Minions never chase into the jungle: targets must stay close to the lane.
+            return actor.structure || LocalCorridorDistance(actor.transform.position) <= CorridorLimit;
+        }
+
+        float LocalCorridorDistance(Vector3 point)
         {
             float best = float.PositiveInfinity;
-            point.y = 0;
-            for (int i = 1; i < path.Length; i++)
-            {
-                Vector3 a = path[i - 1], b = path[i];
-                a.y = b.y = 0;
-                Vector3 d = b - a;
-                float t = d.sqrMagnitude > .0001f ? Mathf.Clamp01(Vector3.Dot(point - a, d) / d.sqrMagnitude) : 0;
-                best = Mathf.Min(best, Vector3.Distance(point, a + d * t));
-            }
+            int from = Mathf.Max(1, waypoint - 10), to = Mathf.Min(path.Length - 1, waypoint + 14);
+            for (int i = from; i <= to; i++)
+                best = Mathf.Min(best, Geo.FlatDistanceToSegment(point, path[i - 1], path[i]));
             return best;
         }
 
-        RiftActor Acquire()
+        void Think()
         {
+            bool keep = target && Eligible(target, out _);
+            if (keep)
+                targetTier = Tier(target);
             RiftActor best = null;
-            float score = 1000;
-            var match = RiftMatch.Instance;
+            float bestTier = 99, bestDistance = float.MaxValue;
             foreach (var actor in All)
             {
-                if (!actor || actor == this || actor.neutral || actor.health.team == health.team || !actor.Targetable || !actor.health.IsTargetableBy(health))
+                if (!Eligible(actor, out float distance))
                     continue;
-                var minion = actor as RiftMinion;
-                if (minion && minion.lane != lane)
-                    continue;
-                var structure = actor as RiftStructure;
-                if (structure && structure.lane >= 0 && structure.lane != lane)
-                    continue;
-                float distance = Geo.FlatDistance(transform.position, actor.transform.position) - actor.radius;
-                if (distance > 7)
-                    continue;
-                if (!actor.structure && CorridorDistance(actor.transform.position, route) > 3.8f)
-                    continue;
-                Vector3 start = transform.position + Vector3.up * .7f, end = actor.transform.position + Vector3.up * .7f;
-                if (Physics.Linecast(start, end, match.player.worldMask, QueryTriggerInteraction.Ignore))
-                    continue;
-                float s = distance + (actor.structure ? 20 : actor.health.countsAsChampion ? 10 : 0);
-                if (s < score)
+                float tier = Tier(actor);
+                if (tier < bestTier || tier == bestTier && distance < bestDistance)
                 {
                     best = actor;
-                    score = s;
+                    bestTier = tier;
+                    bestDistance = distance;
                 }
             }
-            return best;
+            // Targets are sticky: only a strictly higher priority (a call for help) pulls a minion off its target.
+            if (!keep || best && bestTier < targetTier)
+            {
+                target = best;
+                targetTier = best ? bestTier : 99;
+            }
         }
+
+        // ---------- Movement and combat ----------
 
         void Update()
         {
             var match = RiftMatch.Instance;
             if (!match || !match.Running || !health.IsAlive)
                 return;
-            if (health.Stunned)
+            if (health.Stunned || Time.time < MarchAt)
             {
-                motion?.Locomotion(false);
-                return;
-            }
-            if (Time.time < MarchAt)
-            {
-                motion?.Locomotion(false);
+                SetMoving(false);
                 return;
             }
             if (Time.time >= nextThink)
             {
-                target = Acquire();
-                nextThink = Time.time + .2f;
+                nextThink = Time.time + ThinkInterval;
+                Think();
             }
-            Vector3 goal = transform.position;
-            bool moving = false;
+            float speed = match.rules.MinionSpeed(match.Seconds) * match.rules.metresPerLeagueUnit * health.SlowMultiplier * health.SpeedMultiplier;
+            Vector3 goal;
+            bool chasing = false;
             if (target && target.Targetable)
             {
                 float range = Range(target);
-                Vector3 delta = target.transform.position - transform.position;
-                delta.y = 0;
+                Vector3 delta = Geo.Flat(target.transform.position - transform.position);
                 Face(delta);
                 if (delta.magnitude <= range)
                 {
+                    SetMoving(false);
                     if (Time.time >= nextAttack)
-                    {
-                        nextAttack = Time.time + stats.attackInterval * health.AttackIntervalMultiplier;
-                        float delay = motion ? motion.Attack(stats.attackInterval * health.AttackIntervalMultiplier) : stats.attackInterval * .3f;
-                        StartCoroutine(Strike(target, delay, motion ? motion.AttackVariant : 0));
-                    }
+                        BeginAttack(target);
+                    return;
                 }
-                else
-                    goal = target.transform.position - delta.normalized * (range * .82f) + Vector3.Cross(Vector3.up, delta.normalized) * (FormationIndex - 1) * .85f;
+                // Spread around the target by formation column instead of stacking on one point.
+                Vector3 toward = delta.normalized;
+                goal = target.transform.position - toward * (range * .82f) + Vector3.Cross(Vector3.up, toward) * (FormationIndex - 1) * .85f;
+                chasing = true;
             }
-            else if (route != null && route.Length > waypoint)
+            else
             {
-                while (waypoint < route.Length - 1 && (Geo.FlatDistance(transform.position, FormationPoint(waypoint)) < .65f || Geo.FlatDistance(transform.position, route[waypoint]) < .65f))
+                AdvanceWaypoint();
+                goal = path[waypoint];
+            }
+            Vector3 step = Vector3.ClampMagnitude(Geo.Flat(goal - transform.position), speed * Time.deltaTime);
+            step += Separation(speed);
+            step = Vector3.ClampMagnitude(step, speed * Time.deltaTime * 1.2f);
+            if (step.sqrMagnitude < 1e-8f)
+            {
+                SetMoving(false);
+                return;
+            }
+            if (chasing)
+                step = AvoidWalls(match, step);
+            var next = transform.position + step;
+            next.y = GroundHeight(match, next, chasing);
+            transform.position = next;
+            if (!chasing)
+                Face(step);
+            SetMoving(true);
+            if (Time.time - born > 600)
+                Destroy(gameObject);
+        }
+
+        void AdvanceWaypoint()
+        {
+            // Rejoin the path ahead after a fight rather than walking back to a waypoint already passed.
+            if (target == null && waypoint < path.Length - 1)
+                waypoint = Mathf.Max(waypoint, RiftLanePaths.NearestAhead(path, transform.position, waypoint, 6));
+            while (waypoint < path.Length - 1 && Geo.FlatDistanceSqr(transform.position, path[waypoint]) < .65f * .65f)
+                waypoint++;
+            // Also advance once the minion has walked past the waypoint along the lane direction.
+            if (waypoint < path.Length - 1)
+            {
+                Vector3 segment = Geo.Flat(path[waypoint] - path[waypoint - 1]);
+                if (Vector3.Dot(Geo.Flat(transform.position - path[waypoint]), segment) > 0)
                     waypoint++;
-                goal = FormationPoint(waypoint);
             }
-            float speed = match.rules.minionSpeed * match.rules.metresPerLeagueUnit * health.SlowMultiplier * health.SpeedMultiplier;
-            Vector3 deltaMove = Vector3.ProjectOnPlane(goal - transform.position, Vector3.up), step = Vector3.ClampMagnitude(deltaMove, speed * Time.deltaTime);
-            foreach (var other in All)
+        }
+
+        Vector3 Separation(float speed)
+        {
+            Vector3 push = Vector3.zero;
+            if (lane < 0 || lane >= ByLane.Length)
+                return push;
+            float maxPush = speed * Time.deltaTime * .7f;
+            foreach (var other in ByLane[lane])
             {
-                if (other is not RiftMinion m || m == this || !m.health.IsAlive)
+                if (other == this || !other.health.IsAlive)
                     continue;
-                Vector3 away = transform.position - m.transform.position;
-                away.y = 0;
-                float d = away.magnitude, min = radius + m.radius + .15f;
-                if (d >= min)
+                Vector3 away = Geo.Flat(transform.position - other.transform.position);
+                float min = radius + other.radius + .15f;
+                float d2 = away.sqrMagnitude;
+                if (d2 >= min * min)
                     continue;
+                float d = Mathf.Sqrt(d2);
                 if (d < .001f)
                 {
                     away = transform.right * (FormationIndex == 0 ? -1 : 1);
                     d = .001f;
                 }
-                step += away / d * Mathf.Min(speed * Time.deltaTime * .7f, (min - d) * .3f);
+                push += away / d * Mathf.Min(maxPush, (min - d) * .3f);
             }
-            step = Vector3.ClampMagnitude(step, speed * Time.deltaTime * 1.2f);
-            if (step.sqrMagnitude > 1e-8f)
-            {
-                Vector3 ground;
-                bool clear = WalkStep(match, step, out ground);
-                if (!clear)
-                {
-                    // Pull a blocked outside column into the lane before turning around an obstacle.
-                    Vector3 centre = route[Mathf.Min(waypoint, route.Length - 1)] - transform.position;
-                    centre.y = 0;
-                    Vector3 best = Vector3.zero;
-                    float score = float.NegativeInfinity;
-                    var direction = (target ? deltaMove : centre).normalized;
-                    foreach (float turn in Turns)
-                    {
-                        Vector3 alternative = Quaternion.AngleAxis(turn, Vector3.up) * direction * speed * Time.deltaTime;
-                        if (!WalkStep(match, alternative, out var at))
-                            continue;
-                        float value = Vector3.Dot(alternative.normalized, direction) - RiftMinion.CorridorDistance(at, route) * .1f;
-                        foreach (var other in All)
-                            if (other is RiftMinion minion && other != this && minion.health.IsAlive)
-                            {
-                                float distance = Geo.FlatDistance(at, other.transform.position);
-                                if (distance < radius + minion.radius + .1f)
-                                    value -= 3 * (radius + minion.radius + .1f - distance);
-                            }
-                        if (value > score)
-                        {
-                            score = value;
-                            best = at;
-                        }
-                    }
-                    clear = score > float.NegativeInfinity;
-                    if (clear)
-                        ground = best;
-                }
-                if (clear)
-                {
-                    Vector3 movement = ground - transform.position;
-                    moving = true;
-                    transform.position = ground;
-                    if (!target)
-                        Face(movement);
-                }
-            }
-            motion?.Locomotion(moving);
-            if (Time.time - born > 600)
-                Destroy(gameObject);
+            return push;
         }
 
-        bool WalkStep(RiftMatch match, Vector3 step, out Vector3 ground)
+        /// <summary>Slides along walls when chasing off the precomputed path; stops if the way is fully blocked.</summary>
+        Vector3 AvoidWalls(RiftMatch match, Vector3 step)
         {
-            var next = transform.position + step;
-            if (!match.Ground(next + Vector3.up * .3f, out ground) || Mathf.Abs(ground.y - transform.position.y) > .55f || CorridorDistance(ground, route) > 3.0f)
-                return false;
-            if (Physics.CheckSphere(ground + Vector3.up * .55f, .22f, match.player.worldMask, QueryTriggerInteraction.Ignore))
-                return false;
-            // Reject moves that create or worsen allied body overlap. Columns queue at narrow gates.
-            foreach (var other in All)
+            float length = step.magnitude;
+            var origin = transform.position + Vector3.up * .55f;
+            if (!Physics.SphereCast(origin, .22f, step / length, out var hit, length + .05f, match.WorldMask, QueryTriggerInteraction.Ignore))
+                return step;
+            var slide = Geo.Flat(Vector3.ProjectOnPlane(step, hit.normal));
+            if (slide.sqrMagnitude < 1e-8f || Physics.SphereCast(origin, .22f, slide.normalized, out _, slide.magnitude + .05f, match.WorldMask, QueryTriggerInteraction.Ignore))
+                return Vector3.zero;
+            return slide;
+        }
+
+        float GroundHeight(RiftMatch match, Vector3 position, bool chasing)
+        {
+            // Marching minions read the height from their grounded path; only chasing minions sample the terrain.
+            if (!chasing && waypoint > 0)
             {
-                if (other is not RiftMinion minion || other == this || !minion.health.IsAlive || minion.health.team != health.team)
-                    continue;
-                float current = Geo.FlatDistance(transform.position, other.transform.position), nextDistance = Geo.FlatDistance(ground, other.transform.position), minimum = radius + minion.radius + .05f;
-                if (nextDistance < minimum - .0001f && nextDistance < current + .00001f)
-                    return false;
+                Vector3 a = path[waypoint - 1], b = path[waypoint];
+                Vector3 d = Geo.Flat(b - a);
+                float t = d.sqrMagnitude > 1e-4f ? Mathf.Clamp01(Vector3.Dot(Geo.Flat(position - a), d) / d.sqrMagnitude) : 1;
+                return Mathf.Lerp(a.y, b.y, t);
             }
-            return true;
+            if ((Time.frameCount + groundPhase) % 2 != 0)
+                return transform.position.y;
+            return match.Ground(position + Vector3.up * .3f, out var ground) && Mathf.Abs(ground.y - transform.position.y) < 1.2f ? ground.y : transform.position.y;
+        }
+
+        void SetMoving(bool moving)
+        {
+            Moving = moving;
+            motion?.Locomotion(moving);
         }
 
         float Range(RiftActor victim) => Mathf.Max(.65f, stats.range * RiftMatch.Instance.rules.metresPerLeagueUnit) + victim.radius;
@@ -257,21 +316,35 @@ namespace LeagueVR.Match
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), 1 - Mathf.Exp(-12 * Time.deltaTime));
         }
 
+        void BeginAttack(RiftActor victim)
+        {
+            float interval = stats.attackInterval * health.AttackIntervalMultiplier;
+            nextAttack = Time.time + interval;
+            float delay = motion ? motion.Attack(interval) : stats.attackInterval * .3f;
+            StartCoroutine(Strike(victim, delay, motion ? motion.AttackVariant : 0));
+        }
+
         IEnumerator Strike(RiftActor victim, float delay, int variant)
         {
             yield return new WaitForSeconds(delay);
-            if (health.Stunned || !health.IsAlive || !victim || !victim.Targetable || !victim.health.IsTargetableBy(health) || !RiftMatch.Instance.Running || Geo.FlatDistance(transform.position, victim.transform.position) > Range(victim) + .35f)
+            var match = RiftMatch.Instance;
+            if (health.Stunned || !health.IsAlive || !victim || !victim.Targetable || !victim.health.IsTargetableBy(health) || !match || !match.Running || Geo.FlatDistance(transform.position, victim.transform.position) > Range(victim) + .35f)
                 yield break;
             float damage = stats.damage;
-            if (victim.GetComponent<RiftMinion>())
+            var victimStructure = victim as RiftStructure;
+            if (victim is RiftMinion)
                 damage += victim.health.Health * stats.minionOnHit;
-            else if (victim.structure)
-                damage *= kind == MinionKind.Cannon ? .84f : .6f;
+            else if (victimStructure)
+            {
+                // Minions deal 60% to structures; siege minions 84% to turrets; super minions only 12.5% to inhibitors and the Nexus.
+                bool turret = victimStructure.IsTurret;
+                damage *= kind == MinionKind.Cannon && turret ? .84f : kind == MinionKind.Super && !turret ? .125f : .6f;
+            }
             else if (victim.health.countsAsChampion)
-                damage *= .55f;
+                damage *= .6f;
             audio?.Attack(victim.health.countsAsChampion, variant);
             if (kind == MinionKind.Caster || kind == MinionKind.Cannon)
-                RiftMissile.Launch(health, victim.health, health.AimPosition, damage, 12, RiftMatch.Instance.TeamMaterial(health.team));
+                RiftMissile.Launch(health, victim.health, health.AimPosition, damage, 12, match.TeamMaterial(health.team));
             else
             {
                 victim.health.TakeDamage(new DamageHit(health, health.AimPosition, damage, DamageKind.Physical) { isBasicAttack = true });
@@ -293,6 +366,8 @@ namespace LeagueVR.Match
         void Die()
         {
             StopAllCoroutines();
+            foreach (var list in ByLane)
+                list.Remove(this);
             var match = RiftMatch.Instance;
             if (match)
                 match.AwardUnit(health, lastHit, stats.gold, stats.xp);

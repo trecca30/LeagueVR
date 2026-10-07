@@ -27,22 +27,51 @@ namespace LeagueVR.Match
         public int startingGold = 500;
         public float passiveGoldStart = 65, passiveGoldPerSecond = 2.04f;
 
+        // Wave timing (League wiki, 26.x): first wave 0:30, every 30 s, every 25 s from 14:00, every 20 s from 30:00.
         public float WaveInterval(float seconds) => seconds >= lateWaveTime ? lateWaveInterval : seconds >= midWaveTime ? midWaveInterval : earlyWaveInterval;
 
+        // Siege minions: third wave, then every third wave until 14:00, every second wave until 25:00, then every wave.
         public bool CannonWave(int wave, float seconds) => wave >= 3 && (seconds >= 1500 || wave % (seconds >= 840 ? 2 : 3) == 0);
 
+        /// <summary>Minion base movement speed (units/s): 350 rising by 25 at 10, 15, 20 and 25 minutes.</summary>
+        public float MinionSpeed(float seconds) => minionSpeed + 25 * ((seconds >= 600 ? 1 : 0) + (seconds >= 900 ? 1 : 0) + (seconds >= 1200 ? 1 : 0) + (seconds >= 1500 ? 1 : 0));
+
+        /// <summary>
+        /// Minion stats after <paramref name="seconds"/> of game time. Minions upgrade at 0:30 and every 90 s after,
+        /// growing from their base to League's caps (melee 465-1550 HP, caster 284-600, siege 835-5850, super 1600-7500).
+        /// </summary>
         public MinionStats Stats(MinionKind kind, float seconds)
         {
-            // The first upgrade is applied at match start; subsequent upgrades occur every 90 seconds.
-            int n = 1 + Mathf.FloorToInt(Mathf.Min(seconds, 5400) / 90);
+            int n = 1 + Mathf.FloorToInt(Mathf.Clamp(seconds - 30, 0, 5400) / 90);
             if (kind == MinionKind.Melee)
-                return new MinionStats { health = Mathf.Min(1500, 430 + 35 * n), damage = Mathf.Min(80, 11 + .5f * Mathf.Min(n - 1, 5) + 3 * Mathf.Max(0, n - 6)), armor = Mathf.Min(20, Mathf.Max(0, n - 5) * .75f), attackInterval = .8f, range = 110, gold = 20, xp = 62, minionOnHit = .02f };
+                return new MinionStats { health = Mathf.Min(1550, 430 + 35 * n), damage = Mathf.Min(80, 11 + .5f * Mathf.Min(n - 1, 5) + 3 * Mathf.Max(0, n - 6)), armor = Mathf.Min(20, Mathf.Max(0, n - 5) * .75f), attackInterval = .8f, range = 110, gold = 20, xp = 62, minionOnHit = .02f };
             if (kind == MinionKind.Caster)
                 return new MinionStats { health = Mathf.Min(600, 275 + 9 * n), damage = Mathf.Min(125, 19.5f + 1.5f * Mathf.Min(n, 10) + 4.5f * Mathf.Max(0, n - 10)), attackInterval = 1.5f, range = 550, gold = 14, xp = 31, minionOnHit = .035f };
             if (kind == MinionKind.Cannon)
-                return new MinionStats { health = Mathf.Min(5850, 750 + 85 * n), damage = Mathf.Min(270, 36 + 1.5f * Mathf.Min(n, 5) + 4 * Mathf.Max(0, n - 5)), attackInterval = 1, range = 300, gold = Mathf.Min(90, 49 + n), xp = 75, minionOnHit = .05f };
-            return new MinionStats { health = Mathf.Min(7500, 1500 + 100 * n), damage = Mathf.Min(510, 180 + 5 * n), armor = 100, magicResistance = -30, attackInterval = 1.176f, range = 170, gold = Mathf.Min(90, 49 + n), xp = 75 };
+                return new MinionStats { health = Mathf.Min(5850, 750 + 85 * n), damage = Mathf.Min(126, 36 + 1.5f * Mathf.Min(n, 5) + 4 * Mathf.Max(0, n - 5)), attackInterval = 1, range = 300, gold = Mathf.Min(90, 49 + n), xp = 75, minionOnHit = .05f };
+            return new MinionStats { health = Mathf.Min(7500, 1500 + 100 * n), damage = Mathf.Min(480, 180 + 5 * n), armor = 100, magicResistance = -30, attackInterval = 1.176f, range = 170, gold = Mathf.Min(90, 49 + n), xp = 75 };
         }
+
+        /// <summary>Turret attack damage by tier, growing over the first 20 minutes (outer 182-350, inner/inhibitor 187-427, Nexus 165-405).</summary>
+        public float TurretDamage(StructureKind kind, float seconds)
+        {
+            float t = Mathf.Clamp01(seconds / 1200);
+            return kind switch
+            {
+                StructureKind.OuterTurret => Mathf.Lerp(182, 350, t),
+                StructureKind.NexusTurret => Mathf.Lerp(165, 405, t),
+                _ => Mathf.Lerp(187, 427, t),
+            };
+        }
+
+        /// <summary>Turret shots against minions deal a share of the minion's maximum health.</summary>
+        public static float TurretMinionFraction(MinionKind minion, StructureKind turret) => minion switch
+        {
+            MinionKind.Melee => .45f,
+            MinionKind.Caster => .7f,
+            MinionKind.Cannon => turret == StructureKind.OuterTurret ? .14f : turret == StructureKind.InnerTurret ? .11f : .08f,
+            _ => .07f,
+        };
 
         static readonly float[] BaseRespawnWait = { 10, 10, 12, 12, 14, 16, 20, 25, 28, 32.5f, 35, 37.5f, 40, 42.5f, 45, 47.5f, 50, 52.5f };
 

@@ -11,6 +11,9 @@ namespace LeagueVR.Match
         public float range = 7.75f;
         public float RespawnAt { get; private set; }
         public float BonusResistance => 0;
+        public bool IsTurret => kind != StructureKind.Inhibitor && kind != StructureKind.Nexus;
+        /// <summary>What this turret is currently shooting (minions use it for "turret attacking an ally" aggro).</summary>
+        public RiftActor Target => target;
 
         public bool Vulnerable
         {
@@ -91,19 +94,16 @@ namespace LeagueVR.Match
             nextAttack = Time.time + 1.2f;
             if (Time.time > heatUntil)
                 heat = 0;
-            float damage = Mathf.Min(168, 152 + Mathf.Floor(match.Seconds / 60));
+            float damage = match.rules.TurretDamage(kind, match.Seconds);
             if (target.health.countsAsChampion)
             {
+                // Heating up: each consecutive shot on a champion hits harder, up to +150%.
                 damage *= 1 + Mathf.Min(3, heat) * .5f;
                 heat++;
                 heatUntil = Time.time + 5;
             }
-            else
-            {
-                var minion = target.GetComponent<RiftMinion>();
-                if (minion)
-                    damage = target.health.maxHealth * (minion.kind == MinionKind.Melee ? .45f : minion.kind == MinionKind.Caster ? .7f : minion.kind == MinionKind.Cannon ? .14f : .05f);
-            }
+            else if (target is RiftMinion minion)
+                damage = target.health.maxHealth * RiftRules.TurretMinionFraction(minion.kind, kind);
             GetComponent<LeagueUnitAudio>()?.Attack(target.health.countsAsChampion);
             RiftMissile.Launch(health, target.health, muzzle ? muzzle.position : health.AimPosition, damage, 18, match.TeamMaterial(health.team), DamageKind.Physical, .22f);
         }
