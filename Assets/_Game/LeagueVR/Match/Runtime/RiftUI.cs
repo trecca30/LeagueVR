@@ -16,11 +16,13 @@ namespace LeagueVR.Match
         public TMP_Text label;
         public bool interactable = true, selected;
         public string key;
+        /// <summary>Optional colour for the selected state (the shop's gold item frame).</summary>
+        public Color? selectedColor;
 
         public void Hover(bool hover)
         {
             if (image)
-                image.color = !interactable ? new Color(.065f, .08f, .095f, .95f) : hover ? new Color(.13f, .35f, .39f, 1) : selected ? new Color(.10f, .24f, .28f, 1) : new Color(.045f, .09f, .13f, .98f);
+                image.color = !interactable ? new Color(.065f, .08f, .095f, .95f) : hover ? new Color(.13f, .35f, .39f, 1) : selected ? selectedColor ?? new Color(.10f, .24f, .28f, 1) : new Color(.045f, .09f, .13f, .98f);
             if (label)
                 label.color = interactable ? new Color(.86f, .93f, .94f) : new Color(.46f, .52f, .55f);
         }
@@ -34,30 +36,25 @@ namespace LeagueVR.Match
         }
     }
 
-    public class RiftUI : MonoBehaviour
+    public partial class RiftUI : MonoBehaviour
     {
         public RiftMatch match;
         public Texture2D gwenPortrait;
         public bool IsOpen => panel;
         public bool ShopIsOpen => IsOpen && shopScreen;
         public string CurrentScreen { get; private set; }
-        public int SelectedItem => selected;
         public IEnumerable<RiftUIButton> Buttons => panel ? panel.GetComponentsInChildren<RiftUIButton>() : Array.Empty<RiftUIButton>();
         /// <summary>Menus, stasis and a stopped match block combat. Held items only occupy their own hand (see ChampionInput).</summary>
         public static bool BlocksCombat => RiftMatch.Instance && (!RiftMatch.Instance.Running || RiftMatch.Instance.ui.IsOpen || RiftMatch.Instance.economy.Stasis);
         GameObject panel;
         RectTransform root;
-        TMP_Text status, goldText, buyReason;
-        RiftUIButton hovered, buyButton;
+        TMP_Text status;
+        RiftUIButton hovered;
         LineRenderer ray;
         InputAction shop, menu, trigger, recall;
         bool shopScreen;
-        int category, page, selected, detailPage, inventorySelection = -1;
-        string[] categories = { "Recommended", "All", "Attack", "Magic", "Defense", "Boots", "Vision", "Actives" };
         string notice = "";
         float noticeUntil;
-        int renderedVersion;
-        float refreshAt;
         bool weaponHidden;
         Vector3 lastPosition;
         Quaternion lastRotation;
@@ -143,28 +140,13 @@ namespace LeagueVR.Match
                 ray.enabled = IsOpen && !desktop;
             if (!IsOpen)
                 return;
-            if (goldText)
-                goldText.text = $"{match.economy.Gold:N0} GOLD     LV {match.economy.Level}     OWN FOUNTAIN";
             if (status)
                 status.text = Notice;
-            if (shopScreen && inventorySelection < 0)
+            if (shopScreen)
             {
-                var item = match.catalog.Find(selected);
-                string reason = match.economy.CannotBuy(item);
-                if (buyReason)
-                    buyReason.text = reason ?? "Ready to purchase. Owned components reduce the price.";
-                if (buyButton)
-                {
-                    buyButton.interactable = reason == null;
-                    buyButton.label.text = "BUY  " + match.economy.Cost(item, out var used) + "g";
-                    buyButton.Hover(hovered == buyButton);
-                }
-                if (renderedVersion != match.economy.Version && Time.time >= refreshAt)
-                {
-                    refreshAt = Time.time + .35f;
-                    RenderShop();
+                ShopTick();
+                if (!IsOpen)
                     return;
-                }
             }
             Ray pointer = desktop && Mouse.current != null ? match.player.head.ScreenPointToRay(Mouse.current.position.ReadValue()) : new Ray(match.player.rightHand.position, match.player.rightHand.forward);
             var hit = Physics.RaycastAll(pointer, 8, 1 << 5, QueryTriggerInteraction.Collide).OrderBy(h => h.distance).Select(h => new { hit = h, button = h.collider.GetComponent<RiftUIButton>() }).FirstOrDefault(h => h.button && h.button.gameObject.activeInHierarchy);
@@ -186,7 +168,8 @@ namespace LeagueVR.Match
 
         bool CanShop() => match.Running && match.player.Health.IsAlive && !match.economy.Stasis && match.AtShop;
 
-        void Screen(string title, bool stable = false)
+        /// <summary>Opens a fresh menu panel. Without chrome the screen draws its own header (the item shop).</summary>
+        void Screen(string title, bool stable = false, bool chrome = true, float width = 1700, float height = 1100)
         {
             bool retained = stable && panel;
             Vector3 position = retained ? panel.transform.position : lastPosition;
@@ -207,7 +190,7 @@ namespace LeagueVR.Match
             GetComponent<RiftVRHUD>()?.HideForMenu();
             panel = new GameObject(title, typeof(RectTransform), typeof(Canvas));
             root = panel.GetComponent<RectTransform>();
-            root.sizeDelta = new Vector2(1700, 1100);
+            root.sizeDelta = new Vector2(width, height);
             root.localScale = Vector3.one * .0012f;
             var forward = Vector3.ProjectOnPlane(match.player.head.transform.forward, Vector3.up).normalized;
             if (forward.sqrMagnitude < .1f)
@@ -225,8 +208,15 @@ namespace LeagueVR.Match
             canvas.renderMode = RenderMode.WorldSpace;
             canvas.worldCamera = match.player.head;
             canvas.sortingOrder = 40;
-            Fill(root, -850, 0, 1700, 1100, new Color(.009f, .018f, .031f, 1));
-            Fill(root, -850, 543, 1700, 5, cyan);
+            if (!chrome)
+            {
+                // League's shop frame: deep navy with a thin gold border.
+                Fill(root, -width * .5f - 3, 0, width + 6, height + 6, ShopLine);
+                Fill(root, -width * .5f, 0, width, height, ShopBack);
+                return;
+            }
+            Fill(root, -width * .5f, 0, width, height, new Color(.009f, .018f, .031f, 1));
+            Fill(root, -width * .5f, height * .5f - 7, width, 5, cyan);
             Text(root, title.ToUpperInvariant(), -790, 475, 1450, 75, 42, gold);
             Text(root, "SUMMONER'S RIFT  /  CHAMPION VR", -790, 420, 1490, 35, 19, muted);
             status = Text(root, Notice, -790, -493, 1560, 65, 25, gold);
@@ -270,8 +260,11 @@ namespace LeagueVR.Match
             Icon(root, chosen.portrait, 55, 320, 106);
             Text(root, chosen.name.ToUpperInvariant(), 187, 353, 560, 65, 45, chosen.color);
             Text(root, chosen.title + "  /  " + chosen.role, 187, 295, 560, 52, 23, muted);
-            Text(root, chosen.passiveName, 55, 222, 700, 40, 27, gold);
-            Text(root, chosen.passiveDescription, 55, 174, 700, 63, 23, white);
+            Text(root, chosen.passiveName, 55, 234, 700, 36, 26, gold);
+            // Passives run to four lines (Pantheon, Zoe, Gwen): top-aligned under the name so they never overlap it.
+            var passive = Text(root, chosen.passiveDescription, 55, 162, 700, 104, 20, white);
+            passive.alignment = TextAlignmentOptions.TopLeft;
+            passive.overflowMode = TextOverflowModes.Ellipsis;
             for (int i = 0; i < 4; i++)
             {
                 float y = 84 - i * 63;
@@ -409,208 +402,6 @@ namespace LeagueVR.Match
             Button(root, "PLAY AGAIN", -300, -140, 600, 100, () => match.Play());
         }
 
-        public void OpenShop()
-        {
-            if (!CanShop())
-            {
-                match.Notify("Recall to your own fountain to open the shop.");
-                return;
-            }
-            var rack = match.economy.GetComponent<RiftItemRack>();
-            if (rack)
-            {
-                rack.ReturnHeld(0);
-                rack.ReturnHeld(1);
-            }
-            shopScreen = true;
-            inventorySelection = -1;
-            preservePose = false;
-            RenderShop();
-        }
-
-        public void SelectCatalogItem(int id)
-        {
-            if (!CanShop())
-                return;
-            category = 1;
-            selected = id;
-            detailPage = 0;
-            inventorySelection = -1;
-            var all = match.catalog.items.Where(i => i.showInShop).OrderBy(i => i.name).ThenBy(i => i.id).ToArray();
-            int index = Array.FindIndex(all, i => i.id == id);
-            page = Mathf.Max(0, index / 12);
-            RenderShop();
-        }
-
-        void RenderShop()
-        {
-            if (!CanShop())
-            {
-                Close();
-                return;
-            }
-            Screen("Item shop", shopScreen && preservePose);
-            shopScreen = true;
-            inventorySelection = -1;
-            renderedVersion = match.economy.Version;
-            goldText = Text(root, $"{match.economy.Gold:N0} GOLD     LV {match.economy.Level}     OWN FOUNTAIN", -790, 365, 1570, 40, 27, gold);
-            for (int c = 0; c < categories.Length; c++)
-            {
-                int index = c;
-                var b = Button(root, categories[c], -790 + c * 197, 300, 180, 66, () =>
-                {
-                    category = index;
-                    page = 0;
-                    selected = 0;
-                    detailPage = 0;
-                    RenderShop();
-                });
-                b.selected = c == category;
-                b.Hover(false);
-            }
-            IEnumerable<LeagueItem> list = match.catalog.items.Where(i => i.showInShop);
-            if (category == 0)
-            {
-                int[] recommend = { 1056, 2003, 1001, 2031, 3340, 3115, 4633, 3089, 3157, 3152, 3135, 3100, 3020, 3158, 4630, 3916 };
-                var active = match.player.GetComponent<ChampionRoster>()?.Active;
-                if (active && (active.id == ChampionId.Aatrox || active.id == ChampionId.Pantheon))
-                    recommend = new[] { 1054, 2003, 1001, 2031, 3340, 3071, 3161, 3053, 3074, 6333, 3142, 3158 };
-                else if (active && (active.id == ChampionId.Akshan || active.id == ChampionId.Yunara))
-                    recommend = new[] { 1055, 2003, 1001, 2031, 3340, 6672, 3031, 3085, 3094, 3036, 3072, 3006 };
-                list = list.Where(i => recommend.Contains(i.id));
-            }
-            else if (category == 2)
-                list = list.Where(i => i.attackDamage > 0 || i.attackSpeed > 0 || i.criticalChance > 0);
-            else if (category == 3)
-                list = list.Where(i => i.abilityPower > 0 || i.mana > 0 || i.abilityHaste > 0);
-            else if (category == 4)
-                list = list.Where(i => i.armor > 0 || i.magicResistance > 0 || i.health > 0);
-            else if (category == 5)
-                list = list.Where(i => i.HasTag("Boots"));
-            else if (category == 6)
-                list = list.Where(i => i.HasTag("Consumable") || i.HasTag("Trinket") || i.HasTag("Vision"));
-            else if (category == 7)
-                list = list.Where(i => i.active != ItemActive.None);
-            var shown = list.OrderBy(i => i.name).ThenBy(i => i.id).ToArray();
-            int pages = Mathf.Max(1, Mathf.CeilToInt(shown.Length / 12f));
-            page = Mathf.Clamp(page, 0, pages - 1);
-            var visible = shown.Skip(page * 12).Take(12).ToArray();
-            if (!shown.Any(i => i.id == selected))
-            {
-                selected = visible.FirstOrDefault()?.id ?? 0;
-                detailPage = 0;
-            }
-            for (int n = 0; n < visible.Length; n++)
-            {
-                var item = visible[n];
-                float x = -790 + (n % 3) * 298, y = 197 - (n / 3) * 111;
-                int cost = match.economy.Cost(item, out var used);
-                var b = Button(root, item.name + "\n" + cost + "g", x, y, 282, 99, () =>
-                {
-                    selected = item.id;
-                    detailPage = 0;
-                    RenderShop();
-                }, "item-" + item.id);
-                b.label.fontSize = 24;
-                b.label.rectTransform.anchoredPosition = new Vector2(80, 0);
-                b.label.rectTransform.sizeDelta = new Vector2(190, 91);
-                b.label.alignment = TextAlignmentOptions.MidlineLeft;
-                b.selected = selected == item.id;
-                b.Hover(false);
-                Icon(b.transform, item.icon, 10, 0, 60);
-            }
-            Button(root, "‹ PREV", -790, -228, 210, 62, () =>
-{
-    page--;
-    selected = 0;
-    RenderShop();
-}, "prev", page > 0);
-            Text(root, $"{page + 1} / {pages}   ·   {shown.Length} items", -560, -228, 440, 60, 22, muted);
-            Button(root, "NEXT ›", -190, -228, 260, 62, () =>
-            {
-                page++;
-                selected = 0;
-                RenderShop();
-            }, "next", page < pages - 1);
-            Fill(root, 115, -12, 3, 487, new Color(.12f, .25f, .29f));
-            var chosen = match.catalog.Find(selected);
-            if (chosen != null)
-            {
-                Icon(root, chosen.icon, 148, 198, 70);
-                Text(root, chosen.name, 235, 207, 535, 95, 29, gold);
-                Text(root, $"{chosen.price}g total  ·  {chosen.sell}g sell", 235, 139, 520, 36, 21, muted);
-                string description = chosen.description + (string.IsNullOrWhiteSpace(chosen.effectNotes) ? "" : "\n\nVR adaptation: " + chosen.effectNotes);
-                var text = Text(root, "", 148, -23, 627, 279, 26, white);
-                text.alignment = TextAlignmentOptions.TopLeft;
-                text.overflowMode = TextOverflowModes.Truncate;
-                var chunks = Pages(description, text, 627, 279);
-                detailPage = Mathf.Clamp(detailPage, 0, chunks.Length - 1);
-                text.text = chunks[detailPage];
-                if (chunks.Length > 1)
-                {
-                    Button(root, "DETAILS " + (detailPage + 1) + " / " + chunks.Length + " ›", 148, -191, 627, 45, () =>
-                    {
-                        detailPage = (detailPage + 1) % chunks.Length;
-                        RenderShop();
-                    });
-                }
-                buyButton = Button(root, "BUY", 148, -270, 290, 70, () =>
-{
-    match.economy.Buy(selected);
-    RenderShop();
-}, "buy");
-                Button(root, "CLOSE", 475, -270, 300, 70, Close, "close");
-                string reason = match.economy.CannotBuy(chosen);
-                buyButton.interactable = reason == null;
-                buyButton.label.text = "BUY  " + match.economy.Cost(chosen, out var consumed) + "g";
-                buyButton.Hover(false);
-                buyReason = Text(root, reason ?? "Ready to purchase. Owned components reduce the price.", 148, -329, 627, 64, 24, gold);
-                var recipe = chosen.recipe ?? Array.Empty<int>();
-                Text(root, recipe.Length > 0 ? "Recipe: " + string.Join(" + ", recipe.Select(id => match.catalog.Find(id)?.name ?? id.ToString())) : "", -790, -291, 890, 70, 19, muted);
-            }
-            Text(root, "INVENTORY  ·  Select a slot to inspect, equip or sell", -790, -356, 1565, 40, 21, cyan);
-            for (int n = 0; n < 7; n++)
-            {
-                int index = n;
-                var slot = n < match.economy.inventory.Count ? match.economy.inventory[n] : null;
-                int id = n == 6 ? match.economy.Trinket : slot?.id ?? 0;
-                var item = match.catalog.Find(id);
-                var b = Button(root, item == null ? (n == 6 ? "TRINKET" : "EMPTY") : (n == 6 ? "TRINKET" : (n + 1).ToString()) + "  " + item.name + (slot != null && slot.count > 1 ? " ×" + slot.count : ""), -790 + n * 225, -422, 211, 75, () => InventoryActions(index), "slot-" + n, item != null);
-                b.label.fontSize = 21;
-                b.label.rectTransform.anchoredPosition = new Vector2(55, 0);
-                b.label.rectTransform.sizeDelta = new Vector2(145, 69);
-                if (item != null)
-                    Icon(b.transform, item.icon, 7, 0, 41);
-            }
-        }
-
-        void InventoryActions(int index)
-        {
-            int id = index == 6 ? match.economy.Trinket : index < match.economy.inventory.Count ? match.economy.inventory[index].id : 0;
-            var item = match.catalog.Find(id);
-            if (item == null)
-                return;
-            Screen(item.name, true);
-            shopScreen = true;
-            inventorySelection = index;
-            Icon(root, item.icon, -720, 180, 150);
-            Text(root, item.statText + "\n\n" + (item.active == ItemActive.None ? "Passive item: its stats and combat effects apply while owned." : "Physical active: aim with the held item and press trigger.\n" + (item.activeCooldown > 0 ? "Base active cooldown: " + item.activeCooldown + " seconds." : "Uses charges or consumes the item.")), -510, 130, 1260, 350, 28, white);
-            string slot = index == 6 ? "Back trinket" : match.economy.GetComponent<RiftItemRack>().SlotNames[index];
-            Text(root, "Wearable location: " + slot + "  ·  Grab with grip, use with trigger", -720, -205, 1450, 65, 25, cyan);
-            Button(root, "FULL ITEM DETAILS", -720, -220, 1420, 62, () => SelectCatalogItem(id), "details");
-            Button(root, "EQUIP", -720, -360, 440, 90, () =>
-{
-    Close();
-    match.economy.GetComponent<RiftItemRack>().EquipSlot(index, 1);
-}, "equip", item.active != ItemActive.None);
-            Button(root, "SELL  " + item.sell + "g", -230, -360, 440, 90, () =>
-{
-    match.economy.Sell(index);
-    RenderShop();
-}, "sell", index < 6 && item.sell > 0);
-            Button(root, "BACK", 260, -360, 440, 90, RenderShop, "back");
-        }
-
         static string[] Pages(string value, TMP_Text layout, float width, float height)
         {
             var pages = new List<string>();
@@ -649,8 +440,8 @@ namespace LeagueVR.Match
             }
             panel = null;
             root = null;
-            status = goldText = buyReason = null;
-            buyButton = null;
+            status = null;
+            ShopClosed();
             if (hovered)
                 hovered.Hover(false);
             hovered = null;

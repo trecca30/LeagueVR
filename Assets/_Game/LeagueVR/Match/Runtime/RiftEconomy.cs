@@ -93,6 +93,7 @@ namespace LeagueVR.Match
             Experience = CombatGold = SupportGold = 0;
             Trinket = 3340;
             inventory.Clear();
+            undo.Clear();
             baronUntil = 0;
             dragons = 0;
             incomeFraction = 0;
@@ -244,6 +245,44 @@ namespace LeagueVR.Match
             return null;
         }
 
+        // ---------- Undo (League's shop button): purchases and sales since arriving at the fountain ----------
+
+        struct ShopSnapshot
+        {
+            public List<InventorySlot> inventory;
+            public int gold, trinket;
+        }
+
+        readonly Stack<ShopSnapshot> undo = new();
+
+        public bool CanUndo => undo.Count > 0 && match.AtShop;
+
+        void RememberForUndo() => undo.Push(new ShopSnapshot
+        {
+            inventory = inventory.Select(s => new InventorySlot(s.id) { count = s.count, charges = s.charges }).ToList(),
+            gold = Gold,
+            trinket = Trinket,
+        });
+
+        /// <summary>Reverts the last purchase or sale made at this visit to the fountain.</summary>
+        public bool Undo()
+        {
+            if (!CanUndo)
+                return false;
+            var snapshot = undo.Pop();
+            inventory = snapshot.inventory;
+            Gold = snapshot.gold;
+            if (Trinket != snapshot.trinket)
+            {
+                Trinket = snapshot.trinket;
+                Effects?.ResetTrinket(Trinket);
+            }
+            Recalculate();
+            Touch();
+            match.Notify("Undo");
+            return true;
+        }
+
         public bool Buy(int id)
         {
             var item = match.catalog.Find(id);
@@ -253,6 +292,7 @@ namespace LeagueVR.Match
                 match.Notify(reason);
                 return false;
             }
+            RememberForUndo();
             int cost = Cost(item, out var used);
             Gold -= cost;
             if (inventory.Count >= 6 && item.active is ItemActive.ElixirIron or ItemActive.ElixirSorcery or ItemActive.ElixirWrath)
@@ -298,6 +338,7 @@ namespace LeagueVR.Match
                 match.Notify("This item cannot be sold.");
                 return false;
             }
+            RememberForUndo();
             Gold += item.sell;
             if (--slot.count <= 0)
                 inventory.RemoveAt(index);
@@ -422,6 +463,9 @@ namespace LeagueVR.Match
         {
             if (!match.Running || !Player.Health.IsAlive)
                 return;
+            // Like League, leaving the fountain makes the purchases final.
+            if (undo.Count > 0 && !match.AtShop)
+                undo.Clear();
             Player.Health.Heal(healthRegen * Time.deltaTime);
             RestoreMana((match.AtShop ? MaxMana * .1f : manaRegen) * Time.deltaTime);
             incomeFraction += goldPerTen * Time.deltaTime / 10;
