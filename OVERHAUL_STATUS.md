@@ -21,7 +21,7 @@ Last updated: 2026-10-07. Every step is a git commit; `git log --oneline` shows 
    - **Zoe** (ranged): soft-lock star bolts, a Paddle Star thrown by hand and paddled toward where you point, spell shards to pick up and throw, a lobbed sleep bubble that bounces into a trap, and an arc-aimed portal. See the `ZoeKit` summary.
    - **Pantheon**: physical spear thrusts, a Comet Spear thrust or javelin throw, Shield Vault aimed with the shield, Aegis Assault that blocks from wherever the real shield faces, and Grand Starfall aimed on a hologram of the Rift with a sky view of the landing. See the `PantheonKit` summary.
    - Settings has a BIG LEAPS option: watch Grand Starfall from the sky, or fade out instead.
-   - Every champion's attack damage now grows per level (the data had 0 growth).
+   - Every champion's attack damage now grows per level (the data had 0 growth) (`b1c94b5`).
 
 ## Next (planned, in order)
 - **Headset pass:** the bodies and kits were tested in the editor with scripted poses. Throw speeds (1.6 m/s), the spear tilt (40°) and the hologram's position need checking in a headset.
