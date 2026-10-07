@@ -228,6 +228,13 @@ namespace LeagueVR.Champions
             return joint.localRotation;
         }
 
+        /// <summary>World position of the centre of a palm (where held objects sit).</summary>
+        public Vector3 Palm(bool left)
+        {
+            var arm = left ? LeftArm : RightArm;
+            return arm.end ? arm.end.TransformPoint(arm.palmLocal) : root.position;
+        }
+
         /// <summary>Stores the animated pose; call once per frame after the clips have been sampled.</summary>
         public void CaptureAnimatedPose()
         {

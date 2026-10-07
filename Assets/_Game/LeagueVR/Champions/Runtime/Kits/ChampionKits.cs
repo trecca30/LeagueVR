@@ -39,6 +39,16 @@ namespace LeagueVR.Champions
         protected virtual float AttackDamage(Combatant target) => AD;
 
         protected virtual void OnAttackHit(Combatant target, float dealt) { }
+
+        public override void WeaponHit(Combatant target, Vector3 point, Vector3 swing)
+        {
+            float dealt = Player.Hit(target, AttackDamage(target), DamageKind.Physical, "Attack1", true, point);
+            if (dealt > 0)
+            {
+                Player.Emit("Hit", point, swing);
+                OnAttackHit(target, dealt);
+            }
+        }
     }
 
     /// <summary>Champions whose basic attack is a homing missile fired from the right hand.</summary>

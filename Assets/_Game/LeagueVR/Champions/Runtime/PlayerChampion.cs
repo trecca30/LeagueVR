@@ -98,12 +98,115 @@ namespace LeagueVR.Champions
 
         void Update()
         {
+            SampleHands();
             if (Kit == null || !Health.IsAlive)
+            {
+                CancelHolds();
                 return;
+            }
+            if (!CanAct)
+                CancelHolds();
             Kit.Tick();
+            UpdateWeaponSweep();
             // Falling out of the world counts as a death instead of leaving the player stuck under the map.
             if (spawn && origin.transform.position.y < spawn.position.y - 12)
                 Health.TakeDamage(new DamageHit(null, Feet, Health.Health + Health.Shield + 1, DamageKind.True));
+        }
+
+        // ---------- Hands: velocity history for throws and swings ----------
+
+        readonly HandMotion leftMotion = new(), rightMotion = new();
+
+        void SampleHands()
+        {
+            var rig = origin.transform;
+            leftMotion.Sample(rig.InverseTransformPoint(XRPoses.Grip(this, true).position), Time.time);
+            rightMotion.Sample(rig.InverseTransformPoint(XRPoses.Grip(this, false).position), Time.time);
+        }
+
+        /// <summary>World-space velocity of a hand caused by the arm alone (locomotion excluded).</summary>
+        public Vector3 HandVelocity(bool left, bool peak = false)
+        {
+            var motion = left ? leftMotion : rightMotion;
+            return origin.transform.TransformDirection(peak ? motion.PeakVelocity() : motion.Velocity());
+        }
+
+        // ---------- Hold-to-cast ----------
+
+        readonly bool[] holding = new bool[4];
+
+        public bool IsHolding(int slot) => slot >= 0 && slot < 4 && holding[slot];
+
+        /// <summary>Button pressed: starts a hold for kits that aim/charge/throw, otherwise casts immediately.</summary>
+        public bool PressSlot(int slot)
+        {
+            if (Kit == null || !Kit.HoldToCast(slot))
+                return CastSlot(slot);
+            if (!CanAct || holding[slot])
+                return false;
+            bool recast = Kit.CanRecast(slot);
+            if ((Kit.BlocksCasts && !recast) || (Cooldown(slot) > 0 && !recast))
+                return false;
+            holding[slot] = Kit.BeginHold(slot);
+            return holding[slot];
+        }
+
+        /// <summary>Button released: fires a held ability.</summary>
+        public void ReleaseSlot(int slot)
+        {
+            if (slot < 0 || slot >= 4 || !holding[slot])
+                return;
+            holding[slot] = false;
+            if (CanAct)
+                Kit.ReleaseHold(slot);
+            else
+                Kit.CancelHold(slot);
+        }
+
+        void CancelHolds()
+        {
+            for (int i = 0; i < 4; i++)
+                if (holding[i])
+                {
+                    holding[i] = false;
+                    Kit?.CancelHold(i);
+                }
+        }
+
+        // ---------- Physical weapon hits ----------
+
+        const float MinimumSwingSpeed = 2.2f;
+        Vector3 lastEdgeFrom, lastEdgeTo;
+        bool haveEdge;
+
+        /// <summary>
+        /// Sweeps the kit's weapon edge from last frame to this frame. A fast enough swing that passes through an enemy
+        /// lands a basic attack on it if the attack timer is ready.
+        /// </summary>
+        void UpdateWeaponSweep()
+        {
+            if (DesktopMode || !Kit.WeaponEdge(out var from, out var to))
+            {
+                haveEdge = false;
+                return;
+            }
+            if (haveEdge && CanAct && !Busy && Time.time >= attackReadyAt)
+            {
+                var rig = origin.transform;
+                // Tip speed in rig space so walking into a minion does not count as a swing.
+                Vector3 tipMove = rig.InverseTransformPoint(to) - rig.InverseTransformPoint(lastEdgeTo);
+                float speed = Time.deltaTime > 0 ? tipMove.magnitude / Time.deltaTime : 0;
+                if (speed > MinimumSwingSpeed && WeaponSweep(lastEdgeFrom, lastEdgeTo, from, to, .1f, out var target, out var point))
+                {
+                    attackReadyAt = Time.time + AttackInterval;
+                    Vector3 swing = (to - lastEdgeTo).normalized;
+                    Emit("Attack1", point, swing);
+                    Kit.WeaponHit(target, point, swing);
+                }
+            }
+            lastEdgeFrom = from;
+            lastEdgeTo = to;
+            haveEdge = true;
         }
 
         /// <summary>Equips a champion's kit. Clears cooldowns and every effect of the previous kit.</summary>

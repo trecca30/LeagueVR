@@ -58,6 +58,37 @@ namespace LeagueVR.Champions
             victims.Clear();
         }
 
+        /// <summary>
+        /// Skillshots hit like League's: anything standing in their ground path counts, whatever height the projectile
+        /// was thrown from. The visual settles to <see cref="flightHeight"/> above the ground. Homing shots fly in 3D.
+        /// </summary>
+        public bool skillshot = true;
+        public float flightHeight = .85f;
+        float groundY;
+        bool groundKnown;
+
+        void Start()
+        {
+            if (homing)
+                skillshot = false;
+            SampleGround();
+        }
+
+        void SampleGround()
+        {
+            var match = RiftMatch.Instance;
+            if (match && match.Ground(transform.position, out var g))
+            {
+                groundY = g.y;
+                groundKnown = true;
+            }
+            else if (!groundKnown && owner)
+            {
+                groundY = owner.Feet.y;
+                groundKnown = true;
+            }
+        }
+
         void Update()
         {
             if (!owner || !owner.Health.IsAlive || !RiftMatchRunning())
@@ -68,7 +99,7 @@ namespace LeagueVR.Champions
             if (ReturnPhase)
             {
                 var back = owner.AttackOrigin - transform.position;
-                if (back.magnitude < .25f)
+                if ((skillshot ? Geo.Flat(back).magnitude : back.magnitude) < .3f)
                 {
                     Destroy(gameObject);
                     return;
@@ -78,45 +109,8 @@ namespace LeagueVR.Champions
             else if (homing && homing.IsTargetable)
                 direction = (homing.AimPosition - transform.position).normalized;
             float step = Mathf.Min(speed * Time.deltaTime, Mathf.Max(0, range - travelled));
-            int count = Physics.SphereCastNonAlloc(transform.position, radius, direction, hits, step, owner.worldMask | owner.combatMask, QueryTriggerInteraction.Collide);
-            Array.Sort(hits, 0, count, ByDistance);
-            for (int i = 0; i < count; i++)
-            {
-                var h = hits[i];
-                if (owner.OwnCollider(h.collider))
-                    continue;
-                var target = h.collider.GetComponentInParent<Combatant>();
-                if (target)
-                {
-                    if (!owner.IsEnemy(target) || (ignoreStructures && !basic && (target.GetComponent<RiftStructure>() || target.GetComponent<RiftVisionWard>())) || !victims.Add(target))
-                        continue;
-                    float dealt = owner.Hit(target, damageAtDistance != null ? damageAtDistance(travelled) : damage, kind, ability, basic, transform.position);
-                    if (dealt > 0)
-                    {
-                        if (slowFor != null)
-                            target.ApplySlow(slowFor(target), slowDuration);
-                        hit?.Invoke(target, dealt);
-                    }
-                    if (!piercing)
-                    {
-                        Destroy(gameObject);
-                        return;
-                    }
-                }
-                else if ((owner.worldMask.value & (1 << h.collider.gameObject.layer)) != 0)
-                {
-                    if (returning && !ReturnPhase)
-                    {
-                        BeginReturn();
-                        break;
-                    }
-                    Destroy(gameObject);
-                    return;
-                }
-            }
-            transform.position += direction * step;
-            if (direction.sqrMagnitude > 1e-4f)
-                transform.rotation = Quaternion.LookRotation(direction);
+            if (skillshot ? SkillshotStep(step) : FreeStep(step))
+                return;
             travelled += step;
             if (travelled >= range)
             {
@@ -129,6 +123,91 @@ namespace LeagueVR.Champions
                 Destroy(gameObject);
         }
 
+        /// <summary>Ground-plane move: a tall capsule sweeps for units, a sphere at the visual checks for walls. Returns true if destroyed.</summary>
+        bool SkillshotStep(float step)
+        {
+            if (Time.frameCount % 6 == 0)
+                SampleGround();
+            Vector3 flat = Geo.FlatDirection(direction, transform.forward);
+            Vector3 pos = transform.position;
+            var bottom = new Vector3(pos.x, groundY + .1f, pos.z);
+            var top = new Vector3(pos.x, groundY + 2.2f, pos.z);
+            int count = Physics.CapsuleCastNonAlloc(bottom, top, radius, flat, hits, step, owner.combatMask, QueryTriggerInteraction.Collide);
+            Array.Sort(hits, 0, count, ByDistance);
+            for (int i = 0; i < count; i++)
+                if (TryHit(hits[i].collider, pos + flat * hits[i].distance))
+                    return true;
+            // Walls stop skillshots (floors never do: the projectile cruises above them).
+            count = Physics.SphereCastNonAlloc(pos, radius * .6f, flat, hits, step, owner.worldMask, QueryTriggerInteraction.Ignore);
+            for (int i = 0; i < count; i++)
+                if (hits[i].normal.y < .55f && !owner.OwnCollider(hits[i].collider) && HitWall())
+                    return true;
+            float y = Mathf.Lerp(pos.y, groundY + flightHeight, 1 - Mathf.Exp(-7 * Time.deltaTime));
+            var next = pos + flat * step;
+            next.y = y;
+            transform.SetPositionAndRotation(next, Quaternion.LookRotation(next - pos + flat * 1e-3f));
+            return false;
+        }
+
+        /// <summary>Free 3D move for homing shots. Returns true if destroyed.</summary>
+        bool FreeStep(float step)
+        {
+            int count = Physics.SphereCastNonAlloc(transform.position, radius, direction, hits, step, owner.worldMask | owner.combatMask, QueryTriggerInteraction.Collide);
+            Array.Sort(hits, 0, count, ByDistance);
+            for (int i = 0; i < count; i++)
+            {
+                var h = hits[i];
+                if (owner.OwnCollider(h.collider))
+                    continue;
+                if (h.collider.GetComponentInParent<Combatant>())
+                {
+                    if (TryHit(h.collider, transform.position + direction * h.distance))
+                        return true;
+                }
+                else if ((owner.worldMask.value & (1 << h.collider.gameObject.layer)) != 0)
+                {
+                    if (HitWall())
+                        return true;
+                    break;
+                }
+            }
+            transform.position += direction * step;
+            if (direction.sqrMagnitude > 1e-4f)
+                transform.rotation = Quaternion.LookRotation(direction);
+            return false;
+        }
+
+        /// <summary>Damages a struck unit. Returns true if the projectile was consumed.</summary>
+        bool TryHit(Collider collider, Vector3 at)
+        {
+            var target = collider.GetComponentInParent<Combatant>();
+            if (!target || !owner.IsEnemy(target) || (ignoreStructures && !basic && (target.GetComponent<RiftStructure>() || target.GetComponent<RiftVisionWard>())) || !victims.Add(target))
+                return false;
+            float dealt = owner.Hit(target, damageAtDistance != null ? damageAtDistance(travelled) : damage, kind, ability, basic, at);
+            if (dealt > 0)
+            {
+                if (slowFor != null)
+                    target.ApplySlow(slowFor(target), slowDuration);
+                hit?.Invoke(target, dealt);
+            }
+            if (piercing)
+                return false;
+            Destroy(gameObject);
+            return true;
+        }
+
+        /// <summary>Terrain stops the projectile, or sends a boomerang back. Returns true if destroyed.</summary>
+        bool HitWall()
+        {
+            if (returning && !ReturnPhase)
+            {
+                BeginReturn();
+                return false;
+            }
+            Destroy(gameObject);
+            return true;
+        }
+
         void BeginReturn()
         {
             ReturnPhase = true;
@@ -137,6 +216,44 @@ namespace LeagueVR.Champions
         }
 
         static bool RiftMatchRunning() => !RiftMatch.Instance || RiftMatch.Instance.Running;
+    }
+
+    /// <summary>Fades a ghost's own material to transparent, then destroys the object and the material.</summary>
+    public class GhostFade : MonoBehaviour
+    {
+        Material material;
+        Color color;
+        float duration, born;
+        public bool destroyMesh;
+
+        public void Begin(Material m, Color c, float seconds)
+        {
+            material = m;
+            color = c;
+            duration = seconds;
+            born = Time.time;
+        }
+
+        void Update()
+        {
+            float t = (Time.time - born) / Mathf.Max(.01f, duration);
+            if (material)
+            {
+                var c = color;
+                c.a *= 1 - Mathf.Clamp01(t);
+                material.SetColor("_BaseColor", c);
+            }
+            if (t >= 1)
+                Destroy(gameObject);
+        }
+
+        void OnDestroy()
+        {
+            if (material)
+                Destroy(material);
+            if (destroyMesh && TryGetComponent<MeshFilter>(out var filter) && filter.sharedMesh)
+                Destroy(filter.sharedMesh);
+        }
     }
 
     /// <summary>Short-lived visual helper: fades line renderers and grows sparks, then destroys itself.</summary>
@@ -178,6 +295,103 @@ namespace LeagueVR.Champions
     public static class AbilityFx
     {
         static readonly Dictionary<Color, Material> materials = new();
+        static readonly Dictionary<(Color, bool, bool), Material> glassMaterials = new();
+        static Texture2D softDot;
+
+        /// <summary>Translucent unlit material: alpha blended, or additive for glows; optionally visible from inside (two sided).</summary>
+        public static Material Glass(Color color, bool additive = false, bool twoSided = false)
+        {
+            var key = (color, additive, twoSided);
+            if (glassMaterials.TryGetValue(key, out var material) && material)
+                return material;
+            material = new Material(Shader.Find("Universal Render Pipeline/Unlit")) { name = "Ability glass " + ColorUtility.ToHtmlStringRGBA(color), hideFlags = HideFlags.HideAndDontSave };
+            material.SetColor("_BaseColor", color);
+            material.SetFloat("_Surface", 1);
+            material.SetFloat("_Blend", additive ? 2 : 0);
+            material.SetFloat("_SrcBlend", (float)UnityEngine.Rendering.BlendMode.SrcAlpha);
+            material.SetFloat("_DstBlend", (float)(additive ? UnityEngine.Rendering.BlendMode.One : UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha));
+            material.SetFloat("_SrcBlendAlpha", (float)UnityEngine.Rendering.BlendMode.One);
+            material.SetFloat("_DstBlendAlpha", (float)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+            material.SetFloat("_ZWrite", 0);
+            material.SetFloat("_Cull", twoSided ? 0 : 2);
+            material.EnableKeyword("_SURFACE_TYPE_TRANSPARENT");
+            material.SetOverrideTag("RenderType", "Transparent");
+            material.renderQueue = 3000;
+            glassMaterials[key] = material;
+            return material;
+        }
+
+        /// <summary>A soft round particle sprite generated once.</summary>
+        public static Texture2D SoftDot
+        {
+            get
+            {
+                if (softDot)
+                    return softDot;
+                const int size = 64;
+                softDot = new Texture2D(size, size, TextureFormat.RGBA32, false) { name = "Ability soft dot", hideFlags = HideFlags.HideAndDontSave, wrapMode = TextureWrapMode.Clamp };
+                for (int y = 0; y < size; y++)
+                    for (int x = 0; x < size; x++)
+                    {
+                        float d = Vector2.Distance(new Vector2(x + .5f, y + .5f), new Vector2(size / 2f, size / 2f)) / (size / 2f);
+                        float a = Mathf.Clamp01(1 - d);
+                        softDot.SetPixel(x, y, new Color(1, 1, 1, a * a));
+                    }
+                softDot.Apply();
+                return softDot;
+            }
+        }
+
+        /// <summary>Simple glowing particle system (motes, sparkles, mist).</summary>
+        public static ParticleSystem Motes(Transform parent, Color color, float size, float lifetime, float rate, ParticleSystemShapeType shape, float radius)
+        {
+            var go = new GameObject("Ability motes");
+            go.transform.SetParent(parent, false);
+            var ps = go.AddComponent<ParticleSystem>();
+            ps.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+            var main = ps.main;
+            main.startLifetime = lifetime;
+            main.startSize = new ParticleSystem.MinMaxCurve(size * .6f, size * 1.4f);
+            main.startSpeed = new ParticleSystem.MinMaxCurve(.05f, .35f);
+            main.startColor = color;
+            main.simulationSpace = ParticleSystemSimulationSpace.World;
+            main.maxParticles = 400;
+            var emission = ps.emission;
+            emission.rateOverTime = rate;
+            var sh = ps.shape;
+            sh.shapeType = shape;
+            sh.radius = radius;
+            var fade = ps.colorOverLifetime;
+            fade.enabled = true;
+            fade.color = new Gradient
+            {
+                colorKeys = new[] { new GradientColorKey(color, 0), new GradientColorKey(Color.white, 1) },
+                alphaKeys = new[] { new GradientAlphaKey(0, 0), new GradientAlphaKey(color.a, .2f), new GradientAlphaKey(0, 1) },
+            };
+            var renderer = go.GetComponent<ParticleSystemRenderer>();
+            var material = new Material(Glass(Color.white, true)) { name = "Ability mote", hideFlags = HideFlags.HideAndDontSave };
+            material.SetTexture("_BaseMap", SoftDot);
+            renderer.sharedMaterial = material;
+            renderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+            ps.Play();
+            return ps;
+        }
+
+        /// <summary>A translucent copy of a mesh that fades out (afterimages, spectral weapons).</summary>
+        public static GameObject Ghost(Mesh mesh, Vector3 position, Quaternion rotation, Vector3 scale, Color color, float fade, bool additive = true)
+        {
+            var go = new GameObject("Ability ghost");
+            go.transform.SetPositionAndRotation(position, rotation);
+            go.transform.localScale = scale;
+            go.AddComponent<MeshFilter>().sharedMesh = mesh;
+            var r = go.AddComponent<MeshRenderer>();
+            var material = new Material(Glass(color, additive)) { hideFlags = HideFlags.HideAndDontSave };
+            r.sharedMaterial = material;
+            r.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+            if (fade > 0)
+                go.AddComponent<GhostFade>().Begin(material, color, fade);
+            return go;
+        }
 
         public static Material Material(Color color)
         {

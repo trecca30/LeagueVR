@@ -16,13 +16,13 @@ MonoBehaviour:
   title: The Hallowed Seamstress
   role: Fighter
   passiveName: A Thousand Cuts
-  passiveDescription: A Thousand Cuts applies bonus max-health magic damage.
+  passiveDescription: Every hit stitches a cut for 1% (+0.6% per 100 AP) of the target's max health as magic damage and heals you against champions. Swing your scissors through enemies, or hold the right trigger to auto-snip.
   patch: 16.19.1
   portrait: {fileID: 2800000, guid: 42235c8ccb5ea0541b66ebb090007cf0, type: 3}
   passiveIcon: {fileID: 2800000, guid: 33d6b465b836f084592d808f5f7a693c, type: 3}
   spells:
   - name: Snip Snip!
-    vrDescription: Build snip stacks with hits; centre-line snips apply A Thousand Cuts.
+    vrDescription: 'B: giant spectral scissors snip in front of you, 2 snips plus one per stored stack (attacks store up to 4, shown as beads on your blades). Point the blades where you want to cut; the centre line deals true damage and executes weak minions.'
     icon: {fileID: 2800000, guid: 9d756aac508d23546bd391d308403327, type: 3}
     cooldowns:
     - 6.5
@@ -37,7 +37,7 @@ MonoBehaviour:
     - 40
     - 40
   - name: Hallowed Mist
-    vrDescription: 'Left primary: summon protective mist. Recast to move it once.'
+    vrDescription: 'X: raise a dome of Hallowed Mist around you. Enemies outside cannot target you (towers still can) and you gain armor and magic resist. Press X again to pull the mist to where you stand.'
     icon: {fileID: 2800000, guid: d5969bdcc29e40642b2248129df35bb3, type: 3}
     cooldowns:
     - 22
@@ -52,7 +52,7 @@ MonoBehaviour:
     - 60
     - 60
   - name: Skip 'n Slash
-    vrDescription: 'Right primary: a short collision-checked step; attacks gain speed and magic damage.'
+    vrDescription: 'A: dash where you are walking with the stick (or where your blades point if you stand still), leaving an afterimage. Your blades glow: faster attacks, longer reach, bonus magic damage, and the first hit refunds cooldown.'
     icon: {fileID: 2800000, guid: 76a12dd4aa8c18b40bbba2ead65d8fcc, type: 3}
     cooldowns:
     - 13
@@ -67,7 +67,7 @@ MonoBehaviour:
     - 35
     - 35
   - name: Needlework
-    vrDescription: 'Left trigger: aim and fire three escalating needle volleys.'
+    vrDescription: Hold the left trigger to ready needles between your fingers (1, then 3, then 5), then release while throwing. The needles fly where your hand was moving and pull glowing threads; plain releases fly where your hand points.
     icon: {fileID: 2800000, guid: f7f7768ca12aea84c82e3066efb89ed1, type: 3}
     cooldowns:
     - 120

@@ -49,6 +49,37 @@ namespace LeagueVR.Champions
         /// <summary>True while a recast window lets the slot be used again without waiting for its cooldown.</summary>
         public virtual bool CanRecast(int slot) => false;
 
+        // ---------- Hold-to-cast (aim, charge or throw) ----------
+
+        /// <summary>When true for a slot, pressing its button calls <see cref="BeginHold"/> and releasing it calls <see cref="ReleaseHold"/>.</summary>
+        public virtual bool HoldToCast(int slot) => false;
+        /// <summary>Starts aiming or charging. Return false if nothing started (the release is then ignored).</summary>
+        public virtual bool BeginHold(int slot) => false;
+        /// <summary>Releases the held ability; call <see cref="PlayerChampion.Commit"/> here before its effects.</summary>
+        public virtual void ReleaseHold(int slot) { }
+        /// <summary>Abandons a hold without casting (death, menu, stun).</summary>
+        public virtual void CancelHold(int slot) { }
+
+        // ---------- Physical weapon ----------
+
+        /// <summary>
+        /// The striking edge of a held weapon in world space (for example handle to blade tip). Kits that report one get
+        /// physical hits: swinging the real weapon through an enemy lands a basic attack when the attack timer allows.
+        /// </summary>
+        public virtual bool WeaponEdge(out Vector3 from, out Vector3 to)
+        {
+            from = to = default;
+            return false;
+        }
+
+        /// <summary>Resolves a physical weapon hit on <paramref name="target"/>. Defaults to a basic attack on that target.</summary>
+        public virtual void WeaponHit(Combatant target, Vector3 point, Vector3 swing)
+        {
+            float dealt = Player.Hit(target, AD, DamageKind.Physical, "Attack1", true, point);
+            if (dealt > 0)
+                Player.Emit("Hit", point, swing);
+        }
+
         /// <summary>True while an action occupies the champion: basic attacks wait until it ends.</summary>
         public virtual bool Busy => false;
         /// <summary>True while every ability is locked (channels, leaps). Defaults to false so abilities can be woven together.</summary>

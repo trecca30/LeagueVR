@@ -386,9 +386,9 @@ namespace LeagueVR.Match
             shopScreen = false;
             Screen("VR controls", true);
             Text(root, "RIGHT HAND", -735, 295, 700, 50, 32, cyan);
-            Text(root, "Trigger / grip swing   Basic attack\nSecondary button   Q: " + AbilityName(0) + "\nPrimary button   E: " + AbilityName(2) + "\nStick press   Menu", -735, 170, 705, 190, 26, white);
+            Text(root, "Swing your weapon through enemies   Attack\nHold trigger   Auto-attack in front\nB   Q: " + AbilityName(0) + "\nA   E: " + AbilityName(2) + "\nStick press   Menu", -735, 160, 705, 220, 24, white);
             Text(root, "LEFT HAND", 40, 295, 700, 50, 32, cyan);
-            Text(root, "Trigger   R: " + AbilityName(3) + "\nPrimary button   W: " + AbilityName(1) + "\nSecondary button   Shop at your fountain\nStick press   Recall / cancel", 40, 170, 705, 190, 26, white);
+            Text(root, "Trigger (hold, throw to release)   R: " + AbilityName(3) + "\nX   W: " + AbilityName(1) + "\nY   Shop at your fountain\nStick press   Recall / cancel\nStick   Move (abilities dash where you walk)", 40, 160, 705, 220, 24, white);
             Text(root, "WEARABLE ITEMS", -735, -10, 1470, 50, 31, gold);
             Text(root, "Reach to a hip, shoulder or back slot and hold grip to grab.\nAim with the item and press trigger to activate. Release grip to holster.\nLift a potion to your mouth to drink. Trinket: centre of your back.", -735, -120, 1470, 170, 26, white);
             Text(root, "Desktop: hold Tab to inspect wrist / WASD / right mouse look / Q F E R abilities / P shop / B recall\n1–6: equip items  ·  7: equip trinket  ·  left mouse: use held item  ·  Backspace: return", -735, -285, 1470, 100, 21, muted);

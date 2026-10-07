@@ -31,6 +31,10 @@ namespace LeagueVR.Champions
         public Vector3 scissorsTilt = new(12, 0, 0);
 
         public BodyRig Rig { get; private set; }
+        public SkinnedMeshRenderer Skin => skin;
+        /// <summary>Distance from the fist to the blade tips in world units.</summary>
+        public float BladeLength => (.93f - scissorsHandle.z) * scissorsScale * (Rig != null ? Rig.Scale : 1);
+        public float WeaponScale => scissorsScale * (Rig != null ? Rig.Scale : 1);
 
         Quaternion bladeARest, bladeBRest;
         float snipUntil;
@@ -41,6 +45,9 @@ namespace LeagueVR.Champions
         Transform tip;
         SkinnedMeshRenderer skin;
         Renderer[] bodyRenderers;
+        readonly GameObject[] beads = new GameObject[4];
+        readonly System.Collections.Generic.List<GameObject> glows = new();
+        readonly GameObject[] heldNeedles = new GameObject[5];
 
         void Awake()
         {
@@ -67,6 +74,7 @@ namespace LeagueVR.Champions
             bodyRenderers = visualRoot.GetComponentsInChildren<Renderer>(true);
             CreateShadow();
             CreateTrail();
+            CreateKitVisuals();
             foreach (var r in scissorsRoot.GetComponentsInChildren<Renderer>(true))
                 r.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
         }
@@ -115,6 +123,78 @@ namespace LeagueVR.Champions
             trail.sharedMaterial = AbilityFx.Material(cyan);
             trail.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
             trail.emitting = false;
+        }
+
+        void CreateKitVisuals()
+        {
+            var cyan = new Color(.45f, .95f, 1f, .9f);
+            // Snip stacks: glowing beads along the blade spine.
+            for (int i = 0; i < beads.Length; i++)
+            {
+                var bead = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                Destroy(bead.GetComponent<Collider>());
+                bead.name = "Snip stack " + (i + 1);
+                bead.transform.SetParent(scissorsRoot, false);
+                bead.transform.localPosition = new Vector3(0, .1f, .1f + i * .09f);
+                bead.transform.localScale = Vector3.one * .05f;
+                var r = bead.GetComponent<Renderer>();
+                r.sharedMaterial = AbilityFx.Glass(cyan, true);
+                r.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+                bead.SetActive(false);
+                beads[i] = bead;
+            }
+            // Skip 'n Slash: a glowing shell around both blades.
+            foreach (var blade in new[] { bladeA, bladeB })
+            {
+                if (!blade || !blade.TryGetComponent<MeshFilter>(out var filter))
+                    continue;
+                var glow = new GameObject("Empowered glow");
+                glow.transform.SetParent(blade, false);
+                glow.transform.localScale = Vector3.one * 1.03f;
+                glow.AddComponent<MeshFilter>().sharedMesh = filter.sharedMesh;
+                var r = glow.AddComponent<MeshRenderer>();
+                r.sharedMaterial = AbilityFx.Glass(new Color(.5f, 1f, 1f, .35f), true);
+                r.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+                glow.SetActive(false);
+                glows.Add(glow);
+            }
+        }
+
+        /// <summary>Weapon tells driven by the kit: snip stacks, empowered blades and needles readied in the left hand.</summary>
+        void UpdateKitVisuals()
+        {
+            var kit = player.Kit as GwenKit;
+            int stacks = kit != null ? kit.QStacks : 0;
+            for (int i = 0; i < beads.Length; i++)
+                if (beads[i])
+                    beads[i].SetActive(i < stacks);
+            bool empowered = kit != null && kit.Empowered;
+            foreach (var g in glows)
+                if (g)
+                    g.SetActive(empowered);
+            int needles = kit != null ? kit.NeedlesReady : 0;
+            var prefab = player.Definition ? player.Definition.kitPrefab : null;
+            var grip = LeftGrip();
+            Vector3 palm = Rig != null ? Rig.Palm(true) : grip.position;
+            // Needles fan out from between the fingers, points forward along the hand.
+            Quaternion aim = grip.rotation * Quaternion.Euler(55, 0, 0);
+            for (int i = 0; i < heldNeedles.Length; i++)
+            {
+                bool show = i < needles;
+                if (show && !heldNeedles[i] && prefab)
+                {
+                    heldNeedles[i] = Instantiate(prefab);
+                    heldNeedles[i].name = "Readied needle";
+                }
+                if (!heldNeedles[i])
+                    continue;
+                heldNeedles[i].SetActive(show);
+                if (!show)
+                    continue;
+                int side = (i + 1) / 2 * (i % 2 == 0 ? 1 : -1);
+                var rotation = aim * Quaternion.Euler(0, side * 9, 0);
+                heldNeedles[i].transform.SetPositionAndRotation(palm + rotation * new Vector3(0, .015f * side, .05f), rotation);
+            }
         }
 
         void OnEnable()
@@ -241,6 +321,7 @@ namespace LeagueVR.Champions
             Rig.CaptureAnimatedPose();
             Rig.Solve(Frame(), true);
             PoseScissors();
+            UpdateKitVisuals();
             bool alive = player.Health && player.Health.IsAlive;
             foreach (var r in bodyRenderers)
                 if (r)
@@ -254,6 +335,7 @@ namespace LeagueVR.Champions
                 return;
             Rig.Solve(Frame(), false);
             PoseScissors();
+            UpdateKitVisuals();
         }
 
         void TrackLocomotion()

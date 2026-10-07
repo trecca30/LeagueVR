@@ -92,6 +92,52 @@ namespace LeagueVR.Champions
             return Vector3.Cross(d, forward).magnitude * 3 + d.magnitude * .2f;
         }
 
+        /// <summary>
+        /// First enemy crossed by a weapon edge that moved from (a0, b0) to (a1, b1) since last frame. Points along the
+        /// outer 80% of the edge are swept, so the part inside the fist never counts.
+        /// </summary>
+        public bool WeaponSweep(Vector3 a0, Vector3 b0, Vector3 a1, Vector3 b1, float radius, out Combatant target, out Vector3 point)
+        {
+            target = null;
+            point = default;
+            float best = float.MaxValue;
+            for (int s = 0; s <= 4; s++)
+            {
+                float t = .2f + .8f * s / 4f;
+                Vector3 p0 = Vector3.Lerp(a0, b0, t), p1 = Vector3.Lerp(a1, b1, t);
+                Vector3 d = p1 - p0;
+                float length = d.magnitude;
+                if (length > 1e-4f)
+                {
+                    int count = Physics.SphereCastNonAlloc(p0, radius, d / length, castBuffer, length, combatMask, QueryTriggerInteraction.Collide);
+                    for (int i = 0; i < count; i++)
+                    {
+                        var c = castBuffer[i].collider.GetComponentInParent<Combatant>();
+                        float when = castBuffer[i].distance / length;
+                        if (IsEnemy(c) && when < best)
+                        {
+                            best = when;
+                            target = c;
+                            point = castBuffer[i].point == Vector3.zero ? p1 : castBuffer[i].point;
+                        }
+                    }
+                }
+                // Sphere casts miss colliders they start inside; the end position catches those.
+                int overlaps = Physics.OverlapSphereNonAlloc(p1, radius, overlapBuffer, combatMask, QueryTriggerInteraction.Collide);
+                for (int i = 0; i < overlaps; i++)
+                {
+                    var c = overlapBuffer[i].GetComponentInParent<Combatant>();
+                    if (IsEnemy(c) && 1f < best)
+                    {
+                        best = 1f;
+                        target = c;
+                        point = overlapBuffer[i].ClosestPoint(p1);
+                    }
+                }
+            }
+            return target;
+        }
+
         /// <summary>True when no terrain lies between the two points (the target's own colliders are ignored).</summary>
         public bool ClearAttackLine(Vector3 start, Vector3 end, Combatant target)
         {
@@ -171,6 +217,30 @@ namespace LeagueVR.Champions
         }
 
         // ---------- Movement ----------
+
+        /// <summary>
+        /// Direction the player is steering with the movement stick (or WASD on desktop), relative to where they look.
+        /// <paramref name="walking"/> is false when the stick is centred; the head's facing is returned instead.
+        /// </summary>
+        public Vector3 LocomotionDirection(out bool walking)
+        {
+            Vector2 stick = Vector2.zero;
+            if (DesktopMode)
+            {
+                var k = UnityEngine.InputSystem.Keyboard.current;
+                if (k != null)
+                    stick = new Vector2((k.dKey.isPressed ? 1 : 0) - (k.aKey.isPressed ? 1 : 0), (k.wKey.isPressed ? 1 : 0) - (k.sKey.isPressed ? 1 : 0));
+            }
+            else
+            {
+                var device = UnityEngine.XR.InputDevices.GetDeviceAtXRNode(UnityEngine.XR.XRNode.LeftHand);
+                if (device.isValid)
+                    device.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primary2DAxis, out stick);
+            }
+            walking = stick.magnitude > .35f;
+            var yaw = Quaternion.Euler(0, head.transform.eulerAngles.y, 0);
+            return walking ? (yaw * new Vector3(stick.x, 0, stick.y)).normalized : PlanarDirection(head.transform.forward);
+        }
 
         CharacterController Controller => origin.GetComponent<CharacterController>();
 
