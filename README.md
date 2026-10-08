@@ -2,7 +2,7 @@
 
 A fan-made VR take on League of Legends: play a champion in first person on Summoner's Rift, with a full body, physical attacks and abilities built for motion controllers.
 
-> Fan project, non-commercial, not endorsed by Riot Games. League of Legends and all of its models, sounds, icons and names are © Riot Games. Keep this repository private, and do not sell builds of it.
+> Fan project, non-commercial, not endorsed by Riot Games. League of Legends and all of its models, sounds, icons and names are © Riot Games. Do not sell builds of it.
 
 ## What's in it
 
