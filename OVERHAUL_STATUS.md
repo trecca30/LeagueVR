@@ -3,7 +3,7 @@
 Last updated: 2026-10-07. Every step is a git commit; `git log --oneline` shows the history.
 
 ## Done
-1. **Git and LFS.** Baseline commit of the project exactly as ChatGPT left it (`cf25513`). Large assets are in Git LFS, and `PrototypeBackups/` is ignored.
+1. **Git and LFS.** Baseline commit of the project as it was before the overhaul (`cf25513`). Large assets are in Git LFS, and `PrototypeBackups/` is ignored.
 2. **Readable code.** All scripts were unfolded from one-line-per-method C#. A token-for-token check confirmed nothing but whitespace changed (`2915693`).
 3. **Cleanup.** Removed ten auto-running "request file" editor hooks, the one-off builders, repair tools, old test harnesses, the practice-dummy scripts and about 1.1 GB of unused generated assets (`e0407ce`).
 4. **One champion system.** `PlayerChampion` plus one `ChampionKit` class per champion (Gwen, Zoe, Aatrox, Akshan, Brand, Pantheon, Yunara). Stats use League's level-growth curve, death timers follow League, and respawn is at the fountain (`d6778ba`).
