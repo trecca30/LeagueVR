@@ -1,0 +1,106 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1507f9c1fc5ee634f85448889214c929, type: 3}
+  m_Name: Zeri
+  m_EditorClassIdentifier: Assembly-CSharp::LeagueVR.Champions.ChampionDefinition
+  id: 7
+  title: the Spark of Zaun
+  role: Marksman
+  passiveName: Living Battery
+  passiveDescription: 'Walking and Burst Fire charge your Sparkpack (the coils on your gun glow brighter). B fires a battery shot at the enemy you aim at: a full charge adds damage based on max health, and any shot executes an enemy it leaves low (its ring turns red).'
+  patch: 16.19.1
+  portrait: {fileID: 2800000, guid: 1f4441a0c36286041a8c73bd01b28046, type: 3}
+  passiveIcon: {fileID: 2800000, guid: b2b0d50d8e152884b92d12dc066d1347, type: 3}
+  spells:
+  - name: Burst Fire
+    vrDescription: 'Right trigger: seven rounds from your gun at the first enemy where it points (sweep it to spray); hold to keep firing. Overcharged: three fast rounds that chain lightning.'
+    icon: {fileID: 2800000, guid: 756294ce8db76d740bdb39f7325ba26f, type: 3}
+    cooldowns:
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    costs:
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+  - name: Ultrashock Laser
+    vrDescription: 'X: hold until your left palm crackles, then release to fire a pulse where it points. It slows the first enemy; a pulse that hits a wall becomes a long laser through it. A quick tap cancels.'
+    icon: {fileID: 2800000, guid: 1c9387668c92d3743b4673782f99e71b, type: 3}
+    cooldowns:
+    - 12
+    - 11
+    - 10
+    - 9
+    - 8
+    costs:
+    - 50
+    - 60
+    - 70
+    - 80
+    - 90
+  - name: Spark Surge
+    vrDescription: 'A: blink where you walk, or where your gun points, vaulting a wall you stand close to. For 5 s Burst Fire pierces and hits harder. Burst Fire and charged shots shorten the cooldown.'
+    icon: {fileID: 2800000, guid: d08678dd06dedba4ea3d17decb25f086, type: 3}
+    cooldowns:
+    - 24
+    - 22.5
+    - 21
+    - 19.5
+    - 18
+    costs:
+    - 90
+    - 85
+    - 80
+    - 75
+    - 70
+  - name: Lightning Crash
+    vrDescription: 'Left trigger: hold, then release to discharge a lightning nova around you (a quick tap cancels). Hitting an enemy Overcharges you: faster attacks and movement, and Burst Fire chains lightning.'
+    icon: {fileID: 2800000, guid: e197cd51005201446b12b967a9a9e9fe, type: 3}
+    cooldowns:
+    - 80
+    - 75
+    - 70
+    costs:
+    - 100
+    - 100
+    - 100
+  model: {fileID: 6215678933570799875, guid: 6a1b6ac6a60a7a24bb265ed028c33571, type: 3}
+  firstPerson: {fileID: 7771470029432072655, guid: 106851e0c29253a4f80db09a7e803c40, type: 3}
+  idle: {fileID: 747917544427725480, guid: 6a8d644f41420f446a7a1bd633754250, type: 3}
+  color: {r: 0.55, g: 0.95, b: 0.35, a: 1}
+  health: 600
+  healthGrowth: 110
+  armor: 24
+  armorGrowth: 4.2
+  magicResist: 33
+  magicResistGrowth: 1.1
+  mana: 250
+  manaGrowth: 45
+  attackDamage: 56
+  attackGrowth: 2
+  attackSpeed: 0.658
+  attackSpeedGrowth: 2
+  moveSpeed: 330
+  healthRegen: 3.25
+  manaRegen: 6
+  healthRegenGrowth: 0.7
+  manaRegenGrowth: 0.8
+  attackReach: 10
+  bodyHeight: 1.75
+  kitTuning: {fileID: 0}
+  kitPrefab: {fileID: 0}
+  kitMaterial: {fileID: 0}
+  skillOrder: QEW

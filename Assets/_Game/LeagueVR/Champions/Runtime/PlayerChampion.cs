@@ -68,7 +68,13 @@ namespace LeagueVR.Champions
         float attackReadyAt;
         Coroutine respawnRoutine;
 
-        public Vector3 Feet => new(head.transform.position.x, origin.transform.position.y, head.transform.position.z);
+        public Vector3 Feet => FeetOverride ?? new(head.transform.position.x, origin.transform.position.y, head.transform.position.z);
+
+        /// <summary>Where the champion stands while the view is outside the body (watching from the brush).</summary>
+        public Vector3? FeetOverride { get; set; }
+
+        /// <summary>The view from outside the body in brush (see <see cref="BrushView"/>).</summary>
+        public BrushView BrushView { get; private set; }
 
         public Vector3 AttackOrigin
         {
@@ -94,9 +100,18 @@ namespace LeagueVR.Champions
         public Vector3 OffHandDirection => DesktopMode ? AttackDirection : leftHand.forward;
 
         public bool CombatLocked => RiftUI.BlocksCombat || (Economy && Economy.Stasis);
-        public bool CanAct => Kit != null && Health && Health.IsAlive && !Health.Stunned && !CombatLocked;
+        public bool CanAct => Kit != null && Health && Health.IsAlive && !Health.Stunned && !CombatLocked && !(BrushView && BrushView.Active);
         public bool Busy => Kit != null && Kit.Busy;
-        public float AttackInterval => Stats.AttackInterval(Kit?.BonusAttackSpeed ?? 0) * Health.AttackIntervalMultiplier;
+        public float AttackInterval
+        {
+            get
+            {
+                // A kit's cap is hard: ally attack-speed buffs cannot push past it either.
+                float interval = Stats.AttackInterval(Kit?.BonusAttackSpeed ?? 0) * Health.AttackIntervalMultiplier;
+                float cap = Kit?.AttackSpeedCap ?? 0;
+                return cap > 0 ? Mathf.Max(interval, 1 / cap) : interval;
+            }
+        }
         public float AttackReach => Stats.AttackReach + (Kit?.BonusAttackRange ?? 0) + (Economy && Economy.Effects ? Economy.Effects.BonusAttackRange : 0);
 
         void Awake()
@@ -104,18 +119,21 @@ namespace LeagueVR.Champions
             Health = GetComponent<Combatant>();
             Economy = GetComponent<RiftEconomy>();
             Health.RefreshGuards();
+            BrushView = TryGetComponent<BrushView>(out var view) ? view : gameObject.AddComponent<BrushView>();
         }
 
         void OnEnable()
         {
             Health.onDeath.AddListener(OnDeath);
             Combatant.Defeated += OnUnitDefeated;
+            RiftBrushField.Walker = () => Health && Health.IsAlive ? Feet : null;
         }
 
         void OnDisable()
         {
             Health.onDeath.RemoveListener(OnDeath);
             Combatant.Defeated -= OnUnitDefeated;
+            RiftBrushField.Walker = null;
             StopAllCoroutines();
             respawnRoutine = null;
         }
@@ -164,6 +182,8 @@ namespace LeagueVR.Champions
         /// <summary>Button pressed: starts a hold for kits that aim/charge/throw, otherwise casts immediately.</summary>
         public bool PressSlot(int slot)
         {
+            if (!Unlocked(slot))
+                return false;
             if (Kit == null || !Kit.HoldToCast(slot))
                 return CastSlot(slot);
             if (!CanAct || holding[slot])
@@ -173,6 +193,15 @@ namespace LeagueVR.Champions
                 return false;
             holding[slot] = Kit.BeginHold(slot);
             return holding[slot];
+        }
+
+        /// <summary>Abandons a held ability without casting it (the hand was taken over by an item or a teleport).</summary>
+        public void CancelSlot(int slot)
+        {
+            if (slot < 0 || slot >= 4 || !holding[slot])
+                return;
+            holding[slot] = false;
+            Kit?.CancelHold(slot);
         }
 
         /// <summary>Button released: fires a held ability.</summary>
@@ -243,6 +272,7 @@ namespace LeagueVR.Champions
             Kit.Bind(this, definition);
             Stats.Reset(definition);
             Array.Clear(readyAt, 0, readyAt.Length);
+            Array.Clear(holding, 0, holding.Length);
             attackReadyAt = 0;
             Kit.OnEquip();
             Health.RefreshGuards();
@@ -252,6 +282,21 @@ namespace LeagueVR.Champions
         // ---------- Cooldowns and casting ----------
 
         public float Cooldown(int slot) => slot >= 0 && slot < 4 ? Mathf.Max(0, readyAt[slot] - Time.time) : 0;
+
+        float nextLockedNotice;
+
+        /// <summary>False for the ultimate before level 6 (League); pressing it then explains why.</summary>
+        public bool Unlocked(int slot)
+        {
+            if (!Definition || Definition.Rank(slot, Level) > 0)
+                return true;
+            if (Time.time >= nextLockedNotice)
+            {
+                nextLockedNotice = Time.time + 3;
+                RiftMatch.Instance?.Notify("Your ultimate unlocks at level 6.");
+            }
+            return false;
+        }
 
         public float Cooldown(string key) => Cooldown("QWER".IndexOf(key, StringComparison.Ordinal));
 
@@ -275,6 +320,12 @@ namespace LeagueVR.Champions
 
         public void ResetAttackTimer() => attackReadyAt = 0;
 
+        /// <summary>True when the basic-attack timer allows another attack.</summary>
+        public bool AttackReady => Time.time >= attackReadyAt;
+
+        /// <summary>Starts the basic-attack timer for an attack fired outside the trigger (Zeri's battery shot shares it).</summary>
+        public void SpendAttack() => attackReadyAt = Time.time + AttackInterval;
+
         /// <summary>
         /// Commits a validated cast: checks cooldown and mana, starts the cooldown and emits the QWER signal.
         /// Recasts skip cooldown and cost. Returns false when the cast cannot be paid for.
@@ -285,7 +336,7 @@ namespace LeagueVR.Champions
                 return false;
             if (!recast)
             {
-                if (Cooldown(slot) > 0)
+                if (Cooldown(slot) > 0 || !Unlocked(slot))
                     return false;
                 int rank = Definition.Rank(slot, Level);
                 if (Economy && Definition.UsesMana && !Economy.TrySpendMana(Definition.spells[slot].Cost(rank)))
@@ -313,7 +364,7 @@ namespace LeagueVR.Champions
         /// </summary>
         public bool CastSlot(int slot)
         {
-            if (!CanAct)
+            if (!CanAct || !Unlocked(slot))
                 return false;
             bool recast = Kit.CanRecast(slot);
             if (Kit.BlocksCasts && !recast)
@@ -330,6 +381,8 @@ namespace LeagueVR.Champions
 
         public void Emit(string signal, Vector3 position, Vector3 direction)
         {
+            if (signal == "Attack1" || (signal.Length == 1 && "QWER".Contains(signal)))
+                lastReveal = Time.time;
             onAbility.Invoke(signal);
             Cast?.Invoke(signal, position, direction);
         }
@@ -340,7 +393,14 @@ namespace LeagueVR.Champions
 
         public float BonusResistance => Kit?.BonusResistance ?? 0;
 
-        public bool HiddenFrom(Combatant attacker) => Kit != null && Kit.HiddenFrom(attacker);
+        float lastReveal = -100;
+
+        /// <summary>
+        /// Hidden by the kit (Zeri mid-vault, Pantheon in the sky) or by brush: League hides a champion standing in
+        /// brush from enemies outside that patch until it attacks, casts or deals damage. Turrets are not fooled.
+        /// </summary>
+        public bool HiddenFrom(Combatant attacker) => (Kit != null && Kit.HiddenFrom(attacker))
+            || (attacker && !attacker.GetComponent<RiftStructure>() && RiftBrushField.Conceals(Feet, attacker, Mathf.Max(lastReveal, Health.LastHitTime)));
 
         // ---------- Death and respawn ----------
 

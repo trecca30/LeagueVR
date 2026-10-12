@@ -439,8 +439,8 @@ namespace LeagueVR.Match
             health.SetMaximumHealth(baseHealth + bonusHealth, true);
             health.armor = Grow(d.armor, d.armorGrowth) + items.Sum(i => i.armor) + (Effects ? Effects.BonusArmor : 0);
             health.magicResistance = Grow(d.magicResist, d.magicResistGrowth) + items.Sum(i => i.magicResistance) + (Effects ? Effects.BonusMR : 0);
-            healthRegen = Grow(d.healthRegen, 0) / 5 * (1 + items.Sum(i => i.healthRegen)) + items.Sum(i => i.flatHealthRegen) / 5;
-            manaRegen = Grow(d.manaRegen, 0) / 5 * (1 + items.Sum(i => i.manaRegen)) + items.Sum(i => i.flatManaRegen) / 5;
+            healthRegen = Grow(d.healthRegen, d.healthRegenGrowth) / 5 * (1 + items.Sum(i => i.healthRegen)) + items.Sum(i => i.flatHealthRegen) / 5;
+            manaRegen = Grow(d.manaRegen, d.manaRegenGrowth) / 5 * (1 + items.Sum(i => i.manaRegen)) + items.Sum(i => i.flatManaRegen) / 5;
             goldPerTen = items.Sum(i => i.goldPer10);
 
             stats.SetLevelBase(d, Level);

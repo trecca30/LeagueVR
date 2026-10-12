@@ -93,6 +93,8 @@ namespace LeagueVR.Champions
         /// <summary>True while every ability is locked (channels, leaps). Defaults to false so abilities can be woven together.</summary>
         public virtual bool BlocksCasts => false;
         public virtual float BonusAttackSpeed => 0;
+        /// <summary>Highest attacks per second the kit allows (Zeri's Burst Fire caps at 1.5); 0 keeps the game's limit.</summary>
+        public virtual float AttackSpeedCap => 0;
         public virtual float BonusAttackRange => 0;
         public virtual bool Blocks(DamageHit hit) => false;
         public virtual float BonusResistance => 0;
@@ -103,5 +105,9 @@ namespace LeagueVR.Champions
         public virtual string SlotStatus(int slot) => null;
         /// <summary>One short line describing the champion's current state for the wrist display.</summary>
         public virtual string StateText => "";
+        /// <summary>Controls-screen wording for holding the right trigger (null: "Auto-attack in front").</summary>
+        public virtual string TriggerHint => null;
+        /// <summary>Controls-screen wording for a face button when it does more than cast its ability (null: the ability name).</summary>
+        public virtual string ButtonHint(int slot) => null;
     }
 }

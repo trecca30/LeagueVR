@@ -96,8 +96,11 @@ MonoBehaviour:
   moveSpeed: 340
   healthRegen: 5.5
   manaRegen: 11
+  healthRegenGrowth: 0.55
+  manaRegenGrowth: 0.6
   attackReach: 10
   bodyHeight: 1.75
   kitTuning: {fileID: 0}
   kitPrefab: {fileID: 0}
   kitMaterial: {fileID: 0}
+  skillOrder: WQE

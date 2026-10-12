@@ -1,6 +1,6 @@
 # League VR overhaul: status and next steps
 
-Last updated: 2026-10-07. Every step is a git commit; `git log --oneline` shows the history.
+Last updated: 2026-10-12. Every step is a git commit; `git log --oneline` shows the history.
 
 ## Done
 1. **Git and LFS.** Baseline commit of the project as it was before the overhaul (`cf25513`). Large assets are in Git LFS, and `PrototypeBackups/` is ignored.
@@ -36,7 +36,47 @@ Last updated: 2026-10-07. Every step is a git commit; `git log --oneline` shows 
     - Bottom bar: inventory and trinket, UNDO (purchases and sales since arriving at the fountain), SELL, and gold.
     - Select an item twice to buy it. Gold ticks update prices in place instead of rebuilding the panel.
 
+12. **Zeri** (`ZeriKit`, `ZeriEffects`).
+    - **Kit:** Burst Fire on the trigger, the Living Battery charged shot on B (it executes), the W pulse from the left palm that becomes a laser through walls, the Spark Surge vault on E, and Lightning Crash on the left trigger.
+    - **League rules:**
+      - Data Dragon stats and League's numbers: crit rules, excess attack speed turned into damage, the 1.5 attack-speed cap, monster caps, and laser crits on monsters.
+      - A tap of W or R cancels for free.
+      - A B press during a burst is queued, not swallowed.
+    - **Original assets:** Zeri's original sounds and voice lines were decoded from the user's own install (167 clips) and wired to the kit. Her original particle textures are used for the tracers, bolts, laser and nova.
+    - **Reviews:** two rounds of agent reviews with ratings (round 2: code 7, fidelity 6.5, effects 6.5, UX 7, audio 6).
+13. **Walking, ranks and regen.**
+    - Walking: feet now land half a step ahead of where the hips will be. Before, they trailed up to 1.3 m behind and were dragged along; this fix applies to every champion.
+    - Ability ranks follow League's skill path per champion (`skillOrder`), and ultimates unlock at level 6.
+    - Health and mana regen grow per level.
+14. **Summoner's Rift: collision, brush, camps, look.**
+    - **Collision** (League VR > Build Rift Collision, `RiftCollisionBuilder`):
+      - The map's own meshes are voxelized into a NavMesh. League's piece names decide floor or wall per triangle; stairs and ramps inside wall meshes stay walkable.
+      - Only floor connected to the lanes is kept. Its outline becomes double-sided walls as tall as the wall beside them, plus a 25 cm `RiftNavGrid`.
+      - Towers, inhibitors and Nexuses get capsule blockers that switch off when they fall.
+      - Checked against League's own navigation grid, decoded from the user's install: about 93% of the floor agrees; the differences are edge-thin.
+    - **Brush** (`RiftBrushBuilder`, `RiftBrush.shader`, `RiftBrushField`):
+      - 37 patches from League's own brush cells, kept on this map's floor. Curved blade meshes sway and bend as you walk through, and blades right at the eyes dissolve.
+      - Brush hides the player from enemies outside the patch (not turrets) until they attack or cast.
+      - In brush, Y switches to a still view from outside the body (`BrushView`). The stick walks the champion; leaving the brush, attacking or Y returns you to first person.
+    - **Camps:**
+      - Every camp is at League's position (2014–2016 layout, converted and checked by the map's point symmetry), snapped to open floor and facing out of its clearing. The Dragon moved from inside a wall into its pit.
+      - Murk Wolves and Rift Scuttlers were added from League's own models.
+    - **Zeri's vault:**
+      - The wall is measured on the grid (towers by a ray back), and the time over it uses League's dash speed (600 + move speed).
+      - At most 0.3 s over the obstacle is a first-person blink. Longer vaults cut to a still view behind and above, where her full model vaults with League's animation, then cut back.
+      - Both cuts happen behind short fades.
+    - **Look** (League VR > Apply Rift Look, `RiftStylized.shader`, `RiftAtmosphere`):
+      - Soft banded sunlight, relief from the painted textures, cliff stretch cleanup and a sky rim.
+      - A distance haze computed per pixel, a horizon ground over the voids, a patched dragon pit floor, and a plain rock boundary wall.
+    - **Map audit:** five Haiku agents audited the lanes and jungles, and five reviewed the result once. The final ratings are 5–6 out of 10 per region.
+
 ## Next (planned, in order)
+- **Map, from the final review:**
+  - Headset check of the brush colour and density.
+  - The light level of the stylized look; reviewers find it a little dim.
+  - Floating rock islands beyond the NW corner.
+  - A shore blend for the blue-side pond at (4, -38).
+  - The brush layout is the current League grid's, so a few brushes may differ from 2014–2016.
 - **Headset pass:** the bodies, kits and shop were tested in the editor with scripted poses and clicks. Need checking in a headset:
   - throw speeds (1.6 m/s), the spear tilt (40°) and the hologram's position
   - the procedural steps while walking and turning

@@ -114,7 +114,11 @@ namespace LeagueVR.Match
         {
             var keyboard = Keyboard.current;
             bool desktop = match.player.DesktopMode;
-            if (shop.WasPressedThisFrame() || (desktop && keyboard != null && keyboard.pKey.wasPressedThisFrame))
+            // In brush, Y switches the view outside the body instead (see BrushView).
+            var brushView = match.player.BrushView;
+            if (shop.WasPressedThisFrame() && brushView && (brushView.Offered || brushView.Active) && !ShopIsOpen)
+                brushView.Toggle();
+            else if (shop.WasPressedThisFrame() || (desktop && keyboard != null && keyboard.pKey.wasPressedThisFrame))
             {
                 if (ShopIsOpen)
                     Close();
@@ -364,7 +368,7 @@ namespace LeagueVR.Match
             // Big leaps: Grand Starfall can show the landing from the sky or simply fade out.
             bool sky = ComfortSettings.SkyView;
             Text(root, "BIG LEAPS", -720, -125, 1400, 55, 30, cyan);
-            Text(root, $"Grand Starfall: <color=#E5C478>{(sky ? "SKY VIEW" : "FADE")}</color>  ·  watch your landing from high above, or fade out during the leap", -720, -180, 1400, 50, 24, white);
+            Text(root, $"Grand Starfall and Zeri's long vaults: <color=#E5C478>{(sky ? "WATCH" : "FADE")}</color>  ·  watch from outside your body, or fade out during the leap", -720, -180, 1400, 50, 24, white);
             Button(root, sky ? "USE FADE" : "USE SKY VIEW", -720, -255, 400, 72, () =>
             {
                 ComfortSettings.SkyView = !sky;
@@ -395,14 +399,27 @@ namespace LeagueVR.Match
             return roster && roster.Selected ? roster.Selected.spells[slot].name : "QWER"[slot].ToString();
         }
 
+        /// <summary>An unbound kit of the selected champion, only to read its control hints (Zeri's trigger fires Burst Fire).</summary>
+        ChampionKit SelectedKit()
+        {
+            var roster = match.player.GetComponent<ChampionRoster>();
+            return roster && roster.Selected ? ChampionKits.Create(roster.Selected.id) : null;
+        }
+
         void Controls()
         {
             shopScreen = false;
             Screen("VR controls", true);
             Text(root, "RIGHT HAND", -735, 295, 700, 50, 32, cyan);
-            Text(root, "Swing your weapon through enemies   Attack\nHold trigger   Auto-attack in front\nB   Q: " + AbilityName(0) + "\nA   E: " + AbilityName(2) + "\nStick press   Menu", -735, 160, 705, 220, 24, white);
+            var kit = SelectedKit();
+            string swing = kit is RangedKit ? "" : "Swing your weapon through enemies   Attack\n";
+            string trigger = kit?.TriggerHint ?? "Auto-attack in front";
+            string b = kit?.ButtonHint(0) ?? "Q: " + AbilityName(0);
+            Text(root, swing + "Hold trigger   " + trigger + "\nB   " + b + "\nA   E: " + AbilityName(2) + "\nStick press   Menu", -735, 160, 705, 220, 24, white);
             Text(root, "LEFT HAND", 40, 295, 700, 50, 32, cyan);
-            Text(root, "Trigger (hold, throw to release)   R: " + AbilityName(3) + "\nX   W: " + AbilityName(1) + "\nY   Shop at your fountain\nStick press   Recall / cancel\nStick   Move (abilities dash where you walk)\nRaise wrist   Wrist display (menus stay put; reopen to recenter)", 40, 160, 705, 220, 24, white);
+            string leftTrigger = kit?.ButtonHint(3) ?? "R: " + AbilityName(3);
+            string x = kit?.ButtonHint(1) ?? "W: " + AbilityName(1);
+            Text(root, "Trigger (hold, release)   " + leftTrigger + "\nX   " + x + "\nY   Shop at your fountain\nStick press   Recall / cancel\nStick   Move (dashes and blinks go where you walk)\nRaise wrist   Wrist display (menus stay put; reopen to recenter)", 40, 160, 705, 220, 24, white);
             Text(root, "WEARABLE ITEMS", -735, -10, 1470, 50, 31, gold);
             Text(root, "Reach to a hip, shoulder or back slot and hold grip to grab.\nAim with the item and press trigger to activate. Release grip to holster.\nLift a potion to your mouth to drink. Trinket: centre of your back.", -735, -120, 1470, 170, 26, white);
             Text(root, "Desktop: hold Tab to inspect wrist / WASD / right mouse look / Q F E R abilities / P shop / B recall\n1–6: equip items  ·  7: equip trinket  ·  left mouse: use held item  ·  Backspace: return  ·  F8: stream view", -735, -285, 1470, 100, 21, muted);

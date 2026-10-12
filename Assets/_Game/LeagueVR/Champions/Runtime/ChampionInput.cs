@@ -92,7 +92,10 @@ namespace LeagueVR.Champions
                 return;
             if (allowed && action.WasPressedThisFrame())
                 player.PressSlot(slot);
-            if (action.WasReleasedThisFrame() || (!allowed && player.IsHolding(slot)))
+            // A hand taken over by an item or a teleport ray abandons its held ability instead of firing it.
+            if (!allowed && player.IsHolding(slot))
+                player.CancelSlot(slot);
+            else if (action.WasReleasedThisFrame())
                 player.ReleaseSlot(slot);
         }
 

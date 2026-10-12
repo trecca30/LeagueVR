@@ -15,6 +15,7 @@ namespace LeagueVR.Champions
             ChampionId.Brand => new BrandKit(),
             ChampionId.Pantheon => new PantheonKit(),
             ChampionId.Yunara => new YunaraKit(),
+            ChampionId.Zeri => new ZeriKit(),
             _ => throw new ArgumentOutOfRangeException(nameof(id), id, "No kit registered for this champion."),
         };
     }

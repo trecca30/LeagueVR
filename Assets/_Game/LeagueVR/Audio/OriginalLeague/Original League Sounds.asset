@@ -663,3 +663,355 @@ MonoBehaviour:
       - {fileID: 8300000, guid: 109c75c60788f13498a3ca2252ddddc3, type: 3}
       - {fileID: 8300000, guid: 959358744806eea4daea9ba7ec735aeb, type: 3}
       - {fileID: 8300000, guid: 3b3640a4859691f46b54a7382857e8bc, type: 3}
+  - key: Zeri.Q
+    eventName: Play_sfx_Zeri_ZeriQ_OnCast
+    sourceBank: zeri_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 1f8b093c848cc4f47b95668adb1173c9, type: 3}
+      - {fileID: 8300000, guid: 3b8a3ad450533e24ba4c195fa64cdf1c, type: 3}
+      - {fileID: 8300000, guid: f50de7e30d21d8a41aa7738f1399b4d1, type: 3}
+      - {fileID: 8300000, guid: 32c83807a83ff824e91392338c434a01, type: 3}
+      - {fileID: 8300000, guid: 670e3adff064cb04da22148a26b84f9f, type: 3}
+      - {fileID: 8300000, guid: eb15d3ad0eba67747812444035ac7983, type: 3}
+      - {fileID: 8300000, guid: ef80f1db01d64cf4c83f322e210392c8, type: 3}
+      - {fileID: 8300000, guid: 068ce7a44b81f7642b515950222afffb, type: 3}
+      - {fileID: 8300000, guid: 83a12bf1f4ce1ec48b3b79e852536036, type: 3}
+      - {fileID: 8300000, guid: b8210c9a216b5a54db48cf5d06af2280, type: 3}
+  - key: Zeri.QPierce
+    eventName: Play_sfx_Zeri_ZeriQMisPierceParent_OnMissileCast
+    sourceBank: zeri_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 62e6f655b0b5b514c99dfa7f16f4c064, type: 3}
+      - {fileID: 8300000, guid: 33cda3729dc53ef42b1742fb4ff14055, type: 3}
+  - key: Zeri.QOvercharged
+    eventName: Play_sfx_Zeri_ZeriQMisEmpowered_OnMissileLaunch
+    sourceBank: zeri_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: fe3dc6afc3c9d874cb63cd6e4a5bbf5f, type: 3}
+      - {fileID: 8300000, guid: 72aebc86aed4c594d87a4e335a7a8060, type: 3}
+      - {fileID: 8300000, guid: b797fe36a42dabe458b4219ca503a9cd, type: 3}
+  - key: Zeri.QHit
+    eventName: Play_sfx_Zeri_ZeriQMis_hit
+    sourceBank: zeri_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: ddda157d38e275043a0d9772a6914b53, type: 3}
+      - {fileID: 8300000, guid: 84d994d864f47894eabca51e0bbaeaae, type: 3}
+      - {fileID: 8300000, guid: ef9b3e15ebb4d82458cc98598694682b, type: 3}
+      - {fileID: 8300000, guid: 4d1ddd9ff8f530048b61748bc5c86d52, type: 3}
+  - key: Zeri.QHitEmpowered
+    eventName: Play_sfx_Zeri_ZeriQMisEmpowered_hit
+    sourceBank: zeri_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: ef9b3e15ebb4d82458cc98598694682b, type: 3}
+      - {fileID: 8300000, guid: 4d1ddd9ff8f530048b61748bc5c86d52, type: 3}
+      - {fileID: 8300000, guid: 84d994d864f47894eabca51e0bbaeaae, type: 3}
+      - {fileID: 8300000, guid: ddda157d38e275043a0d9772a6914b53, type: 3}
+  - key: Zeri.BatteryShot
+    eventName: Play_sfx_Zeri_ZeriQBasicAttack_OnCast
+    sourceBank: zeri_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 733de8e47877ce044931dc3100c487d5, type: 3}
+      - {fileID: 8300000, guid: f91385cb2582612488c29437151a9f1c, type: 3}
+      - {fileID: 8300000, guid: 097494616047fd449a8c1db8d418864f, type: 3}
+  - key: Zeri.BatteryHit
+    eventName: Play_sfx_Zeri_ZeriQBasicAttack_OnHit
+    sourceBank: zeri_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 3be94e89426356343886640d47d11379, type: 3}
+      - {fileID: 8300000, guid: c1f82341b6442bd4b9beafaf934225be, type: 3}
+      - {fileID: 8300000, guid: 6c19542364ffe22448a11094624f17df, type: 3}
+  - key: Zeri.ChargedShot
+    eventName: Play_sfx_Zeri_ZeriQBasicAttackEmpowered_OnCast
+    sourceBank: zeri_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: a78c60adb67daff44b4c2b80e8ee74a0, type: 3}
+  - key: Zeri.ChargedHit
+    eventName: Play_sfx_Zeri_ZeriQBasicAttackEmpowered_OnHit
+    sourceBank: zeri_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 5f29c85cb0fa34e4580b364a7ca371ab, type: 3}
+      - {fileID: 8300000, guid: 314b9d16b3f69564e94f28434ca17017, type: 3}
+  - key: Zeri.PassiveReady
+    eventName: Play_sfx_Zeri_ZeriQPassiveReady_OnBuffCast
+    sourceBank: zeri_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 230be44c53d4b254b99e2eeadb1f779e, type: 3}
+      - {fileID: 8300000, guid: 2b1aaf0e7c040854eacc7c573a7211f7, type: 3}
+  - key: Zeri.WCast
+    eventName: Play_sfx_Zeri_ZeriW_OnCast
+    sourceBank: zeri_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: fd842d1c35b969d4eac645fccc554bb1, type: 3}
+      - {fileID: 8300000, guid: 1bb80bbea53819643874eb5ba61a92f0, type: 3}
+  - key: Zeri.WLaunch
+    eventName: Play_sfx_Zeri_ZeriW_OnMissileLaunch
+    sourceBank: zeri_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 3ac418f991ef6c043a65b2bec9776093, type: 3}
+  - key: Zeri.WHit
+    eventName: Play_sfx_Zeri_ZeriW_hit
+    sourceBank: zeri_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: eeadb4678af58ab489f1ee3083dcdaaa, type: 3}
+      - {fileID: 8300000, guid: a0124cc7ea226bd488ae8d848ec93be3, type: 3}
+  - key: Zeri.WLaser
+    eventName: Play_sfx_Zeri_ZeriW_beam_buffactivate
+    sourceBank: zeri_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 4d0e18249ae834741b31743c175d7d0c, type: 3}
+      - {fileID: 8300000, guid: 483ba381f398bbc4d8e98b58100a0817, type: 3}
+    - variants:
+      - {fileID: 8300000, guid: 86493171bc90ce64a829371fcd76c811, type: 3}
+  - key: Zeri.E
+    eventName: Play_sfx_Zeri_ZeriE_cast
+    sourceBank: zeri_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 0e8a0add198cf9644a0e074d69f59412, type: 3}
+      - {fileID: 8300000, guid: 89a7895cfb17d4a48b69dd2683fe6320, type: 3}
+  - key: Zeri.ELand
+    eventName: Play_sfx_Zeri_ZeriE_foley_land_hit
+    sourceBank: zeri_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 059124500be389a448ed10ea67829dae, type: 3}
+  - key: Zeri.ERounds
+    eventName: Play_sfx_Zeri_ZeriESpecialRounds_OnBuffActivate
+    sourceBank: zeri_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: b783f774eb3d69647872a32567b99031, type: 3}
+      - {fileID: 8300000, guid: 39e1363af7be02a4490a7842bfafc15e, type: 3}
+  - key: Zeri.R
+    eventName: Play_sfx_Zeri_ZeriR_OnCast
+    sourceBank: zeri_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 0ec9d24c10f1ab242b13a9eed75cb9cf, type: 3}
+      - {fileID: 8300000, guid: 1607b7edb594fb946925f236e367c2f9, type: 3}
+  - key: Zeri.ROvercharged
+    eventName: Play_sfx_Zeri_ZeriR_OnBuffActivate
+    sourceBank: zeri_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 7e590cccd18363840a2df6c4ecc66e9e, type: 3}
+      - {fileID: 8300000, guid: 557032481d68e7b4c85d04a10b006cff, type: 3}
+      - {fileID: 8300000, guid: 311a2308d1681084396ec7f580c7cf96, type: 3}
+      - {fileID: 8300000, guid: b02d3204ab454a84ab0e6eefcc33d61c, type: 3}
+  - key: Zeri.REnd
+    eventName: Play_sfx_Zeri_ZeriR_OnBuffDeactivate
+    sourceBank: zeri_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 9abe05404bf8bba41b11ee67f247ca99, type: 3}
+      - {fileID: 8300000, guid: e668461d9599bab4096dc7c5db01541f, type: 3}
+  - key: Zeri.RChainHit
+    eventName: Play_sfx_Zeri_ZeriRChain_hit
+    sourceBank: zeri_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: cb52b6c05a2c9d8428e572638065d854, type: 3}
+      - {fileID: 8300000, guid: 0803046f5a724b7488b5c78f5a529ea0, type: 3}
+      - {fileID: 8300000, guid: 707103a49d16dd5458e64b654e861b48, type: 3}
+  - key: Zeri.Death
+    eventName: Play_sfx_Zeri_Death3D_cast
+    sourceBank: zeri_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 69b96efca9b4fee4db02b936c1ef1f6c, type: 3}
+  - key: Zeri.Respawn
+    eventName: Play_sfx_Zeri_Respawn3D_buffactivate
+    sourceBank: zeri_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: f71e473b0d8c35544bc402e8a81782d4, type: 3}
+  - key: Zeri.VOQ
+    eventName: Play_vo_Zeri_ZeriQ_cast3D
+    sourceBank: zeri_base_vo_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 62b794f23e949c44a9fcdb31318b9ea7, type: 3}
+      - {fileID: 8300000, guid: bbbaba31c523fb5449345fa0a2b575d3, type: 3}
+      - {fileID: 8300000, guid: 1763fbc59fa15ac4da5b5a9accb166b0, type: 3}
+      - {fileID: 8300000, guid: d59000be1bf8c424ea57fb04201b7d1e, type: 3}
+      - {fileID: 8300000, guid: 5d9d7b87fe1450647b9b8994775bc0bf, type: 3}
+      - {fileID: 8300000, guid: b37083ebfcae485419cc105644c3b1c0, type: 3}
+      - {fileID: 8300000, guid: ec8fa30d36a89404f8716c85e45cfdba, type: 3}
+      - {fileID: 8300000, guid: 6fdfc33263f896f44b3fd2b2118b75be, type: 3}
+      - {fileID: 8300000, guid: 952dcfc71449d1a4ba2c97559e8fe493, type: 3}
+      - {fileID: 8300000, guid: a912d9232c62cab44b406c2845c9fbd4, type: 3}
+      - {fileID: 8300000, guid: ae30138e5e750a0409a4e1a01a1bee2d, type: 3}
+      - {fileID: 8300000, guid: 168350515f618e04bae41ac74036509a, type: 3}
+      - {fileID: 8300000, guid: c8f165d1c8b1fcc45add8e38deaf425d, type: 3}
+      - {fileID: 8300000, guid: c8c559ea4ce588f418379d24804b770f, type: 3}
+      - {fileID: 8300000, guid: 40c96513ed9be2c4aaa945c8849d95a7, type: 3}
+      - {fileID: 8300000, guid: 70d1544494cdc5540ba5d1bea94c615c, type: 3}
+      - {fileID: 8300000, guid: cd3df768df23a5d4997ccf25c0334cdb, type: 3}
+      - {fileID: 8300000, guid: 5e69fbce729dfbf429cd8f6896bc2a41, type: 3}
+      - {fileID: 8300000, guid: 378683fdc9b16d54184837fe04ff92c8, type: 3}
+      - {fileID: 8300000, guid: 322059e46d29ba948a424da7a919e89f, type: 3}
+      - {fileID: 8300000, guid: df6b65b5f8e9e3042913e3bc6251672b, type: 3}
+      - {fileID: 8300000, guid: 7fb928b0e2230b746a2c759021e72841, type: 3}
+      - {fileID: 8300000, guid: 7f513a7998452c94c84ce389c445d556, type: 3}
+      - {fileID: 8300000, guid: 7509b7d0b6c0b844fbf65f42f17c19f9, type: 3}
+      - {fileID: 8300000, guid: 70ab97381d6cce34697d73deeeb42da9, type: 3}
+      - {fileID: 8300000, guid: 5e32f13f7f58a734fbdc775e2a2b26c2, type: 3}
+      - {fileID: 8300000, guid: 5777d3c835004394b987083e1129ac46, type: 3}
+      - {fileID: 8300000, guid: bb1dba7c2e05156478b16761dee88d0d, type: 3}
+      - {fileID: 8300000, guid: cc80305a0c27a1949ba47c46c6bf15c0, type: 3}
+      - {fileID: 8300000, guid: 653ad41c7bc3f1b47ba8dee5fb75a843, type: 3}
+      - {fileID: 8300000, guid: 59dc97e46335c464c98ac97b8bd4f1a8, type: 3}
+      - {fileID: 8300000, guid: 794d27da93df32042bb3add907d69e3f, type: 3}
+      - {fileID: 8300000, guid: 24fa2465c3a8f194cb3697a2252afe45, type: 3}
+      - {fileID: 8300000, guid: ee891b3636e095d43b3fcb9083bed962, type: 3}
+      - {fileID: 8300000, guid: da6d4578aa0780f4999c53723d4113d6, type: 3}
+  - key: Zeri.VOCharged
+    eventName: Play_vo_Zeri_ZeriQBasicAttackEmpowered_cast3D
+    sourceBank: zeri_base_vo_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 45a8055fa79915f4ebf7c1d3533bec0a, type: 3}
+      - {fileID: 8300000, guid: 05cb3aba579a7af4cb8f02f1a9357ae9, type: 3}
+      - {fileID: 8300000, guid: 7f486153b66617d4d8b44149efcd4d1a, type: 3}
+      - {fileID: 8300000, guid: 8a918999df68b2443b22bf69a077f839, type: 3}
+      - {fileID: 8300000, guid: 7b05b3929a0d6184699e4c122798aa2f, type: 3}
+  - key: Zeri.VOPassiveReady
+    eventName: Play_vo_Zeri_ZeriQPassiveReady_OnBuffActivate
+    sourceBank: zeri_base_vo_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 4cba9a91dfb2c7c408abcbd916d31909, type: 3}
+      - {fileID: 8300000, guid: 68b546f55b4dc7b47b67e61eeed5334e, type: 3}
+      - {fileID: 8300000, guid: c70cd0ec9febf7f4aab9a37966bed549, type: 3}
+  - key: Zeri.VOW
+    eventName: Play_vo_Zeri_ZeriW_cast3D
+    sourceBank: zeri_base_vo_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 7396d3447ae2d394c9f2fc10ec98f559, type: 3}
+      - {fileID: 8300000, guid: b6875cc809f732045b9485593bcc18af, type: 3}
+      - {fileID: 8300000, guid: 14fea0f173f26204fa886ddd26f13d87, type: 3}
+      - {fileID: 8300000, guid: 033d3d91b6c8293458709451e58118ef, type: 3}
+      - {fileID: 8300000, guid: b0b059e1f0a487142999004dcd166abf, type: 3}
+  - key: Zeri.VOE
+    eventName: Play_vo_Zeri_ZeriE_cast3D
+    sourceBank: zeri_base_vo_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 2c8e7a10403b4e74b8ffb5d63668346e, type: 3}
+      - {fileID: 8300000, guid: cf9512ca711890f42ab7a20e6b2a1370, type: 3}
+      - {fileID: 8300000, guid: f5f96785297eaba4d834d4417e740161, type: 3}
+      - {fileID: 8300000, guid: 91b078192cdcaf54285d0eb30137e788, type: 3}
+      - {fileID: 8300000, guid: 6c4b74f9fae377946a1a0fbb5ea648fe, type: 3}
+      - {fileID: 8300000, guid: 4e6502ee901a4c144b860efba2bf7eee, type: 3}
+      - {fileID: 8300000, guid: 2e60398c33da6964ca97b7b4a04b372f, type: 3}
+      - {fileID: 8300000, guid: 37087621d13251747b3a51d66b963823, type: 3}
+  - key: Zeri.VOR
+    eventName: Play_vo_Zeri_ZeriR_cast3D
+    sourceBank: zeri_base_vo_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 3e821fc478a2c9f43b915f4fe2b6ab24, type: 3}
+      - {fileID: 8300000, guid: f1e18532761a33c45a1333d6e67e7e7e, type: 3}
+      - {fileID: 8300000, guid: 29a90055fe26f9048ad63cb706963f38, type: 3}
+  - key: Zeri.VOREnd
+    eventName: Play_vo_Zeri_ZeriR_OnBuffDeactivate
+    sourceBank: zeri_base_vo_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 6faa78768b74fa547816a0294800253b, type: 3}
+      - {fileID: 8300000, guid: 139513ab2053e6a49a817599265f2d48, type: 3}
+      - {fileID: 8300000, guid: 4086093db8d632e4eab87b44ca385c99, type: 3}
+  - key: Zeri.VOKill
+    eventName: Play_vo_Zeri_Kill3DGeneral
+    sourceBank: zeri_base_vo_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: a79c27420af6150488eae499118179f1, type: 3}
+      - {fileID: 8300000, guid: 751c6f421005a9d4e9ba095082c33676, type: 3}
+      - {fileID: 8300000, guid: 87718ed2d53c7824e826b0a48c6e3881, type: 3}
+      - {fileID: 8300000, guid: 44461d846326c5e43b11639874183b30, type: 3}
+      - {fileID: 8300000, guid: 490d22fc3225a814ebbf45b526b20f6d, type: 3}
+      - {fileID: 8300000, guid: f7f78aa36a612674584b55ee4ed3571f, type: 3}
+      - {fileID: 8300000, guid: e9831bbe4c986b245a1f139681696e16, type: 3}
+      - {fileID: 8300000, guid: d6aa713c75f21ee4d81fe171d37a5d50, type: 3}
+      - {fileID: 8300000, guid: 1bac687aa8e2eaf4fac157c60f6e5676, type: 3}
+      - {fileID: 8300000, guid: 5f35fa2e7d6cd6b4797e502099544754, type: 3}
+      - {fileID: 8300000, guid: 286e61e97a5aa2d4fb66cdec6e2873e7, type: 3}
+      - {fileID: 8300000, guid: bf55e88ce469fa348ab2612371560508, type: 3}
+  - key: Zeri.VOMove
+    eventName: Play_vo_Zeri_Move2DStandard
+    sourceBank: zeri_base_vo_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 26d601984e4744e4a8f03d4566c1a676, type: 3}
+      - {fileID: 8300000, guid: 96da560d886c80746874e193ffd3e0a3, type: 3}
+      - {fileID: 8300000, guid: 4c89e50afec23b542894ebde6d3ca757, type: 3}
+      - {fileID: 8300000, guid: e2d75e4c73c1aa3439007391915c64af, type: 3}
+      - {fileID: 8300000, guid: 5071e1127f376f448b062612c9b38170, type: 3}
+      - {fileID: 8300000, guid: ae7f1b2d0fb093946aca1c8ec882d3a4, type: 3}
+      - {fileID: 8300000, guid: b97697aadc45fe04187902c29c18cd82, type: 3}
+      - {fileID: 8300000, guid: b8b58780854759a4fbe5c06c664763bf, type: 3}
+      - {fileID: 8300000, guid: 2ad8fc3294be09243b843e31761376a7, type: 3}
+      - {fileID: 8300000, guid: 9ac6a810122656d47a614c0cd424180f, type: 3}
+      - {fileID: 8300000, guid: cf91b6390c896b54dbcff4dceae6c0da, type: 3}
+      - {fileID: 8300000, guid: 186585846060cba4aaa5528ce20917bc, type: 3}
+      - {fileID: 8300000, guid: eedf1630a810d8f4e85316732eb6ec01, type: 3}
+      - {fileID: 8300000, guid: 28b652051b5899c428e2efe4c043fcf5, type: 3}
+      - {fileID: 8300000, guid: 67d5058147ef30b4e977a7262707a3b1, type: 3}
+      - {fileID: 8300000, guid: 0634fa5fb45951d4987c32e46f0e8371, type: 3}
+      - {fileID: 8300000, guid: fbfae78f5f2cf7a4cb7c5693ebac84c3, type: 3}
+      - {fileID: 8300000, guid: 6174bf92281bee745902278fd0bee153, type: 3}
+      - {fileID: 8300000, guid: cb8c975084e9780459c0242dd5464e21, type: 3}
+      - {fileID: 8300000, guid: 32022cafea207814da8689b886804fa3, type: 3}
+      - {fileID: 8300000, guid: 6c1d6ebf4d8b9c7438e92ffc184ab38e, type: 3}
+  - key: Zeri.VOFirstMove
+    eventName: Play_vo_Zeri_Move2DFirst
+    sourceBank: zeri_base_vo_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: eb4cdb2c630c5ac4e85c7f9d8a1352c6, type: 3}
+      - {fileID: 8300000, guid: d698c261f94da3840abcbe5bf00fa39c, type: 3}
+      - {fileID: 8300000, guid: 57f1f5a561aa546469e688cda517a6e9, type: 3}
+      - {fileID: 8300000, guid: cc8046f4c1398e643ae051b4036a5921, type: 3}
+      - {fileID: 8300000, guid: ec9aecce022ec54498f3a5cb649b05c3, type: 3}
+  - key: Zeri.VORecall
+    eventName: Play_vo_Zeri_Recall3DGeneral
+    sourceBank: zeri_base_vo_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 75d0596a28726e24ebd04ab23fcf10ca, type: 3}
+      - {fileID: 8300000, guid: 71c96b94ce9372e40a64a5f5226cc0d0, type: 3}
+      - {fileID: 8300000, guid: 0a996ce8a0b9355439afcc69685dd50f, type: 3}
+  - key: Zeri.VODeath
+    eventName: Play_vo_Zeri_Death3D
+    sourceBank: zeri_base_vo_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 675711d4c5079a04080b804b51c0f86c, type: 3}
+      - {fileID: 8300000, guid: 8824f313becc1cb4ab867281f2d98375, type: 3}
+      - {fileID: 8300000, guid: 2aa288244c62475498bbd896893c40d5, type: 3}
+      - {fileID: 8300000, guid: ef0dd48976e705d4ebd981890de011f2, type: 3}
+  - key: Zeri.VORespawn
+    eventName: Play_vo_Zeri_Respawn2DGeneral
+    sourceBank: zeri_base_vo_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 17b9f5d11b97cd643b8ddd7886f7734e, type: 3}
+      - {fileID: 8300000, guid: acc97b35e3ed7e646853d33947219c83, type: 3}
+      - {fileID: 8300000, guid: a316a6aa8b801654e8afaec72d4e0bfc, type: 3}
+      - {fileID: 8300000, guid: 03d909e918e090042a9d2b556fa1e2f8, type: 3}

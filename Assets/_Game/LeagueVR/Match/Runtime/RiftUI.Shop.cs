@@ -61,6 +61,8 @@ namespace LeagueVR.Match
             [ChampionId.Akshan] = new[] { ("STARTER", new[] { 1055, 2003 }, false), ("CORE BUILD", new[] { 6672, 3031, 3087 }, true), ("BOOTS", new[] { 3006 }, false), ("SITUATIONAL", new[] { 3036, 3072, 3139, 3026, 3095 }, false) },
             [ChampionId.Brand] = new[] { ("STARTER", new[] { 1056, 2003 }, false), ("CORE BUILD", new[] { 6653, 2503, 3116 }, true), ("BOOTS", new[] { 3020 }, false), ("SITUATIONAL", new[] { 3157, 3135, 3089, 3165 }, false) },
             [ChampionId.Yunara] = new[] { ("STARTER", new[] { 1055, 2003 }, false), ("CORE BUILD", new[] { 3153, 3124, 3302 }, true), ("BOOTS", new[] { 3006 }, false), ("SITUATIONAL", new[] { 3091, 3085, 3036, 3026 }, false) },
+            // Zeri: op.gg / Lolalytics 16.20 most common build (Yun Tal Wildarrows, Runaan's Hurricane, Infinity Edge).
+            [ChampionId.Zeri] = new[] { ("STARTER", new[] { 1086, 2003 }, false), ("CORE BUILD", new[] { 3032, 3085, 3031 }, true), ("BOOTS", new[] { 3008, 3006 }, false), ("SITUATIONAL", new[] { 3036, 3026, 3139, 6673, 3072 }, false) },
         };
 
         class ShopRow

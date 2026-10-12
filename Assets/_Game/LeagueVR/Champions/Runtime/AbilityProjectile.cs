@@ -340,6 +340,7 @@ namespace LeagueVR.Champions
         static readonly Dictionary<Color, Material> materials = new();
         static readonly Dictionary<(Color, bool, bool), Material> glassMaterials = new();
         static Texture2D softDot;
+        static Material moteMaterial;
 
         /// <summary>Translucent unlit material: alpha blended, or additive for glows; optionally visible from inside (two sided).</summary>
         public static Material Glass(Color color, bool additive = false, bool twoSided = false)
@@ -412,9 +413,13 @@ namespace LeagueVR.Champions
                 alphaKeys = new[] { new GradientAlphaKey(0, 0), new GradientAlphaKey(color.a, .2f), new GradientAlphaKey(0, 1) },
             };
             var renderer = go.GetComponent<ParticleSystemRenderer>();
-            var material = new Material(Glass(Color.white, true)) { name = "Ability mote", hideFlags = HideFlags.HideAndDontSave };
-            material.SetTexture("_BaseMap", SoftDot);
-            renderer.sharedMaterial = material;
+            // One shared soft-dot material: particle colour comes from the particles, so every caller can use it.
+            if (!moteMaterial)
+            {
+                moteMaterial = new Material(Glass(Color.white, true)) { name = "Ability mote", hideFlags = HideFlags.HideAndDontSave };
+                moteMaterial.SetTexture("_BaseMap", SoftDot);
+            }
+            renderer.sharedMaterial = moteMaterial;
             renderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
             ps.Play();
             return ps;

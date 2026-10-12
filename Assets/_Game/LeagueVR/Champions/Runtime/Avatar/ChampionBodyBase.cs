@@ -275,8 +275,16 @@ namespace LeagueVR.Champions
             bool alive = player.Health && player.Health.IsAlive;
             foreach (var r in bodyRenderers)
                 if (r)
-                    r.forceRenderingOff = !alive;
+                    r.forceRenderingOff = !alive || Hidden;
+            if (shadowObject && shadowObject.activeSelf == Hidden)
+                shadowObject.SetActive(!Hidden);
         }
+
+        /// <summary>
+        /// Hides the whole first-person body and its shadow while the view is outside it (Zeri watching her own vault
+        /// from behind); the body keeps solving so it reappears posed.
+        /// </summary>
+        public bool Hidden { get; set; }
 
         void OnAfterInputUpdate()
         {

@@ -96,8 +96,11 @@ MonoBehaviour:
   moveSpeed: 345
   healthRegen: 3
   manaRegen: 0
+  healthRegenGrowth: 0.5
+  manaRegenGrowth: 0
   attackReach: 2.4
   bodyHeight: 1.75
   kitTuning: {fileID: 0}
   kitPrefab: {fileID: 0}
   kitMaterial: {fileID: 0}
+  skillOrder: QEW

@@ -5,7 +5,8 @@ namespace LeagueVR.Champions
 {
     public enum ChampionId
     {
-        Gwen, Zoe, Aatrox, Akshan, Brand, Pantheon, Yunara
+        // Append only: champion assets store these as numbers.
+        Gwen, Zoe, Aatrox, Akshan, Brand, Pantheon, Yunara, Zeri
     }
 
     [Serializable]
@@ -31,7 +32,7 @@ namespace LeagueVR.Champions
         public GameObject model, firstPerson;
         public AnimationClip idle;
         public Color color;
-        public float health, healthGrowth, armor, armorGrowth, magicResist, magicResistGrowth, mana, manaGrowth, attackDamage, attackGrowth, attackSpeed, attackSpeedGrowth, moveSpeed, healthRegen, manaRegen;
+        public float health, healthGrowth, armor, armorGrowth, magicResist, magicResistGrowth, mana, manaGrowth, attackDamage, attackGrowth, attackSpeed, attackSpeedGrowth, moveSpeed, healthRegen, manaRegen, healthRegenGrowth, manaRegenGrowth;
         public float attackReach = 9, bodyHeight = 1.75f;
 
         [Header("Kit assets (optional, kit specific)")]
@@ -44,10 +45,30 @@ namespace LeagueVR.Champions
 
         public bool UsesMana => mana > 0;
 
+        [Tooltip("League's usual order for maxing the basic abilities, first to last (for example QEW).")]
+        public string skillOrder = "QEW";
+
+        // League's standard skill path (Q W E Q Q R Q E Q E R E E W W R W W): the first ability maxed ranks up at
+        // 4, 5, 7 and 9, the second at 8, 10, 12 and 13, the last at 14, 15, 17 and 18.
+        static readonly int[][] RankUps = { new[] { 4, 5, 7, 9 }, new[] { 8, 10, 12, 13 }, new[] { 14, 15, 17, 18 } };
+
         /// <summary>
-        /// Ability rank from champion level (no skill points in this prototype): basic abilities gain a rank every
-        /// three levels and max at 13, the ultimate ranks up at 11 and 16 like League.
+        /// Ability rank from champion level (no skill points in this game), along League's standard skill path for the
+        /// champion's <see cref="skillOrder"/>. In VR all three basic abilities start at rank 1. The ultimate unlocks at
+        /// level 6 (rank 0 before) and ranks up at 11 and 16.
         /// </summary>
-        public int Rank(int slot, int level) => slot == 3 ? (level >= 16 ? 3 : level >= 11 ? 2 : 1) : Mathf.Clamp(1 + (level - 1) / 3, 1, 5);
+        public int Rank(int slot, int level)
+        {
+            if (slot == 3)
+                return level >= 16 ? 3 : level >= 11 ? 2 : level >= 6 ? 1 : 0;
+            int order = string.IsNullOrEmpty(skillOrder) ? -1 : skillOrder.IndexOf("QWE"[Mathf.Clamp(slot, 0, 2)]);
+            if (order < 0)
+                order = Mathf.Clamp(slot, 0, 2);
+            int rank = 1;
+            foreach (int at in RankUps[order])
+                if (level >= at)
+                    rank++;
+            return rank;
+        }
     }
 }

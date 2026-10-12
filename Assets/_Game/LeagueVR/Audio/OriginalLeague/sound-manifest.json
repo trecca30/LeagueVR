@@ -1200,6 +1200,613 @@
           ]
         }
       ]
+    },
+    {
+      "key": "Zeri.Q",
+      "eventName": "Play_sfx_Zeri_ZeriQ_OnCast",
+      "bank": "zeri_base_sfx_events",
+      "eventId": 3694044931,
+      "layers": [
+        {
+          "clips": [
+            "zeri_base_sfx-907706576.wav",
+            "zeri_base_sfx-108264510.wav",
+            "zeri_base_sfx-997207894.wav",
+            "zeri_base_sfx-326019419.wav",
+            "zeri_base_sfx-719180171.wav",
+            "zeri_base_sfx-93976835.wav",
+            "zeri_base_sfx-1062499827.wav",
+            "zeri_base_sfx-453351563.wav",
+            "zeri_base_sfx-358319788.wav",
+            "zeri_base_sfx-754218797.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Zeri.QPierce",
+      "eventName": "Play_sfx_Zeri_ZeriQMisPierceParent_OnMissileCast",
+      "bank": "zeri_base_sfx_events",
+      "eventId": 2679681782,
+      "layers": [
+        {
+          "clips": [
+            "zeri_base_sfx-558322617.wav",
+            "zeri_base_sfx-391948362.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Zeri.QOvercharged",
+      "eventName": "Play_sfx_Zeri_ZeriQMisEmpowered_OnMissileLaunch",
+      "bank": "zeri_base_sfx_events",
+      "eventId": 1336278714,
+      "layers": [
+        {
+          "clips": [
+            "zeri_base_sfx-908210576.wav",
+            "zeri_base_sfx-61888793.wav",
+            "zeri_base_sfx-115754526.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Zeri.QHit",
+      "eventName": "Play_sfx_Zeri_ZeriQMis_hit",
+      "bank": "zeri_base_sfx_events",
+      "eventId": 3892773221,
+      "layers": [
+        {
+          "clips": [
+            "zeri_base_sfx-884025587.wav",
+            "zeri_base_sfx-592135228.wav",
+            "zeri_base_sfx-399128514.wav",
+            "zeri_base_sfx-192633793.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Zeri.QHitEmpowered",
+      "eventName": "Play_sfx_Zeri_ZeriQMisEmpowered_hit",
+      "bank": "zeri_base_sfx_events",
+      "eventId": 3656048561,
+      "layers": [
+        {
+          "clips": [
+            "zeri_base_sfx-399128514.wav",
+            "zeri_base_sfx-192633793.wav",
+            "zeri_base_sfx-592135228.wav",
+            "zeri_base_sfx-884025587.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Zeri.BatteryShot",
+      "eventName": "Play_sfx_Zeri_ZeriQBasicAttack_OnCast",
+      "bank": "zeri_base_sfx_events",
+      "eventId": 1863352185,
+      "layers": [
+        {
+          "clips": [
+            "zeri_base_sfx-445038055.wav",
+            "zeri_base_sfx-993664368.wav",
+            "zeri_base_sfx-550061840.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Zeri.BatteryHit",
+      "eventName": "Play_sfx_Zeri_ZeriQBasicAttack_OnHit",
+      "bank": "zeri_base_sfx_events",
+      "eventId": 3316988227,
+      "layers": [
+        {
+          "clips": [
+            "zeri_base_sfx-458330455.wav",
+            "zeri_base_sfx-551334229.wav",
+            "zeri_base_sfx-218019124.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Zeri.ChargedShot",
+      "eventName": "Play_sfx_Zeri_ZeriQBasicAttackEmpowered_OnCast",
+      "bank": "zeri_base_sfx_events",
+      "eventId": 1650942363,
+      "layers": [
+        {
+          "clips": [
+            "zeri_base_sfx-313194394.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Zeri.ChargedHit",
+      "eventName": "Play_sfx_Zeri_ZeriQBasicAttackEmpowered_OnHit",
+      "bank": "zeri_base_sfx_events",
+      "eventId": 1129686833,
+      "layers": [
+        {
+          "clips": [
+            "zeri_base_sfx-945153067.wav",
+            "zeri_base_sfx-12282151.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Zeri.PassiveReady",
+      "eventName": "Play_sfx_Zeri_ZeriQPassiveReady_OnBuffCast",
+      "bank": "zeri_base_sfx_events",
+      "eventId": 2353957900,
+      "layers": [
+        {
+          "clips": [
+            "zeri_base_sfx-371733252.wav",
+            "zeri_base_sfx-452027371.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Zeri.WCast",
+      "eventName": "Play_sfx_Zeri_ZeriW_OnCast",
+      "bank": "zeri_base_sfx_events",
+      "eventId": 1894197573,
+      "layers": [
+        {
+          "clips": [
+            "zeri_base_sfx-582351336.wav",
+            "zeri_base_sfx-836440996.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Zeri.WLaunch",
+      "eventName": "Play_sfx_Zeri_ZeriW_OnMissileLaunch",
+      "bank": "zeri_base_sfx_events",
+      "eventId": 3918553257,
+      "layers": [
+        {
+          "clips": [
+            "zeri_base_sfx-962622354.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Zeri.WHit",
+      "eventName": "Play_sfx_Zeri_ZeriW_hit",
+      "bank": "zeri_base_sfx_events",
+      "eventId": 485117326,
+      "layers": [
+        {
+          "clips": [
+            "zeri_base_sfx-823649689.wav",
+            "zeri_base_sfx-129591119.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Zeri.WLaser",
+      "eventName": "Play_sfx_Zeri_ZeriW_beam_buffactivate",
+      "bank": "zeri_base_sfx_events",
+      "eventId": 2748688001,
+      "layers": [
+        {
+          "clips": [
+            "zeri_base_sfx-63336871.wav",
+            "zeri_base_sfx-528495880.wav"
+          ]
+        },
+        {
+          "clips": [
+            "zeri_base_sfx-807748196.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Zeri.E",
+      "eventName": "Play_sfx_Zeri_ZeriE_cast",
+      "bank": "zeri_base_sfx_events",
+      "eventId": 2831460628,
+      "layers": [
+        {
+          "clips": [
+            "zeri_base_sfx-145417287.wav",
+            "zeri_base_sfx-16134607.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Zeri.ELand",
+      "eventName": "Play_sfx_Zeri_ZeriE_foley_land_hit",
+      "bank": "zeri_base_sfx_events",
+      "eventId": 4212871628,
+      "layers": [
+        {
+          "clips": [
+            "zeri_base_sfx-536653330.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Zeri.ERounds",
+      "eventName": "Play_sfx_Zeri_ZeriESpecialRounds_OnBuffActivate",
+      "bank": "zeri_base_sfx_events",
+      "eventId": 2843563084,
+      "layers": [
+        {
+          "clips": [
+            "zeri_base_sfx-716657168.wav",
+            "zeri_base_sfx-448216337.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Zeri.R",
+      "eventName": "Play_sfx_Zeri_ZeriR_OnCast",
+      "bank": "zeri_base_sfx_events",
+      "eventId": 3978286902,
+      "layers": [
+        {
+          "clips": [
+            "zeri_base_sfx-598475591.wav",
+            "zeri_base_sfx-824076144.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Zeri.ROvercharged",
+      "eventName": "Play_sfx_Zeri_ZeriR_OnBuffActivate",
+      "bank": "zeri_base_sfx_events",
+      "eventId": 2835561691,
+      "layers": [
+        {
+          "clips": [
+            "zeri_base_sfx-129553125.wav",
+            "zeri_base_sfx-787194996.wav",
+            "zeri_base_sfx-905497928.wav",
+            "zeri_base_sfx-29607470.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Zeri.REnd",
+      "eventName": "Play_sfx_Zeri_ZeriR_OnBuffDeactivate",
+      "bank": "zeri_base_sfx_events",
+      "eventId": 2350397298,
+      "layers": [
+        {
+          "clips": [
+            "zeri_base_sfx-709292407.wav",
+            "zeri_base_sfx-120270919.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Zeri.RChainHit",
+      "eventName": "Play_sfx_Zeri_ZeriRChain_hit",
+      "bank": "zeri_base_sfx_events",
+      "eventId": 3258978042,
+      "layers": [
+        {
+          "clips": [
+            "zeri_base_sfx-32801128.wav",
+            "zeri_base_sfx-474654207.wav",
+            "zeri_base_sfx-263194982.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Zeri.Death",
+      "eventName": "Play_sfx_Zeri_Death3D_cast",
+      "bank": "zeri_base_sfx_events",
+      "eventId": 1101815622,
+      "layers": [
+        {
+          "clips": [
+            "zeri_base_sfx-180968788.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Zeri.Respawn",
+      "eventName": "Play_sfx_Zeri_Respawn3D_buffactivate",
+      "bank": "zeri_base_sfx_events",
+      "eventId": 208252801,
+      "layers": [
+        {
+          "clips": [
+            "zeri_base_sfx-506972980.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Zeri.VOQ",
+      "eventName": "Play_vo_Zeri_ZeriQ_cast3D",
+      "bank": "zeri_base_vo_events",
+      "eventId": 3567843297,
+      "layers": [
+        {
+          "clips": [
+            "zeri_base_vo-364990537.wav",
+            "zeri_base_vo-842605158.wav",
+            "zeri_base_vo-1004844798.wav",
+            "zeri_base_vo-660584459.wav",
+            "zeri_base_vo-409077515.wav",
+            "zeri_base_vo-368722665.wav",
+            "zeri_base_vo-360285352.wav",
+            "zeri_base_vo-1648398.wav",
+            "zeri_base_vo-951071593.wav",
+            "zeri_base_vo-814322824.wav",
+            "zeri_base_vo-152053973.wav",
+            "zeri_base_vo-264675913.wav",
+            "zeri_base_vo-922102291.wav",
+            "zeri_base_vo-488202413.wav",
+            "zeri_base_vo-886205754.wav",
+            "zeri_base_vo-29570697.wav",
+            "zeri_base_vo-654632167.wav",
+            "zeri_base_vo-231015849.wav",
+            "zeri_base_vo-275256359.wav",
+            "zeri_base_vo-212711241.wav",
+            "zeri_base_vo-160975847.wav",
+            "zeri_base_vo-474927060.wav",
+            "zeri_base_vo-1067814836.wav",
+            "zeri_base_vo-674735739.wav",
+            "zeri_base_vo-103279141.wav",
+            "zeri_base_vo-943671573.wav",
+            "zeri_base_vo-494314618.wav",
+            "zeri_base_vo-104473019.wav",
+            "zeri_base_vo-5971746.wav",
+            "zeri_base_vo-214492122.wav",
+            "zeri_base_vo-467058813.wav",
+            "zeri_base_vo-983258606.wav",
+            "zeri_base_vo-479634078.wav",
+            "zeri_base_vo-96273410.wav",
+            "zeri_base_vo-26406604.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Zeri.VOCharged",
+      "eventName": "Play_vo_Zeri_ZeriQBasicAttackEmpowered_cast3D",
+      "bank": "zeri_base_vo_events",
+      "eventId": 2110208161,
+      "layers": [
+        {
+          "clips": [
+            "zeri_base_vo-210685588.wav",
+            "zeri_base_vo-454897489.wav",
+            "zeri_base_vo-873795897.wav",
+            "zeri_base_vo-433272055.wav",
+            "zeri_base_vo-391717531.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Zeri.VOPassiveReady",
+      "eventName": "Play_vo_Zeri_ZeriQPassiveReady_OnBuffActivate",
+      "bank": "zeri_base_vo_events",
+      "eventId": 3467672910,
+      "layers": [
+        {
+          "clips": [
+            "zeri_base_vo-692507426.wav",
+            "zeri_base_vo-77056118.wav",
+            "zeri_base_vo-857516720.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Zeri.VOW",
+      "eventName": "Play_vo_Zeri_ZeriW_cast3D",
+      "bank": "zeri_base_vo_events",
+      "eventId": 2758358879,
+      "layers": [
+        {
+          "clips": [
+            "zeri_base_vo-801290912.wav",
+            "zeri_base_vo-362769563.wav",
+            "zeri_base_vo-690016333.wav",
+            "zeri_base_vo-293726846.wav",
+            "zeri_base_vo-691579459.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Zeri.VOE",
+      "eventName": "Play_vo_Zeri_ZeriE_cast3D",
+      "bank": "zeri_base_vo_events",
+      "eventId": 4100512261,
+      "layers": [
+        {
+          "clips": [
+            "zeri_base_vo-817262997.wav",
+            "zeri_base_vo-1045531416.wav",
+            "zeri_base_vo-417382378.wav",
+            "zeri_base_vo-34967713.wav",
+            "zeri_base_vo-938182458.wav",
+            "zeri_base_vo-7961106.wav",
+            "zeri_base_vo-396161513.wav",
+            "zeri_base_vo-892710127.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Zeri.VOR",
+      "eventName": "Play_vo_Zeri_ZeriR_cast3D",
+      "bank": "zeri_base_vo_events",
+      "eventId": 3516206108,
+      "layers": [
+        {
+          "clips": [
+            "zeri_base_vo-149658338.wav",
+            "zeri_base_vo-746637048.wav",
+            "zeri_base_vo-228088221.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Zeri.VOREnd",
+      "eventName": "Play_vo_Zeri_ZeriR_OnBuffDeactivate",
+      "bank": "zeri_base_vo_events",
+      "eventId": 3581916398,
+      "layers": [
+        {
+          "clips": [
+            "zeri_base_vo-284642243.wav",
+            "zeri_base_vo-533854585.wav",
+            "zeri_base_vo-663679841.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Zeri.VOKill",
+      "eventName": "Play_vo_Zeri_Kill3DGeneral",
+      "bank": "zeri_base_vo_events",
+      "eventId": 3014120780,
+      "layers": [
+        {
+          "clips": [
+            "zeri_base_vo-411829512.wav",
+            "zeri_base_vo-694195331.wav",
+            "zeri_base_vo-790767080.wav",
+            "zeri_base_vo-942191672.wav",
+            "zeri_base_vo-1067638489.wav",
+            "zeri_base_vo-1070143200.wav",
+            "zeri_base_vo-935562237.wav",
+            "zeri_base_vo-248167206.wav",
+            "zeri_base_vo-729541879.wav",
+            "zeri_base_vo-334589527.wav",
+            "zeri_base_vo-387531106.wav",
+            "zeri_base_vo-565291211.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Zeri.VOMove",
+      "eventName": "Play_vo_Zeri_Move2DStandard",
+      "bank": "zeri_base_vo_events",
+      "eventId": 4276379427,
+      "layers": [
+        {
+          "clips": [
+            "zeri_base_vo-568320618.wav",
+            "zeri_base_vo-57357878.wav",
+            "zeri_base_vo-628957142.wav",
+            "zeri_base_vo-221193001.wav",
+            "zeri_base_vo-785478340.wav",
+            "zeri_base_vo-872097181.wav",
+            "zeri_base_vo-198540728.wav",
+            "zeri_base_vo-468511327.wav",
+            "zeri_base_vo-533008762.wav",
+            "zeri_base_vo-772214958.wav",
+            "zeri_base_vo-719963113.wav",
+            "zeri_base_vo-754296699.wav",
+            "zeri_base_vo-868859912.wav",
+            "zeri_base_vo-143263536.wav",
+            "zeri_base_vo-856746756.wav",
+            "zeri_base_vo-924075588.wav",
+            "zeri_base_vo-447830676.wav",
+            "zeri_base_vo-450883924.wav",
+            "zeri_base_vo-156503077.wav",
+            "zeri_base_vo-606924245.wav",
+            "zeri_base_vo-580065854.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Zeri.VOFirstMove",
+      "eventName": "Play_vo_Zeri_Move2DFirst",
+      "bank": "zeri_base_vo_events",
+      "eventId": 3436419502,
+      "layers": [
+        {
+          "clips": [
+            "zeri_base_vo-604438049.wav",
+            "zeri_base_vo-784581292.wav",
+            "zeri_base_vo-464559290.wav",
+            "zeri_base_vo-269637241.wav",
+            "zeri_base_vo-866043729.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Zeri.VORecall",
+      "eventName": "Play_vo_Zeri_Recall3DGeneral",
+      "bank": "zeri_base_vo_events",
+      "eventId": 743464061,
+      "layers": [
+        {
+          "clips": [
+            "zeri_base_vo-431366881.wav",
+            "zeri_base_vo-861917129.wav",
+            "zeri_base_vo-5903876.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Zeri.VODeath",
+      "eventName": "Play_vo_Zeri_Death3D",
+      "bank": "zeri_base_vo_events",
+      "eventId": 2767017080,
+      "layers": [
+        {
+          "clips": [
+            "zeri_base_vo-846434.wav",
+            "zeri_base_vo-280889821.wav",
+            "zeri_base_vo-785726078.wav",
+            "zeri_base_vo-490169922.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Zeri.VORespawn",
+      "eventName": "Play_vo_Zeri_Respawn2DGeneral",
+      "bank": "zeri_base_vo_events",
+      "eventId": 3392108247,
+      "layers": [
+        {
+          "clips": [
+            "zeri_base_vo-381572194.wav",
+            "zeri_base_vo-857116838.wav",
+            "zeri_base_vo-57528624.wav",
+            "zeri_base_vo-37874832.wav"
+          ]
+        }
+      ]
     }
   ],
   "media": [
@@ -2625,5 +3232,6 @@
       "sourceWemSHA256": "b2c3e320c9c1ca5b520806307308ab4075225c142782416ef96ee0f187e604a0"
     }
   ],
-  "notes": "Decoded unchanged original Wwise media from the local League installation. Event mapping follows verified bank event IDs and Play action container lineage. Unity mixes the selected original layers; Wwise RTPC/filter/delay processing is not recreated."
+  "notes": "Decoded unchanged original Wwise media from the local League installation. Event mapping follows verified bank event IDs and Play action container lineage. Unity mixes the selected original layers; Wwise RTPC/filter/delay processing is not recreated.",
+  "zeriNotes": "Zeri: original Wwise media from the local League installation (Zeri.wad.client, Zeri.en_US.wad.client), decoded with vgmstream r2117; events resolved through the bank HIRC (event -> action -> container -> media)."
 }

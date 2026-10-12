@@ -50,6 +50,21 @@ namespace LeagueVR
             "pan.r" => Make(name, 2.1f, Rumble(2f)),
             "pan.crash" => Make(name, 2.4f, Boom(70, 30, 1.6f) + Noise(.5f, .8f) + Delay(.05f, Clang(1.2f, .5f))),
             "pan.will" => Make(name, .9f, Clang(.8f, .5f) + Chime(660, .6f, .5f), .5f),
+            // Zeri: crackling electricity. A burst is baked into one clip (rounds 35 ms apart) so no round is throttled away.
+            "zeri.volley" => Make(name, .32f, Round(0, 2600) + Round(.035f, 2400) + Round(.07f, 2800) + Round(.105f, 2500) + Round(.14f, 2700) + Round(.175f, 2300) + Round(.21f, 2900), .6f),
+            "zeri.volley3" => Make(name, .3f, Round(0, 3200) + Round(.03f, 3000) + Round(.06f, 3400) + Sparkles(8, .25f, 2400, 6400, 11), .65f),
+            "zeri.hit" => Make(name, .18f, Noise(.005f, .9f) + Chime(2349, .05f, .6f) + Boom(240, 80, .04f, .5f) + Sparkles(4, .12f, 2400, 5200, 7), .6f),
+            "zeri.zap" => Make(name, .2f, Pew(1900, 700, .1f) + Noise(.006f, .6f) + Sparkles(3, .12f, 2600, 5000, 5), .6f),
+            "zeri.charged" => Make(name, .55f, Boom(220, 50, .2f, 1f) + Pew(2600, 400, .2f) + Clang(.1f, .4f) + Noise(.012f, .8f) + Whoosh(.3f, 400, 3600, .5f), .85f),
+            "zeri.ready" => Make(name, .5f, Chime(1568, .2f, .7f) + Delay(.08f, Chime(2349, .25f, .6f)) + Sparkles(6, .4f, 2600, 6000, 13), .55f),
+            "zeri.charge" => Make(name, .74f, Sweep(200, 1400, .72f) + Rumble(.72f) + Delay(.16f, Noise(.005f, .4f)) + Delay(.3f, Noise(.005f, .5f)) + Delay(.42f, Noise(.005f, .6f)) + Delay(.52f, Noise(.005f, .75f)) + Delay(.6f, Noise(.005f, .9f)), .6f),
+            "zeri.w" => Make(name, .32f, Pew(600, 2800, .16f) + Whoosh(.16f, 900, 5000, .5f) + Delay(.16f, Chime(1976, .14f, .5f)) + Boom(260, 120, .05f, .4f), .75f),
+            "zeri.telegraph" => Make(name, .85f, Hum(440, .85f, .3f) + Sweep(500, 1800, .8f) + Sparkles(6, .8f, 2200, 5200, 17), .45f),
+            "zeri.laser" => Make(name, 1f, Hum(330, 1f, .5f) + Hum(660, 1f, .25f) + Sweep(1400, 1600, 1f) + Sparkles(12, .9f, 2400, 5200, 9) + Boom(180, 60, .3f, .7f), .65f),
+            "zeri.e" => Make(name, .36f, Pew(300, 2600, .3f) + Whoosh(.34f, 400, 6000, .7f) + Sparkles(6, .3f, 2200, 5200, 4), .7f),
+            "zeri.crashcharge" => Make(name, .6f, Sweep(150, 700, .55f) + Rumble(.55f) + Sparkles(8, .5f, 1800, 5000, 19), .5f),
+            "zeri.r" => Make(name, 1.8f, Noise(.02f, 1.2f) + Boom(120, 26, 1.2f, 1.1f) + Whoosh(1f, 300, 7000, .9f) + Delay(.02f, Clang(.9f, .5f)) + Sparkles(16, 1.3f, 1400, 6500, 21), .9f),
+            "zeri.chain" => Make(name, .22f, Pew(3200, 1400, .09f) + Delay(.09f, Pew(1400, 2800, .09f)) + Noise(.012f, .7f) + Sparkles(6, .2f, 2000, 6000, 33), .6f),
             // Anyone else.
             "generic.attack" => Make(name, .25f, Whoosh(.2f, 600, 2400, .8f), .5f),
             "generic.hit" => Make(name, .3f, Thud(140, 70, .08f) + Noise(.02f, .4f), .55f),
@@ -85,6 +100,9 @@ namespace LeagueVR
             int offset = Mathf.RoundToInt(seconds * Rate);
             return new(i => i < offset ? 0 : voice[i - offset]);
         }
+
+        /// <summary>One electric round of Zeri's Burst Fire: a short falling zap with a crack, starting at <paramref name="at"/>.</summary>
+        static Voice Round(float at, float pitch) => Delay(at, Pew(pitch, pitch * .42f, .035f) + Noise(.004f, .9f));
 
         static Voice Arpeggio(float[] notes, float step, float decay)
         {

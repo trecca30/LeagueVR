@@ -389,7 +389,7 @@ namespace LeagueVR.Champions
             {
                 // Hips lag a little behind small leans (the spine bends instead) but follow steps and locomotion.
                 Vector3 lag = Geo.Flat(rootFlat) - desiredRoot;
-                float maxLag = moving ? .06f : .14f;
+                float maxLag = moving ? .02f : .14f;
                 if (lag.magnitude > 1.2f)
                     lag = Vector3.zero;
                 else if (lag.magnitude > maxLag)
@@ -441,18 +441,25 @@ namespace LeagueVR.Champions
 
         /// <summary>
         /// Procedural legs. Each foot stays planted on the floor until it falls too far behind where it belongs under
-        /// the body (or the body turns away from it); then it takes a step, lifted in a small arc, landing a little ahead
-        /// when walking. One foot steps at a time. No clip moves the hips, so the body never bobs in first person.
+        /// the body (or the body turns away from it); then it takes a step, lifted in a small arc. One foot steps at a
+        /// time, so while walking each foot stays planted for exactly one step of the other foot. It lands half a step
+        /// ahead of where the hips will be when it touches down, so the hips pass over it and it leaves the floor half a
+        /// step behind: the stance stays centred under the body at any speed instead of trailing behind it. No clip
+        /// moves the hips, so the body never bobs in first person.
         /// </summary>
         void StepFeet(BodyFrame frame, Quaternion yaw, bool advance, float dt)
         {
             if (feet.Length == 0)
                 return;
             Vector3 velocity = Geo.Flat(frame.locomotion);
-            float pace = Mathf.InverseLerp(.5f, 3.5f, velocity.magnitude);
-            bool moving = velocity.magnitude > .25f;
-            float duration = moving ? Mathf.Lerp(.34f, .22f, pace) : .3f;
-            float threshold = (moving ? Mathf.Lerp(.16f, .3f, pace) : .2f) * Scale;
+            float speed = velocity.magnitude;
+            float pace = Mathf.InverseLerp(.5f, 3.5f, speed);
+            bool moving = speed > .25f;
+            // Step length in metres (the body is already scaled to the player): longer strides as the pace rises,
+            // about 2.8 steps a second at a 2.5 m/s jog.
+            float stepLength = Mathf.Lerp(.45f, .95f, pace);
+            float duration = moving ? Mathf.Clamp(stepLength / speed, .22f, .42f) : .3f;
+            float threshold = moving ? .5f * speed * duration : .2f * Scale;
             Vector3 hips = new(root.position.x, frame.floorY, root.position.z);
 
             if (advance)
@@ -464,7 +471,7 @@ namespace LeagueVR.Champions
                 {
                     Vector3 home = Home(f, hips, yaw);
                     Quaternion homeRotation = yaw * f.restRotation;
-                    if (!f.placed || Geo.FlatDistance(f.planted, home) > 1.4f * Scale)
+                    if (!f.placed || Geo.FlatDistance(f.planted, home) > 1.4f * Mathf.Max(1, Scale))
                     {
                         // First frame, teleports, blinks and dashes: the feet simply land under the body.
                         f.planted = f.from = f.to = home;
@@ -487,10 +494,11 @@ namespace LeagueVR.Champions
                 {
                     due.from = due.planted;
                     due.fromRotation = due.plantedRotation;
-                    due.to = Home(due, hips, yaw) + velocity * duration * .9f;
+                    // The hips travel one step while the foot swings; it lands half a step past them.
+                    due.to = Home(due, hips, yaw) + velocity * duration * 1.5f;
                     due.toRotation = yaw * due.restRotation;
                     due.duration = duration;
-                    due.lift = (moving ? Mathf.Lerp(.07f, .13f, pace) : .05f) * Scale;
+                    due.lift = (moving ? Mathf.Lerp(.08f, .16f, pace) : .05f) * Scale;
                     due.progress = 0;
                 }
                 foreach (var f in feet)

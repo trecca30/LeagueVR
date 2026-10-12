@@ -5,7 +5,8 @@ namespace LeagueVR.Champions
 {
     /// <summary>
     /// Champion sounds. Champions with recorded League events in the sound bank (keys "Champion.Event", for example
-    /// "Gwen.QCast") play those; the others (Zoe, Pantheon) play synthesized effects from <see cref="ProceduralSfx"/>.
+    /// "Gwen.QCast" or "Zeri.Q") play those, Zeri through her own signal table with voice lines on a chance and a
+    /// cooldown like League; the others (Zoe, Pantheon) play synthesized effects from <see cref="ProceduralSfx"/>.
     /// Casts play at the head, impacts in 3D where they land, and repeated impacts within a moment play once.
     /// </summary>
     [DefaultExecutionOrder(250)]
@@ -52,7 +53,67 @@ namespace LeagueVR.Champions
                 ["Crash"] = ("pan.crash", 1f, true),
                 ["Will"] = ("pan.will", .45f, false),
             },
+            ["Zeri"] = new()
+            {
+                ["Volley"] = ("zeri.volley", .5f, false),
+                ["Volley3"] = ("zeri.volley3", .55f, false),
+                ["VolleyPierce"] = ("zeri.volley", .5f, false),
+                ["Hit"] = ("zeri.hit", .5f, true),
+                ["Zap"] = ("zeri.zap", .5f, false),
+                ["ChargedShot"] = ("zeri.charged", .85f, false),
+                ["Charged"] = ("zeri.ready", .45f, false),
+                ["PulseCharge"] = ("zeri.charge", .5f, false),
+                ["W"] = ("zeri.w", .7f, false),
+                ["PulseHit"] = ("zeri.hit", .5f, true),
+                ["LaserCharge"] = ("zeri.telegraph", .6f, true),
+                ["Laser"] = ("zeri.laser", .8f, true),
+                ["E"] = ("zeri.e", .65f, false),
+                ["CrashCharge"] = ("zeri.crashcharge", .55f, false),
+                ["Crash"] = ("zeri.r", 1f, false),
+                ["Chain"] = ("zeri.chain", .5f, true),
+                ["Execute"] = ("zeri.charged", .7f, true),
+            },
         };
+
+        /// <summary>
+        /// Original League recordings per champion: signal -> bank events (without the champion prefix), each with a
+        /// volume, whether it plays where it happened, a chance and a cooldown (voice lines). A signal listed here with no
+        /// events is silent; signals not listed fall back to the synthesized table.
+        /// </summary>
+        static readonly Dictionary<string, Dictionary<string, (string key, float volume, bool spatial, float chance, float cooldown)[]>> Original = new()
+        {
+            ["Zeri"] = new()
+            {
+                // Levels from the clips' loudness: her effects are mastered hot, her voice lines quieter.
+                ["Volley"] = new[] { ("Q", .5f, false, 1f, 0f), ("VOQ", 1f, false, .1f, 12f) },
+                ["VolleyPierce"] = new[] { ("QPierce", .6f, false, 1f, 0f), ("VOQ", 1f, false, .1f, 12f) },
+                ["Volley3"] = new[] { ("QOvercharged", .75f, false, 1f, 0f), ("VOQ", 1f, false, .12f, 12f) },
+                ["Hit"] = new[] { ("QHit", .5f, true, 1f, .08f) },
+                ["Chain"] = new[] { ("RChainHit", .55f, true, 1f, .06f) },
+                ["Zap"] = new[] { ("BatteryShot", .75f, false, 1f, 0f) },
+                ["BatteryHit"] = new[] { ("BatteryHit", .45f, true, 1f, 0f) },
+                ["ChargedShot"] = new[] { ("ChargedShot", .6f, false, 1f, 0f), ("VOCharged", 1f, false, .35f, 10f) },
+                ["ChargedHit"] = new[] { ("ChargedHit", .6f, true, 1f, 0f) },
+                ["Execute"] = new[] { ("ChargedHit", .65f, true, 1f, 0f), ("VOKill", 1f, false, .35f, 12f) },
+                ["Charged"] = new[] { ("PassiveReady", .55f, false, 1f, 0f), ("VOPassiveReady", 1f, false, .4f, 15f) },
+                ["PulseCharge"] = new[] { ("WCast", .4f, false, 1f, 0f) },
+                ["W"] = new[] { ("WLaunch", .75f, false, 1f, 0f), ("VOW", 1f, false, .3f, 10f) },
+                ["PulseHit"] = new[] { ("WHit", .5f, true, 1f, .15f) },
+                // The pulse meets the wall, then the beam fires 0.85 s later.
+                ["LaserCharge"] = new[] { ("WHit", .5f, true, 1f, .15f) },
+                ["Laser"] = new[] { ("WLaser", .6f, false, 1f, 0f) },
+                ["E"] = new[] { ("E", .55f, false, 1f, 0f), ("VOE", 1f, false, .3f, 10f) },
+                ["Surge"] = new[] { ("ERounds", .45f, false, 1f, 0f) },
+                ["Crash"] = new[] { ("R", .8f, false, 1f, 0f), ("VOR", 1f, false, 1f, 0f) },
+                ["Overcharge"] = new[] { ("ROvercharged", .8f, false, 1f, 0f) },
+                ["OverchargeEnd"] = new[] { ("REnd", .4f, false, 1f, 0f), ("VOREnd", 1f, false, .5f, 10f) },
+                ["Moving"] = new[] { ("VOMove", 1f, false, .3f, 30f) },
+                ["Death"] = new[] { ("Death", .55f, false, 1f, 0f), ("VODeath", 1f, false, 1f, 0f) },
+                ["Respawn"] = new[] { ("Respawn", .5f, false, 1f, 0f), ("VORespawn", 1f, false, .7f, 0f) },
+            },
+        };
+
+        readonly Dictionary<string, float> lastOriginal = new();
 
         static readonly Dictionary<string, (string sound, float volume, bool spatial)> Generic = new()
         {
@@ -150,10 +211,35 @@ namespace LeagueVR.Champions
                     return;
                 lastImpact = Time.time;
             }
+            if (OriginalCue(signal, position))
+                return;
             if (recorded)
                 RecordedCue(signal);
             else
                 SynthCue(signal, position);
+        }
+
+        /// <summary>Plays a champion's original recordings for a signal; false if the champion has none for it.</summary>
+        bool OriginalCue(string signal, Vector3 position)
+        {
+            if (!originalSounds || !Original.TryGetValue(player.ChampionName, out var table) || !table.TryGetValue(signal, out var cues))
+                return false;
+            foreach (var (key, volume, spatial, chance, cooldown) in cues)
+            {
+                string full = Prefix + key;
+                if (originalSounds.Find(full) == null)
+                    continue;
+                if (cooldown > 0 && lastOriginal.TryGetValue(full, out float last) && Time.time - last < cooldown)
+                    continue;
+                if (chance < 1 && Random.value > chance)
+                    continue;
+                lastOriginal[full] = Time.time;
+                if (spatial)
+                    originalSounds.At(full, position, volume * effectsVolume);
+                else if (effects)
+                    originalSounds.Play(effects, full, volume);
+            }
+            return true;
         }
 
         void RecordedCue(string signal)

@@ -8,7 +8,7 @@ namespace LeagueVR.Champions
     /// First-person body for champions built from a prefab (Zoe, Pantheon and the other imported champions). The
     /// champion's first-person model (its own mesh without the head) gets the shared full-body rig on its idle pose
     /// and a complete shadow. Weapons are fitted to the controllers: a weapon runs along the right grip, a shield
-    /// faces where the left fist punches.
+    /// faces where the left fist punches, and a gun (Zeri's) points where the controller points.
     /// </summary>
     [DefaultExecutionOrder(225)]
     public class ChampionVRAvatar : ChampionBodyBase
@@ -29,6 +29,12 @@ namespace LeagueVR.Champions
             public Material material;
             /// <summary>Hidden by the kit (for example while the spear is in flight).</summary>
             public bool hidden;
+            /// <summary>Held like a pistol: the prop's forward follows the controller's pointing ray.</summary>
+            public bool aimed;
+            /// <summary>Least finger curl while holding it (a gun leaves the index on the trigger).</summary>
+            public HandCurl curl;
+            /// <summary>Recoil, 0-1: the prop tips up and back after each shot and settles (the camera never moves).</summary>
+            public float kick;
 
             public bool Visible => bone && !hidden && bone.localScale.x > 0;
         }
@@ -42,6 +48,8 @@ namespace LeagueVR.Champions
             public Vector3 forward, up;
             public Vector3 handle, edge, tip;
             public float scale;
+            public bool aimed;
+            public HandCurl curl;
         }
 
         /// <summary>
@@ -58,6 +66,14 @@ namespace LeagueVR.Champions
                     new PropSpec { bone = "Shield", material = "Shield", left = true, forward = Vector3.left, up = Vector3.up, handle = new Vector3(.02f, 0, 0), scale = .48f },
                 }
             },
+            {
+                // Zeri's gun: the bone sits in her grip, the muzzle (League's Buffbone_Glb_Weapon_1) is 0.3 m along -Z and
+                // the coils run along the top (+Y) behind the hand. Held like a pistol, index finger on the trigger.
+                ChampionId.Zeri, new[]
+                {
+                    new PropSpec { bone = "Weapon1", material = "Gun", forward = Vector3.back, up = Vector3.up, handle = new Vector3(0, .02f, .03f), edge = Vector3.zero, tip = new Vector3(0, .07f, -.3f), scale = .85f, aimed = true, curl = new HandCurl(.2f, .85f, .55f) },
+                }
+            },
         };
 
         /// <summary>Submeshes of the complete model that cast the body's shadow (head, hair, cape and props in hand).</summary>
@@ -65,6 +81,7 @@ namespace LeagueVR.Champions
         {
             { ChampionId.Zoe, new[] { "Zoe_Base_Mat", "Zoe_Base_Hair_Mat" } },
             { ChampionId.Pantheon, new[] { "Pantheon_Base_Mat", "L_Arm", "Cape", "Spear", "Shield", "Head", "Helmet" } },
+            { ChampionId.Zeri, new[] { "Body", "Shoes", "Gun", "Hair", "HairSpike" } },
         };
 
         [Tooltip("Angle between the controller handle and a held weapon: pitch, yaw, roll. Positive pitch lowers the weapon toward the pointing direction.")]
@@ -100,7 +117,7 @@ namespace LeagueVR.Champions
             if (animator)
                 animator.enabled = false;
             Skin = Instance.GetComponentInChildren<SkinnedMeshRenderer>(true);
-            SetupAnimation(Instance.GetComponentInChildren<Animation>(true), null);
+            SetupAnimation(Instance.GetComponentInChildren<Animation>(true), definition.idle ? definition.idle.name : null);
             // Props are posed by hand, so their bones must not follow the hand's animated pose; build them from the
             // animated rest pose before the rig takes over.
             SetupProps(definition);
@@ -175,6 +192,8 @@ namespace LeagueVR.Champions
                     edge = spec.edge,
                     tip = spec.tip,
                     scale = spec.scale,
+                    aimed = spec.aimed,
+                    curl = spec.curl,
                 };
                 prop.mesh = ExtractPropMesh(Skin, bone, spec.material, out prop.material);
                 if (spec.left)
@@ -240,7 +259,7 @@ namespace LeagueVR.Champions
         Quaternion HandFrame(Prop prop)
         {
             var grip = Grip(prop.left);
-            if (prop.left)
+            if (prop.left || prop.aimed)
                 return XRPoses.AimFromGrip(grip.rotation);
             var along = grip.rotation * Quaternion.Euler(weaponTilt);
             Vector3 forward = along * Vector3.forward;
@@ -251,9 +270,20 @@ namespace LeagueVR.Champions
         /// <summary>World pose and scale of a prop this frame.</summary>
         public void PropPose(Prop prop, out Vector3 position, out Quaternion rotation, out float scale)
         {
-            rotation = HandFrame(prop) * prop.fit;
+            var frame = HandFrame(prop);
+            // Recoil pivots about the hand: the muzzle tips up and the prop slides back a little.
+            if (prop.kick > 0)
+                frame *= Quaternion.Euler(-9 * prop.kick, 0, 0);
+            rotation = frame * prop.fit;
             scale = prop.scale * BodyScale;
-            position = Palm(prop.left) - rotation * (prop.handle * scale);
+            position = Palm(prop.left) - rotation * (prop.handle * scale) - frame * Vector3.forward * (.03f * prop.kick);
+        }
+
+        /// <summary>Kicks the right-hand weapon (a gun's recoil); it settles back within about a tenth of a second.</summary>
+        public void Kick(float amount)
+        {
+            if (Weapon != null)
+                Weapon.kick = Mathf.Min(1, Weapon.kick + amount);
         }
 
         /// <summary>A point given in prop space, in the world.</summary>
@@ -285,6 +315,17 @@ namespace LeagueVR.Champions
             return true;
         }
 
+        /// <summary>A gun's muzzle and the direction it fires (false when no weapon is out).</summary>
+        public bool WeaponMuzzle(out Vector3 position, out Vector3 forward)
+        {
+            position = forward = default;
+            if (Weapon == null || !Weapon.Visible || !Ready)
+                return false;
+            position = PropPoint(Weapon, Weapon.tip);
+            forward = HandFrame(Weapon) * Vector3.forward;
+            return true;
+        }
+
         /// <summary>Distance from the fist to the weapon tip in world units.</summary>
         public float WeaponReach => Weapon != null ? (Weapon.tip - Weapon.handle).magnitude * Weapon.scale * BodyScale : 0;
 
@@ -292,11 +333,15 @@ namespace LeagueVR.Champions
         {
             var prop = left ? Shield : Weapon;
             // Closed around a spear shaft or a shield grip: firm, not crushed through the handle.
-            return prop != null && prop.Visible ? new HandCurl(.62f, .82f, .72f) : default;
+            if (prop == null || !prop.Visible)
+                return default;
+            return prop.aimed ? prop.curl : new HandCurl(.62f, .82f, .72f);
         }
 
         protected override void AfterSolve()
         {
+            if (Weapon != null && Weapon.kick > 0)
+                Weapon.kick = Mathf.MoveTowards(Weapon.kick, 0, Time.deltaTime * 4.5f); // runs twice a frame (late update and before render)
             PoseProp(Weapon);
             PoseProp(Shield);
         }

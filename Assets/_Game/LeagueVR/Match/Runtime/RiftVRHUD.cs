@@ -143,6 +143,8 @@ namespace LeagueVR.Match
                 string custom = p.Kit?.SlotStatus(i);
                 if (custom != null)
                     return custom;
+                if (i == 3 && p.Definition && p.Definition.Rank(3, e.Level) == 0)
+                    return "<color=#829399>LV 6</color>";
                 float cd = p.Cooldown(i);
                 return cd > 0 ? $"<color=#829399>{cd:0.0}s</color>" : "READY";
             }

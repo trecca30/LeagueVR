@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: grnd_terrain_o VR
-  m_Shader: {fileID: 4800000, guid: 650dd9526735d5b46b79224bc6e94025, type: 3}
+  m_Shader: {fileID: 4800000, guid: 4719d6817fb8ebb43bc44046ed3a8fcd, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -17,8 +17,7 @@ Material:
   m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 1
   m_CustomRenderQueue: -1
-  stringTagMap:
-    RenderType: Opaque
+  stringTagMap: {}
   disabledShaderPasses:
   - MOTIONVECTORS
   m_LockedProperties: 
@@ -38,16 +37,22 @@ Material:
     - _AddPrecomputedVelocity: 0
     - _AlphaClip: 0
     - _AlphaToMask: 0
+    - _Bands: 3
     - _Blend: 0
     - _BlendOp: 0
     - _Cull: 0
     - _Cutoff: 0.5
     - _DstBlend: 0
     - _DstBlendAlpha: 0
+    - _Grain: 0.25
+    - _Light: 0.5
     - _QueueOffset: 0
+    - _Relief: 1.2
+    - _Rim: 0.12
     - _SampleGI: 0
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
+    - _Steep: 0
     - _Surface: 0
     - _XRMotionVectorsPass: 1
     - _ZWrite: 1
