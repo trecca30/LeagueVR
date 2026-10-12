@@ -103,7 +103,7 @@ Shader "LeagueVR/Rift Brush"
                 half wrap = saturate(dot(n, sun.direction) * .5 + .5);
                 // Light through the blades when looking toward the sun.
                 half through = pow(saturate(dot(-normalize(toEye), sun.direction)), 4) * h * .2;
-                half3 shade = lerp(half3(.72, .78, .86), hue * 1.12, wrap) + through * hue;
+                half3 shade = lerp(half3(.5, .55, .5), hue * 1.0, wrap) + through * hue;
                 // Roots sit in shade.
                 half3 color = albedo * lerp(half3(1, 1, 1), shade, _Light) * lerp(.7, 1, h);
                 float haze = saturate((eye - _RiftHaze.x) / max(1, _RiftHaze.y - _RiftHaze.x)) * _RiftHaze.z;

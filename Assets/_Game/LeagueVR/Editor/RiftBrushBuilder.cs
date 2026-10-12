@@ -19,7 +19,7 @@ namespace LeagueVR.EditorTools
         const string MeshFolder = "Assets/_Game/LeagueVR/Generated/RiftNav/Brush";
         const string MaterialPath = "Assets/_Game/SummonersRIft/VRRebuild/Rift Brush.mat";
         const string RootName = "Rift Brush";
-        const int MinCells = 10, BladesPerCell = 4, Segments = 4;
+        const int MinCells = 10, BladesPerCell = 6, Segments = 4;
 
         static readonly Color[] Palette =
         {
@@ -90,8 +90,8 @@ namespace LeagueVR.EditorTools
                 AssetDatabase.CreateAsset(material, MaterialPath);
             }
             // League's brush: a dense dark blue-green mass with muted yellow-green tips.
-            material.SetColor("_TipColor", new Color(.36f, .48f, .17f));
-            material.SetFloat("_Light", .4f);
+            material.SetColor("_TipColor", new Color(.22f, .31f, .13f));
+            material.SetFloat("_Light", .3f);
             EditorUtility.SetDirty(material);
             if (AssetDatabase.IsValidFolder(MeshFolder))
                 AssetDatabase.DeleteAsset(MeshFolder);
@@ -177,7 +177,7 @@ namespace LeagueVR.EditorTools
                     var outward = root - centre;
                     outward.y = 0;
                     var lean = (outward.sqrMagnitude > 1e-4f ? outward.normalized * (1 - inner) * .25f : Vector3.zero) + facing * Mathf.Lerp(.08f, .3f, r3);
-                    float width = Mathf.Lerp(.09f, .15f, r1);
+                    float width = Mathf.Lerp(.08f, .13f, r1);
                     var color = Palette[(int)(r2 * Palette.Length) % Palette.Length];
                     int first = vertices.Count;
                     for (int k = 0; k <= Segments; k++)
