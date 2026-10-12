@@ -63,7 +63,7 @@ Last updated: 2026-10-12. Every step is a git commit; `git log --oneline` shows 
       - Murk Wolves and Rift Scuttlers were added from League's own models.
     - **Zeri's vault:**
       - The wall is measured on the grid (towers by a ray back), and the time over it uses League's dash speed (600 + move speed).
-      - At most 0.3 s over the obstacle is a first-person blink. Longer vaults cut to a still view behind and above, where her full model vaults with League's animation, then cut back.
+      - At most 0.3 s over the obstacle is a first-person blink. Longer vaults cut to a view behind and above that follows her over the wall at a fixed distance (her full model vaults with League's animation), then cut back.
       - Both cuts happen behind short fades.
     - **Look** (League VR > Apply Rift Look, `RiftStylized.shader`, `RiftAtmosphere`):
       - Soft banded sunlight, relief from the painted textures, cliff stretch cleanup and a sky rim.

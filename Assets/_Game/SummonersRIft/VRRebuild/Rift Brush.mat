@@ -25,9 +25,9 @@ Material:
     m_TexEnvs: []
     m_Ints: []
     m_Floats:
-    - _Light: 0.4
+    - _Light: 0.3
     - _Wind: 0.07
     m_Colors:
-    - _TipColor: {r: 0.36, g: 0.48, b: 0.17, a: 1}
+    - _TipColor: {r: 0.22, g: 0.31, b: 0.13, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

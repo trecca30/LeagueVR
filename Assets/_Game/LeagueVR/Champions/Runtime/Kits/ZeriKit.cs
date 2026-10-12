@@ -649,8 +649,8 @@ namespace LeagueVR.Champions
         /// <summary>
         /// Dashes where you walk (or where the gun points), vaulting a wall or tower you are close to. A short hop (a
         /// thin wall or a tower, at most 0.3 s over it) is a first-person blink. A long vault cuts behind a brief fade
-        /// to a still view behind and above the vault: you watch Zeri arc over the wall, then the view cuts back into
-        /// her body where she lands. Nothing about the view ever moves smoothly, which keeps it comfortable.
+        /// to a view behind and above her: the view follows Zeri's arc over the wall at a fixed distance, then the view
+        /// cuts back into her body where she lands.
         /// </summary>
         bool SparkSurge()
         {
@@ -739,9 +739,10 @@ namespace LeagueVR.Champions
         }
 
         /// <summary>
-        /// The long vault, seen from outside. Behind a short spark-coloured fade the view cuts to a still spot behind and
-        /// above the vault (whichever way the player is looking), the first-person body is hidden and her full model
-        /// vaults along the real path with League's vault animation. Then the view cuts back into her body on landing.
+        /// The long vault, seen from outside. Behind a short spark-coloured fade the view moves to a spot behind and above
+        /// the vault (whichever way the player is looking), the first-person body is hidden and her full model vaults
+        /// along the real path with League's vault animation. The view keeps its distance from her as she travels, so
+        /// it follows her over the wall. Then the view cuts back into her body on landing.
         /// While the view is away she cannot be targeted, because her body is not where the view is.
         /// </summary>
         System.Collections.IEnumerator VaultFromOutside(SurgePlan plan)
@@ -760,6 +761,8 @@ namespace LeagueVR.Champions
                 Vector3 middle = (plan.start + plan.landing) * .5f;
                 float span = Geo.FlatDistance(plan.start, plan.landing);
                 Vector3 eye = middle - view * Mathf.Max(4.5f, span * .75f) + Vector3.up * (2.4f + span * .12f);
+                // The view's offset from her, kept for the whole vault so the camera follows her arc.
+                Vector3 offset = eye - plan.start;
                 Player.MoveFeet(eye - eyeAboveFeet);
                 if (Body)
                     Body.Hidden = true;
@@ -770,8 +773,10 @@ namespace LeagueVR.Champions
                 while (Time.time - begin < plan.seconds && Player && Health.IsAlive && Player.Kit == this)
                 {
                     float t = (Time.time - begin) / plan.seconds;
+                    Vector3 at = Vector3.Lerp(plan.start, plan.landing, t) + Vector3.up * arc * 4 * t * (1 - t);
                     if (puppet)
-                        puppet.transform.position = Vector3.Lerp(plan.start, plan.landing, t) + Vector3.up * arc * 4 * t * (1 - t);
+                        puppet.transform.position = at;
+                    Player.MoveFeet(at + offset - eyeAboveFeet);
                     yield return null;
                 }
                 Player.ScreenFade(spark, .06f, .04f, .16f, .85f);

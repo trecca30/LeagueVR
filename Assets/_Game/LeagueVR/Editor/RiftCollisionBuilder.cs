@@ -121,75 +121,66 @@ namespace LeagueVR.EditorTools
             NavMesh.RemoveAllNavMeshData();
             var instance = NavMesh.AddNavMeshData(data);
             var triangulation = NavMesh.CalculateTriangulation();
+            instance.Remove();
 
-            // ---------- Weld tiles, keep the floor connected to the lanes ----------
-            var weld = new Dictionary<(int, int, int), int>();
-            var points = new List<Vector3>();
-            var vertexOf = new int[triangulation.vertices.Length];
-            for (int i = 0; i < triangulation.vertices.Length; i++)
-            {
-                var v = triangulation.vertices[i];
-                var key = (Mathf.RoundToInt(v.x * 100), Mathf.RoundToInt(v.z * 100), Mathf.RoundToInt(v.y * 2));
-                if (!weld.TryGetValue(key, out int index))
-                {
-                    index = points.Count;
-                    points.Add(v);
-                    weld[key] = index;
-                }
-                vertexOf[i] = index;
-            }
+            // ---------- Navigation grid ----------
+            // Every navigable triangle covers some cells. The NavMesh's tiles do not weld: a tile's edge can meet a
+            // neighbour's triangle halfway along its side, so triangle-edge flood fills and outlines broke at each tile
+            // seam (every 9.6 m) and left walls standing in open floor. Cells have no seams, so the grid is built from them.
             int triangleCount = triangulation.indices.Length / 3;
-            var tris = new int[triangleCount * 3];
-            for (int i = 0; i < tris.Length; i++)
-                tris[i] = vertexOf[triangulation.indices[i]];
-            var edges = new Dictionary<long, List<int>>();
-            long EdgeKey(int a, int b) => a < b ? (long)a * 10_000_000 + b : (long)b * 10_000_000 + a;
+            var navigable = new bool[width * height];
+            var surface = new float[width * height];
             for (int t = 0; t < triangleCount; t++)
-                for (int e = 0; e < 3; e++)
+                Rasterize(triangulation.vertices[triangulation.indices[t * 3]], triangulation.vertices[triangulation.indices[t * 3 + 1]], triangulation.vertices[triangulation.indices[t * 3 + 2]], min, width, height, (cell, y) =>
                 {
-                    long key = EdgeKey(tris[t * 3 + e], tris[t * 3 + (e + 1) % 3]);
-                    if (!edges.TryGetValue(key, out var list))
-                        edges[key] = list = new List<int>(2);
-                    list.Add(t);
-                }
-            var kept = new bool[triangleCount];
+                    navigable[cell] = true;
+                    surface[cell] = y;
+                });
+
+            // ---------- Keep the floor connected to the lanes ----------
+            // Cells join across corners too; a step of more than the agent's 0.5 m climb is a cliff, not a way on.
+            var kept = new bool[width * height];
             var queue = new Queue<int>();
             int seedsFound = 0;
             var seedReport = new List<string>();
             foreach (var seed in Seeds)
             {
-                int t = TriangleAt(seed, points, tris);
-                seedReport.Add(t < 0 ? "none" : kept[t] ? "joined" : "new");
-                if (t < 0 || kept[t])
+                int start = NearestNavigable(seed, navigable, min, width, height, 24);
+                seedReport.Add(start < 0 ? "none" : kept[start] ? "joined" : "new");
+                if (start < 0 || kept[start])
                     continue;
                 seedsFound++;
-                kept[t] = true;
-                queue.Enqueue(t);
+                kept[start] = true;
+                queue.Enqueue(start);
                 while (queue.Count > 0)
                 {
                     int current = queue.Dequeue();
-                    for (int e = 0; e < 3; e++)
-                        foreach (int next in edges[EdgeKey(tris[current * 3 + e], tris[current * 3 + (e + 1) % 3])])
-                            if (!kept[next])
+                    int cx = current % width, cz = current / width;
+                    for (int dz = -1; dz <= 1; dz++)
+                        for (int dx = -1; dx <= 1; dx++)
+                        {
+                            int nx = cx + dx, nz = cz + dz;
+                            if ((dx == 0 && dz == 0) || nx < 0 || nz < 0 || nx >= width || nz >= height)
+                                continue;
+                            int next = nz * width + nx;
+                            if (navigable[next] && !kept[next] && Mathf.Abs(surface[next] - surface[current]) <= .55f)
                             {
                                 kept[next] = true;
                                 queue.Enqueue(next);
                             }
+                        }
                 }
             }
             int keptCount = kept.Count(k => k);
-            instance.Remove();
-
-            // ---------- Navigation grid ----------
-            var open = new byte[width * height];
+            int unreached = navigable.Where((n, i) => n && !kept[i]).Count();
+            var cells = new byte[width * height];
             var floor = new short[width * height];
-            for (int t = 0; t < triangleCount; t++)
-                if (kept[t])
-                    Rasterize(points[tris[t * 3]], points[tris[t * 3 + 1]], points[tris[t * 3 + 2]], min, width, height, (cell, y) =>
-                    {
-                        open[cell] = 1;
-                        floor[cell] = (short)Mathf.Clamp(Mathf.RoundToInt(y * 100), short.MinValue, short.MaxValue);
-                    });
+            for (int i = 0; i < cells.Length; i++)
+                if (kept[i])
+                {
+                    cells[i] = 1;
+                    floor[i] = (short)Mathf.Clamp(Mathf.RoundToInt(surface[i] * 100), short.MinValue, short.MaxValue);
+                }
             // Tallest map surface per cell, for wall heights.
             var top = Enumerable.Repeat(float.NegativeInfinity, width * height).ToArray();
             foreach (var (mesh, matrix) in meshes)
@@ -200,40 +191,43 @@ namespace LeagueVR.EditorTools
                 }));
 
             // ---------- Walls along the floor's outline ----------
+            // Every side of a floor cell that faces a cell which is not floor becomes a wall, as tall as the map beside it.
             var wallVertices = new List<Vector3>();
             var wallTriangles = new List<int>();
             int boundary = 0;
-            foreach (var pair in edges)
-            {
-                var owners = pair.Value.Where(t => kept[t]).ToList();
-                if (owners.Count != 1)
-                    continue;
-                int owner = owners[0];
-                int a = (int)(pair.Key / 10_000_000), b = (int)(pair.Key % 10_000_000);
-                int c = tris[owner * 3] != a && tris[owner * 3] != b ? tris[owner * 3] : tris[owner * 3 + 1] != a && tris[owner * 3 + 1] != b ? tris[owner * 3 + 1] : tris[owner * 3 + 2];
-                Vector3 pa = points[a], pb = points[b];
-                Vector3 mid = (pa + pb) * .5f;
-                Vector3 outward = Vector3.Cross(Vector3.up, pb - pa);
-                outward.y = 0;
-                if (outward.sqrMagnitude < 1e-8f)
-                    continue;
-                outward.Normalize();
-                Vector3 inside = points[c] - mid;
-                if (outward.x * inside.x + outward.z * inside.z > 0)
-                    outward = -outward;
-                float floorY = Mathf.Max(pa.y, pb.y);
-                float wallTop = float.NegativeInfinity;
-                foreach (float reach in new[] { .3f, .6f, 1f })
+            for (int z = 0; z < height; z++)
+                for (int x = 0; x < width; x++)
                 {
-                    var probe = mid + outward * reach;
-                    int x = Mathf.FloorToInt((probe.x - min.x) / Cell), z = Mathf.FloorToInt((probe.z - min.y) / Cell);
-                    if (x >= 0 && z >= 0 && x < width && z < height)
-                        wallTop = Mathf.Max(wallTop, top[z * width + x]);
+                    int c = z * width + x;
+                    if (!kept[c])
+                        continue;
+                    for (int side = 0; side < 4; side++)
+                    {
+                        int dx = side == 0 ? 1 : side == 1 ? -1 : 0, dz = side == 2 ? 1 : side == 3 ? -1 : 0;
+                        int nx = x + dx, nz = z + dz;
+                        bool inside = nx >= 0 && nz >= 0 && nx < width && nz < height;
+                        if (inside && kept[nz * width + nx])
+                            continue;
+                        float floorY = surface[c];
+                        float wallTop = inside ? top[nz * width + nx] : float.NegativeInfinity;
+                        float tall = float.IsNegativeInfinity(wallTop) ? 3 : Mathf.Clamp(wallTop - floorY, MinWall, MaxWall);
+                        Vector3 a, b;
+                        if (dx != 0)
+                        {
+                            float edgeX = min.x + (dx > 0 ? x + 1 : x) * Cell;
+                            a = new Vector3(edgeX, 0, min.y + z * Cell);
+                            b = new Vector3(edgeX, 0, min.y + (z + 1) * Cell);
+                        }
+                        else
+                        {
+                            float edgeZ = min.y + (dz > 0 ? z + 1 : z) * Cell;
+                            a = new Vector3(min.x + x * Cell, 0, edgeZ);
+                            b = new Vector3(min.x + (x + 1) * Cell, 0, edgeZ);
+                        }
+                        AddWall(wallVertices, wallTriangles, a, b, floorY - 1, floorY + tall);
+                        boundary++;
+                    }
                 }
-                float tall = float.IsNegativeInfinity(wallTop) ? 3 : Mathf.Clamp(wallTop - floorY, MinWall, MaxWall);
-                AddWall(wallVertices, wallTriangles, pa, pb, Mathf.Min(pa.y, pb.y) - 1, floorY + tall);
-                boundary++;
-            }
 
             // ---------- Save ----------
             if (!AssetDatabase.IsValidFolder(Folder))
@@ -249,7 +243,7 @@ namespace LeagueVR.EditorTools
             grid.cellSize = Cell;
             grid.width = width;
             grid.height = height;
-            grid.walkable = open;
+            grid.walkable = cells;
             grid.floor = floor;
             grid = Save(grid, Folder + "/RiftNavGrid.asset");
             Save(data, Folder + "/RiftNavMesh.asset");
@@ -272,8 +266,8 @@ namespace LeagueVR.EditorTools
             EditorSceneManager.MarkSceneDirty(collision.scene);
             EditorSceneManager.SaveScene(collision.scene);
             AssetDatabase.SaveAssets();
-            int openCells = open.Count(w => w != 0);
-            return $"navmesh {triangleCount} triangles, kept {keptCount} in {seedsFound} regions (seeds: {string.Join(",", seedReport)}); grid {width}x{height}, walkable {openCells * Cell * Cell:0} m², floor triangles {walkable.Count / 3}, wall triangles {blocked.Count / 3}; walls {boundary} segments ({wallTriangles.Count / 3} triangles); structure blockers {blockers}; {brush}";
+            int walkableCells = cells.Count(w => w != 0);
+            return $"navmesh {triangleCount} triangles, kept {keptCount} cells in {seedsFound} regions (seeds: {string.Join(",", seedReport)}), {unreached} navigable cells cut off; grid {width}x{height}, walkable {walkableCells * Cell * Cell:0} m², floor triangles {walkable.Count / 3}, wall triangles {blocked.Count / 3}; walls {boundary} segments ({wallTriangles.Count / 3} triangles); structure blockers {blockers}; {brush}";
         }
 
         static void ForEachTriangle(Mesh mesh, Matrix4x4 matrix, System.Action<Vector3, Vector3, Vector3> visit)
@@ -304,25 +298,21 @@ namespace LeagueVR.EditorTools
             return mesh;
         }
 
-        static int TriangleAt(Vector3 point, List<Vector3> points, int[] tris)
+        /// <summary>The navigable cell nearest a point, searching out to <paramref name="radius"/> cells; -1 if there is none.</summary>
+        static int NearestNavigable(Vector3 point, bool[] navigable, Vector2 min, int width, int height, int radius)
         {
-            if (!NavMesh.SamplePosition(point + Vector3.up * 2, out var hit, 6, NavMesh.AllAreas))
-                return -1;
-            int best = -1;
-            float bestHeight = float.MaxValue;
-            for (int t = 0; t < tris.Length / 3; t++)
-            {
-                Vector3 a = points[tris[t * 3]], b = points[tris[t * 3 + 1]], c = points[tris[t * 3 + 2]];
-                if (!Barycentric(hit.position.x, hit.position.z, a, b, c, out float u, out float v, out float w))
-                    continue;
-                float gap = Mathf.Abs(a.y * u + b.y * v + c.y * w - hit.position.y);
-                if (gap < bestHeight)
-                {
-                    bestHeight = gap;
-                    best = t;
-                }
-            }
-            return best;
+            int cx = Mathf.FloorToInt((point.x - min.x) / Cell), cz = Mathf.FloorToInt((point.z - min.y) / Cell);
+            for (int r = 0; r <= radius; r++)
+                for (int dz = -r; dz <= r; dz++)
+                    for (int dx = -r; dx <= r; dx++)
+                    {
+                        if (Mathf.Max(Mathf.Abs(dx), Mathf.Abs(dz)) != r)
+                            continue;
+                        int x = cx + dx, z = cz + dz;
+                        if (x >= 0 && z >= 0 && x < width && z < height && navigable[z * width + x])
+                            return z * width + x;
+                    }
+            return -1;
         }
 
         static bool Barycentric(float x, float z, Vector3 a, Vector3 b, Vector3 c, out float u, out float v, out float w)

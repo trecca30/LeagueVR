@@ -16,7 +16,8 @@ namespace LeagueVR.Match
         GameObject wrist, noticeRoot, recallRoot, targetRoot;
         TMP_Text vitals, abilities, meta, notice, recallTime, targetName, targetNumbers;
         Image hp, mp, shield, recallFill, targetFill;
-        float next, watchDwell, watchHide, lastAttack = -10;
+        CanvasGroup wristGroup;
+        float next, watchDwell, watchHide, wristFade, lastAttack = -10;
 
         void OnEnable()
         {
@@ -34,16 +35,25 @@ namespace LeagueVR.Match
         void Start()
         {
             wrist = Canvas("Gwen wrist interface", 500, 264, .00038f);
+            wristGroup = wrist.AddComponent<CanvasGroup>();
             Surface(wrist.transform, -250, 0, 500, 264, new Color(.015f, .027f, .04f, .94f));
             Surface(wrist.transform, -250, 130, 500, 4, new Color(.3f, .9f, .92f));
-            vitals = Text(wrist.transform, "", -227, 91, 454, 48, 25, new Color(.87f, .96f, .96f));
-            Surface(wrist.transform, -227, 47, 454, 15, new Color(.06f, .16f, .13f));
-            hp = Surface(wrist.transform, -227, 47, 454, 15, new Color(.27f, .79f, .53f));
-            shield = Surface(wrist.transform, -227, 47, 454, 15, new Color(.7f, .91f, .99f, .85f));
-            Surface(wrist.transform, -227, 22, 454, 9, new Color(.06f, .12f, .20f));
-            mp = Surface(wrist.transform, -227, 22, 454, 9, new Color(.25f, .55f, .92f));
-            abilities = Text(wrist.transform, "", -227, -34, 454, 89, 19, new Color(.45f, .94f, .95f));
-            meta = Text(wrist.transform, "", -227, -102, 454, 43, 22, new Color(.9f, .77f, .46f));
+            // Vitals first: the champion name and numbers, shrinking rather than overflowing for long names.
+            vitals = Text(wrist.transform, "", -232, 104, 464, 36, 25, new Color(.87f, .96f, .96f));
+            vitals.textWrappingMode = TextWrappingModes.NoWrap;
+            vitals.enableAutoSizing = true;
+            vitals.fontSizeMin = 20;
+            vitals.fontSizeMax = 25;
+            vitals.overflowMode = TextOverflowModes.Ellipsis;
+            // Health is the widest bar; the shield lies over it.
+            Surface(wrist.transform, -232, 62, 464, 30, new Color(.06f, .16f, .13f));
+            hp = Surface(wrist.transform, -232, 62, 464, 30, new Color(.27f, .79f, .53f));
+            shield = Surface(wrist.transform, -232, 62, 464, 30, new Color(.7f, .91f, .99f, .85f));
+            Surface(wrist.transform, -232, 37, 464, 8, new Color(.06f, .12f, .20f));
+            mp = Surface(wrist.transform, -232, 37, 464, 8, new Color(.25f, .55f, .92f));
+            // Abilities are what a glance needs during a fight, so they take the most room.
+            abilities = Text(wrist.transform, "", -232, -30, 464, 112, 24, new Color(.45f, .94f, .95f));
+            meta = Text(wrist.transform, "", -232, -108, 464, 34, 24, new Color(.9f, .77f, .46f));
             noticeRoot = Canvas("Transient match notice", 850, 95, .00065f);
             Surface(noticeRoot.transform, -425, 0, 850, 95, new Color(.015f, .027f, .04f, .88f));
             notice = Text(noticeRoot.transform, "", -399, 0, 798, 89, 25, new Color(.94f, .85f, .63f));
@@ -91,7 +101,7 @@ namespace LeagueVR.Match
                 if (root)
                     root.SetActive(false);
             WristVisible = false;
-            watchDwell = watchHide = 0;
+            watchDwell = watchHide = wristFade = 0;
         }
 
         void OnDestroy()
@@ -101,11 +111,19 @@ namespace LeagueVR.Match
                     Destroy(root);
         }
 
+        /// <summary>
+        /// Whether the wrist is raised to the eyes: within reach, in view, with the back of the hand facing the head.
+        /// Opening the window is harder than keeping it: once shown, the reach, gaze cone and palm angle all widen, so
+        /// the display holds through small head and wrist movements instead of flickering.
+        /// </summary>
         public static bool LookingAtWatch(Transform head, Vector3 position, Vector3 outward, bool alreadyVisible = false)
         {
             var delta = position - head.position;
             float distance = delta.magnitude;
-            return distance > .22f && distance < .85f && Vector3.Angle(head.forward, delta) < (alreadyVisible ? 24 : 18) && Vector3.Dot(outward.normalized, -delta.normalized) > .45f;
+            float reach = alreadyVisible ? 1.25f : 1.1f;
+            float cone = alreadyVisible ? 45 : 35;
+            float facing = alreadyVisible ? -.2f : 0f;
+            return distance > .15f && distance < reach && Vector3.Angle(head.forward, delta) < cone && Vector3.Dot(outward.normalized, -delta.normalized) > facing;
         }
 
         void LateUpdate()
@@ -126,7 +144,9 @@ namespace LeagueVR.Match
                 watchHide += Time.unscaledDeltaTime;
             }
             bool allowed = match.Running && !match.ui.IsOpen && match.player.Health.IsAlive;
-            WristVisible = allowed && (WristVisible ? watchHide < .12f : watchDwell >= .18f);
+            WristVisible = allowed && (WristVisible ? watchHide < .2f : watchDwell >= .1f);
+            // Fade in over .12 s and out over .18 s, so the display never pops in or out of view.
+            wristFade = Mathf.MoveTowards(wristFade, WristVisible ? 1 : 0, Time.unscaledDeltaTime / (WristVisible ? .12f : .18f));
             Pose();
             if (Time.time < next)
                 return;
@@ -144,9 +164,9 @@ namespace LeagueVR.Match
                 if (custom != null)
                     return custom;
                 if (i == 3 && p.Definition && p.Definition.Rank(3, e.Level) == 0)
-                    return "<color=#829399>LV 6</color>";
+                    return "<color=#9AAAB0>LV 6</color>";
                 float cd = p.Cooldown(i);
-                return cd > 0 ? $"<color=#829399>{cd:0.0}s</color>" : "READY";
+                return cd > 0 ? $"<color=#9AAAB0>{cd:0.0}s</color>" : "READY";
             }
             abilities.text = $"Q  {Slot(0)}     W  {Slot(1)}\nE  {Slot(2)}     R  {Slot(3)}\n<color=#E5C478>{p.Kit?.StateText}</color>";
             meta.text = $"Lv {e.Level}    {e.Gold:N0}g    {(int)match.Seconds / 60:00}:{(int)match.Seconds % 60:00}";
@@ -177,7 +197,8 @@ namespace LeagueVR.Match
             else
                 wrist.transform.SetPositionAndRotation(hand.TransformPoint(new Vector3(-.015f, .04f, -.095f)), Quaternion.LookRotation(-hand.up, hand.forward));
             bool allowed = match.Running && !match.ui.IsOpen && match.player.Health.IsAlive;
-            wrist.SetActive(allowed && WristVisible);
+            wristGroup.alpha = wristFade;
+            wrist.SetActive(wristFade > 0);
             noticeRoot.transform.SetPositionAndRotation(head.TransformPoint(new Vector3(0, .21f, 1.65f)), head.rotation);
             noticeRoot.SetActive(allowed && !match.IsRecalling && !string.IsNullOrEmpty(match.ui.Notice));
             recallRoot.transform.SetPositionAndRotation(head.TransformPoint(new Vector3(0, -.24f, 1.4f)), head.rotation);
