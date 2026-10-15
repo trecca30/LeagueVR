@@ -31,6 +31,13 @@ namespace LeagueVR.Champions
             return puppet;
         }
 
+        /// <summary>Length in seconds of one of the model's clips, or 0 when it has none by that name.</summary>
+        public float Length(string name)
+        {
+            var state = clips ? clips[name] : null;
+            return state != null ? state.length : 0;
+        }
+
         /// <summary>Plays the first clip that exists of <paramref name="names"/>, looping or held at its end, over <paramref name="seconds"/> if given.</summary>
         public void Play(bool loop, float seconds, params string[] names)
         {

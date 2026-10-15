@@ -20,7 +20,9 @@ namespace LeagueVR.Champions
         GameObject leftGlow, rightGlow, palmOrb, palmHalo, sightDot;
         ZeriSprite leftSprite, rightSprite;
         ParticleSystem coilSparks, palmSparks, crashSparks, impactSparks;
-        LineRenderer sight, coilArc, palmArc, palmGuide, targetRing, crashRing;
+        LineRenderer sight, coilArc, palmArc, palmGuide, targetRing, crashRing, surgePath, surgeRing, surgeHead;
+        readonly LineRenderer[] surgeChevrons = new LineRenderer[4];
+        ZeriKit.SurgeLook surgeShown = ZeriKit.SurgeLook.Hidden;
         Combatant shownTarget;
         float nextTargetScan;
         int targetLook = -1;
@@ -40,6 +42,12 @@ namespace LeagueVR.Champions
             targetRing.loop = true;
             crashRing = Keep(AbilityFx.Line("Zeri crash charge", ZeriKit.Volt, .05f, 48));
             crashRing.loop = true;
+            surgePath = Keep(AbilityFx.Line("Zeri surge preview", ZeriKit.Spark, .05f, SurgePathPoints));
+            surgeRing = Keep(AbilityFx.Line("Zeri surge landing", ZeriKit.Spark, .05f, 40));
+            surgeRing.loop = true;
+            surgeHead = Keep(AbilityFx.Line("Zeri surge arrowhead", ZeriKit.Spark, .07f, 3));
+            for (int i = 0; i < surgeChevrons.Length; i++)
+                surgeChevrons[i] = Keep(AbilityFx.Line("Zeri surge chevron", ZeriKit.Spark, .045f, 3));
             palmOrb = Keep(ZeriFx.Sphere("Zeri pulse orb", new Color(1f, .95f, .6f, .9f), 1));
             palmHalo = ZeriFx.Sphere("Zeri pulse halo", new Color(.45f, .85f, 1f, .35f), 1.8f);
             palmHalo.transform.SetParent(palmOrb.transform, false);
@@ -80,6 +88,10 @@ namespace LeagueVR.Champions
         public void HideAll()
         {
             sight.enabled = coilArc.enabled = palmGuide.enabled = palmArc.enabled = targetRing.enabled = crashRing.enabled = false;
+            surgePath.enabled = surgeRing.enabled = surgeHead.enabled = false;
+            foreach (var chevron in surgeChevrons)
+                chevron.enabled = false;
+            leftMove = LeftMove.None;
             sightDot.SetActive(false);
             palmOrb.SetActive(false);
             crashSparks.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
@@ -155,6 +167,12 @@ namespace LeagueVR.Champions
         /// <summary>After each body pose: the coils, the sight and the arcs follow the freshly posed gun.</summary>
         public void Pose()
         {
+            // Where the left palm sits on its controller, measured while the hand follows the controller.
+            if (LeftClock < 0 && player.Body)
+            {
+                var leftGrip = player.Body.Grip(true);
+                leftPalmInGrip = Quaternion.Inverse(leftGrip.rotation) * (player.Body.Palm(true) - leftGrip.position);
+            }
             // The gun's lights go with the body: not while the view is outside it (vaults, the brush view).
             bool gun = GunOut && player.Health && player.Health.IsAlive && !(player.Body && player.Body.Hidden) && FindCoils();
             if (leftGlow)
@@ -207,6 +225,7 @@ namespace LeagueVR.Champions
         /// <summary>Per frame: the battery-shot marker, the charging pulse in the left palm and the Lightning Crash charge.</summary>
         public void Tick(float pulseCharge, float crashCharge)
         {
+            HandEffects();
             // Battery target (looked up 20 times a second): dim ring, bright when charged, red when the shot executes.
             if (Time.time >= nextTargetScan)
             {
@@ -262,6 +281,75 @@ namespace LeagueVR.Champions
             }
         }
 
+        const int SurgePathPoints = 24;
+
+        /// <summary>
+        /// Where Spark Surge would take her if pressed now: a high yellow arc over the wall to a landing ring for a vault,
+        /// a flat green line for a plain dash, and red when the dash would stop at the wall (barely moving) or find no room.
+        /// Drawn through walls, since a vault lands behind one.
+        /// </summary>
+        public void SurgePreview(ZeriKit.SurgeLook look, ZeriKit.SurgePlan plan, Vector3 feet)
+        {
+            bool show = look != ZeriKit.SurgeLook.Hidden;
+            surgePath.enabled = surgeRing.enabled = surgeHead.enabled = show;
+            foreach (var chevron in surgeChevrons)
+                chevron.enabled = show;
+            if (!show)
+                return;
+            if (look != surgeShown)
+            {
+                surgeShown = look;
+                Color color = look == ZeriKit.SurgeLook.Vault ? ZeriKit.Volt : look == ZeriKit.SurgeLook.Dash ? new Color(.62f, 1f, .38f, .75f) : ZeriKit.Danger;
+                surgePath.sharedMaterial = surgeRing.sharedMaterial = surgeHead.sharedMaterial = ZeriFx.XRay(color);
+                surgePath.startColor = surgePath.endColor = surgeRing.startColor = surgeRing.endColor = surgeHead.startColor = surgeHead.endColor = color;
+                foreach (var chevron in surgeChevrons)
+                {
+                    chevron.sharedMaterial = ZeriFx.XRay(color);
+                    chevron.startColor = chevron.endColor = color;
+                }
+                // A vault's arc starts right before the eyes and lands up to 12 m away: thin near, bold far.
+                bool vault = look == ZeriKit.SurgeLook.Vault;
+                surgePath.startWidth = vault ? .015f : .04f;
+                surgePath.endWidth = vault ? .09f : .04f;
+                surgeRing.startWidth = surgeRing.endWidth = vault ? .08f : .05f;
+            }
+            // From just ahead of the feet (followed every frame) to the planned landing, arcing like the vault itself.
+            // A vault's arc starts at chest height and a little to the right, so from the eyes it reads as an arc over
+            // the wall rather than a line straight up the middle of the view.
+            bool vaulting = look == ZeriKit.SurgeLook.Vault;
+            Vector3 right = Vector3.Cross(Vector3.up, plan.direction).normalized;
+            Vector3 start = feet + plan.direction * .5f + (vaulting ? Vector3.up * .9f + right * .3f : Vector3.up * .15f);
+            Vector3 end = plan.landing + Vector3.up * .15f;
+            float span = Geo.FlatDistance(feet, plan.landing);
+            float arc = vaulting ? Mathf.Clamp(1.2f + span * .18f, 1.4f, 3.2f) : 0;
+            Vector3 Along(float t) => Vector3.Lerp(start, end, t) + Vector3.up * arc * 4 * t * (1 - t);
+            surgePath.positionCount = SurgePathPoints;
+            for (int i = 0; i < SurgePathPoints; i++)
+                surgePath.SetPosition(i, Along(i / (SurgePathPoints - 1f)));
+            // Chevrons run along the path toward the landing, so which way it goes reads at a glance; they fade in away
+            // from the eyes.
+            for (int k = 0; k < surgeChevrons.Length; k++)
+            {
+                float t = Mathf.Lerp(.12f, .9f, Mathf.Repeat(Time.time * .9f + k / (float)surgeChevrons.Length, 1));
+                Vector3 tip = Along(t), tangent = (Along(t + .02f) - tip).normalized;
+                Vector3 side = Vector3.Cross(Vector3.up, plan.direction).normalized;
+                float size = Mathf.Lerp(.12f, .3f, t) * (vaulting ? 1.2f : 1);
+                var chevron = surgeChevrons[k];
+                chevron.startWidth = chevron.endWidth = Mathf.Lerp(.02f, .05f, t);
+                chevron.SetPosition(0, tip - tangent * size + side * size * .8f);
+                chevron.SetPosition(1, tip);
+                chevron.SetPosition(2, tip - tangent * size - side * size * .8f);
+            }
+            // A bold arrowhead on the ground at the landing, pointing on along the dash.
+            Vector3 head = plan.landing + Vector3.up * .08f + plan.direction * .55f, across = Vector3.Cross(Vector3.up, plan.direction).normalized;
+            surgeHead.SetPosition(0, head - plan.direction * .5f + across * .38f);
+            surgeHead.SetPosition(1, head);
+            surgeHead.SetPosition(2, head - plan.direction * .5f - across * .38f);
+            float radius = look == ZeriKit.SurgeLook.Vault ? .85f : look == ZeriKit.SurgeLook.Dash ? .55f : .35f;
+            float pulse = 1 + Mathf.Sin(Time.time * 8) * .08f;
+            AbilityFx.SetCircle(surgeRing, plan.landing + Vector3.up * .06f, radius * pulse);
+        }
+
         // ---------- One-shot effects ----------
 
         /// <summary>A Burst Fire round: a muzzle flash and a short glowing streak (thicker and blue when Overcharged).</summary>
@@ -306,6 +394,262 @@ namespace LeagueVR.Champions
             Impact(to, ZeriKit.Plasma, 4);
         }
 
+        float nextRushSpark;
+
+        /// <summary>Spark Surge sets off: a ring of sparks bursts from her feet.</summary>
+        public void SurgeRushStart(Vector3 feet, Vector3 direction)
+        {
+            ZeriRing.Create(player, feet + Vector3.up * .05f, Vector3.up, .7f, ZeriKit.Spark, .06f, .35f);
+            ZeriFlash.Create(player, feet + Vector3.up * .08f, new Color(.7f, 1f, .5f, .3f), .8f, .2f, flat: true);
+            Impact(feet + Vector3.up * .3f, ZeriKit.Spark, 10);
+        }
+
+        /// <summary>
+        /// While Spark Surge carries her: arcs crackle off both feet and streak back along the ground, low in the view and
+        /// never across it, with sparks spraying behind.
+        /// </summary>
+        public void SurgeRushing(Vector3 feet, Vector3 direction)
+        {
+            if (Time.time < nextRushSpark)
+                return;
+            nextRushSpark = Time.time + .04f;
+            Vector3 right = Vector3.Cross(Vector3.up, direction).normalized;
+            for (int side = -1; side <= 1; side += 2)
+                Arc(feet + Vector3.up * .15f + right * side * .22f, feet - direction * 1.3f + Vector3.up * .08f + right * side * .45f, ZeriKit.Spark, .14f, .035f);
+            impactSparks.Emit(new ParticleSystem.EmitParams { position = feet + Vector3.up * .2f - direction * .3f, applyShapeToPosition = true, startColor = ZeriKit.Spark }, 2);
+        }
+
+        /// <summary>Zapping through a thin wall or a tower: a burst of her electricity where she meets it.</summary>
+        public void ZapThrough(Vector3 at, Vector3 direction)
+        {
+            Impact(at + Vector3.up * 1.1f + direction * .6f, ZeriKit.Volt, 14);
+            Arc(at + Vector3.up * 1.1f, at + Vector3.up * 1.1f + direction * 2.5f, ZeriKit.Volt, .25f, .08f);
+        }
+
+        /// <summary>The vault seen from outside: her model trails sparks and a streak of her green glow over the wall.</summary>
+        public void VaultTrail(GameObject puppet)
+        {
+            if (!puppet)
+                return;
+            var host = new GameObject("Zeri vault trail");
+            host.transform.SetParent(puppet.transform, false);
+            host.transform.localPosition = Vector3.up * .9f;
+            var trail = host.AddComponent<TrailRenderer>();
+            trail.sharedMaterial = ZeriFx.Glow(new Color(.62f, 1f, .38f, .5f));
+            trail.time = .3f;
+            trail.startWidth = .45f;
+            trail.endWidth = 0;
+            trail.minVertexDistance = .05f;
+            trail.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+            AbilityFx.Motes(host.transform, ZeriKit.Volt, .04f, .25f, 50, ParticleSystemShapeType.Sphere, .25f);
+        }
+
+        // ---------- The left hand: the battery flick and the pulse throw ----------
+
+        enum LeftMove { None, Flick, Throw }
+
+        LeftMove leftMove;
+        float leftStart, nextHandSpark;
+        bool leftBig;
+        Combatant flickTarget;
+        Vector3 throwDirection, leftPalmInGrip;
+
+        static float Smooth(float x) => x * x * (3 - 2 * x);
+
+        /// <summary>Seconds into the left hand's animation, or -1 while the hand is with its controller.</summary>
+        float LeftClock
+        {
+            get
+            {
+                if (leftMove == LeftMove.None)
+                    return -1;
+                float clock = Time.time - leftStart;
+                if (clock < (leftMove == LeftMove.Flick ? ZeriKit.FlickTime : ZeriKit.ThrowTime))
+                    return clock;
+                leftMove = LeftMove.None;
+                return -1;
+            }
+        }
+
+        /// <summary>League's Attack1a and Attack2: the left hand rises beside the shoulder and snaps out at the target.</summary>
+        public void StartFlick(Combatant target, bool big)
+        {
+            leftMove = LeftMove.Flick;
+            leftStart = Time.time;
+            flickTarget = target;
+            leftBig = big;
+        }
+
+        /// <summary>Ultrashock Laser's throw: the arm draws back and thrusts the pulse out along the palm's aim.</summary>
+        public void StartThrow(Vector3 direction)
+        {
+            leftMove = LeftMove.Throw;
+            leftStart = Time.time;
+            throwDirection = direction.normalized;
+        }
+
+        /// <summary>The left shoulder and how far the arm reaches (from the skeleton; 0.52 m for Zeri at her usual size).</summary>
+        void LeftArm(out Vector3 shoulder, out Vector3 elbow, out float reach)
+        {
+            var rig = player.Body ? player.Body.Rig : null;
+            if (rig != null && rig.Valid)
+            {
+                var arm = rig.LeftArm;
+                shoulder = arm.upper.position;
+                elbow = arm.lower.position;
+                reach = Vector3.Distance(arm.upper.position, arm.lower.position) + Vector3.Distance(arm.lower.position, arm.end.position);
+                return;
+            }
+            var head = player.head.transform;
+            shoulder = head.position - Vector3.up * .2f - head.right * .16f;
+            elbow = shoulder - Vector3.up * .2f;
+            reach = .52f;
+        }
+
+        /// <summary>Where the flick goes: at the target's chest, or straight on if it is gone.</summary>
+        Vector3 FlickDirection(Vector3 shoulder) => flickTarget && flickTarget.IsAlive
+            ? (flickTarget.AimPosition - shoulder).normalized
+            : player.PlanarDirection(player.head.transform.forward);
+
+        /// <summary>A left grip turned so the palm (+X on the left hand) faces <paramref name="palm"/>, thumb toward <paramref name="thumb"/>.</summary>
+        static Quaternion LeftTurn(Vector3 palm, Vector3 thumb)
+        {
+            Vector3 x = palm.normalized;
+            Vector3 z = Vector3.ProjectOnPlane(thumb, x);
+            if (z.sqrMagnitude < 1e-4f)
+                z = Vector3.ProjectOnPlane(Vector3.forward, x);
+            z.Normalize();
+            return Quaternion.LookRotation(z, Vector3.Cross(z, x));
+        }
+
+        /// <summary>
+        /// The left grip during a flick or a throw, laid out from her shoulder and arm length: wind up, snap or thrust out
+        /// (the spark or pulse leaves at <see cref="ZeriKit.FlickSnap"/> / <see cref="ZeriKit.ThrowRelease"/>), follow
+        /// through, and back to the controller.
+        /// </summary>
+        public Pose LeftGrip(Pose grip)
+        {
+            float clock = LeftClock;
+            if (clock < 0 || !player.Body || player.HandStowed(true))
+                return grip;
+            LeftArm(out var shoulder, out _, out float reach);
+            Vector3 hand = grip.position + grip.rotation * leftPalmInGrip;
+            Vector3 up = Vector3.up, wind, snap, follow;
+            Quaternion windTurn, snapTurn;
+            float tWind, tSnap, tFollow, total;
+            if (leftMove == LeftMove.Flick)
+            {
+                Vector3 dir = FlickDirection(shoulder);
+                Vector3 flat = player.PlanarDirection(dir);
+                Vector3 left = -Vector3.Cross(up, flat).normalized;
+                // Cocked up just under eye height out to the left, in view (beside the shoulder the eyes never saw it),
+                // then snapped out at the target.
+                wind = player.head.transform.position + (flat * .32f + left * .22f - up * .07f) * (reach / .52f);
+                snap = shoulder + dir * (.92f * reach);
+                follow = shoulder + (dir * .8f - up * .12f) * reach;
+                windTurn = LeftTurn(flat + up * .3f, up);
+                snapTurn = LeftTurn(dir, up);
+                tWind = .12f;
+                tSnap = .16f;
+                tFollow = .22f;
+                total = ZeriKit.FlickTime;
+            }
+            else
+            {
+                Vector3 dir = throwDirection;
+                // Drawn back a hand's width from where the player holds it, then thrust out along the palm's own aim line,
+                // so the pulse leaves exactly where the player aimed from.
+                wind = hand - dir * .12f;
+                snap = hand + dir * .22f;
+                follow = hand + dir * .16f - up * .03f;
+                windTurn = snapTurn = LeftTurn(dir, up);
+                tWind = .06f;
+                tSnap = .12f;
+                tFollow = .2f;
+                total = ZeriKit.ThrowTime;
+            }
+            Vector3 palm;
+            Quaternion turn;
+            if (clock < tWind)
+            {
+                float u = Smooth(clock / tWind);
+                palm = Vector3.Lerp(hand, wind, u);
+                turn = Quaternion.Slerp(grip.rotation, windTurn, u);
+            }
+            else if (clock < tSnap)
+            {
+                float u = (clock - tWind) / (tSnap - tWind);
+                u = 1 - (1 - u) * (1 - u);
+                palm = Vector3.Lerp(wind, snap, u);
+                turn = Quaternion.Slerp(windTurn, snapTurn, u);
+            }
+            else if (clock < tFollow)
+            {
+                palm = Vector3.Lerp(snap, follow, (clock - tSnap) / (tFollow - tSnap));
+                turn = snapTurn;
+            }
+            else
+            {
+                float u = Smooth((clock - tFollow) / (total - tFollow));
+                palm = Vector3.Lerp(follow, hand, u);
+                turn = Quaternion.Slerp(snapTurn, grip.rotation, u);
+            }
+            return new Pose(palm - turn * leftPalmInGrip, turn);
+        }
+
+        /// <summary>The left hand's fingers while it flicks or throws: a loose fist gathering the spark, then open as it lets go.</summary>
+        public HandCurl? LeftFingers()
+        {
+            float clock = LeftClock;
+            if (clock < 0)
+                return null;
+            if (leftMove == LeftMove.Flick && clock < ZeriKit.FlickSnap - .02f)
+                return new HandCurl(.5f, .55f, .7f, .75f, .8f);
+            return new HandCurl(.1f, 0, .05f, .1f, .15f);
+        }
+
+        /// <summary>Where the flicked spark leaves the hand: just past the fingers of the posed left hand.</summary>
+        public Vector3 FlickTip()
+        {
+            LeftArm(out var shoulder, out _, out _);
+            return (player.Body ? player.Body.Palm(true) : player.OffHandOrigin) + FlickDirection(shoulder) * .07f;
+        }
+
+        /// <summary>Where the thrown pulse leaves the hand: on the palm's aim line, just past where the thrust ends.</summary>
+        public Vector3 ThrowPoint() => kit.PalmAim().position + throwDirection * .3f;
+
+        /// <summary>
+        /// The hand's own effects: sparks gather between the fingers as the flick winds up (bigger for a charged or
+        /// executing shot), and lightning coils around the forearm as it throws the pulse.
+        /// </summary>
+        void HandEffects()
+        {
+            float clock = LeftClock;
+            if (clock < 0 || Time.time < nextHandSpark || !player.Body)
+                return;
+            nextHandSpark = Time.time + .03f;
+            Vector3 palm = player.Body.Palm(true);
+            if (leftMove == LeftMove.Flick && clock < ZeriKit.FlickSnap)
+            {
+                float size = leftBig ? .14f : .09f;
+                ZeriSprite.Create(player, palm, "ZeriFx_Glow", leftBig ? ZeriKit.Volt : ZeriKit.Spark, size * .5f, size, .1f);
+                impactSparks.Emit(new ParticleSystem.EmitParams { position = palm, applyShapeToPosition = true, startColor = leftBig ? ZeriKit.Volt : ZeriKit.Spark }, leftBig ? 3 : 1);
+            }
+            else if (leftMove == LeftMove.Throw && clock < .14f)
+            {
+                LeftArm(out _, out var elbow, out _);
+                Arc(elbow, palm, ZeriKit.Plasma, .07f, .025f);
+                Arc(elbow, palm, ZeriKit.Volt, .06f, .018f);
+            }
+        }
+
+        /// <summary>The pulse leaves the palm: a ring of light bursts around the hand, facing the throw.</summary>
+        public void PulseThrown(Vector3 at, Vector3 direction)
+        {
+            ZeriRing.Create(player, at + direction * .2f, direction, .12f, ZeriKit.Volt, .02f, .18f);
+            ZeriSprite.Create(player, at + direction * .15f, "ZeriFx_Glow", new Color(.75f, 1f, .5f, .6f), .1f, .25f, .12f);
+        }
+
         public void SurgeTrail(Vector3 from, Vector3 to)
         {
             ZeriArc.Create(player, from, to, ZeriKit.Spark, .6f, .5f, textured: true);
@@ -337,21 +681,38 @@ namespace LeagueVR.Champions
             ZeriRing.Create(player, ground + Vector3.up * .05f, Vector3.up, .6f, ZeriKit.Plasma, .05f, 2);
         }
 
-        /// <summary>The wall the pulse hit glows and a warning line shows where the laser will fire (visible through walls).</summary>
+        /// <summary>
+        /// The wall the pulse hit glows, and the laser's whole hit area shows until it fires: a faint band as wide as the
+        /// laser hits, outlined at both edges, with a line down the middle (all visible through walls).
+        /// </summary>
         public void LaserTelegraph(Vector3 wall, Vector3 normal, Vector3 end, float seconds)
         {
-            ZeriBeam.Create(player, wall, end, new Color(1f, .95f, .45f, .55f), .1f, .1f, seconds, 0, xray: true);
+            Vector3 side = Vector3.Cross(Vector3.up, Geo.FlatDirection(end - wall, Vector3.forward)).normalized * ZeriKit.LaserHalfWidth;
+            float width = ZeriKit.LaserHalfWidth * 2;
+            ZeriBeam.Create(player, wall, end, new Color(1f, .95f, .45f, .1f), width, width, seconds, 0, xray: true);
+            ZeriBeam.Create(player, wall + side, end + side, new Color(1f, .95f, .45f, .55f), .07f, .07f, seconds, 0, xray: true);
+            ZeriBeam.Create(player, wall - side, end - side, new Color(1f, .95f, .45f, .55f), .07f, .07f, seconds, 0, xray: true);
+            ZeriBeam.Create(player, wall, end, new Color(1f, .95f, .45f, .45f), .06f, .06f, seconds, 0, xray: true);
             ZeriRing.Create(player, wall + normal * .03f, normal, .5f, ZeriKit.Volt, .06f, seconds, pulse: true);
             Impact(wall, ZeriKit.Volt, 10);
         }
 
-        /// <summary>The laser itself: a glowing fringe, a yellow core and a white-hot centre, drawn through walls.</summary>
+        /// <summary>
+        /// The laser itself, as wide as it hits: a translucent green-yellow band with bright crackling edges, a golden core
+        /// and a pale centre. Saturated rather than white, so it reads clearly without blinding (drawn through walls).
+        /// </summary>
         public void Laser(Vector3 from, Vector3 to)
         {
-            ZeriBeam.Create(player, from, to, new Color(1f, .93f, .4f, .3f), ZeriKit.LaserHalfWidth * 1.2f, ZeriKit.LaserHalfWidth, .38f, 0, xray: true, texture: "ZeriFx_BeamFringe");
-            ZeriBeam.Create(player, from, to, new Color(1f, .95f, .5f, .9f), 1f, .7f, .35f, 0, xray: true, texture: "ZeriFx_BeamCore");
-            ZeriBeam.Create(player, from, to, new Color(1f, 1f, 1f, .9f), .35f, .2f, .3f, 0, xray: true, texture: "ZeriFx_BeamCore");
-            ZeriArc.Create(player, from, to, ZeriKit.Volt, .8f, .4f, textured: true);
+            Vector3 side = Vector3.Cross(Vector3.up, Geo.FlatDirection(to - from, Vector3.forward)).normalized * ZeriKit.LaserHalfWidth;
+            float width = ZeriKit.LaserHalfWidth * 2;
+            ZeriBeam.Create(player, from, to, new Color(.62f, 1f, .38f, .22f), width, width * .9f, .45f, 0, xray: true, texture: "ZeriFx_BeamFringe");
+            ZeriBeam.Create(player, from + side, to + side, new Color(.8f, 1f, .45f, .75f), .14f, .1f, .42f, 0, xray: true);
+            ZeriBeam.Create(player, from - side, to - side, new Color(.8f, 1f, .45f, .75f), .14f, .1f, .42f, 0, xray: true);
+            ZeriBeam.Create(player, from, to, new Color(1f, .82f, .3f, .55f), 1.1f, .8f, .4f, 0, xray: true, texture: "ZeriFx_BeamCore");
+            ZeriBeam.Create(player, from, to, new Color(1f, .95f, .65f, .55f), .3f, .2f, .32f, 0, xray: true, texture: "ZeriFx_BeamCore");
+            ZeriArc.Create(player, from, to, ZeriKit.Volt, .6f, .4f, textured: true);
+            ZeriArc.Create(player, from + side, to + side, ZeriKit.Spark, .3f, .35f, textured: true);
+            ZeriArc.Create(player, from - side, to - side, ZeriKit.Spark, .3f, .35f, textured: true);
         }
 
         /// <summary>Points a line along a jittered lightning path between two points.</summary>
@@ -388,10 +749,14 @@ namespace LeagueVR.Champions
         static readonly Dictionary<string, Material> texturedXRay = new();
         static readonly Dictionary<string, Texture2D> textures = new();
 
+        /// <summary>
+        /// One of Zeri's textures by name, or any champion's by resource path ("GwenFx/GwenFx_Flare"): the sprite, beam
+        /// and glow helpers here are shared with other kits.
+        /// </summary>
         public static Texture2D Tex(string name)
         {
             if (!textures.TryGetValue(name, out var texture) || !texture)
-                textures[name] = texture = Resources.Load<Texture2D>("ZeriFx/" + name);
+                textures[name] = texture = Resources.Load<Texture2D>(name.Contains('/') ? name : "ZeriFx/" + name);
             return texture;
         }
 
@@ -736,6 +1101,9 @@ namespace LeagueVR.Champions
         /// <summary>For a sprite on a parent: metres it is pulled from its anchor toward the eyes (glows on meshes).</summary>
         public float lift;
 
+        /// <summary>Turn about its facing axis in degrees; for a flat sprite, the compass heading its top points to.</summary>
+        public float Roll { set => roll = value; }
+
         public static ZeriSprite Create(PlayerChampion owner, Vector3 at, string texture, Color color, float startSize, float endSize, float seconds, Vector3? axis = null, bool flat = false, Transform parent = null)
         {
             var go = new GameObject("Zeri sprite " + texture);
@@ -874,21 +1242,36 @@ namespace LeagueVR.Champions
         {
             var go = new GameObject("Zeri Ultrashock pulse");
             go.transform.position = origin;
-            ZeriFx.Sphere("Pulse core", new Color(1f, .97f, .7f, .95f), .12f, go.transform);
-            ZeriFx.Sphere("Pulse halo", new Color(1f, .9f, .4f, .35f), .26f, go.transform);
+            // A ball of her electricity: a green-gold core in a blue halo (not a white blob), wide enough to follow.
+            ZeriFx.Sphere("Pulse core", new Color(.85f, 1f, .5f, .7f), .22f, go.transform);
+            ZeriFx.Sphere("Pulse halo", new Color(.45f, .85f, 1f, .25f), .55f, go.transform);
             var trail = go.AddComponent<TrailRenderer>();
-            trail.sharedMaterial = ZeriFx.Glow(new Color(1f, .9f, .4f, .6f));
-            trail.time = .35f;
-            trail.startWidth = .09f;
+            trail.sharedMaterial = ZeriFx.Glow(new Color(.62f, 1f, .38f, .5f));
+            trail.time = .3f;
+            trail.startWidth = .35f;
             trail.endWidth = 0;
             trail.minVertexDistance = .05f;
             trail.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
-            AbilityFx.Motes(go.transform, ZeriKit.Volt, .03f, .2f, 60, ParticleSystemShapeType.Sphere, .08f);
+            AbilityFx.Motes(go.transform, ZeriKit.Volt, .03f, .2f, 60, ParticleSystemShapeType.Sphere, .12f);
+            // Two sparks orbit it, leaving a double helix of light along its path.
+            for (int i = 0; i < 2; i++)
+            {
+                var orbiter = ZeriFx.Sphere("Pulse orbiter", ZeriKit.Volt, .06f, go.transform);
+                var helix = orbiter.AddComponent<TrailRenderer>();
+                helix.sharedMaterial = ZeriFx.Glow(new Color(1f, .93f, .4f, .7f));
+                helix.time = .25f;
+                helix.startWidth = .05f;
+                helix.endWidth = 0;
+                helix.minVertexDistance = .03f;
+                helix.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+            }
             var pulse = go.AddComponent<ZeriPulse>();
             pulse.kit = kit;
             pulse.owner = owner;
             pulse.origin = origin;
             pulse.direction = direction.normalized;
+            go.transform.localScale = Vector3.one * .3f;
+            trail.widthMultiplier = .3f;
             owner.Track(go);
             return pulse;
         }
@@ -909,13 +1292,13 @@ namespace LeagueVR.Champions
             // The nearest enemy along this step, if it comes before the wall.
             Combatant best = null;
             float bestAlong = Mathf.Min(step, wallAt);
-            foreach (var target in owner.EnemiesAround((from + to) * .5f, step * .5f + Radius + .6f))
+            foreach (var target in owner.EnemiesAround((from + to) * .5f, step * .5f + Radius + 1.05f))
             {
                 Vector3 rel = target.AimPosition - from;
                 float along = Vector3.Dot(rel, direction);
                 if (along < -Radius || along > bestAlong)
                     continue;
-                if ((rel - direction * along).magnitude <= Radius + .45f)
+                if ((rel - direction * along).magnitude <= Radius + .9f)
                 {
                     best = target;
                     bestAlong = along;
@@ -940,6 +1323,23 @@ namespace LeagueVR.Champions
             }
             transform.position = to;
             travelled += step;
+            // It leaves the palm small and swells to full size over its first 2.5 m, so it never fills the view.
+            float grow = Mathf.Lerp(.3f, 1, Mathf.Clamp01(travelled / 2.5f));
+            transform.localScale = Vector3.one * grow;
+            if (TryGetComponent<TrailRenderer>(out var trail))
+                trail.widthMultiplier = grow;
+            // The two orbiting sparks circle the line of flight.
+            Vector3 across = Vector3.Cross(direction, Mathf.Abs(direction.y) > .9f ? Vector3.right : Vector3.up).normalized;
+            Vector3 over = Vector3.Cross(direction, across);
+            int k = 0;
+            foreach (Transform child in transform)
+            {
+                if (child.name != "Pulse orbiter")
+                    continue;
+                float angle = travelled * 2.2f + k * Mathf.PI;
+                child.position = transform.position + (across * Mathf.Cos(angle) + over * Mathf.Sin(angle)) * .22f * grow;
+                k++;
+            }
             if (travelled >= ZeriKit.PulseRange - .01f)
                 Destroy(gameObject);
         }

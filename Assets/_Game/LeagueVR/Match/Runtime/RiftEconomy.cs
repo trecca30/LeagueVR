@@ -104,6 +104,49 @@ namespace LeagueVR.Match
             Touch();
         }
 
+        /// <summary>
+        /// Test loadout: sets the level and gives random finished shop items that suit the champion's class (no gold spent).
+        /// Only items any champion can buy, not consumables, trinkets, boots or elixirs, and not parts of other items.
+        /// </summary>
+        /// <summary>What the last test loadout judged the champion's class to be (for checking it).</summary>
+        public string LoadoutRole { get; private set; } = "none yet";
+
+        public void ApplyLoadout(int level, int itemCount)
+        {
+            Level = Mathf.Clamp(level, 1, 18);
+            // The roster holds the chosen champion from the moment it is picked, before the round sets it up.
+            var roster = match.player.GetComponent<ChampionRoster>();
+            var champion = roster && roster.Selected ? roster.Selected : ChampionBase ? ChampionBase : match.player.Definition;
+            string role = champion ? champion.role : "";
+            LoadoutRole = (champion ? champion.name : "no champion") + " / role [" + role + "]";
+            // Finished items only: built from parts, and not a part of anything else.
+            var parts = new HashSet<int>(match.catalog.items.Where(i => i != null && i.recipe != null).SelectMany(i => i.recipe));
+            var pool = match.catalog.items.Where(i => i != null && i.showInShop && !i.consumable && !i.HasTag("Trinket") && !i.HasTag("Boots")
+                && string.IsNullOrEmpty(i.requiredChampion) && i.recipe != null && i.recipe.Length > 0 && !parts.Contains(i.id) && SuitsRole(i, role)
+                && i.active != ItemActive.ElixirIron && i.active != ItemActive.ElixirSorcery && i.active != ItemActive.ElixirWrath).ToList();
+            var picks = pool.OrderBy(_ => UnityEngine.Random.value).Take(itemCount);
+            inventory.Clear();
+            foreach (var item in picks)
+                inventory.Add(new InventorySlot(item.id));
+            Recalculate();
+            Mana = MaxMana;
+            Touch();
+            match.Notify("Test loadout: level " + Level + ", " + inventory.Count + " random items");
+        }
+
+        /// <summary>Whether an item fits a champion class, read from its stat tags (the catalog has no class tags).</summary>
+        static bool SuitsRole(LeagueItem item, string role)
+        {
+            // Marksman items scale crits, attack speed or on-hit, and carry no health, resistances or ability power
+            // (that rules out bruiser and lethality items such as Sterak's Gage or Hubris).
+            if (role.Contains("Marksman"))
+                return (item.HasTag("CriticalStrike") || item.HasTag("AttackSpeed") || item.HasTag("OnHit"))
+                    && !item.HasTag("SpellDamage") && !item.HasTag("Health") && !item.HasTag("Armor") && !item.HasTag("SpellBlock");
+            if (role.Contains("Mage"))
+                return item.HasTag("SpellDamage") && !item.HasTag("Damage");
+            return item.HasTag("Health") || item.HasTag("Armor") || item.HasTag("SpellBlock");
+        }
+
         public void AddGold(int amount, bool combat = false)
         {
             Gold += amount;
@@ -495,10 +538,21 @@ namespace LeagueVR.Match
 
         public bool LastAttackCritical { get; private set; }
 
-        /// <summary>Basic attack damage before mitigation, rolling a critical strike.</summary>
+        /// <summary>Rolls the next basic attack's critical strike ahead of its hit, for attack animations that show it from
+        /// the start (Gragas's crit swing); the hit then uses this roll.</summary>
+        public bool RollNextCritical()
+        {
+            nextCritical = UnityEngine.Random.value < CriticalChance;
+            return nextCritical.Value;
+        }
+
+        bool? nextCritical;
+
+        /// <summary>Basic attack damage before mitigation, rolling a critical strike (or using one rolled ahead).</summary>
         public float AttackDamage(float amount, Combatant target)
         {
-            LastAttackCritical = UnityEngine.Random.value < CriticalChance;
+            LastAttackCritical = nextCritical ?? UnityEngine.Random.value < CriticalChance;
+            nextCritical = null;
             return LastAttackCritical ? amount * CriticalDamage : amount;
         }
 

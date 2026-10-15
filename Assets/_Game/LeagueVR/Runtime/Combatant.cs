@@ -38,6 +38,13 @@ namespace LeagueVR
         float BonusResistance { get; }
     }
 
+    /// <summary>Takes a share off incoming damage after resistances and before shields (Gragas's Drunken Rage).</summary>
+    public interface IDamageReduction
+    {
+        /// <summary>Fraction of the damage still taken, 0-1 (1 = no reduction).</summary>
+        float DamageTaken(DamageHit hit);
+    }
+
     /// <summary>Hides its owner from attackers. <c>attacker</c> is null for general targetability checks.</summary>
     public interface ITargetFilter
     {
@@ -72,6 +79,7 @@ namespace LeagueVR
         float armorShredUntil, armorShred, magicShredUntil, magicShred;
         bool deathReported;
         IDamageGuard[] guards = Array.Empty<IDamageGuard>();
+        IDamageReduction[] reductions = Array.Empty<IDamageReduction>();
         ITargetFilter[] filters = Array.Empty<ITargetFilter>();
         RiftEconomy economy;
         bool isWard;
@@ -150,15 +158,19 @@ namespace LeagueVR
             isWard = GetComponent<RiftVisionWard>();
             guardBuffer.Clear();
             filterBuffer.Clear();
+            var reductionList = new List<IDamageReduction>();
             foreach (var c in GetComponents<MonoBehaviour>())
             {
                 if (c is IDamageGuard guard)
                     guardBuffer.Add(guard);
                 if (c is ITargetFilter filter)
                     filterBuffer.Add(filter);
+                if (c is IDamageReduction reduction)
+                    reductionList.Add(reduction);
             }
             guards = guardBuffer.ToArray();
             filters = filterBuffer.ToArray();
+            reductions = reductionList.ToArray();
         }
 
         public static float Mitigate(float damage, float resistance) => damage * (resistance >= 0 ? 100 / (100 + resistance) : 2 - 100 / (100 - resistance));
@@ -208,6 +220,8 @@ namespace LeagueVR
             amount = RiftItemEffects.RedirectVowDamage(this, hit, amount);
             if (economy && economy.Effects)
                 amount = economy.Effects.AfterMitigation(hit, amount);
+            foreach (var reduction in reductions)
+                amount *= Mathf.Clamp01(reduction.DamageTaken(hit));
             foreach (var shield in shields)
             {
                 if (Time.time >= shield.until || shield.type.HasValue && shield.type.Value != hit.kind)

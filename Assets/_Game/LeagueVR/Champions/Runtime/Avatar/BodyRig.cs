@@ -4,19 +4,25 @@ using UnityEngine;
 
 namespace LeagueVR.Champions
 {
-    /// <summary>How far each part of a hand is closed, 0 (open) to 1 (fist).</summary>
+    /// <summary>How far each finger of a hand is closed, 0 (open; the thumb stands up) to 1 (fist).</summary>
     public struct HandCurl
     {
-        public float index, grip, thumb;
+        public float thumb, index, middle, ring, pinky;
 
-        public HandCurl(float index, float grip, float thumb)
+        /// <summary>The index finger, the other three fingers together, and the thumb (weapon and prop grips).</summary>
+        public HandCurl(float index, float grip, float thumb) : this(thumb, index, grip, grip, grip) { }
+
+        public HandCurl(float thumb, float index, float middle, float ring, float pinky)
         {
-            this.index = index;
-            this.grip = grip;
             this.thumb = thumb;
+            this.index = index;
+            this.middle = middle;
+            this.ring = ring;
+            this.pinky = pinky;
         }
 
-        public HandCurl AtLeast(HandCurl other) => new(Mathf.Max(index, other.index), Mathf.Max(grip, other.grip), Mathf.Max(thumb, other.thumb));
+        public HandCurl AtLeast(HandCurl other) => new(Mathf.Max(thumb, other.thumb), Mathf.Max(index, other.index),
+            Mathf.Max(middle, other.middle), Mathf.Max(ring, other.ring), Mathf.Max(pinky, other.pinky));
     }
 
     /// <summary>Everything the body needs for one frame, in world space.</summary>
@@ -35,7 +41,7 @@ namespace LeagueVR.Champions
     /// Full-body first-person rig for League champion skeletons, starting from a still idle pose: the body turns with
     /// the player, the spine leans toward the headset, the feet step procedurally and the legs bend when crouching,
     /// two-bone arms reach the controller grip poses with natural elbows, the wrist twist is shared with the forearm,
-    /// and the fingers follow grip and trigger. The hips never bob.
+    /// and every finger follows the controller's sensors (<see cref="FingerSense"/>). The hips never bob.
     /// </summary>
     public class BodyRig
     {
@@ -71,7 +77,7 @@ namespace LeagueVR.Champions
             public float[] maxAngles;
             public float[] relaxed;
             public int hand; // 0 left, 1 right
-            public int kind; // 0 thumb, 1 index, 2 other
+            public int kind; // 0 thumb, 1 index, 2 middle, 3 ring, 4 pinky, 5 a mitten's one finger block
             /// <summary>Knuckle joint only: how far the finger fans out from the middle finger (degrees) and the axis it fans about.</summary>
             public float splay;
             public Vector3 spreadAxis;
@@ -90,6 +96,24 @@ namespace LeagueVR.Champions
         public float Scale { get; private set; } = 1;
         public float BodyYaw => bodyYaw;
         public bool Valid { get; }
+
+        /// <summary>The fingers found on each hand and their joint counts (for checks), e.g. "L: thumb3 index3 ...".</summary>
+        public string FingerSummary
+        {
+            get
+            {
+                string[] names = { "thumb", "index", "middle", "ring", "pinky", "mitten" };
+                var text = new System.Text.StringBuilder();
+                for (int h = 0; h < 2; h++)
+                {
+                    text.Append(h == 0 ? "L:" : " R:");
+                    foreach (var f in fingers)
+                        if (f.hand == h)
+                            text.Append(' ').Append(names[f.kind]).Append(f.joints.Length);
+                }
+                return text.ToString();
+            }
+        }
 
         readonly Transform hips, spine1, spine2, chest, neck, leftClavicle, rightClavicle;
         /// <summary>The spine bones this skeleton has, from the hips up.</summary>
@@ -117,15 +141,25 @@ namespace LeagueVR.Champions
                             return t;
                 return null;
             }
+            // Older League rigs (Gragas, Brand) have a waist instead of spine bones, no neck (the head joint sits at the
+            // neck), and chain collarbone > upper arm as X_Shoulder > X_Uparm > X_Forearm; newer rigs chain
+            // X_Clavicle > X_Shoulder > X_Elbow.
+            bool CollarChain(string side)
+            {
+                var shoulder = Bone(side + "Shoulder");
+                var uparm = Bone(side + "Uparm");
+                return shoulder && uparm && uparm.IsChildOf(shoulder);
+            }
+            bool leftCollar = CollarChain("L_"), rightCollar = CollarChain("R_");
             hips = Bone("Pelvis", "Root");
-            spine1 = Bone("Spine1", "Spine");
+            spine1 = Bone("Spine1", "Spine", "Waist");
             spine2 = Bone("Spine2");
             chest = Bone("Chest", "Spine3");
-            neck = Bone("Neck");
-            leftClavicle = Bone("L_Clavicle");
-            rightClavicle = Bone("R_Clavicle");
-            LeftArm = new Limb { upper = Bone("L_Shoulder", "L_Uparm"), lower = Bone("L_Elbow", "L_Forearm"), end = Bone("L_Hand"), side = -1 };
-            RightArm = new Limb { upper = Bone("R_Shoulder", "R_Uparm"), lower = Bone("R_Elbow", "R_Forearm"), end = Bone("R_Hand"), side = 1 };
+            neck = Bone("Neck", "Head");
+            leftClavicle = leftCollar ? Bone("L_Shoulder") : Bone("L_Clavicle");
+            rightClavicle = rightCollar ? Bone("R_Shoulder") : Bone("R_Clavicle");
+            LeftArm = new Limb { upper = leftCollar ? Bone("L_Uparm") : Bone("L_Shoulder", "L_Uparm"), lower = Bone("L_Elbow", "L_Forearm"), end = Bone("L_Hand"), side = -1 };
+            RightArm = new Limb { upper = rightCollar ? Bone("R_Uparm") : Bone("R_Shoulder", "R_Uparm"), lower = Bone("R_Elbow", "R_Forearm"), end = Bone("R_Hand"), side = 1 };
             LeftLeg = new Limb { upper = Bone("L_Hip", "L_Thigh"), lower = Bone("L_KneeUpper", "L_Knee", "L_Calf"), end = Bone("L_Foot", "L_Ankle"), side = -1 };
             RightLeg = new Limb { upper = Bone("R_Hip", "R_Thigh"), lower = Bone("R_KneeUpper", "R_Knee", "R_Calf"), end = Bone("R_Foot", "R_Ankle"), side = 1 };
             Valid = spine1 && neck && LeftArm.upper && LeftArm.lower && LeftArm.end && RightArm.upper && RightArm.lower && RightArm.end;
@@ -209,11 +243,23 @@ namespace LeagueVR.Champions
         {
             Transform Find(string name) => bone(new[] { prefix + name });
             var hand = arm.end;
-            var middle = Find("Middle1");
-            var index = Find("Index1");
-            var pinky = Find("Pinky1");
+            // Newer rigs number every joint (Index1..Index3); older ones (Brand) name the base joint plainly and the tip _b.
+            bool numbered = Find("Middle1") && Find("Index1") && Find("Pinky1");
+            var middle = Find(numbered ? "Middle1" : "Middle");
+            var index = Find(numbered ? "Index1" : "Index");
+            var pinky = Find(numbered ? "Pinky1" : "Pinky");
+            bool mitten = false;
             if (!middle || !index || !pinky)
-                return;
+            {
+                // Mitten hands (Gragas): one finger block and a thumb. The block stands in for the middle knuckle, the
+                // thumb marks the index side and the hand itself the little-finger side.
+                middle = Find("Finger");
+                index = Find("Thumb");
+                pinky = hand;
+                mitten = true;
+                if (!middle || !index)
+                    return;
+            }
             // Palm frame from the current pose: metacarpals toward the middle knuckle, knuckle line pinky -> index.
             Vector3 f = (middle.position - hand.position).normalized;
             Vector3 u = Vector3.ProjectOnPlane(index.position - pinky.position, f).normalized;
@@ -234,12 +280,12 @@ namespace LeagueVR.Champions
             Vector3 bindNormal = (handIndex == 1 ? 1 : -1) * Vector3.Cross(bf, bu).normalized;
             Vector3 bindPalm = Vector3.Lerp(BindPos(hand), BindPos(middle), .55f);
 
-            void AddFinger(string name, int count, int kind)
+            void AddFinger(int kind, params string[] names)
             {
                 var joints = new List<Transform>();
-                for (int i = 1; i <= count; i++)
+                foreach (var name in names)
                 {
-                    var j = Find(name + i);
+                    var j = Find(name);
                     if (j)
                         joints.Add(j);
                 }
@@ -264,7 +310,7 @@ namespace LeagueVR.Champions
                     if (Vector3.Dot(Quaternion.AngleAxis(30, axis) * along, toward) < Vector3.Dot(along, toward))
                         axis = -axis;
                     finger.axes[i] = Quaternion.Inverse(BindRot(j)) * axis;
-                    // Two-joint fingers (Zoe, Pantheon) fold the middle and tip phalanges as one; they bend a little less.
+                    // Two-joint fingers (Zoe, Pantheon, Brand) fold the middle and tip phalanges as one; they bend a little less.
                     // The thumb folds across the palm far enough to close over a handle; a two-joint thumb bends more per joint.
                     finger.maxAngles[i] = kind == 0
                         ? (joints.Count == 2 ? new[] { 42f, 66f } : new[] { 34f, 50f, 60f })[Mathf.Min(i, joints.Count - 1)]
@@ -288,11 +334,26 @@ namespace LeagueVR.Champions
                     }
                 fingers.Add(finger);
             }
-            AddFinger("Thumb", 3, 0);
-            AddFinger("Index", 3, 1);
-            AddFinger("Middle", 3, 2);
-            AddFinger("Ring", 3, 2);
-            AddFinger("Pinky", 3, 2);
+            if (mitten)
+            {
+                AddFinger(0, "Thumb", "Thumb_b");
+                AddFinger(5, "Finger", "Finger_b");
+                return;
+            }
+            if (!numbered)
+            {
+                AddFinger(0, "Thumb", "Thumb_b");
+                AddFinger(1, "Index", "Index_b");
+                AddFinger(2, "Middle", "Middle_b");
+                AddFinger(3, "Ring", "Ring_b");
+                AddFinger(4, "Pinky", "Pinky_b");
+                return;
+            }
+            AddFinger(0, "Thumb1", "Thumb2", "Thumb3");
+            AddFinger(1, "Index1", "Index2", "Index3");
+            AddFinger(2, "Middle1", "Middle2", "Middle3");
+            AddFinger(3, "Ring1", "Ring2", "Ring3");
+            AddFinger(4, "Pinky1", "Pinky2", "Pinky3");
         }
 
         static Quaternion BindLocal(Transform joint, Dictionary<Transform, Matrix4x4> bind)
@@ -624,7 +685,16 @@ namespace LeagueVR.Champions
             foreach (var f in fingers)
             {
                 var curl = f.hand == 0 ? left : right;
-                float amount = f.kind == 0 ? curl.thumb : f.kind == 1 ? curl.index : curl.grip;
+                float amount = f.kind switch
+                {
+                    0 => curl.thumb,
+                    1 => curl.index,
+                    2 => curl.middle,
+                    3 => curl.ring,
+                    4 => curl.pinky,
+                    // A mitten's one finger block is all four fingers: it closes as far as they do together.
+                    _ => (curl.index + curl.middle + curl.ring + curl.pinky) * .25f,
+                };
                 for (int i = 0; i < f.joints.Length; i++)
                 {
                     float angle = Mathf.Lerp(f.relaxed[i], f.maxAngles[i], Mathf.Clamp01(amount));

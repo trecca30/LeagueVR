@@ -12,15 +12,19 @@ namespace LeagueVR.Champions
     /// moment, so sweeping the gun sprays the burst. Rounds stop at the first enemy (all enemies with Spark Surge) and at
     /// walls. Fire rate is her attack speed, hard capped at 1.5 per second like League; attack speed past the cap becomes
     /// bonus attack damage for the burst.</item>
-    /// <item>Living Battery (B): her League basic attack, a battery shot at the enemy the gun points at (it shares the
-    /// attack timer with Burst Fire). Walking and bursts charge the Sparkpack (the gun's coils glow); a full charge adds
-    /// damage based on max health. Any battery shot executes an enemy it leaves under the threshold; the ring under the
-    /// aimed enemy turns red when the shot would.</item>
-    /// <item>W Ultrashock Laser (X): hold until the pulse in the left palm is charged (League's cast time), then release
-    /// to fire where the palm points; a quick tap cancels for free. It slows the first enemy; if it meets a wall, a laser
-    /// fires through the wall 0.85 s later.</item>
-    /// <item>E Spark Surge (A): a blink (with a short comfort fade) where you walk or where the gun points, vaulting over
-    /// a wall within reach. For 5 s Burst Fire pierces and its first target takes bonus damage.</item>
+    /// <item>Living Battery (B): her League basic attack, at the enemy the gun points at (it shares the attack timer with
+    /// Burst Fire). As in League, her free left hand throws it: the hand rises beside the shoulder and snaps out at the
+    /// enemy, and the spark leaves the fingers at the snap. Walking and bursts charge the Sparkpack (the gun's coils
+    /// glow); a full charge adds damage based on max health. Any battery shot executes an enemy it leaves under the
+    /// threshold; the ring under the aimed enemy turns red when the shot would.</item>
+    /// <item>W Ultrashock Laser (X): hold until the pulse in the left palm is charged (League's cast time), then release:
+    /// the arm draws back and throws the pulse where the palm points. A quick tap cancels for free. It slows the first
+    /// enemy; if it meets a wall, a laser as wide as its hit area fires through the wall 0.85 s later.</item>
+    /// <item>E Spark Surge (A): a dash where you walk or where the gun points: the view rushes along at her dash speed
+    /// behind the comfort vignette (or blinks, in the comfort settings). A thin wall or a tower in the path is vaulted in
+    /// first person, zapping through it in a flash of her electricity; a thick wall is watched from outside her body.
+    /// Hold A to see where she will land, release to dash. For 5 s Burst Fire pierces and its first target takes bonus
+    /// damage.</item>
     /// <item>R Lightning Crash (left trigger): hold, then release to discharge a nova; a quick tap cancels for free.
     /// Hitting an enemy Overcharges her: faster attacks and movement, and Burst Fire becomes three quick rounds whose first
     /// hit chains lightning to four more enemies.</item>
@@ -37,26 +41,40 @@ namespace LeagueVR.Champions
 
         // League units / 55 = metres.
         public const float BurstRange = 13.6f, RoundRadius = .3f, RoundSpacing = .035f, OverchargedSpacing = .03f;
-        public const float PulseRange = 21.8f, PulseSpeed = 45, LaserRange = 28, LaserHalfWidth = 1.8f, LaserDelay = .85f;
-        public const float SurgeDistance = 5.5f, SurgeWallReach = .9f, SurgeMaxVault = 12, SurgeBuff = 5;
+        // The laser's half-width was 1.8 m; widened to 3 m so the through-wall laser is easier to land.
+        public const float PulseRange = 21.8f, PulseSpeed = 45, LaserRange = 28, LaserHalfWidth = 3f, LaserDelay = .85f;
+        // League vaults whenever terrain or a structure lies in the dash's path, so walls within a dash are vaulted
+        // (the wall ray starts at the chest and adds .3 m, so this reaches the full dash distance).
+        public const float SurgeDistance = 5.5f, SurgeWallReach = SurgeDistance - .3f, SurgeMaxVault = 12, SurgeBuff = 5;
         public const float NovaRadius = 15, ChainRange = 11.8f, OverchargeDuration = 5, OverchargeExtend = 2.5f;
         /// <summary>League caps Burst Fire at 1.5 attacks a second; Overcharged raises it by 12.5% (1.6875).</summary>
         public const float SpeedCap = 1.5f, OverchargedSpeedCap = SpeedCap * 1.125f;
         const float MetresPerCharge = 40f / 55f, BatteryCone = 10, BatteryQueueTime = 1.6f, ChargeCap = 100, CrashCastTime = .25f, MoveDeadZone = .002f;
         const int Rounds = 7, OverchargedRounds = 3, ChainTargets = 4;
+        // The battery shot's flick (League's Attack1a and Attack2): the left hand rises for 0.12 s, the spark leaves the
+        // fingers at 0.14 s, and the hand is back with its controller at 0.34 s.
+        public const float FlickTime = .34f, FlickSnap = .14f;
+        // Ultrashock Laser's throw: the arm draws back and thrusts out; the pulse leaves the palm at 0.1 s.
+        public const float ThrowTime = .36f, ThrowRelease = .1f;
 
         float charge = ChargeCap;
         float surgeUntil, overchargedUntil, hyperUntil, nextHum, nextHoldHint, stillSince, batteryQueuedUntil;
         bool wasOvercharged;
         int hyperStacks;
         Vector3 lastFeet;
-        bool haveFeet, holdingPulse, holdingCrash;
+        bool haveFeet, holdingPulse, holdingCrash, holdingSurge;
         float pulseHoldStart, crashHoldStart;
 
         // Burst Fire in flight: rounds left, the next round's time and per-burst state.
         int roundsLeft;
         float nextRound;
         bool burstOvercharged, burstCrit, burstFirstHit;
+
+        // A battery shot on its way out of the left hand, and a pulse being thrown.
+        Combatant flickTarget;
+        float flickStart = -1, throwStart = -1;
+        bool flickCharged;
+        Vector3 throwDirection;
 
         ChampionBodyBase boundBody;
         ZeriVisuals visuals;
@@ -67,8 +85,10 @@ namespace LeagueVR.Champions
         public bool Overcharged => Time.time < overchargedUntil;
         public int HyperStacks => Time.time < hyperUntil ? hyperStacks : 0;
         public bool BurstInFlight => roundsLeft > 0;
+        /// <summary>True while Spark Surge carries the view along the ground (first person).</summary>
+        public bool Rushing { get; private set; }
 
-        public override bool HoldToCast(int slot) => slot == 1 || slot == 3;
+        public override bool HoldToCast(int slot) => slot == 1 || slot == 2 || slot == 3;
         public override float BonusAttackSpeed => Overcharged ? .3f : 0;
         public override float AttackSpeedCap => Overcharged ? OverchargedSpeedCap : SpeedCap;
         protected override float AimCone => BatteryCone;
@@ -79,6 +99,7 @@ namespace LeagueVR.Champions
         {
             0 => "Living Battery shot (executes low-health enemies)",
             1 => "W: hold, release to fire Ultrashock Laser (tap cancels)",
+            2 => "E: hold to see where you land, release to Spark Surge",
             3 => "R: Lightning Crash (tap cancels)",
             _ => null,
         };
@@ -104,7 +125,12 @@ namespace LeagueVR.Champions
             boundBody = Body;
             visuals = new ZeriVisuals(this, Player);
             if (boundBody)
+            {
                 boundBody.Posed += OnPosed;
+                // The left hand flicks battery shots and throws the pulse.
+                boundBody.GripOverride = (left, grip) => left && visuals != null ? visuals.LeftGrip(grip) : grip;
+                boundBody.HandOverride = left => left && visuals != null ? visuals.LeftFingers() : null;
+            }
         }
 
         public override void OnUnequip()
@@ -117,8 +143,13 @@ namespace LeagueVR.Champions
                     boundBody.Hidden = false;
                 Player.FreezeLocomotion(false);
             }
+            EndRush();
             if (boundBody)
+            {
                 boundBody.Posed -= OnPosed;
+                boundBody.GripOverride = null;
+                boundBody.HandOverride = null;
+            }
             boundBody = null;
             visuals?.Destroy();
             visuals = null;
@@ -131,16 +162,21 @@ namespace LeagueVR.Champions
             surgeUntil = overchargedUntil = hyperUntil = 0;
             hyperStacks = 0;
             roundsLeft = 0;
-            haveFeet = holdingPulse = holdingCrash = wasOvercharged = false;
+            haveFeet = holdingPulse = holdingCrash = holdingSurge = wasOvercharged = false;
             stillSince = batteryQueuedUntil = 0;
+            flickStart = throwStart = -1;
+            flickTarget = null;
         }
 
         public override void OnDeath()
         {
+            EndRush();
             visuals?.HideAll();
-            holdingPulse = holdingCrash = wasOvercharged = false;
+            holdingPulse = holdingCrash = holdingSurge = wasOvercharged = false;
             roundsLeft = 0;
             overchargedUntil = surgeUntil = batteryQueuedUntil = 0;
+            flickStart = throwStart = -1;
+            flickTarget = null;
         }
 
         // League refills the Sparkpack on respawn.
@@ -165,13 +201,21 @@ namespace LeagueVR.Champions
                 if (BatteryQueued && Player.AttackReady && roundsLeft == 0 && BatteryShot())
                     batteryQueuedUntil = 0;
             }
+            // The flicked spark and the thrown pulse leave the hand partway through their animations.
+            if (flickStart >= 0 && Time.time - flickStart >= FlickSnap)
+                FireBattery();
+            if (throwStart >= 0 && Time.time - throwStart >= ThrowRelease)
+                LaunchPulse();
             if (Overcharged)
                 Health.ApplySpeed(OverchargedSpeed, .25f);
             else if (wasOvercharged)
                 Player.Emit("OverchargeEnd", Player.Feet + Vector3.up, Vector3.up);
             wasOvercharged = Overcharged;
             HoldFeedback();
-            visuals?.Tick(holdingPulse ? Mathf.Clamp01((Time.time - pulseHoldStart) / PulseCastTime) : -1, holdingCrash ? Mathf.Clamp01((Time.time - crashHoldStart) / CrashCastTime) : -1);
+            UpdateSurgePreview();
+            // The charged pulse stays in the palm while the arm throws it, until it leaves the hand.
+            float pulse = holdingPulse ? Mathf.Clamp01((Time.time - pulseHoldStart) / PulseCastTime) : throwStart >= 0 ? 1 : -1;
+            visuals?.Tick(pulse, holdingCrash ? Mathf.Clamp01((Time.time - crashHoldStart) / CrashCastTime) : -1);
         }
 
         void OnPosed() => visuals?.Pose();
@@ -294,18 +338,42 @@ namespace LeagueVR.Champions
             return false;
         }
 
-        /// <summary>B: Zeri's League basic attack. A full charge adds max-health damage; it executes what it leaves low.</summary>
+        /// <summary>
+        /// B: Zeri's League basic attack, thrown by the left hand: it rises beside the shoulder and snaps out at the target,
+        /// and the shot leaves the fingers at the snap (<see cref="FireBattery"/>).
+        /// </summary>
         bool BatteryShot()
         {
-            if (!Player.AttackReady || roundsLeft > 0)
+            if (!Player.AttackReady || roundsLeft > 0 || flickStart >= 0)
                 return false;
             var target = BatteryTarget();
             if (!target)
                 return false;
             Player.SpendAttack();
-            Vector3 origin = Muzzle(out _);
+            flickTarget = target;
+            flickStart = Time.time;
+            flickCharged = FullyCharged;
+            visuals?.StartFlick(target, flickCharged || WouldExecute(target));
+            return true;
+        }
+
+        /// <summary>
+        /// The spark leaves the fingers. A full charge adds max-health damage; it executes what it leaves low. If the target
+        /// died or got away during the flick, nothing is thrown and the next attack may start at once.
+        /// </summary>
+        void FireBattery()
+        {
+            var target = flickTarget;
+            flickTarget = null;
+            flickStart = -1;
+            if (!target || !target.IsAlive || Geo.FlatDistance(target.transform.position, Player.Feet) > Player.AttackReach + 2)
+            {
+                Player.ResetAttackTimer();
+                return;
+            }
+            Vector3 origin = visuals != null ? visuals.FlickTip() : Player.OffHandOrigin;
             Vector3 direction = (target.AimPosition - origin).normalized;
-            bool charged = FullyCharged;
+            bool charged = flickCharged && FullyCharged;
             float before = target.Health + target.Shield;
             Player.Hit(target, BatteryDamage(target), DamageKind.Magic, "Passive", false, origin);
             bool executed = false;
@@ -320,10 +388,9 @@ namespace LeagueVR.Champions
             if (charged && landed)
                 charge = 0;
             visuals?.BatteryBolt(origin, target.AimPosition, charged || executed);
-            KickGun(charged ? .9f : .45f);
             Player.Emit(charged ? "ChargedShot" : "Zap", origin, direction);
             if (!landed)
-                return true;
+                return;
             Player.Emit(executed ? "Execute" : charged ? "ChargedHit" : "BatteryHit", target.AimPosition, direction);
             if (executed)
                 visuals?.ExecuteMark(target.transform.position);
@@ -333,7 +400,6 @@ namespace LeagueVR.Champions
                 Player.ReduceCooldown(2, .5f);
                 ExtendOvercharge(target, 1);
             }
-            return true;
         }
 
         // ---------- Q: Burst Fire ----------
@@ -550,7 +616,20 @@ namespace LeagueVR.Champions
             Vector3 direction = aim.rotation * Vector3.forward;
             if (!Player.Commit(1, false, aim.position, direction))
                 return;
-            ZeriPulse.Launch(this, Player, aim.position, direction);
+            // The arm draws back and throws; the pulse leaves the palm as it thrusts out (LaunchPulse).
+            throwStart = Time.time;
+            throwDirection = direction;
+            visuals?.StartThrow(direction);
+        }
+
+        void LaunchPulse()
+        {
+            throwStart = -1;
+            if (!Health.IsAlive)
+                return;
+            Vector3 from = visuals != null ? visuals.ThrowPoint() : PalmAim().position;
+            visuals?.PulseThrown(from, throwDirection);
+            ZeriPulse.Launch(this, Player, from, throwDirection);
         }
 
         void HoldHint(string text)
@@ -634,6 +713,8 @@ namespace LeagueVR.Champions
             public bool vaulted;
             /// <summary>Seconds of the whole dash, and of the part over the obstacle, at League's dash speed.</summary>
             public float seconds, overObstacle;
+            /// <summary>Where the obstacle starts and ends along the dash (metres from the start).</summary>
+            public float obstacleStart, obstacleEnd;
         }
 
         /// <summary>
@@ -647,21 +728,16 @@ namespace LeagueVR.Champions
         public bool Vaulting { get; private set; }
 
         /// <summary>
-        /// Dashes where you walk (or where the gun points), vaulting a wall or tower you are close to. A short hop (a
-        /// thin wall or a tower, at most 0.3 s over it) is a first-person blink. A long vault cuts behind a brief fade
-        /// to a view behind and above her: the view follows Zeri's arc over the wall at a fixed distance, then the view
-        /// cuts back into her body where she lands.
+        /// Dashes where you walk (or where the gun points), vaulting a wall or tower in the dash's path. A plain dash and a
+        /// short vault (a thin wall or a tower, at most 0.3 s over it) rush in first person (<see cref="SurgeRush"/>). A long
+        /// vault cuts to a view behind and above her that follows Zeri's arc over the wall, then cuts back into her body
+        /// where she lands. With rushes off in the comfort settings, dashes and short vaults blink.
         /// </summary>
         bool SparkSurge()
         {
-            if (Vaulting)
+            if (Vaulting || Rushing)
                 return false;
-            Vector3 direction = Player.LocomotionDirection(out bool walking);
-            if (!walking)
-            {
-                Muzzle(out var aim);
-                direction = Player.PlanarDirection(aim);
-            }
+            Vector3 direction = SurgeDirection();
             Vector3 feet = Player.Feet;
             if (!PlanSurge(feet, direction, out var plan))
             {
@@ -677,6 +753,11 @@ namespace LeagueVR.Champions
                 Player.StartCoroutine(VaultFromOutside(plan));
                 return true;
             }
+            if (ComfortSettings.RushCharges && Geo.FlatDistance(feet, plan.landing) > .3f)
+            {
+                Player.StartCoroutine(SurgeRush(plan));
+                return true;
+            }
             Player.ComfortBlink(.14f);
             visuals?.SurgeTrail(feet + Vector3.up * .9f, plan.landing + Vector3.up * .9f);
             Player.MoveFeet(plan.landing);
@@ -687,7 +768,131 @@ namespace LeagueVR.Champions
         }
 
         /// <summary>
-        /// A wall or tower within reach is vaulted: the landing is the full dash distance past it if there is room,
+        /// Spark Surge in first person: the view rushes along the dash at her dash speed behind the comfort vignette, the
+        /// stick frozen, sparks streaming off her. A thin wall or a tower in the way she zaps through: half a metre before
+        /// it a flash of her electricity covers the view, she is moved through while it is covered (the obstacle's inside
+        /// is never seen), and she rushes on out of the far side.
+        /// </summary>
+        System.Collections.IEnumerator SurgeRush(SurgePlan plan)
+        {
+            Rushing = true;
+            Player.FreezeLocomotion(true);
+            Player.RushVignette(true);
+            visuals?.SurgeRushStart(plan.start, plan.direction);
+            float span = Mathf.Max(.3f, Geo.FlatDistance(plan.start, plan.landing));
+            float speed = span / Mathf.Max(.1f, plan.seconds);
+            float arc = plan.vaulted ? Mathf.Clamp(.3f + span * .04f, .3f, .6f) : 0;
+            float distance = 0, height = plan.start.y;
+            bool zapped = false;
+            while (Player.Kit == this && Health.IsAlive)
+            {
+                float t = Mathf.Clamp01(distance / span);
+                Vector3 at = Vector3.Lerp(plan.start, plan.landing, t);
+                if (plan.vaulted)
+                {
+                    at.y = Mathf.Lerp(plan.start.y, plan.landing.y, t) + arc * 4 * t * (1 - t);
+                    if (!zapped && distance >= plan.obstacleStart - .5f)
+                    {
+                        zapped = true;
+                        Player.MoveFeet(at);
+                        Player.ScreenFade(new Color(.75f, 1f, .5f), .05f, .05f, .14f, 1);
+                        visuals?.ZapThrough(at, plan.direction);
+                        while (Player.FadeCoveredIn > 0 && Player.Kit == this && Health.IsAlive)
+                            yield return null;
+                        // Covered: she is through the obstacle.
+                        distance = Mathf.Clamp(plan.obstacleEnd + .4f, distance, span);
+                        visuals?.ZapThrough(Vector3.Lerp(plan.start, plan.landing, distance / span), plan.direction);
+                        continue;
+                    }
+                }
+                else
+                {
+                    // Up and down ramps the feet keep to the floor nearest the height she is at.
+                    at.y = RiftMatch.Instance && RiftMatch.Instance.Ground(new Vector3(at.x, height + .1f, at.z), out var floor) && Mathf.Abs(floor.y - height) < .3f ? floor.y : height;
+                    height = at.y;
+                }
+                Player.MoveFeet(at);
+                visuals?.SurgeRushing(at, plan.direction);
+                if (t >= 1)
+                    break;
+                yield return null;
+                distance = Mathf.Min(span, distance + speed * Time.deltaTime);
+            }
+            bool landed = Rushing && Player.Kit == this && Health.IsAlive;
+            EndRush();
+            if (!landed)
+                yield break;
+            Player.MoveFeet(plan.landing);
+            visuals?.SurgeTrail(plan.start + Vector3.up * .9f, plan.landing + Vector3.up * .9f);
+            Player.Emit("Surge", plan.landing, plan.direction);
+            if (plan.vaulted)
+                RiftMatch.Instance?.Notify("Vaulted!");
+        }
+
+        /// <summary>Gives the stick and the view back after a rush (also when the champion changes or dies mid-dash).</summary>
+        void EndRush()
+        {
+            if (!Rushing)
+                return;
+            Rushing = false;
+            Player.RushVignette(false);
+            Player.FreezeLocomotion(false);
+        }
+
+        /// <summary>The way Spark Surge goes: where you walk, or where the gun points while standing still.</summary>
+        Vector3 SurgeDirection()
+        {
+            Vector3 direction = Player.LocomotionDirection(out bool walking);
+            if (!walking)
+            {
+                Muzzle(out var aim);
+                direction = Player.PlanarDirection(aim);
+            }
+            return direction;
+        }
+
+        /// <summary>
+        /// The Spark Surge preview: hidden, a full dash, a vault, a dash cut short by a wall it cannot vault (no floor
+        /// beyond it in range), or no room to land.
+        /// </summary>
+        public enum SurgeLook { Hidden, Dash, Vault, Short, Blocked }
+
+        SurgeLook surgeLook;
+        SurgePlan surgePreview;
+
+        /// <summary>
+        /// Shows where Spark Surge will go while its button is held, so a wall is never a surprise; releasing dashes.
+        /// It uses the same plan as the cast, re-planned every frame so the arrow follows the hand smoothly.
+        /// </summary>
+        void UpdateSurgePreview()
+        {
+            surgeLook = PlanPreview(out surgePreview);
+            visuals?.SurgePreview(surgeLook, surgePreview, Player.Feet);
+        }
+
+        SurgeLook PlanPreview(out SurgePlan plan)
+        {
+            plan = default;
+            if (!holdingSurge || !Player.CanAct || Vaulting || Rushing)
+                return SurgeLook.Hidden;
+            Vector3 feet = Player.Feet;
+            Vector3 direction = SurgeDirection();
+            bool wallAhead = Player.TerrainRay(feet + Vector3.up * .9f, direction, SurgeDistance + .5f, out var wall) && wall.normal.y < .5f;
+            if (!PlanSurge(feet, direction, out plan))
+            {
+                plan.landing = feet + direction * (wallAhead ? Mathf.Max(.3f, wall.distance - .3f) : 1);
+                return SurgeLook.Blocked;
+            }
+            if (plan.vaulted)
+                return SurgeLook.Vault;
+            // A wall in the way that cannot be vaulted (no floor beyond it): she would only run into it.
+            if (wallAhead && Geo.FlatDistance(feet, plan.landing) < SurgeDistance - .5f)
+                return SurgeLook.Short;
+            return SurgeLook.Dash;
+        }
+
+        /// <summary>
+        /// A wall or tower in the dash's path is vaulted: the landing is the full dash distance past it if there is room,
         /// further out for a thick wall (up to 12 m), measured on the Rift's collision grid (towers by a ray back from
         /// beyond). Without one the dash stops short of walls.
         /// </summary>
@@ -707,6 +912,8 @@ namespace LeagueVR.Champions
                             plan.vaulted = true;
                             plan.seconds = along / speed;
                             plan.overObstacle = Mathf.Max(0, exit - wall.distance) / speed;
+                            plan.obstacleStart = wall.distance;
+                            plan.obstacleEnd = exit;
                             return true;
                         }
             }
@@ -748,10 +955,12 @@ namespace LeagueVR.Champions
         System.Collections.IEnumerator VaultFromOutside(SurgePlan plan)
         {
             Vaulting = true;
-            var spark = new Color(1f, .95f, .55f);
+            var spark = new Color(.85f, 1f, .6f);
             Player.FreezeLocomotion(true);
-            Player.ScreenFade(spark, .07f, .05f, .15f, .85f);
-            yield return new WaitForSeconds(.07f);
+            // A quick flash of her electricity hides the cut (it used to linger as a yellow wash over half the vault).
+            Player.ScreenFade(spark, .05f, 0, .1f, .7f);
+            visuals?.SurgeRushStart(plan.start, plan.direction);
+            yield return new WaitForSeconds(.05f);
             GameObject puppet = null;
             if (Player && Health.IsAlive && Player.Kit == this)
             {
@@ -763,11 +972,13 @@ namespace LeagueVR.Champions
                 Vector3 eye = middle - view * Mathf.Max(4.5f, span * .75f) + Vector3.up * (2.4f + span * .12f);
                 // The view's offset from her, kept for the whole vault so the camera follows her arc.
                 Vector3 offset = eye - plan.start;
-                Player.MoveFeet(eye - eyeAboveFeet);
+                // The first-person body goes before the view moves, or it would hang in front of the new view for a frame.
                 if (Body)
                     Body.Hidden = true;
-                puppet = VaultPuppet(plan);
-                visuals?.SurgeTrail(plan.start + Vector3.up * .9f, plan.landing + Vector3.up * .9f);
+                Player.MoveFeet(eye - eyeAboveFeet);
+                var vault = VaultPuppet(plan);
+                puppet = vault ? vault.gameObject : null;
+                visuals?.VaultTrail(puppet);
                 float arc = Mathf.Clamp(1.2f + span * .18f, 1.4f, 3.2f);
                 float begin = Time.time;
                 while (Time.time - begin < plan.seconds && Player && Health.IsAlive && Player.Kit == this)
@@ -776,11 +987,12 @@ namespace LeagueVR.Champions
                     Vector3 at = Vector3.Lerp(plan.start, plan.landing, t) + Vector3.up * arc * 4 * t * (1 - t);
                     if (puppet)
                         puppet.transform.position = at;
+                    VaultClips(vault, plan, Time.time - begin);
                     Player.MoveFeet(at + offset - eyeAboveFeet);
                     yield return null;
                 }
-                Player.ScreenFade(spark, .06f, .04f, .16f, .85f);
-                yield return new WaitForSeconds(.06f);
+                Player.ScreenFade(spark, .05f, 0, .12f, .7f);
+                yield return new WaitForSeconds(.05f);
             }
             if (puppet)
                 Object.Destroy(puppet);
@@ -795,15 +1007,39 @@ namespace LeagueVR.Champions
             Vaulting = false;
         }
 
-        /// <summary>Her full model playing League's vault animation (short, medium or long), stretched over the dash.</summary>
-        GameObject VaultPuppet(SurgePlan plan)
+        /// <summary>Her full model for the vault, starting League's vault animation for its length (short, medium or long).</summary>
+        ChampionPuppet VaultPuppet(SurgePlan plan)
         {
             var puppet = ChampionPuppet.Spawn(Player, plan.start, Quaternion.LookRotation(plan.direction));
             if (!puppet)
                 return null;
+            VaultClips(puppet, plan, 0);
+            return puppet;
+        }
+
+        /// <summary>
+        /// League's vault clips in order, at their own speed (a little faster or slower to fit, never stretched into slow
+        /// motion): the take-off clip, then for a long vault the airborne loop until she lands.
+        /// </summary>
+        static void VaultClips(ChampionPuppet puppet, SurgePlan plan, float elapsed)
+        {
+            if (!puppet)
+                return;
             float span = Geo.FlatDistance(plan.start, plan.landing);
-            puppet.Play(false, plan.seconds, span > 9 ? "Spell3_Vault_Long" : span > 6.5f ? "Spell3_Vault_Med" : "Spell3_Vault_Short", "Spell3");
-            return puppet.gameObject;
+            string start = span > 9 ? "Spell3_Vault_Long" : span > 6.5f ? "Spell3_Vault_Med" : "Spell3_Vault_Short";
+            float length = puppet.Length(start);
+            bool loops = span > 9 && puppet.Length("Spell3_Vault_Long_Loop") > 0;
+            if (length <= 0)
+            {
+                puppet.Play(false, plan.seconds, "Spell3");
+                return;
+            }
+            // The take-off plays over its own length, squeezed if the vault is shorter, and eased by up to 30% to end with it.
+            float takeOff = loops ? Mathf.Min(length, plan.seconds * .6f) : Mathf.Clamp(plan.seconds, length / 1.6f, length * 1.3f);
+            if (elapsed < takeOff || !loops)
+                puppet.Play(false, takeOff, start);
+            else
+                puppet.Play(true, 0, "Spell3_Vault_Long_Loop");
         }
 
         public override bool HiddenFrom(Combatant attacker) => Vaulting;
@@ -895,6 +1131,14 @@ namespace LeagueVR.Champions
                 Player.Emit("PulseCharge", PalmAim().position, Vector3.up);
                 return true;
             }
+            if (slot == 2)
+            {
+                // Held: the landing preview shows until release, which dashes (no cost until then).
+                if (Vaulting || Rushing)
+                    return false;
+                holdingSurge = true;
+                return true;
+            }
             if (slot == 3)
             {
                 holdingCrash = true;
@@ -910,6 +1154,11 @@ namespace LeagueVR.Champions
         {
             if (slot == 1)
                 ReleasePulse();
+            else if (slot == 2)
+            {
+                holdingSurge = false;
+                SparkSurge();
+            }
             else if (slot == 3)
                 ReleaseCrash();
         }
@@ -918,6 +1167,8 @@ namespace LeagueVR.Champions
         {
             if (slot == 1)
                 holdingPulse = false;
+            else if (slot == 2)
+                holdingSurge = false;
             else if (slot == 3)
                 holdingCrash = false;
         }

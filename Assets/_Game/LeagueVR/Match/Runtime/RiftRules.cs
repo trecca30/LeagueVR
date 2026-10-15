@@ -28,7 +28,12 @@ namespace LeagueVR.Match
         public float passiveGoldStart = 65, passiveGoldPerSecond = 2.04f;
 
         // Wave timing (League wiki, 26.x): first wave 0:30, every 30 s, every 25 s from 14:00, every 20 s from 30:00.
-        public float WaveInterval(float seconds) => seconds >= lateWaveTime ? lateWaveInterval : seconds >= midWaveTime ? midWaveInterval : earlyWaveInterval;
+        /// <summary>Minion waves come this many times as often as League's (1.7 for now); every wave timer divides by it.</summary>
+        public float minionSpawnRate = 1.7f;
+
+        public float FirstWaveTime => firstWave / minionSpawnRate;
+
+        public float WaveInterval(float seconds) => (seconds >= lateWaveTime ? lateWaveInterval : seconds >= midWaveTime ? midWaveInterval : earlyWaveInterval) / minionSpawnRate;
 
         // Siege minions: third wave, then every third wave until 14:00, every second wave until 25:00, then every wave.
         public bool CannonWave(int wave, float seconds) => wave >= 3 && (seconds >= 1500 || wave % (seconds >= 840 ? 2 : 3) == 0);

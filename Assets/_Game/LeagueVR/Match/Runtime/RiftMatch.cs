@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 using LeagueVR.Champions;
 
 namespace LeagueVR.Match
@@ -30,6 +32,18 @@ namespace LeagueVR.Match
         public RiftFountain[] fountains;
         public Material blueMaterial, redMaterial, neutralMaterial;
         public Transform spawnedRoot;
+        /// <summary>
+        /// Enemy super minions that march down mid on their own (they replaced the Pantheon bots): a group at the start,
+        /// another every <see cref="superGroupWaves"/> waves, at most <see cref="maxSupers"/> of them alive. They fight
+        /// like any minion. A group size of 0 turns them off.
+        /// </summary>
+        [FormerlySerializedAs("startingBots")] public int startingSupers = 2;
+        [FormerlySerializedAs("botGroupSize")] public int superGroupSize = 2;
+        [FormerlySerializedAs("botGroupWaves")] public int superGroupWaves = 2;
+        [FormerlySerializedAs("maxBots")] public int maxSupers = 8;
+        /// <summary>At every round start: set the player's level and give class-specific items. A test setup, on for now; turn it off for real play.</summary>
+        public bool testLoadout = true;
+        public int testLevel = 12, testItemCount = 6;
 
         public const float RecallDuration = 8;
 
@@ -47,13 +61,14 @@ namespace LeagueVR.Match
         float goldAccumulator;
         bool recalling;
         float recallUntil;
+        readonly List<RiftMinion> marchingSupers = new();
         Vector3 recallOrigin, recallHead;
         static readonly RaycastHit[] groundHits = new RaycastHit[16];
 
         void Awake()
         {
             Instance = this;
-            NextWave = rules.firstWave;
+            NextWave = rules.FirstWaveTime;
         }
 
         void OnDestroy()
@@ -155,6 +170,8 @@ namespace LeagueVR.Match
             {
                 Wave++;
                 StartCoroutine(SpawnWave(Wave));
+                if (superGroupWaves > 0 && Wave % superGroupWaves == 0)
+                    SpawnSupers(superGroupSize);
                 NextWave += rules.WaveInterval(Seconds);
             }
             if (Seconds >= rules.passiveGoldStart)
@@ -197,9 +214,10 @@ namespace LeagueVR.Match
             StopAllCoroutines();
             foreach (Transform child in spawnedRoot)
                 Destroy(child.gameObject);
+            marchingSupers.Clear();
             Seconds = 0;
             Wave = 0;
-            NextWave = rules.firstWave;
+            NextWave = rules.FirstWaveTime;
             goldAccumulator = 0;
             recalling = false;
             Running = true;
@@ -209,9 +227,35 @@ namespace LeagueVR.Match
                 objective.ResetObjective();
             economy.ResetMatch();
             player.ResetPractice();
+            // The champion's class decides the test items, and it is only settled a couple of frames into the round.
+            if (testLoadout)
+                StartCoroutine(ApplyTestLoadout());
             MoveToFountain();
+            SpawnSupers(startingSupers);
             ui.Close();
             Notify("Welcome to Summoner's Rift");
+        }
+
+        IEnumerator ApplyTestLoadout()
+        {
+            yield return null;
+            yield return null;
+            if (Running)
+                economy.ApplyLoadout(testLevel, testItemCount);
+        }
+
+        /// <summary>
+        /// Sends enemy super minions down the mid lane from their base, side by side, up to <see cref="maxSupers"/> of
+        /// them alive.
+        /// </summary>
+        void SpawnSupers(int count)
+        {
+            int mid = Array.FindIndex(lanes, lane => lane.name == "Mid");
+            if (mid < 0 || count <= 0)
+                return;
+            marchingSupers.RemoveAll(s => !s || !s.health.IsAlive);
+            for (int i = 0; i < count && marchingSupers.Count < maxSupers; i++)
+                marchingSupers.Add(SpawnMinion(1 - player.Health.team, mid, MinionKind.Super, i % 3));
         }
 
         public void MoveToFountain()

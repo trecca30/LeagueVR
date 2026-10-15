@@ -9,6 +9,15 @@ namespace LeagueVR.Champions
     /// </summary>
     public static class XRPoses
     {
+        /// <summary>
+        /// Tests only: the head and hands follow their transforms (scripted poses) even with a headset connected.
+        /// Every play session starts with it off.
+        /// </summary>
+        public static bool Scripted;
+
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        static void ResetScripted() => Scripted = false;
+
         public static bool Tracked(bool left)
         {
             var device = left ? XRController.leftHand : XRController.rightHand;
@@ -31,7 +40,7 @@ namespace LeagueVR.Champions
         {
             Transform hand = left ? player.leftHand : player.rightHand;
             var device = left ? XRController.leftHand : XRController.rightHand;
-            if (!player.DesktopMode && device != null && Tracked(left))
+            if (!Scripted && !player.DesktopMode && device != null && Tracked(left))
             {
                 Transform space = hand.parent;
                 return new Pose(space.TransformPoint(device.devicePosition.ReadValue()), space.rotation * device.deviceRotation.ReadValue());

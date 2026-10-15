@@ -29,6 +29,13 @@ namespace LeagueVR.Champions
         /// <summary>The scissors are in the hand (not stowed for a menu or a held item).</summary>
         public bool WeaponReady => scissorsRoot && scissorsRoot.gameObject.activeInHierarchy;
 
+        /// <summary>A kit animation's pose for the scissors (their root), or null while the right fist holds them.</summary>
+        public System.Func<Pose?> ScissorsOverride { get; set; }
+        /// <summary>A kit animation's blade opening in degrees (0 is closed), or null for the usual attack snip.</summary>
+        public System.Func<float?> BladeOpenOverride { get; set; }
+        /// <summary>True while a kit animation swings the scissors fast enough to trail light.</summary>
+        public System.Func<bool> TrailOverride { get; set; }
+
         protected override bool Ready => visualRoot && visualRoot.gameObject.activeInHierarchy;
 
         Quaternion bladeARest, bladeBRest;
@@ -38,6 +45,7 @@ namespace LeagueVR.Champions
         readonly GameObject[] beads = new GameObject[4];
         readonly System.Collections.Generic.List<GameObject> glows = new();
         readonly GameObject[] heldNeedles = new GameObject[5];
+        LineRenderer needleThread;
 
         void Awake()
         {
@@ -124,6 +132,7 @@ namespace LeagueVR.Champions
                 if (g)
                     g.SetActive(empowered);
             int needles = kit != null ? kit.NeedlesReady : 0;
+            ThreadNeedles(needles);
             var prefab = player.Definition ? player.Definition.kitPrefab : null;
             var grip = LeftGrip();
             Vector3 palm = Palm(true);
@@ -145,6 +154,43 @@ namespace LeagueVR.Champions
                 int side = (i + 1) / 2 * (i % 2 == 0 ? 1 : -1);
                 var rotation = aim * Quaternion.Euler(0, side * 9, 0);
                 heldNeedles[i].transform.SetPositionAndRotation(palm + rotation * new Vector3(0, .015f * side, .05f), rotation);
+            }
+        }
+
+        /// <summary>
+        /// Needlework readied: a glowing thread runs from the scissors' tips to the needles between the fingers, swaying
+        /// gently, brighter for each stage of needles.
+        /// </summary>
+        void ThreadNeedles(int needles)
+        {
+            bool show = needles > 0 && tip && scissorsRoot && scissorsRoot.gameObject.activeInHierarchy;
+            if (!show)
+            {
+                if (needleThread)
+                    needleThread.enabled = false;
+                return;
+            }
+            if (!needleThread)
+            {
+                var go = new GameObject("Needlework thread");
+                go.transform.SetParent(transform, false);
+                needleThread = go.AddComponent<LineRenderer>();
+                needleThread.useWorldSpace = true;
+                needleThread.positionCount = 12;
+                needleThread.textureMode = LineTextureMode.Stretch;
+                needleThread.sharedMaterial = ZeriFx.TexGlow("GwenFx/GwenFx_Thread", new Color(.7f, 1f, 1f, 1f));
+                needleThread.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+            }
+            needleThread.enabled = true;
+            needleThread.startWidth = .03f + .008f * needles;
+            needleThread.endWidth = .018f;
+            Vector3 from = tip.position, to = Palm(true);
+            Vector3 sag = Vector3.down * Mathf.Min(.15f, Vector3.Distance(from, to) * .25f);
+            for (int i = 0; i < needleThread.positionCount; i++)
+            {
+                float t = i / (needleThread.positionCount - 1f);
+                Vector3 sway = new Vector3(Mathf.Sin(Time.time * 5 + t * 9), Mathf.Cos(Time.time * 4 + t * 7), 0) * .01f * Mathf.Sin(t * Mathf.PI);
+                needleThread.SetPosition(i, Vector3.Lerp(from, to, t) + sag * 4 * t * (1 - t) + sway);
             }
         }
 
@@ -181,9 +227,12 @@ namespace LeagueVR.Champions
                 snipUntil = Time.time + .14f;
         }
 
-        /// <summary>The scissors' pose in the right fist; melee sweeps start here.</summary>
+        /// <summary>The scissors' pose in the right fist (or where a kit animation holds them); melee sweeps start here.</summary>
         public override Pose WeaponPose()
         {
+            var animated = ScissorsOverride?.Invoke();
+            if (animated.HasValue)
+                return new Pose(animated.Value.position + animated.Value.rotation * (scissorsHandle * WeaponScale), animated.Value.rotation);
             var grip = RightGrip();
             return new Pose(grip.position, grip.rotation * Quaternion.Euler(scissorsTilt));
         }
@@ -213,13 +262,14 @@ namespace LeagueVR.Champions
             var weapon = WeaponPose();
             scissorsRoot.localScale = Vector3.one * scissorsScale * BodyScale;
             scissorsRoot.SetPositionAndRotation(weapon.position - weapon.rotation * (scissorsHandle * scissorsScale * BodyScale), weapon.rotation);
-            float open = Time.time < snipUntil ? Mathf.Sin((snipUntil - Time.time) / .14f * Mathf.PI) * 14 : 2;
+            float open = BladeOpenOverride?.Invoke() ?? (Time.time < snipUntil ? Mathf.Sin((snipUntil - Time.time) / .14f * Mathf.PI) * 14 : 2);
+            // The blades turn apart about the pivot (their handles spread, as on real scissors).
             if (bladeA)
-                bladeA.localRotation = bladeARest * Quaternion.AngleAxis(open, Vector3.right);
+                bladeA.localRotation = bladeARest * GwenMoves.TurnA(open);
             if (bladeB)
-                bladeB.localRotation = bladeBRest * Quaternion.AngleAxis(-open, Vector3.right);
+                bladeB.localRotation = bladeBRest * GwenMoves.TurnB(open);
             if (trail)
-                trail.emitting = Time.time < snipUntil + .1f;
+                trail.emitting = Time.time < snipUntil + .1f || (TrailOverride?.Invoke() ?? false);
         }
     }
 }

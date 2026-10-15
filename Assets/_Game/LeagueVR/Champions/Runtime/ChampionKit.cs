@@ -80,6 +80,9 @@ namespace LeagueVR.Champions
             return false;
         }
 
+        /// <summary>How thick the striking edge is (metres around the edge line): a blade is thin, Gragas's keg is wide.</summary>
+        public virtual float WeaponRadius => .1f;
+
         /// <summary>Resolves a physical weapon hit on <paramref name="target"/>. Defaults to a basic attack on that target.</summary>
         public virtual void WeaponHit(Combatant target, Vector3 point, Vector3 swing)
         {
@@ -98,6 +101,8 @@ namespace LeagueVR.Champions
         public virtual float BonusAttackRange => 0;
         public virtual bool Blocks(DamageHit hit) => false;
         public virtual float BonusResistance => 0;
+        /// <summary>Fraction of incoming damage still taken after resistances (Gragas's Drunken Rage); 1 = all of it.</summary>
+        public virtual float DamageTaken(DamageHit hit) => 1;
         /// <summary>Percentage armor penetration granted by the kit (0-1), combined with items by the economy.</summary>
         public virtual float ArmorPenetration => 0;
         public virtual bool HiddenFrom(Combatant attacker) => false;

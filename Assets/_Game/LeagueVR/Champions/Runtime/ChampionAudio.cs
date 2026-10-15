@@ -5,8 +5,9 @@ namespace LeagueVR.Champions
 {
     /// <summary>
     /// Champion sounds. Champions with recorded League events in the sound bank (keys "Champion.Event", for example
-    /// "Gwen.QCast" or "Zeri.Q") play those, Zeri through her own signal table with voice lines on a chance and a
-    /// cooldown like League; the others (Zoe, Pantheon) play synthesized effects from <see cref="ProceduralSfx"/>.
+    /// "Gwen.QCast" or "Zeri.Q") play those, with their voice lines on a chance and a cooldown like League (Zeri through
+    /// her own signal table, Gwen through the recorded cues); the others (Zoe, Pantheon) play synthesized effects from
+    /// <see cref="ProceduralSfx"/>.
     /// Casts play at the head, impacts in 3D where they land, and repeated impacts within a moment play once.
     /// </summary>
     [DefaultExecutionOrder(250)]
@@ -18,8 +19,9 @@ namespace LeagueVR.Champions
 
         PlayerChampion player;
         AudioSource effects;
-        bool mistPlaying, recorded;
-        float lastAttack = -10, lastImpact = -10;
+        bool mistPlaying, recorded, haveFeet, wasRecalling;
+        float lastAttack = -10, lastImpact = -10, stillSince = -1;
+        Vector3 lastFeet;
         readonly Dictionary<string, float> lastSynth = new();
 
         /// <summary>Synthesized cues per champion: signal -> (effect, volume, played where it happened).</summary>
@@ -111,6 +113,30 @@ namespace LeagueVR.Champions
                 ["Death"] = new[] { ("Death", .55f, false, 1f, 0f), ("VODeath", 1f, false, 1f, 0f) },
                 ["Respawn"] = new[] { ("Respawn", .5f, false, 1f, 0f), ("VORespawn", 1f, false, .7f, 0f) },
             },
+            ["Gragas"] = new()
+            {
+                ["Attack1"] = new[] { ("Attack", .6f, false, 1f, 0f), ("VOBasicAttack", 1f, false, .12f, 6f), ("VOAttack", 1f, false, .04f, 30f) },
+                ["Hit"] = new[] { ("AttackHit", .55f, true, 1f, .08f) },
+                // A critical strike: the wound-up swing, then League's heavier hit.
+                ["CritSwing"] = new[] { ("Crit", .6f, false, 1f, 0f) },
+                ["CritHit"] = new[] { ("CritHit", .7f, true, 1f, .08f) },
+                ["Q"] = new[] { ("QCast", .6f, false, 1f, 0f), ("VOQ", 1f, false, .35f, 8f) },
+                // The barrel foams where it stops while it ferments.
+                ["QLand"] = new[] { ("QMissile", .6f, true, 1f, 0f) },
+                ["QBurst"] = new[] { ("QExplode", .75f, true, 1f, 0f) },
+                ["W"] = new[] { ("WCast", .7f, false, 1f, 0f), ("VOW", 1f, false, .35f, 8f) },
+                ["Empowered"] = new[] { ("WBuffActivate", .5f, false, 1f, 0f) },
+                ["WSplash"] = new[] { ("WEmpoweredHit", .75f, true, 1f, 0f) },
+                // Both hands take the keg for the empowered smash.
+                ["WSmashCast"] = new[] { ("WEmpoweredCast", .7f, false, 1f, 0f) },
+                // The keg smashed down in both hands thuds even when it lands on nobody.
+                ["WSmash"] = new[] { ("AttackHit", .6f, true, 1f, .08f) },
+                ["E"] = new[] { ("ECast", .7f, false, 1f, 0f), ("VOE", 1f, false, .35f, 8f) },
+                ["SlamHit"] = new[] { ("EHit", .8f, true, 1f, 0f) },
+                ["R"] = new[] { ("RCast", .8f, false, 1f, 0f), ("VOR", 1f, false, 1f, 0f) },
+                ["RBurst"] = new[] { ("RExplode", 1f, true, 1f, 0f) },
+                ["Death"] = new[] { ("VODeath", 1f, false, 1f, 0f) },
+            },
         };
 
         readonly Dictionary<string, float> lastOriginal = new();
@@ -143,16 +169,60 @@ namespace LeagueVR.Champions
                 player = GetComponent<PlayerChampion>();
             player.Cast += OnCast;
             player.KitChanged += OnKitChanged;
+            Combatant.Defeated += OnDefeated;
             if (player.Kit != null)
                 OnKitChanged(player.Kit);
         }
 
         void OnDisable()
         {
+            Combatant.Defeated -= OnDefeated;
             if (!player)
                 return;
             player.Cast -= OnCast;
             player.KitChanged -= OnKitChanged;
+        }
+
+        /// <summary>A kill line when the player takes down a champion (bots included).</summary>
+        void OnDefeated(Combatant victim, DamageHit hit)
+        {
+            if (player && hit.source == player.Health && victim && victim != player.Health && victim.countsAsChampion)
+                Voice("VOKill", .8f, 6);
+        }
+
+        /// <summary>
+        /// A voice line from the bank, on a chance and a cooldown like League's, so lines stay occasional. Does nothing for
+        /// champions whose bank has no such line.
+        /// </summary>
+        void Voice(string key, float chance, float cooldown)
+        {
+            string full = Prefix + key;
+            if (!originalSounds || !effects || originalSounds.Find(full) == null)
+                return;
+            if (cooldown > 0 && lastOriginal.TryGetValue(full, out float last) && Time.time - last < cooldown)
+                return;
+            if (chance < 1 && Random.value > chance)
+                return;
+            lastOriginal[full] = Time.time;
+            originalSounds.Play(effects, full, 1);
+        }
+
+        /// <summary>For recorded champions whose kits send no move signal: a move line when walking off after standing still.</summary>
+        void MoveVoice()
+        {
+            Vector3 feet = player.Feet;
+            float speed = haveFeet && Time.deltaTime > 0 ? Geo.FlatDistance(feet, lastFeet) / Time.deltaTime : 0;
+            lastFeet = feet;
+            haveFeet = true;
+            if (speed < .4f)
+            {
+                if (stillSince < 0)
+                    stillSince = Time.time;
+                return;
+            }
+            if (stillSince >= 0 && Time.time - stillSince > 2.5f)
+                Voice("VOMove", .3f, 30);
+            stillSince = -1;
         }
 
         void OnKitChanged(ChampionKit kit)
@@ -170,6 +240,17 @@ namespace LeagueVR.Champions
                 Cue("WEnd");
                 mistPlaying = false;
             }
+            if (recorded && player.Health && player.Health.IsAlive)
+                MoveVoice();
+            // The recall channel and a recall line as the recall begins (any champion whose bank has them).
+            var match = LeagueVR.Match.RiftMatch.Instance;
+            bool recalling = match && match.IsRecalling;
+            if (recalling && !wasRecalling)
+            {
+                Cue("Recall", .6f, LeagueVR.Match.RiftMatch.RecallDuration);
+                Voice("VORecall", 1, 0);
+            }
+            wasRecalling = recalling;
         }
 
         /// <summary>Plays "Champion.event" through the head-locked source if the bank has it.</summary>
@@ -192,7 +273,17 @@ namespace LeagueVR.Champions
             Cue(index == 0 ? "QFirst" : index == count - 1 ? "QLast" : "QMiddle", .7f);
         }
 
-        public void SnipHit(Vector3 point, bool final) => CueAt(final ? "QLastHit" : "QHit", point, .45f);
+        /// <summary>A snip landing: League's middle or final hit, or its centre-line version where the true damage lands.</summary>
+        public void SnipHit(Vector3 point, bool final, bool centre)
+        {
+            string key = final ? (centre ? "QLastHitCenter" : "QLastHit") : (centre ? "QHitCenter" : "QMiddleHit");
+            if (originalSounds && originalSounds.Find(Prefix + key) == null)
+                key = final ? "QLastHit" : "QHit";
+            CueAt(key, point, .45f);
+        }
+
+        /// <summary>The needles leaving the hand: League's missile whoosh, the heavier one for the five-needle third cast.</summary>
+        public void NeedlesThrown(int count) => Cue(count >= 5 ? "R3Missile" : "RMissile", .55f);
 
         public void NeedleHit(Combatant target)
         {
@@ -249,6 +340,7 @@ namespace LeagueVR.Champions
             {
                 case "Attack1":
                     Cue(empowered ? "EmpoweredAttack" : "Attack", .7f);
+                    Voice("VOAttack", .03f, 30);
                     break;
                 case "Hit":
                     // The swing's own impact; spells play their own hit sounds.
@@ -258,30 +350,39 @@ namespace LeagueVR.Champions
                 case "Q":
                     if (!(player.Kit is GwenKit))
                         Cue("Q");
+                    Voice("VOQ", .35f, 8);
                     break;
                 case "W":
+                    if (!mistPlaying)
+                        Voice("VOW", .35f, 8);
                     Cue(mistPlaying ? "WRecast" : "W");
                     mistPlaying = player.Kit is GwenKit;
                     break;
                 case "E":
                     // The empowered-blade loop lasts as long as the empowerment (4 s), not the 18 s of the recording.
                     Cue("E", 1, 4);
+                    Voice("VOE", .35f, 8);
                     break;
                 case "R":
                     if (player.Kit is GwenKit gwen)
                     {
-                        int stage = gwen.RStage == 0 ? 3 : gwen.RStage;
+                        // The cast signal comes before the kit counts the cast, so this is cast RStage + 1 of 3.
+                        int stage = gwen.RStage + 1;
                         Cue(stage == 1 ? "R" : "RRecast");
                         Cue("R" + stage, .65f, 8);
+                        // League voices the first cast every time and the recasts now and then.
+                        Voice(stage == 1 ? "VOR" : stage == 2 ? "VOR2" : "VOR3", stage == 1 ? 1 : .6f, 0);
                     }
                     else
                         Cue("R");
                     break;
                 case "Death":
                     Cue("Death");
+                    Voice("VODeath", 1, 0);
                     break;
                 case "Respawn":
                     Cue("Respawn");
+                    Voice("VORespawn", .7f, 0);
                     break;
             }
         }

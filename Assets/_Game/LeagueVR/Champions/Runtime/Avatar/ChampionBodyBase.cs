@@ -181,7 +181,7 @@ namespace LeagueVR.Champions
         protected Pose Head()
         {
             var camera = player.head.transform;
-            if (!player.DesktopMode)
+            if (!player.DesktopMode && !XRPoses.Scripted)
             {
                 // Read the headset directly so the body uses the same input update as the controllers.
                 var hmd = InputSystem.GetDevice<XRHMD>();
@@ -226,37 +226,44 @@ namespace LeagueVR.Champions
         /// <summary>World size of one body unit (the rig grows or shrinks the champion to the player's height).</summary>
         public float BodyScale => Rig != null ? Rig.Scale : 1;
 
-        static HandCurl ReadCurl(XRNode node)
-        {
-            var device = UnityEngine.XR.InputDevices.GetDeviceAtXRNode(node);
-            if (!device.isValid)
-                return new HandCurl(.15f, .2f, .2f);
-            device.TryGetFeatureValue(UnityEngine.XR.CommonUsages.trigger, out float trigger);
-            device.TryGetFeatureValue(UnityEngine.XR.CommonUsages.grip, out float grip);
-            bool thumb = device.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primaryTouch, out bool a) && a
-                || device.TryGetFeatureValue(UnityEngine.XR.CommonUsages.secondaryTouch, out bool b) && b
-                || device.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primary2DAxisTouch, out bool s) && s;
-            return new HandCurl(trigger, grip, thumb ? .85f : .3f);
-        }
-
         /// <summary>Minimum finger closure while a hand holds something (weapon handle, shield grip).</summary>
         protected virtual HandCurl HeldCurl(bool left) => default;
 
+        /// <summary>
+        /// Lets a kit move a hand of the body away from its controller for a short animation (Gragas lifting his keg to
+        /// drink): given the hand (true for left) and its controller grip, returns the grip the arm should reach for.
+        /// </summary>
+        public Func<bool, Pose, Pose> GripOverride { get; set; }
+
+        /// <summary>Minimum finger closure a kit asks for while a hand holds something that is not a prop (Gragas's keg).</summary>
+        public Func<bool, HandCurl> KitCurl { get; set; }
+
+        /// <summary>
+        /// The whole finger pose a kit animation gives a hand instead of what the controller senses (Zeri's hand opening as
+        /// it flicks a spark, Gwen's fingers on the scissors' second handle); null keeps the sensed fingers.
+        /// </summary>
+        public Func<bool, HandCurl?> HandOverride { get; set; }
+
+        Pose ReachFor(bool left, Pose grip) => GripOverride != null ? GripOverride(left, grip) : grip;
+
+        /// <summary>The grip a hand reaches for this frame: its controller's, or where a kit animation moves it.</summary>
+        protected Pose ReachedGrip(bool left) => ReachFor(left, Grip(left));
+
         protected BodyFrame Frame()
         {
-            var right = player.DesktopMode ? new HandCurl(.3f, .4f, .4f) : ReadCurl(XRNode.RightHand);
-            var left = player.DesktopMode ? new HandCurl(.15f, .25f, .2f) : ReadCurl(XRNode.LeftHand);
+            var right = player.DesktopMode ? new HandCurl(.3f, .4f, .4f) : FingerSense.Read(false);
+            var left = player.DesktopMode ? new HandCurl(.15f, .25f, .2f) : FingerSense.Read(true);
             return new BodyFrame
             {
                 head = Head(),
-                leftGrip = LeftGrip(),
-                rightGrip = RightGrip(),
+                leftGrip = ReachFor(true, LeftGrip()),
+                rightGrip = ReachFor(false, RightGrip()),
                 floorY = player.origin.transform.position.y,
                 deltaTime = Time.deltaTime,
                 locomotion = locomotion,
                 rigTurn = rigTurn,
-                leftCurl = left.AtLeast(HeldCurl(true)),
-                rightCurl = right.AtLeast(HeldCurl(false)),
+                leftCurl = HandOverride?.Invoke(true) ?? left.AtLeast(HeldCurl(true)).AtLeast(KitCurl?.Invoke(true) ?? default),
+                rightCurl = HandOverride?.Invoke(false) ?? right.AtLeast(HeldCurl(false)).AtLeast(KitCurl?.Invoke(false) ?? default),
             };
         }
 

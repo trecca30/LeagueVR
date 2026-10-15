@@ -23,6 +23,23 @@ namespace LeagueVR
             }
         }
 
+        const string RushChargesKey = "LeagueVR.RushCharges";
+
+        /// <summary>
+        /// Dashes and charges (Gragas's Body Slam, Zeri's Spark Surge, Gwen's Skip 'n Slash) carry the view along the ground
+        /// at the champion's own speed, behind a vignette a little tighter than the stick's, as League plays them. Off,
+        /// they blink: a short fade over an instant move.
+        /// </summary>
+        public static bool RushCharges
+        {
+            get => PlayerPrefs.GetInt(RushChargesKey, 1) != 0;
+            set
+            {
+                PlayerPrefs.SetInt(RushChargesKey, value ? 1 : 0);
+                PlayerPrefs.Save();
+            }
+        }
+
         const string StreamViewKey = "LeagueVR.StreamView";
         public static readonly string[] StreamViewNames = { "HEADSET", "SMOOTH", "SHOULDER" };
 
@@ -82,6 +99,22 @@ namespace LeagueVR
                 return;
             parameters.apertureSize = Aperture[level];
             parameters.featheringEffect = Feathering[level];
+        }
+
+        /// <summary>
+        /// The vignette while a charge carries the view: 15% tighter than the stick's at the saved strength, closing fast
+        /// and opening over a third of a second. False when the vignette is off (the charge then has none).
+        /// </summary>
+        public static bool ConfigureRush(VignetteParameters parameters)
+        {
+            int level = VignetteLevel;
+            if (level == 0 || parameters == null)
+                return false;
+            parameters.apertureSize = Mathf.Min(1, Aperture[level]) * .85f;
+            parameters.featheringEffect = Feathering[level];
+            parameters.easeInTime = .08f;
+            parameters.easeOutTime = .3f;
+            return true;
         }
     }
 }

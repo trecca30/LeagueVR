@@ -51,6 +51,8 @@ namespace LeagueVR.Match
         TMP_Text status;
         RiftUIButton hovered;
         LineRenderer ray;
+        LineRenderer cursor;
+        Material pointerMaterial;
         InputAction shop, menu, trigger, recall;
         bool shopScreen;
         string notice = "";
@@ -64,9 +66,11 @@ namespace LeagueVR.Match
         void Awake()
         {
             shop = new InputAction("Shop", binding: "<XRController>{LeftHand}/secondaryButton");
-            menu = new InputAction("Menu", binding: "<XRController>{RightHand}/primary2DAxisClick");
+            // Stick clicks by usage: OpenXR controllers name the control thumbstickClicked, other runtimes
+            // primary2DAxisClick, and all of them tag it Primary2DAxisClick (as XRI's own actions bind it).
+            menu = new InputAction("Menu", binding: "<XRController>{LeftHand}/{Primary2DAxisClick}");
             trigger = new InputAction("Select", binding: "<XRController>{RightHand}/triggerPressed");
-            recall = new InputAction("Recall", binding: "<XRController>{LeftHand}/primary2DAxisClick");
+            recall = new InputAction("Recall", binding: "<XRController>{RightHand}/{Primary2DAxisClick}");
             shop.Enable();
             menu.Enable();
             trigger.Enable();
@@ -76,13 +80,32 @@ namespace LeagueVR.Match
         void Start()
         {
             match.Announcement += Announce;
+            // A laser you can see in a headset (8 mm at the hand, 4 mm at the end), drawn over the panel, and a cursor
+            // where it lands.
             var go = new GameObject("VR menu pointer");
             ray = go.AddComponent<LineRenderer>();
-            ray.sharedMaterial = match.blueMaterial;
-            ray.startWidth = .003f;
-            ray.endWidth = .0015f;
+            // The panel's canvas sorts at order 40 and would paint over the laser: the laser and its dot get their own
+            // overlay material (drawn last, through everything) and sort after the canvas.
+            pointerMaterial = new Material(ZeriFx.XRay(Color.white)) { name = "VR menu pointer", hideFlags = HideFlags.HideAndDontSave, renderQueue = 4000 };
+            ray.sharedMaterial = pointerMaterial;
+            ray.sortingOrder = 100;
+            ray.startColor = new Color(cyan.r, cyan.g, cyan.b, .85f);
+            ray.endColor = new Color(1, 1, 1, .95f);
+            ray.startWidth = .008f;
+            ray.endWidth = .006f;
+            ray.numCapVertices = 4;
             ray.positionCount = 2;
+            ray.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
             ray.enabled = false;
+            // The cursor is a round dot: a very short line with round caps (the overlay shader takes its colour from the
+            // vertices, which a line renderer provides).
+            cursor = new GameObject("VR menu cursor").AddComponent<LineRenderer>();
+            cursor.sharedMaterial = pointerMaterial;
+            cursor.sortingOrder = 101;
+            cursor.positionCount = 2;
+            cursor.numCapVertices = 8;
+            cursor.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+            cursor.enabled = false;
             if (!GetComponent<RiftVRHUD>())
                 gameObject.AddComponent<RiftVRHUD>().match = match;
             if (!match.player.GetComponent<SpectatorCamera>())
@@ -108,6 +131,10 @@ namespace LeagueVR.Match
             Close();
             if (ray)
                 Destroy(ray.gameObject);
+            if (cursor)
+                Destroy(cursor.gameObject);
+            if (pointerMaterial)
+                Destroy(pointerMaterial);
         }
 
         void Update()
@@ -145,7 +172,11 @@ namespace LeagueVR.Match
             if (ray)
                 ray.enabled = IsOpen && !desktop;
             if (!IsOpen)
+            {
+                if (cursor)
+                    cursor.enabled = false;
                 return;
+            }
             if (status)
                 status.text = Notice;
             if (shopScreen)
@@ -164,12 +195,55 @@ namespace LeagueVR.Match
                 hovered.Hover(true);
             if (ray)
             {
+                // The laser ends where it lands, on a button or anywhere on the panel; the cursor marks the spot and
+                // turns gold over a button.
+                Vector3 end = pointer.GetPoint(2.3f);
+                bool onPanel = false;
+                if (hit != null)
+                {
+                    end = hit.hit.point;
+                    onPanel = true;
+                }
+                else if (PanelPoint(pointer, out var point))
+                {
+                    end = point;
+                    onPanel = true;
+                }
                 ray.SetPosition(0, pointer.origin);
-                ray.SetPosition(1, hit != null ? hit.hit.point : pointer.GetPoint(2.3f));
+                ray.SetPosition(1, end);
+                if (cursor)
+                {
+                    cursor.enabled = onPanel && !desktop;
+                    if (onPanel)
+                    {
+                        // The same size to the eye at any distance.
+                        float size = Vector3.Distance(pointer.origin, end) * (button ? .022f : .015f);
+                        Color color = button ? gold : cyan;
+                        cursor.startWidth = cursor.endWidth = size;
+                        cursor.startColor = cursor.endColor = color;
+                        cursor.SetPosition(0, end);
+                        cursor.SetPosition(1, end + (pointer.origin - end).normalized * .002f);
+                    }
+                }
             }
             bool pressed = desktop ? Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame : trigger.WasPressedThisFrame();
             if (pressed && button)
                 button.Click();
+        }
+
+        /// <summary>Where a pointer ray meets the open panel, if it lands inside it.</summary>
+        bool PanelPoint(Ray pointer, out Vector3 point)
+        {
+            point = default;
+            if (!panel || !root)
+                return false;
+            var plane = new Plane(panel.transform.forward, panel.transform.position);
+            if (!plane.Raycast(pointer, out float distance) || distance <= 0)
+                return false;
+            point = pointer.GetPoint(distance);
+            Vector3 local = root.InverseTransformPoint(point);
+            Vector2 half = root.sizeDelta * .5f;
+            return Mathf.Abs(local.x) <= half.x && Mathf.Abs(local.y) <= half.y;
         }
 
         bool CanShop() => match.Running && match.player.Health.IsAlive && !match.economy.Stasis && match.AtShop;
@@ -291,7 +365,7 @@ namespace LeagueVR.Match
             Button(root, "COMFORT & AUDIO", -400, -315, 365, 78, Settings, "settings");
             Button(root, "ITEM SHOP", -790, -416, 365, 76, OpenShop, "shop", CanShop());
             Button(root, "NEW MATCH", -400, -416, 365, 76, ConfirmNewMatch, "new", match.Running);
-            Text(root, "Right-hand ray + trigger to select. Left stick: recall. Right stick: menu.", 55, -413, 700, 80, 23, muted);
+            Text(root, "Right-hand ray + trigger to select. Left stick: menu. Right stick: recall.", 55, -413, 700, 80, 23, muted);
         }
 
         void ChampionGuide()
@@ -365,15 +439,21 @@ namespace LeagueVR.Match
                 Settings();
             }, "vignette-toggle");
 
-            // Big leaps: Grand Starfall can show the landing from the sky or simply fade out.
-            bool sky = ComfortSettings.SkyView;
-            Text(root, "BIG LEAPS", -720, -125, 1400, 55, 30, cyan);
-            Text(root, $"Grand Starfall and Zeri's long vaults: <color=#E5C478>{(sky ? "WATCH" : "FADE")}</color>  ·  watch from outside your body, or fade out during the leap", -720, -180, 1400, 50, 24, white);
+            // Big leaps: Grand Starfall can show the landing from the sky or simply fade out. Charges (Body Slam) can carry
+            // the view along the ground or blink.
+            bool sky = ComfortSettings.SkyView, rush = ComfortSettings.RushCharges;
+            Text(root, "LEAPS & CHARGES", -720, -125, 1400, 55, 30, cyan);
+            Text(root, $"Leaps (Grand Starfall, Zeri's long vaults): <color=#E5C478>{(sky ? "WATCH" : "FADE")}</color>  ·  dashes and charges: <color=#E5C478>{(rush ? "RUSH" : "BLINK")}</color>, your view runs along or blinks", -720, -180, 1400, 50, 22, white);
             Button(root, sky ? "USE FADE" : "USE SKY VIEW", -720, -255, 400, 72, () =>
             {
                 ComfortSettings.SkyView = !sky;
                 Settings();
             }, "skyview-toggle");
+            Button(root, rush ? "BLINK DASHES" : "RUSH DASHES", -270, -255, 400, 72, () =>
+            {
+                ComfortSettings.RushCharges = !rush;
+                Settings();
+            }, "rush-toggle");
 
             // Stream view: what friends see when the desktop window is shared (Discord, OBS). F8 cycles it in game.
             int stream = ComfortSettings.StreamView;
@@ -415,11 +495,11 @@ namespace LeagueVR.Match
             string swing = kit is RangedKit ? "" : "Swing your weapon through enemies   Attack\n";
             string trigger = kit?.TriggerHint ?? "Auto-attack in front";
             string b = kit?.ButtonHint(0) ?? "Q: " + AbilityName(0);
-            Text(root, swing + "Hold trigger   " + trigger + "\nB   " + b + "\nA   E: " + AbilityName(2) + "\nStick press   Menu", -735, 160, 705, 220, 24, white);
+            Text(root, swing + "Hold trigger   " + trigger + "\nB   " + b + "\nA   E: " + AbilityName(2) + "\nStick press   Recall / cancel", -735, 160, 705, 220, 24, white);
             Text(root, "LEFT HAND", 40, 295, 700, 50, 32, cyan);
             string leftTrigger = kit?.ButtonHint(3) ?? "R: " + AbilityName(3);
             string x = kit?.ButtonHint(1) ?? "W: " + AbilityName(1);
-            Text(root, "Trigger (hold, release)   " + leftTrigger + "\nX   " + x + "\nY   Shop at your fountain\nStick press   Recall / cancel\nStick   Move (dashes and blinks go where you walk)\nRaise wrist   Wrist display (menus stay put; reopen to recenter)", 40, 160, 705, 220, 24, white);
+            Text(root, "Trigger (hold, release)   " + leftTrigger + "\nX   " + x + "\nY   Shop at your fountain\nStick press   Menu\nStick   Move (dashes and blinks go where you walk)\nRaise wrist   Wrist display (menus stay put; reopen to recenter)", 40, 160, 705, 220, 24, white);
             Text(root, "WEARABLE ITEMS", -735, -10, 1470, 50, 31, gold);
             Text(root, "Reach to a hip, shoulder or back slot and hold grip to grab.\nAim with the item and press trigger to activate. Release grip to holster.\nLift a potion to your mouth to drink. Trinket: centre of your back.", -735, -120, 1470, 170, 26, white);
             Text(root, "Desktop: hold Tab to inspect wrist / WASD / right mouse look / Q F E R abilities / P shop / B recall\n1–6: equip items  ·  7: equip trinket  ·  left mouse: use held item  ·  Backspace: return  ·  F8: stream view", -735, -285, 1470, 100, 21, muted);

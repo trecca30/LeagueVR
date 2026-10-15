@@ -39,16 +39,22 @@ namespace LeagueVR.Champions
                     else
                         Haptic(XRNode.RightHand, .5f, .08f);
                     break;
+                case "CritHit":
+                    Haptic(XRNode.RightHand, .8f, .12f);
+                    break;
                 // Zeri: the gun kicks every round, the battery shot thumps, the left palm hums as the pulse charges.
                 case "Round":
                     Haptic(XRNode.RightHand, .22f, .02f);
                     break;
+                // Zeri's battery shot leaves her left hand (League's flick); chain lightning comes off the gun.
                 case "Zap":
+                    Haptic(player.Kit is ZeriKit ? XRNode.LeftHand : XRNode.RightHand, .3f, .04f);
+                    break;
                 case "Chain":
                     Haptic(XRNode.RightHand, .3f, .04f);
                     break;
                 case "ChargedShot":
-                    Haptic(XRNode.RightHand, .85f, .12f);
+                    Haptic(player.Kit is ZeriKit ? XRNode.LeftHand : XRNode.RightHand, .85f, .12f);
                     break;
                 case "Charged":
                     Haptic(XRNode.RightHand, .35f, .04f);
@@ -71,13 +77,13 @@ namespace LeagueVR.Champions
                     Haptic(XRNode.LeftHand, .2f, .1f);
                     break;
                 case "BatteryHit":
-                    Haptic(XRNode.RightHand, .4f, .05f);
+                    Haptic(XRNode.LeftHand, .4f, .05f);
                     break;
                 case "ChargedHit":
-                    Haptic(XRNode.RightHand, .7f, .1f);
+                    Haptic(XRNode.LeftHand, .7f, .1f);
                     break;
                 case "Execute":
-                    Haptic(XRNode.RightHand, .9f, .15f);
+                    Haptic(XRNode.LeftHand, .9f, .15f);
                     break;
                 case "Overcharge":
                     Haptic(XRNode.LeftHand, .6f, .2f);
@@ -93,8 +99,39 @@ namespace LeagueVR.Champions
                     Haptic(XRNode.RightHand, .3f, .08f);
                     break;
                 case "W":
+                    // Gragas drinks from the keg in his right hand.
+                    Haptic(player.Kit is GragasKit ? XRNode.RightHand : XRNode.LeftHand, .3f, .08f);
+                    break;
                 case "R":
                     Haptic(XRNode.LeftHand, .3f, .08f);
+                    break;
+                // Gragas: the keg hums when Drunken Rage empowers it, thumps on the splash; the barrel and the cask
+                // burst in the hand that threw them; the slam shakes both arms; a swig is a soft pulse.
+                case "Empowered":
+                    Haptic(XRNode.RightHand, .3f, .1f);
+                    break;
+                case "WSplash":
+                    Haptic(XRNode.RightHand, .8f, .14f);
+                    break;
+                case "QBurst":
+                    Haptic(XRNode.RightHand, .45f, .1f);
+                    break;
+                case "RBurst":
+                    Haptic(XRNode.LeftHand, .75f, .2f);
+                    break;
+                case "SlamHit":
+                case "WSmash":
+                    // The slam shakes both arms; so does the keg smashed down in both hands.
+                    Haptic(XRNode.LeftHand, .9f, .18f);
+                    Haptic(XRNode.RightHand, .9f, .18f);
+                    break;
+                case "Stride":
+                    // Body Slam's strides thud through both hands while the charge carries him.
+                    Haptic(XRNode.LeftHand, .25f, .04f);
+                    Haptic(XRNode.RightHand, .25f, .04f);
+                    break;
+                case "HappyHour":
+                    Haptic(XRNode.RightHand, .15f, .12f);
                     break;
                 case "Block":
                 case "Bash":

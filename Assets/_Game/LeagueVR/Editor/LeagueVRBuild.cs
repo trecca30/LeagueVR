@@ -101,7 +101,7 @@ Streaming to friends
 - Menu > Comfort & audio > STREAM VIEW, or F8 in game: SMOOTH or SHOULDER makes the desktop window
   a viewer-friendly camera. Share the game window on Discord or capture it in OBS.
 
-Controls: open the menu (right stick press) > CONTROLS.
+Controls: open the menu (left stick press) > CONTROLS.
 ";
     }
 }

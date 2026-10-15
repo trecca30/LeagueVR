@@ -1807,6 +1807,1048 @@
           ]
         }
       ]
+    },
+    {
+      "key": "Gwen.VOMove",
+      "eventName": "Play_vo_Gwen_Move2DStandard",
+      "bank": "gwen_base_vo_events",
+      "eventId": 1195308942,
+      "layers": [
+        {
+          "clips": [
+            "gwen_base_vo-351891012.wav",
+            "gwen_base_vo-122656212.wav",
+            "gwen_base_vo-963330213.wav",
+            "gwen_base_vo-693307476.wav",
+            "gwen_base_vo-218525060.wav",
+            "gwen_base_vo-88795418.wav",
+            "gwen_base_vo-785662162.wav",
+            "gwen_base_vo-473912949.wav",
+            "gwen_base_vo-473444435.wav",
+            "gwen_base_vo-900186521.wav",
+            "gwen_base_vo-718504946.wav",
+            "gwen_base_vo-461847677.wav",
+            "gwen_base_vo-737567998.wav",
+            "gwen_base_vo-792829719.wav",
+            "gwen_base_vo-898567273.wav",
+            "gwen_base_vo-984628534.wav",
+            "gwen_base_vo-795515824.wav",
+            "gwen_base_vo-365943262.wav",
+            "gwen_base_vo-548834.wav",
+            "gwen_base_vo-1049902344.wav",
+            "gwen_base_vo-3279509.wav",
+            "gwen_base_vo-489502947.wav",
+            "gwen_base_vo-1017592896.wav",
+            "gwen_base_vo-67883868.wav",
+            "gwen_base_vo-242505048.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gwen.VOFirstMove",
+      "eventName": "Play_vo_Gwen_Move2DFirst",
+      "bank": "gwen_base_vo_events",
+      "eventId": 2579584741,
+      "layers": [
+        {
+          "clips": [
+            "gwen_base_vo-844572526.wav",
+            "gwen_base_vo-573662640.wav",
+            "gwen_base_vo-942682835.wav",
+            "gwen_base_vo-158283532.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gwen.VOMoveLong",
+      "eventName": "Play_vo_Gwen_Move2DLong",
+      "bank": "gwen_base_vo_events",
+      "eventId": 3059600407,
+      "layers": [
+        {
+          "clips": [
+            "gwen_base_vo-557759021.wav",
+            "gwen_base_vo-551323646.wav",
+            "gwen_base_vo-389754956.wav",
+            "gwen_base_vo-810495330.wav",
+            "gwen_base_vo-571603260.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gwen.VOAttack",
+      "eventName": "Play_vo_Gwen_Attack2DGeneral",
+      "bank": "gwen_base_vo_events",
+      "eventId": 2491481078,
+      "layers": [
+        {
+          "clips": [
+            "gwen_base_vo-484588305.wav",
+            "gwen_base_vo-65770301.wav",
+            "gwen_base_vo-679244172.wav",
+            "gwen_base_vo-78630831.wav",
+            "gwen_base_vo-966714760.wav",
+            "gwen_base_vo-739661684.wav",
+            "gwen_base_vo-630013556.wav",
+            "gwen_base_vo-321308267.wav",
+            "gwen_base_vo-604599136.wav",
+            "gwen_base_vo-426849663.wav",
+            "gwen_base_vo-359858546.wav",
+            "gwen_base_vo-709188045.wav",
+            "gwen_base_vo-857085037.wav",
+            "gwen_base_vo-279209116.wav",
+            "gwen_base_vo-892817769.wav",
+            "gwen_base_vo-102765294.wav",
+            "gwen_base_vo-1051568307.wav",
+            "gwen_base_vo-1026238133.wav",
+            "gwen_base_vo-849153942.wav",
+            "gwen_base_vo-255932033.wav",
+            "gwen_base_vo-117496445.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gwen.VOQ",
+      "eventName": "Play_vo_Gwen_GwenQ_cast3D",
+      "bank": "gwen_base_vo_events",
+      "eventId": 2092603151,
+      "layers": [
+        {
+          "clips": [
+            "gwen_base_vo-430743892.wav",
+            "gwen_base_vo-895704344.wav",
+            "gwen_base_vo-555163370.wav",
+            "gwen_base_vo-612278449.wav",
+            "gwen_base_vo-429644967.wav",
+            "gwen_base_vo-298931153.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gwen.VOW",
+      "eventName": "Play_vo_Gwen_GwenW_cast3D",
+      "bank": "gwen_base_vo_events",
+      "eventId": 506059473,
+      "layers": [
+        {
+          "clips": [
+            "gwen_base_vo-443441640.wav",
+            "gwen_base_vo-680667874.wav",
+            "gwen_base_vo-862718919.wav",
+            "gwen_base_vo-494237160.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gwen.VOE",
+      "eventName": "Play_vo_Gwen_GwenE_cast3D",
+      "bank": "gwen_base_vo_events",
+      "eventId": 2633168987,
+      "layers": [
+        {
+          "clips": [
+            "gwen_base_vo-438081637.wav",
+            "gwen_base_vo-888557696.wav",
+            "gwen_base_vo-1051931923.wav",
+            "gwen_base_vo-103012422.wav",
+            "gwen_base_vo-533185701.wav",
+            "gwen_base_vo-465662349.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gwen.VOR",
+      "eventName": "Play_vo_Gwen_GwenR_cast3D",
+      "bank": "gwen_base_vo_events",
+      "eventId": 418036038,
+      "layers": [
+        {
+          "clips": [
+            "gwen_base_vo-49187906.wav",
+            "gwen_base_vo-981305356.wav",
+            "gwen_base_vo-579870883.wav",
+            "gwen_base_vo-960230474.wav",
+            "gwen_base_vo-741025790.wav",
+            "gwen_base_vo-58327039.wav",
+            "gwen_base_vo-331041413.wav",
+            "gwen_base_vo-1060501713.wav",
+            "gwen_base_vo-713115531.wav",
+            "gwen_base_vo-222949372.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gwen.VOR2",
+      "eventName": "Play_vo_Gwen_GwenR2_buffactivate_lua",
+      "bank": "gwen_base_vo_events",
+      "eventId": 524954273,
+      "layers": [
+        {
+          "clips": [
+            "gwen_base_vo-49187906.wav",
+            "gwen_base_vo-981305356.wav",
+            "gwen_base_vo-579870883.wav",
+            "gwen_base_vo-960230474.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gwen.VOR3",
+      "eventName": "Play_vo_Gwen_GwenR3_buffactivate_lua",
+      "bank": "gwen_base_vo_events",
+      "eventId": 469932558,
+      "layers": [
+        {
+          "clips": [
+            "gwen_base_vo-741025790.wav",
+            "gwen_base_vo-58327039.wav",
+            "gwen_base_vo-331041413.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gwen.VORRecast",
+      "eventName": "Play_vo_Gwen_GwenRRecast_cast3D",
+      "bank": "gwen_base_vo_events",
+      "eventId": 1441023040,
+      "layers": [
+        {
+          "clips": [
+            "gwen_base_vo-49187906.wav",
+            "gwen_base_vo-981305356.wav",
+            "gwen_base_vo-579870883.wav",
+            "gwen_base_vo-960230474.wav",
+            "gwen_base_vo-741025790.wav",
+            "gwen_base_vo-58327039.wav",
+            "gwen_base_vo-331041413.wav",
+            "gwen_base_vo-1060501713.wav",
+            "gwen_base_vo-713115531.wav",
+            "gwen_base_vo-222949372.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gwen.VOKill",
+      "eventName": "Play_vo_Gwen_Kill3DGeneral",
+      "bank": "gwen_base_vo_events",
+      "eventId": 3311725103,
+      "layers": [
+        {
+          "clips": [
+            "gwen_base_vo-151783459.wav",
+            "gwen_base_vo-608296513.wav",
+            "gwen_base_vo-136915752.wav",
+            "gwen_base_vo-796069153.wav",
+            "gwen_base_vo-482088120.wav",
+            "gwen_base_vo-752997441.wav",
+            "gwen_base_vo-670309155.wav",
+            "gwen_base_vo-877066929.wav",
+            "gwen_base_vo-11125912.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gwen.VODeath",
+      "eventName": "Play_vo_Gwen_Death3D",
+      "bank": "gwen_base_vo_events",
+      "eventId": 1475155975,
+      "layers": [
+        {
+          "clips": [
+            "gwen_base_vo-1049211441.wav",
+            "gwen_base_vo-975776054.wav",
+            "gwen_base_vo-508119632.wav",
+            "gwen_base_vo-328651392.wav",
+            "gwen_base_vo-1491742.wav",
+            "gwen_base_vo-648547795.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gwen.VORespawn",
+      "eventName": "Play_vo_Gwen_Respawn2DGeneral",
+      "bank": "gwen_base_vo_events",
+      "eventId": 509623198,
+      "layers": [
+        {
+          "clips": [
+            "gwen_base_vo-420132149.wav",
+            "gwen_base_vo-309616386.wav",
+            "gwen_base_vo-235936468.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gwen.VORecall",
+      "eventName": "Play_vo_Gwen_Recall3DGeneral",
+      "bank": "gwen_base_vo_events",
+      "eventId": 2024827814,
+      "layers": [
+        {
+          "clips": [
+            "gwen_base_vo-746440298.wav",
+            "gwen_base_vo-587736663.wav",
+            "gwen_base_vo-820713501.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gwen.VOTaunt",
+      "eventName": "Play_vo_Gwen_Taunt3DGeneral",
+      "bank": "gwen_base_vo_events",
+      "eventId": 2863908051,
+      "layers": [
+        {
+          "clips": [
+            "gwen_base_vo-327845409.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gwen.VOJoke",
+      "eventName": "Play_vo_Gwen_Joke3DGeneral",
+      "bank": "gwen_base_vo_events",
+      "eventId": 891182752,
+      "layers": [
+        {
+          "clips": [
+            "gwen_base_vo-144571102.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gwen.VOLaugh",
+      "eventName": "Play_vo_Gwen_Laugh3DGeneral",
+      "bank": "gwen_base_vo_events",
+      "eventId": 2851160850,
+      "layers": [
+        {
+          "clips": [
+            "gwen_base_vo-672763768.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gwen.QMiddleHit",
+      "eventName": "Play_sfx_Gwen_GwenQMiddle_hit",
+      "bank": "gwen_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "gwen_base_sfx-1064256902.wav",
+            "gwen_base_sfx-927225298.wav",
+            "gwen_base_sfx-253101884.wav",
+            "gwen_base_sfx-497484892.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gwen.QHitCenter",
+      "eventName": "Play_sfx_Gwen_GwenQMiddle_hit_center",
+      "bank": "gwen_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "gwen_base_sfx-1064256902.wav",
+            "gwen_base_sfx-927225298.wav",
+            "gwen_base_sfx-497484892.wav",
+            "gwen_base_sfx-253101884.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gwen.QLastHitCenter",
+      "eventName": "Play_sfx_Gwen_GwenQLast_hit_center",
+      "bank": "gwen_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "gwen_base_sfx-923563128.wav",
+            "gwen_base_sfx-396871256.wav",
+            "gwen_base_sfx-1071995365.wav",
+            "gwen_base_sfx-309821044.wav"
+          ]
+        },
+        {
+          "clips": [
+            "gwen_base_sfx-1064256902.wav",
+            "gwen_base_sfx-927225298.wav",
+            "gwen_base_sfx-497484892.wav",
+            "gwen_base_sfx-253101884.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gwen.QMiddleHitMinion",
+      "eventName": "Play_sfx_Gwen_GwenQMiddle_hit_minion",
+      "bank": "gwen_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "gwen_base_sfx-497484892.wav",
+            "gwen_base_sfx-927225298.wav",
+            "gwen_base_sfx-253101884.wav",
+            "gwen_base_sfx-1064256902.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gwen.QMiddleHitCenterMinion",
+      "eventName": "Play_sfx_Gwen_GwenQMiddle_hit_center_minion",
+      "bank": "gwen_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "gwen_base_sfx-1064256902.wav",
+            "gwen_base_sfx-927225298.wav",
+            "gwen_base_sfx-497484892.wav",
+            "gwen_base_sfx-253101884.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gwen.QLastHitCenterMinion",
+      "eventName": "Play_sfx_Gwen_GwenQLast_hit_center_minion",
+      "bank": "gwen_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "gwen_base_sfx-309821044.wav",
+            "gwen_base_sfx-396871256.wav",
+            "gwen_base_sfx-1071995365.wav",
+            "gwen_base_sfx-923563128.wav"
+          ]
+        },
+        {
+          "clips": [
+            "gwen_base_sfx-1064256902.wav",
+            "gwen_base_sfx-927225298.wav",
+            "gwen_base_sfx-497484892.wav",
+            "gwen_base_sfx-253101884.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gwen.QMaxStacks",
+      "eventName": "Play_sfx_Gwen_GwenQ_max_stacks_buffactivate_self",
+      "bank": "gwen_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "gwen_base_sfx-880053733.wav",
+            "gwen_base_sfx-545613006.wav",
+            "gwen_base_sfx-892809311.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gwen.RMissile",
+      "eventName": "Play_sfx_Gwen_GwenR_missile",
+      "bank": "gwen_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "gwen_base_sfx-380331369.wav",
+            "gwen_base_sfx-256249312.wav",
+            "gwen_base_sfx-1018996848.wav",
+            "gwen_base_sfx-1039224751.wav",
+            "gwen_base_sfx-480169720.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gwen.R3Missile",
+      "eventName": "Play_sfx_Gwen_GwenR3_missile",
+      "bank": "gwen_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "gwen_base_sfx-174567570.wav",
+            "gwen_base_sfx-723094409.wav",
+            "gwen_base_sfx-898867817.wav",
+            "gwen_base_sfx-1003483555.wav",
+            "gwen_base_sfx-37336623.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gwen.RRefresh",
+      "eventName": "Play_sfx_Gwen_GwenR_refresh",
+      "bank": "gwen_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "gwen_base_sfx-65655663.wav",
+            "gwen_base_sfx-820483614.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gwen.RBuffEnd",
+      "eventName": "Play_sfx_Gwen_GwenR_buffdeactivate",
+      "bank": "gwen_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "gwen_base_sfx-690235275.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gwen.Recall",
+      "eventName": "Play_sfx_Gwen_Recall3D_buffactivate_01",
+      "bank": "gwen_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "gwen_base_sfx-707198673.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gwen.Recall2",
+      "eventName": "Play_sfx_Gwen_Recall3D_buffactivate_02",
+      "bank": "gwen_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "gwen_base_sfx-331807294.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gwen.Recall3",
+      "eventName": "Play_sfx_Gwen_Recall3D_buffactivate_03",
+      "bank": "gwen_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "gwen_base_sfx-1054604302.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gwen.RecallWinddown",
+      "eventName": "Play_sfx_Gwen_Recall3D_winddown",
+      "bank": "gwen_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "gwen_base_sfx-645325984.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gwen.WEvade",
+      "eventName": "Play_sfx_Gwen_GwenW_evade",
+      "bank": "gwen_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "gwen_base_sfx-883349210.wav",
+            "gwen_base_sfx-820637702.wav",
+            "gwen_base_sfx-884051769.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gwen.WChampEnter",
+      "eventName": "Play_sfx_Gwen_GwenW_champ_enter",
+      "bank": "gwen_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "gwen_base_sfx-519310487.wav",
+            "gwen_base_sfx-631831437.wav",
+            "gwen_base_sfx-1032372948.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gwen.WChampExit",
+      "eventName": "Play_sfx_Gwen_GwenW_champ_exit_other",
+      "bank": "gwen_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "gwen_base_sfx-346024439.wav",
+            "gwen_base_sfx-1068449368.wav",
+            "gwen_base_sfx-443869824.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gwen.WBuffActivate",
+      "eventName": "Play_sfx_Gwen_GwenW_buffactivate_Self",
+      "bank": "gwen_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "gwen_base_sfx-712039398.wav",
+            "gwen_base_sfx-515185330.wav",
+            "gwen_base_sfx-574607003.wav"
+          ]
+        },
+        {
+          "clips": [
+            "gwen_base_sfx-854509046.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gragas.Attack",
+      "eventName": "Play_sfx_Gragas_GragasBasicAttack_OnCast",
+      "bank": "gragas_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "gragas_base_sfx-353671218.wav",
+            "gragas_base_sfx-323432869.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gragas.AttackHit",
+      "eventName": "Play_sfx_Gragas_GragasBasicAttack_OnHit",
+      "bank": "gragas_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "gragas_base_sfx-195395622.wav",
+            "gragas_base_sfx-279726486.wav",
+            "gragas_base_sfx-183193935.wav",
+            "gragas_base_sfx-379369987.wav",
+            "gragas_base_sfx-193724774.wav",
+            "gragas_base_sfx-12414705.wav",
+            "gragas_base_sfx-160197797.wav",
+            "gragas_base_sfx-147142527.wav",
+            "gragas_base_sfx-602747931.wav",
+            "gragas_base_sfx-90979734.wav",
+            "gragas_base_sfx-287511898.wav",
+            "gragas_base_sfx-309897469.wav",
+            "gragas_base_sfx-228567503.wav",
+            "gragas_base_sfx-41147340.wav",
+            "gragas_base_sfx-972441139.wav",
+            "gragas_base_sfx-55416013.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gragas.Crit",
+      "eventName": "Play_sfx_Gragas_GragasCritAttack_OnCast",
+      "bank": "gragas_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "gragas_base_sfx-323432869.wav",
+            "gragas_base_sfx-353671218.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gragas.CritHit",
+      "eventName": "Play_sfx_Gragas_GragasCritAttack_OnHit",
+      "bank": "gragas_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "gragas_base_sfx-602747931.wav",
+            "gragas_base_sfx-90979734.wav",
+            "gragas_base_sfx-287511898.wav",
+            "gragas_base_sfx-309897469.wav",
+            "gragas_base_sfx-228567503.wav",
+            "gragas_base_sfx-55416013.wav",
+            "gragas_base_sfx-972441139.wav",
+            "gragas_base_sfx-41147340.wav",
+            "gragas_base_sfx-195395622.wav",
+            "gragas_base_sfx-279726486.wav",
+            "gragas_base_sfx-379369987.wav",
+            "gragas_base_sfx-183193935.wav",
+            "gragas_base_sfx-160197797.wav",
+            "gragas_base_sfx-12414705.wav",
+            "gragas_base_sfx-147142527.wav",
+            "gragas_base_sfx-193724774.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gragas.QCast",
+      "eventName": "Play_sfx_Gragas_GragasQ_OnCast",
+      "bank": "gragas_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "gragas_base_sfx-843673933.wav",
+            "gragas_base_sfx-914331364.wav",
+            "gragas_base_sfx-905694050.wav",
+            "gragas_base_sfx-987897841.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gragas.QMissile",
+      "eventName": "Play_sfx_Gragas_GragasQMissile_foam",
+      "bank": "gragas_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "gragas_base_sfx-1073012260.wav",
+            "gragas_base_sfx-826761539.wav",
+            "gragas_base_sfx-789887477.wav",
+            "gragas_base_sfx-602364398.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gragas.QExplode",
+      "eventName": "Play_sfx_Gragas_GragasQMissile_boom",
+      "bank": "gragas_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "gragas_base_sfx-99092660.wav",
+            "gragas_base_sfx-38448423.wav",
+            "gragas_base_sfx-1017638910.wav",
+            "gragas_base_sfx-275196235.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gragas.WCast",
+      "eventName": "Play_sfx_Gragas_GragasW_OnCast",
+      "bank": "gragas_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "gragas_base_sfx-752756167.wav",
+            "gragas_base_sfx-527615731.wav",
+            "gragas_base_sfx-562826608.wav",
+            "gragas_base_sfx-59043534.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gragas.WEmpoweredHit",
+      "eventName": "Play_sfx_Gragas_GragasWAttack_OnHit",
+      "bank": "gragas_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "gragas_base_sfx-195395622.wav",
+            "gragas_base_sfx-279726486.wav",
+            "gragas_base_sfx-183193935.wav",
+            "gragas_base_sfx-379369987.wav",
+            "gragas_base_sfx-193724774.wav",
+            "gragas_base_sfx-12414705.wav",
+            "gragas_base_sfx-160197797.wav",
+            "gragas_base_sfx-147142527.wav",
+            "gragas_base_sfx-602747931.wav",
+            "gragas_base_sfx-90979734.wav",
+            "gragas_base_sfx-287511898.wav",
+            "gragas_base_sfx-309897469.wav",
+            "gragas_base_sfx-228567503.wav",
+            "gragas_base_sfx-41147340.wav",
+            "gragas_base_sfx-972441139.wav",
+            "gragas_base_sfx-55416013.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gragas.WEmpoweredCast",
+      "eventName": "Play_sfx_Gragas_GragasWAttack_OnCast",
+      "bank": "gragas_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "gragas_base_sfx-353671218.wav",
+            "gragas_base_sfx-323432869.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gragas.WBuffActivate",
+      "eventName": "Play_sfx_Gragas_GragasWSelf_OnBuffActivate",
+      "bank": "gragas_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "gragas_base_sfx-257853551.wav",
+            "gragas_base_sfx-443862626.wav",
+            "gragas_base_sfx-266651424.wav",
+            "gragas_base_sfx-202111292.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gragas.ECast",
+      "eventName": "Play_sfx_Gragas_GragasE_OnCast",
+      "bank": "gragas_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "gragas_base_sfx-137416781.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gragas.EHit",
+      "eventName": "Play_sfx_Gragas_GragasE_hit",
+      "bank": "gragas_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "gragas_base_sfx-215166354.wav",
+            "gragas_base_sfx-125958689.wav",
+            "gragas_base_sfx-986389143.wav",
+            "gragas_base_sfx-809763914.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gragas.RCast",
+      "eventName": "Play_sfx_Gragas_GragasR_OnCast",
+      "bank": "gragas_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "gragas_base_sfx-421591823.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gragas.RExplode",
+      "eventName": "Play_sfx_Gragas_GragasR_boom",
+      "bank": "gragas_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "gragas_base_sfx-595477819.wav",
+            "gragas_base_sfx-24364761.wav",
+            "gragas_base_sfx-94192507.wav",
+            "gragas_base_sfx-117420554.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gragas.VOMove",
+      "eventName": "Play_vo_Gragas_Move2DStandard",
+      "bank": "gragas_base_vo_events",
+      "layers": [
+        {
+          "clips": [
+            "gragas_base_vo-196138689.wav",
+            "gragas_base_vo-553216865.wav",
+            "gragas_base_vo-28267910.wav",
+            "gragas_base_vo-885793957.wav",
+            "gragas_base_vo-1010605181.wav",
+            "gragas_base_vo-937059590.wav",
+            "gragas_base_vo-751801384.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gragas.VOAttack",
+      "eventName": "Play_vo_Gragas_Attack2DGeneral",
+      "bank": "gragas_base_vo_events",
+      "layers": [
+        {
+          "clips": [
+            "gragas_base_vo-76964633.wav",
+            "gragas_base_vo-160743468.wav",
+            "gragas_base_vo-719481460.wav",
+            "gragas_base_vo-396304930.wav",
+            "gragas_base_vo-380177854.wav",
+            "gragas_base_vo-322665620.wav",
+            "gragas_base_vo-264310702.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gragas.VOQ",
+      "eventName": "Play_vo_Gragas_GragasQ_cast3D",
+      "bank": "gragas_base_vo_events",
+      "layers": [
+        {
+          "clips": [
+            "gragas_base_vo-1004528308.wav",
+            "gragas_base_vo-14295857.wav",
+            "gragas_base_vo-1072533085.wav",
+            "gragas_base_vo-642862266.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gragas.VOW",
+      "eventName": "Play_vo_Gragas_GragasW_OnCast",
+      "bank": "gragas_base_vo_events",
+      "layers": [
+        {
+          "clips": [
+            "gragas_base_vo-205528052.wav",
+            "gragas_base_vo-144032200.wav",
+            "gragas_base_vo-634172833.wav",
+            "gragas_base_vo-547116773.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gragas.VOE",
+      "eventName": "Play_vo_Gragas_GragasE_cast3D",
+      "bank": "gragas_base_vo_events",
+      "layers": [
+        {
+          "clips": [
+            "gragas_base_vo-14295857.wav",
+            "gragas_base_vo-1072533085.wav",
+            "gragas_base_vo-1004528308.wav",
+            "gragas_base_vo-648164132.wav",
+            "gragas_base_vo-164247941.wav",
+            "gragas_base_vo-642862266.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gragas.VOR",
+      "eventName": "Play_vo_Gragas_GragasR_cast3D",
+      "bank": "gragas_base_vo_events",
+      "layers": [
+        {
+          "clips": [
+            "gragas_base_vo-1004528308.wav",
+            "gragas_base_vo-1072533085.wav",
+            "gragas_base_vo-648164132.wav",
+            "gragas_base_vo-164247941.wav",
+            "gragas_base_vo-14295857.wav",
+            "gragas_base_vo-642862266.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gragas.VODeath",
+      "eventName": "Play_vo_Gragas_Death3D",
+      "bank": "gragas_base_vo_events",
+      "layers": [
+        {
+          "clips": [
+            "gragas_base_vo-704413220.wav",
+            "gragas_base_vo-155528758.wav",
+            "gragas_base_vo-126915013.wav",
+            "gragas_base_vo-857223548.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gragas.VOTaunt",
+      "eventName": "Play_vo_Gragas_Taunt3DGeneral",
+      "bank": "gragas_base_vo_events",
+      "layers": [
+        {
+          "clips": [
+            "gragas_base_vo-942305534.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gragas.VOJoke",
+      "eventName": "Play_vo_Gragas_Joke3DGeneral",
+      "bank": "gragas_base_vo_events",
+      "layers": [
+        {
+          "clips": [
+            "gragas_base_vo-1008796840.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gragas.VOLaugh",
+      "eventName": "Play_vo_Gragas_Laugh3DGeneral",
+      "bank": "gragas_base_vo_events",
+      "layers": [
+        {
+          "clips": [
+            "gragas_base_vo-510108194.wav",
+            "gragas_base_vo-742595809.wav",
+            "gragas_base_vo-610405269.wav",
+            "gragas_base_vo-93732492.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Gragas.VOBasicAttack",
+      "eventName": "Play_vo_Gragas_GragasBasicAttack_cast3D",
+      "bank": "gragas_base_vo_events",
+      "layers": [
+        {
+          "clips": [
+            "gragas_base_vo-1004528308.wav",
+            "gragas_base_vo-14295857.wav",
+            "gragas_base_vo-1072533085.wav",
+            "gragas_base_vo-642862266.wav"
+          ]
+        }
+      ]
     }
   ],
   "media": [
@@ -3233,5 +4275,7 @@
     }
   ],
   "notes": "Decoded unchanged original Wwise media from the local League installation. Event mapping follows verified bank event IDs and Play action container lineage. Unity mixes the selected original layers; Wwise RTPC/filter/delay processing is not recreated.",
-  "zeriNotes": "Zeri: original Wwise media from the local League installation (Zeri.wad.client, Zeri.en_US.wad.client), decoded with vgmstream r2117; events resolved through the bank HIRC (event -> action -> container -> media)."
+  "zeriNotes": "Zeri: original Wwise media from the local League installation (Zeri.wad.client, Zeri.en_US.wad.client), decoded with vgmstream r2117; events resolved through the bank HIRC (event -> action -> container -> media).",
+  "gwenVoiceNotes": "Gwen voice: original Wwise media from the local League installation (Gwen.en_US.wad.client), decoded with vgmstream; events named by FNV-1 against the strings in Gwen.wad.client.",
+  "gragasNotes": "Gragas: original Wwise media from the local League installation (Gragas.wad.client base-skin effects, Gragas.en_US.wad.client voice), decoded with vgmstream; events named by FNV-1 against the strings in the champion bins."
 }

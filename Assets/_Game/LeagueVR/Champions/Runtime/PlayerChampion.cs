@@ -14,7 +14,7 @@ namespace LeagueVR.Champions
     /// </summary>
     [RequireComponent(typeof(Combatant))]
     [DefaultExecutionOrder(-50)]
-    public partial class PlayerChampion : MonoBehaviour, IDamageGuard, ITargetFilter
+    public partial class PlayerChampion : MonoBehaviour, IDamageGuard, IDamageReduction, ITargetFilter
     {
         public XROrigin origin;
         public Camera head;
@@ -120,6 +120,10 @@ namespace LeagueVR.Champions
             Economy = GetComponent<RiftEconomy>();
             Health.RefreshGuards();
             BrushView = TryGetComponent<BrushView>(out var view) ? view : gameObject.AddComponent<BrushView>();
+            // League has no jumping, and the starter rig's jump is bound to the right controller's A button, which casts
+            // every champion's E: each E press also made the player jump.
+            foreach (var jump in origin.GetComponentsInChildren<UnityEngine.XR.Interaction.Toolkit.Locomotion.Jump.JumpProvider>(true))
+                jump.enabled = false;
         }
 
         void OnEnable()
@@ -229,8 +233,12 @@ namespace LeagueVR.Champions
         // ---------- Physical weapon hits ----------
 
         const float MinimumSwingSpeed = 2.2f;
-        Vector3 lastEdgeFrom, lastEdgeTo;
+        /// <summary>A rig move this far in one frame is a dash, blink or teleport, not walking; a turn this big is a snap turn.</summary>
+        const float RigJump = .3f, RigSnap = 10;
+        Vector3 lastEdgeFrom, lastEdgeTo, lastRigPosition;
+        Quaternion lastRigRotation = Quaternion.identity;
         bool haveEdge;
+        int sweepPause;
 
         /// <summary>
         /// Sweeps the kit's weapon edge from last frame to this frame. A fast enough swing that passes through an enemy
@@ -238,6 +246,19 @@ namespace LeagueVR.Champions
         /// </summary>
         void UpdateWeaponSweep()
         {
+            // A dash or a snap turn carries the weapon through the world in a frame (and the posed body catches up a
+            // frame later): that is not a swing, so the sweep restarts once the body has settled.
+            var rig = origin.transform;
+            if ((rig.position - lastRigPosition).sqrMagnitude > RigJump * RigJump || Quaternion.Angle(rig.rotation, lastRigRotation) > RigSnap)
+                sweepPause = 2;
+            lastRigPosition = rig.position;
+            lastRigRotation = rig.rotation;
+            if (sweepPause > 0)
+            {
+                sweepPause--;
+                haveEdge = false;
+                return;
+            }
             if (DesktopMode || !Kit.WeaponEdge(out var from, out var to))
             {
                 haveEdge = false;
@@ -245,11 +266,10 @@ namespace LeagueVR.Champions
             }
             if (haveEdge && CanAct && !Busy && Time.time >= attackReadyAt)
             {
-                var rig = origin.transform;
                 // Tip speed in rig space so walking into a minion does not count as a swing.
                 Vector3 tipMove = rig.InverseTransformPoint(to) - rig.InverseTransformPoint(lastEdgeTo);
                 float speed = Time.deltaTime > 0 ? tipMove.magnitude / Time.deltaTime : 0;
-                if (speed > MinimumSwingSpeed && WeaponSweep(lastEdgeFrom, lastEdgeTo, from, to, .1f, out var target, out var point))
+                if (speed > MinimumSwingSpeed && WeaponSweep(lastEdgeFrom, lastEdgeTo, from, to, Kit.WeaponRadius, out var target, out var point))
                 {
                     attackReadyAt = Time.time + AttackInterval;
                     Vector3 swing = (to - lastEdgeTo).normalized;
@@ -393,6 +413,8 @@ namespace LeagueVR.Champions
 
         public float BonusResistance => Kit?.BonusResistance ?? 0;
 
+        public float DamageTaken(DamageHit hit) => Kit != null ? Kit.DamageTaken(hit) : 1;
+
         float lastReveal = -100;
 
         /// <summary>
@@ -440,6 +462,8 @@ namespace LeagueVR.Champions
         /// <summary>Full reset for a new match: health, cooldowns and kit state.</summary>
         public void ResetPractice()
         {
+            // A button held across the reset must not fire an unaimed ability on release.
+            CancelHolds();
             StopAllCoroutines();
             respawnRoutine = null;
             RespawnAt = 0;

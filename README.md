@@ -21,7 +21,7 @@ Progress, decisions and next steps are in `OVERHAUL_STATUS.md`.
 2. Make the headset's software the active OpenXR runtime.
 3. Run `LeagueVR.exe`. Without a headset the game starts in desktop mode.
 
-The build folder includes `HOW TO PLAY.txt`. In game, open the menu with the right stick press and choose CONTROLS.
+The build folder includes `HOW TO PLAY.txt`. In game, open the menu with the left stick press and choose CONTROLS.
 
 ## Working on the project
 

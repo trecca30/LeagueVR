@@ -1015,3 +1015,640 @@ MonoBehaviour:
       - {fileID: 8300000, guid: acc97b35e3ed7e646853d33947219c83, type: 3}
       - {fileID: 8300000, guid: a316a6aa8b801654e8afaec72d4e0bfc, type: 3}
       - {fileID: 8300000, guid: 03d909e918e090042a9d2b556fa1e2f8, type: 3}
+  - key: Gwen.VOMove
+    eventName: Play_vo_Gwen_Move2DStandard
+    sourceBank: gwen_base_vo_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 879c9478dac13da49b0be180fb433e2b, type: 3}
+      - {fileID: 8300000, guid: 13a5692b1c295de4fa8409244918a3c7, type: 3}
+      - {fileID: 8300000, guid: f1ca48c3c51dff242a3ec3173392a05f, type: 3}
+      - {fileID: 8300000, guid: e9564f4201da061489da522d32212b59, type: 3}
+      - {fileID: 8300000, guid: b263167a89878eb4aa93af3915baf473, type: 3}
+      - {fileID: 8300000, guid: 1b5673a3a9d0955408c9df51292c6d1a, type: 3}
+      - {fileID: 8300000, guid: c7455e75c01e57a479f6615864f3c74d, type: 3}
+      - {fileID: 8300000, guid: cbf4ff8cbb9cd6e4eb51d5633d3449a0, type: 3}
+      - {fileID: 8300000, guid: 3e456b48c4e43b647a891a01df1bd166, type: 3}
+      - {fileID: 8300000, guid: ab0c80705e48498488e11905a46e54e9, type: 3}
+      - {fileID: 8300000, guid: 48ff37c00d1de5e46953175db7515cca, type: 3}
+      - {fileID: 8300000, guid: ced37f36d35a5ae4480dbe5a9dc137a0, type: 3}
+      - {fileID: 8300000, guid: 9f53f66570df23f41a6ebfcc8b0ee00f, type: 3}
+      - {fileID: 8300000, guid: 72d69d7dc809b414b96cd3003a425746, type: 3}
+      - {fileID: 8300000, guid: 2e565b9938ea1434f920856ec79e26ca, type: 3}
+      - {fileID: 8300000, guid: 2bac230f305b58441a022d5d74e1e995, type: 3}
+      - {fileID: 8300000, guid: d0b7414c6b949224288d2f8eb1943c66, type: 3}
+      - {fileID: 8300000, guid: 09951b56f1b9de441bb233c378b0ba2d, type: 3}
+      - {fileID: 8300000, guid: 975832d7beb8db648bc1d23aee85f323, type: 3}
+      - {fileID: 8300000, guid: e89c1c04ea7df49429d89690beeece2e, type: 3}
+      - {fileID: 8300000, guid: 736788cf05e5a764d8e8cb433f8426c6, type: 3}
+      - {fileID: 8300000, guid: 3dcbe9358910eb247aed4d09db40509c, type: 3}
+      - {fileID: 8300000, guid: 68a0f6b78515b894f96b814fc4ad5168, type: 3}
+      - {fileID: 8300000, guid: 0c7dae1007c2f0444810ff98666e2cd2, type: 3}
+      - {fileID: 8300000, guid: a8e7faa4eb8f3bb45ba81c46b1f0577e, type: 3}
+  - key: Gwen.VOFirstMove
+    eventName: Play_vo_Gwen_Move2DFirst
+    sourceBank: gwen_base_vo_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 37c5e460e0b90674aae264cd83ef93b2, type: 3}
+      - {fileID: 8300000, guid: a57180e4133bd1b429972632008a3b1f, type: 3}
+      - {fileID: 8300000, guid: 44b4bb4d56c14f5498653c48d6298378, type: 3}
+      - {fileID: 8300000, guid: f3f1fcebf200dcb42a368768a780c8b6, type: 3}
+  - key: Gwen.VOMoveLong
+    eventName: Play_vo_Gwen_Move2DLong
+    sourceBank: gwen_base_vo_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 48686f55420b59e4ab82796309dbbefa, type: 3}
+      - {fileID: 8300000, guid: b221241b2ee4f294290a7c4765fd33b0, type: 3}
+      - {fileID: 8300000, guid: 9f7b0f151283da14cbe33dfc550f3f26, type: 3}
+      - {fileID: 8300000, guid: 952359e6a29493a448e6842c55916f49, type: 3}
+      - {fileID: 8300000, guid: 8e1623273c94256409b17c3ac863befe, type: 3}
+  - key: Gwen.VOAttack
+    eventName: Play_vo_Gwen_Attack2DGeneral
+    sourceBank: gwen_base_vo_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 35f33036fb7b61446b641c6301a454df, type: 3}
+      - {fileID: 8300000, guid: 42e94971dac385341b86c155ac5e34f1, type: 3}
+      - {fileID: 8300000, guid: db82c32f6fef37f448a6317be28a02a8, type: 3}
+      - {fileID: 8300000, guid: c1a863a347470994bbe80783fb44138a, type: 3}
+      - {fileID: 8300000, guid: dd25219918722da4e8e8dbd917966091, type: 3}
+      - {fileID: 8300000, guid: c8ceb95068642f84889e68431a2f7e3d, type: 3}
+      - {fileID: 8300000, guid: 210fca5773bd1c2408dab6bc8575d13f, type: 3}
+      - {fileID: 8300000, guid: e5ca5564cb4c9134691a665d5832f370, type: 3}
+      - {fileID: 8300000, guid: be07f40a2ef85ed4e9f593e807211e9a, type: 3}
+      - {fileID: 8300000, guid: 2ed67092b3fa0ee4baf7ebf7dd69eda5, type: 3}
+      - {fileID: 8300000, guid: 7d10a638c028ba949883499b7380a0ea, type: 3}
+      - {fileID: 8300000, guid: 3b5f9fb68d213584e98003468451fc48, type: 3}
+      - {fileID: 8300000, guid: 27179c730ebc01b469fe467bbcb48036, type: 3}
+      - {fileID: 8300000, guid: d69753a5cefc1d048b0545f4c0655f62, type: 3}
+      - {fileID: 8300000, guid: 671b0fa4785ea2c4180caf1d83e9ad3a, type: 3}
+      - {fileID: 8300000, guid: 68b76da593fc4454490960c736c27acf, type: 3}
+      - {fileID: 8300000, guid: 35296f3cece4b874da94b1b0d74f017d, type: 3}
+      - {fileID: 8300000, guid: bc471cf4ad5c4aa4abed3c37f3860879, type: 3}
+      - {fileID: 8300000, guid: a7f805f970228114d81da3d2316f3208, type: 3}
+      - {fileID: 8300000, guid: 034e0d69e95f3e24f9434f0a76fdc52f, type: 3}
+      - {fileID: 8300000, guid: 6fc98f76ca31818488c9b9f7187dd5a0, type: 3}
+  - key: Gwen.VOQ
+    eventName: Play_vo_Gwen_GwenQ_cast3D
+    sourceBank: gwen_base_vo_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: fb5c26ed67de3b9408b4ec7879e5fcaa, type: 3}
+      - {fileID: 8300000, guid: 2104a8ea02227634c9c1fb389a718903, type: 3}
+      - {fileID: 8300000, guid: 0f937afdc24cc4948b28d291144bafd2, type: 3}
+      - {fileID: 8300000, guid: 281cdb0dee2a341449bb192ccb843fb1, type: 3}
+      - {fileID: 8300000, guid: 3d7c98a0509eaf348a5717befcf303d1, type: 3}
+      - {fileID: 8300000, guid: bb66751d10c64fa49ac64086a438858f, type: 3}
+  - key: Gwen.VOW
+    eventName: Play_vo_Gwen_GwenW_cast3D
+    sourceBank: gwen_base_vo_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: ff6ff02dffae83c429039fc82ff86b48, type: 3}
+      - {fileID: 8300000, guid: 61b694b049c5b6c49b55d2fc8a8af746, type: 3}
+      - {fileID: 8300000, guid: 8badcacf49da81c449b3bad0ccb0b757, type: 3}
+      - {fileID: 8300000, guid: f6633111b74dddb4ebd101b7fdf6799b, type: 3}
+  - key: Gwen.VOE
+    eventName: Play_vo_Gwen_GwenE_cast3D
+    sourceBank: gwen_base_vo_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: ebdc43a5be0b30241851392eff69d987, type: 3}
+      - {fileID: 8300000, guid: cad879ab5ccee61489ecafaf216912c5, type: 3}
+      - {fileID: 8300000, guid: 7457a215558f6ac49a94df5343dcc20e, type: 3}
+      - {fileID: 8300000, guid: cba79f982705d6d4094da0947ddf8ca0, type: 3}
+      - {fileID: 8300000, guid: 2da05f59538f74540b66e9acc3416b93, type: 3}
+      - {fileID: 8300000, guid: 0e3ad339e6364c041abff8470108c0a2, type: 3}
+  - key: Gwen.VOR
+    eventName: Play_vo_Gwen_GwenR_cast3D
+    sourceBank: gwen_base_vo_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 72122f851037df44ca7145b4e6f9e336, type: 3}
+      - {fileID: 8300000, guid: b176edfe74b4c53438fb4eefe45642cf, type: 3}
+      - {fileID: 8300000, guid: ccdc80f132160ba42b26015fcef88b57, type: 3}
+      - {fileID: 8300000, guid: ab78ffd23106723468999864ee84e790, type: 3}
+      - {fileID: 8300000, guid: bc3c3f2e81e192347bdc35fe515203e9, type: 3}
+      - {fileID: 8300000, guid: d2dc3651708017e41abb799aa22fb7a8, type: 3}
+      - {fileID: 8300000, guid: ada47414dd8ba1d46886ed9b55d14969, type: 3}
+      - {fileID: 8300000, guid: ea3b1fe001d780b48b1edf6423d3ea95, type: 3}
+      - {fileID: 8300000, guid: 0eafe5e8d7aac934b82a9e9b60f51f79, type: 3}
+      - {fileID: 8300000, guid: 207e6adc84ccbc94bbf0627bc5aba29b, type: 3}
+  - key: Gwen.VOR2
+    eventName: Play_vo_Gwen_GwenR2_buffactivate_lua
+    sourceBank: gwen_base_vo_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 72122f851037df44ca7145b4e6f9e336, type: 3}
+      - {fileID: 8300000, guid: b176edfe74b4c53438fb4eefe45642cf, type: 3}
+      - {fileID: 8300000, guid: ccdc80f132160ba42b26015fcef88b57, type: 3}
+      - {fileID: 8300000, guid: ab78ffd23106723468999864ee84e790, type: 3}
+  - key: Gwen.VOR3
+    eventName: Play_vo_Gwen_GwenR3_buffactivate_lua
+    sourceBank: gwen_base_vo_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: bc3c3f2e81e192347bdc35fe515203e9, type: 3}
+      - {fileID: 8300000, guid: d2dc3651708017e41abb799aa22fb7a8, type: 3}
+      - {fileID: 8300000, guid: ada47414dd8ba1d46886ed9b55d14969, type: 3}
+  - key: Gwen.VORRecast
+    eventName: Play_vo_Gwen_GwenRRecast_cast3D
+    sourceBank: gwen_base_vo_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 72122f851037df44ca7145b4e6f9e336, type: 3}
+      - {fileID: 8300000, guid: b176edfe74b4c53438fb4eefe45642cf, type: 3}
+      - {fileID: 8300000, guid: ccdc80f132160ba42b26015fcef88b57, type: 3}
+      - {fileID: 8300000, guid: ab78ffd23106723468999864ee84e790, type: 3}
+      - {fileID: 8300000, guid: bc3c3f2e81e192347bdc35fe515203e9, type: 3}
+      - {fileID: 8300000, guid: d2dc3651708017e41abb799aa22fb7a8, type: 3}
+      - {fileID: 8300000, guid: ada47414dd8ba1d46886ed9b55d14969, type: 3}
+      - {fileID: 8300000, guid: ea3b1fe001d780b48b1edf6423d3ea95, type: 3}
+      - {fileID: 8300000, guid: 0eafe5e8d7aac934b82a9e9b60f51f79, type: 3}
+      - {fileID: 8300000, guid: 207e6adc84ccbc94bbf0627bc5aba29b, type: 3}
+  - key: Gwen.VOKill
+    eventName: Play_vo_Gwen_Kill3DGeneral
+    sourceBank: gwen_base_vo_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 9b2a8cedf66d6b847a71da8433dfc72f, type: 3}
+      - {fileID: 8300000, guid: 7032866a031167449abda518a15b2544, type: 3}
+      - {fileID: 8300000, guid: 623cdb22fdfc01340a60a5ab131c2bdc, type: 3}
+      - {fileID: 8300000, guid: 67ab5a606b4f25f40914ac81b4fa5ba8, type: 3}
+      - {fileID: 8300000, guid: c489ad18992a95c4796e8d29a793c85a, type: 3}
+      - {fileID: 8300000, guid: 94c91ab5ac347174da44d2d144196f31, type: 3}
+      - {fileID: 8300000, guid: d4557902f7bc6a0428786ccb2b3d9fcb, type: 3}
+      - {fileID: 8300000, guid: 4317ba0312349b344bce8fca3618ace8, type: 3}
+      - {fileID: 8300000, guid: ed9588e57ebffe246b7306e1c34c7d6c, type: 3}
+  - key: Gwen.VODeath
+    eventName: Play_vo_Gwen_Death3D
+    sourceBank: gwen_base_vo_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 7851b9a0256d518428474859b31af145, type: 3}
+      - {fileID: 8300000, guid: c883c8cdee6da9241b8b3992077f7ca5, type: 3}
+      - {fileID: 8300000, guid: 73a8804297c3c2e4ca1594090e474958, type: 3}
+      - {fileID: 8300000, guid: b239de572b346d34193adc5623f65098, type: 3}
+      - {fileID: 8300000, guid: efa5a4ddbaf151141ade6795cc5f3620, type: 3}
+      - {fileID: 8300000, guid: 13cb815875a1d934ba405ec006006a81, type: 3}
+  - key: Gwen.VORespawn
+    eventName: Play_vo_Gwen_Respawn2DGeneral
+    sourceBank: gwen_base_vo_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 945654ede6a6913489699451cda3d6a7, type: 3}
+      - {fileID: 8300000, guid: ce2a69749917a714fa1e906ab3af4d00, type: 3}
+      - {fileID: 8300000, guid: 654aef97bc53c8147ae3e586b34dd275, type: 3}
+  - key: Gwen.VORecall
+    eventName: Play_vo_Gwen_Recall3DGeneral
+    sourceBank: gwen_base_vo_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 6b00a328cbb26814ea73a9939740fe7b, type: 3}
+      - {fileID: 8300000, guid: 20c349c88653c944cb252c1309387b59, type: 3}
+      - {fileID: 8300000, guid: ca13b4825105ed74d80bc5388a0d8101, type: 3}
+  - key: Gwen.VOTaunt
+    eventName: Play_vo_Gwen_Taunt3DGeneral
+    sourceBank: gwen_base_vo_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 3f980d4788303674891261c283c8b285, type: 3}
+  - key: Gwen.VOJoke
+    eventName: Play_vo_Gwen_Joke3DGeneral
+    sourceBank: gwen_base_vo_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 83e09f49369d67043befd3d434e3773c, type: 3}
+  - key: Gwen.VOLaugh
+    eventName: Play_vo_Gwen_Laugh3DGeneral
+    sourceBank: gwen_base_vo_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: b12e5c479ad4a614a8ea935d255ddc6c, type: 3}
+  - key: Gwen.QMiddleHit
+    eventName: Play_sfx_Gwen_GwenQMiddle_hit
+    sourceBank: gwen_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 8866766340a4f9d479046f02e1ac638b, type: 3}
+      - {fileID: 8300000, guid: 24362cafc8a5d934fb95ec21b2b5d7e4, type: 3}
+      - {fileID: 8300000, guid: 72d90b89bdb78ad498417e5dbd4d28e0, type: 3}
+      - {fileID: 8300000, guid: dc6070635df4571488248a6661ca25e3, type: 3}
+  - key: Gwen.QHitCenter
+    eventName: Play_sfx_Gwen_GwenQMiddle_hit_center
+    sourceBank: gwen_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 8866766340a4f9d479046f02e1ac638b, type: 3}
+      - {fileID: 8300000, guid: 24362cafc8a5d934fb95ec21b2b5d7e4, type: 3}
+      - {fileID: 8300000, guid: dc6070635df4571488248a6661ca25e3, type: 3}
+      - {fileID: 8300000, guid: 72d90b89bdb78ad498417e5dbd4d28e0, type: 3}
+  - key: Gwen.QLastHitCenter
+    eventName: Play_sfx_Gwen_GwenQLast_hit_center
+    sourceBank: gwen_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: da303727ac580ba4a804a627b34a4318, type: 3}
+      - {fileID: 8300000, guid: 9b34cb8f713559243bfc4e3324b3ac7a, type: 3}
+      - {fileID: 8300000, guid: a6ac5105eba2d4b4f910709c13eb9075, type: 3}
+      - {fileID: 8300000, guid: 3b2337ed178c0834291c2b69440f9322, type: 3}
+    - variants:
+      - {fileID: 8300000, guid: 8866766340a4f9d479046f02e1ac638b, type: 3}
+      - {fileID: 8300000, guid: 24362cafc8a5d934fb95ec21b2b5d7e4, type: 3}
+      - {fileID: 8300000, guid: dc6070635df4571488248a6661ca25e3, type: 3}
+      - {fileID: 8300000, guid: 72d90b89bdb78ad498417e5dbd4d28e0, type: 3}
+  - key: Gwen.QMiddleHitMinion
+    eventName: Play_sfx_Gwen_GwenQMiddle_hit_minion
+    sourceBank: gwen_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: dc6070635df4571488248a6661ca25e3, type: 3}
+      - {fileID: 8300000, guid: 24362cafc8a5d934fb95ec21b2b5d7e4, type: 3}
+      - {fileID: 8300000, guid: 72d90b89bdb78ad498417e5dbd4d28e0, type: 3}
+      - {fileID: 8300000, guid: 8866766340a4f9d479046f02e1ac638b, type: 3}
+  - key: Gwen.QMiddleHitCenterMinion
+    eventName: Play_sfx_Gwen_GwenQMiddle_hit_center_minion
+    sourceBank: gwen_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 8866766340a4f9d479046f02e1ac638b, type: 3}
+      - {fileID: 8300000, guid: 24362cafc8a5d934fb95ec21b2b5d7e4, type: 3}
+      - {fileID: 8300000, guid: dc6070635df4571488248a6661ca25e3, type: 3}
+      - {fileID: 8300000, guid: 72d90b89bdb78ad498417e5dbd4d28e0, type: 3}
+  - key: Gwen.QLastHitCenterMinion
+    eventName: Play_sfx_Gwen_GwenQLast_hit_center_minion
+    sourceBank: gwen_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 3b2337ed178c0834291c2b69440f9322, type: 3}
+      - {fileID: 8300000, guid: 9b34cb8f713559243bfc4e3324b3ac7a, type: 3}
+      - {fileID: 8300000, guid: a6ac5105eba2d4b4f910709c13eb9075, type: 3}
+      - {fileID: 8300000, guid: da303727ac580ba4a804a627b34a4318, type: 3}
+    - variants:
+      - {fileID: 8300000, guid: 8866766340a4f9d479046f02e1ac638b, type: 3}
+      - {fileID: 8300000, guid: 24362cafc8a5d934fb95ec21b2b5d7e4, type: 3}
+      - {fileID: 8300000, guid: dc6070635df4571488248a6661ca25e3, type: 3}
+      - {fileID: 8300000, guid: 72d90b89bdb78ad498417e5dbd4d28e0, type: 3}
+  - key: Gwen.QMaxStacks
+    eventName: Play_sfx_Gwen_GwenQ_max_stacks_buffactivate_self
+    sourceBank: gwen_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 44d0afd1751f3274abebceb2dc4e3eb8, type: 3}
+      - {fileID: 8300000, guid: 66b638855954a634892536423af2474a, type: 3}
+      - {fileID: 8300000, guid: 238c721b20df9a74ba5c51b7b5fbb0d0, type: 3}
+  - key: Gwen.RMissile
+    eventName: Play_sfx_Gwen_GwenR_missile
+    sourceBank: gwen_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: d9e956ae18484324098b816f79696ece, type: 3}
+      - {fileID: 8300000, guid: 29bc8464f1a5a194bba5561db07bd0e0, type: 3}
+      - {fileID: 8300000, guid: 143c0bda944b8e94196b1e03ddccdf37, type: 3}
+      - {fileID: 8300000, guid: 0a5fd93b323d4f847b9d25cefbbf5968, type: 3}
+      - {fileID: 8300000, guid: 7dae3fb1671219346aa328e3d3298a05, type: 3}
+  - key: Gwen.R3Missile
+    eventName: Play_sfx_Gwen_GwenR3_missile
+    sourceBank: gwen_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 930d54f466bf4f143a94ea535c5a8d1f, type: 3}
+      - {fileID: 8300000, guid: a00c83f95bc79b443b83704d644524f3, type: 3}
+      - {fileID: 8300000, guid: fe383132c2ff7394db3485c627dd4d12, type: 3}
+      - {fileID: 8300000, guid: 8e041fe75f828eb41a31b4e78e7f51fe, type: 3}
+      - {fileID: 8300000, guid: bda83e56e231c1049a21d3f4cf62fdaa, type: 3}
+  - key: Gwen.RRefresh
+    eventName: Play_sfx_Gwen_GwenR_refresh
+    sourceBank: gwen_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: b5572b4b84846214a84e1396b25cd5c6, type: 3}
+      - {fileID: 8300000, guid: 1d7182d5fee32e640bcd28c8f3928e42, type: 3}
+  - key: Gwen.RBuffEnd
+    eventName: Play_sfx_Gwen_GwenR_buffdeactivate
+    sourceBank: gwen_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: f5f36c3ea273f9440a6fab52d4eefc9b, type: 3}
+  - key: Gwen.Recall
+    eventName: Play_sfx_Gwen_Recall3D_buffactivate_01
+    sourceBank: gwen_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: a2993688185e4e640920b77ea0169ded, type: 3}
+  - key: Gwen.Recall2
+    eventName: Play_sfx_Gwen_Recall3D_buffactivate_02
+    sourceBank: gwen_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: aaaf1788da9cf9c488d669cce5921011, type: 3}
+  - key: Gwen.Recall3
+    eventName: Play_sfx_Gwen_Recall3D_buffactivate_03
+    sourceBank: gwen_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 029290a34b15c8a47b70d32fc0c51af4, type: 3}
+  - key: Gwen.RecallWinddown
+    eventName: Play_sfx_Gwen_Recall3D_winddown
+    sourceBank: gwen_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: b40802782cc9d1f4cb12ef122cc45d4f, type: 3}
+  - key: Gwen.WEvade
+    eventName: Play_sfx_Gwen_GwenW_evade
+    sourceBank: gwen_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: a769fdf5b9dc5564d99c6ac0374c4367, type: 3}
+      - {fileID: 8300000, guid: b12ea75c716db5e44881386432f2621b, type: 3}
+      - {fileID: 8300000, guid: 391a83c850fb3dc44b1b3672cbc2dd34, type: 3}
+  - key: Gwen.WChampEnter
+    eventName: Play_sfx_Gwen_GwenW_champ_enter
+    sourceBank: gwen_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: e4d4f58c0ddf80e43be6b402b6d9e5f2, type: 3}
+      - {fileID: 8300000, guid: fc707f6349136a744a882b2feb3afbfa, type: 3}
+      - {fileID: 8300000, guid: 17fc2819cd46cfb478d75c4b22693612, type: 3}
+  - key: Gwen.WChampExit
+    eventName: Play_sfx_Gwen_GwenW_champ_exit_other
+    sourceBank: gwen_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 39b77851f3f96224b83a500ee9fae5af, type: 3}
+      - {fileID: 8300000, guid: 78893ccd8264df141b5c1b1ffb7b0e75, type: 3}
+      - {fileID: 8300000, guid: 08e1fbbac0a0f04488ad701b61981834, type: 3}
+  - key: Gwen.WBuffActivate
+    eventName: Play_sfx_Gwen_GwenW_buffactivate_Self
+    sourceBank: gwen_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 3a39d0f9fd8f5d542ab08c2e99af48a1, type: 3}
+      - {fileID: 8300000, guid: 007c1912813b7b74fb132ba19760ef62, type: 3}
+      - {fileID: 8300000, guid: 560896ab5aa499d408442705d5fde14b, type: 3}
+    - variants:
+      - {fileID: 8300000, guid: 9b896fc5b2c1a2044a73321ddf7f9cb0, type: 3}
+  - key: Gragas.Attack
+    eventName: Play_sfx_Gragas_GragasBasicAttack_OnCast
+    sourceBank: gragas_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: d0b88518065b5b84a9398e9a760ede30, type: 3}
+      - {fileID: 8300000, guid: d515ffb90c4a3ab4795b5d6dacf67809, type: 3}
+  - key: Gragas.AttackHit
+    eventName: Play_sfx_Gragas_GragasBasicAttack_OnHit
+    sourceBank: gragas_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 1db422a70f6f0a84fac322442301ffeb, type: 3}
+      - {fileID: 8300000, guid: 6c779c859789a554b83584b8d0db4ff3, type: 3}
+      - {fileID: 8300000, guid: 7c7e0994a94c23f4cb7b877cb377e404, type: 3}
+      - {fileID: 8300000, guid: ffc3d4a2fcdc3d3408a69601607e8b2d, type: 3}
+      - {fileID: 8300000, guid: 602c7dd148f7ba948b23010664927765, type: 3}
+      - {fileID: 8300000, guid: 8ac784acf90084847af21b07a3419cd8, type: 3}
+      - {fileID: 8300000, guid: a665201490f00b74c8729ff3dc18e0d8, type: 3}
+      - {fileID: 8300000, guid: 693390e3550a6e74db545a2d5f3dab07, type: 3}
+      - {fileID: 8300000, guid: c169063d3f9b37b42a512cbb8ed776fa, type: 3}
+      - {fileID: 8300000, guid: 4c32e499f3664bb45b659d0d16179e89, type: 3}
+      - {fileID: 8300000, guid: 33021629ede23d04eab1bd0ef4d7cd05, type: 3}
+      - {fileID: 8300000, guid: d5c92129fe7e50c40a1b3d1ed6f7a490, type: 3}
+      - {fileID: 8300000, guid: 91d7c403502cfeb448fb041ac413a6d7, type: 3}
+      - {fileID: 8300000, guid: 9e410d0a564c67c42ba19a29ddf46714, type: 3}
+      - {fileID: 8300000, guid: d70e08f6f2a58f147ae11b1c4faaa54c, type: 3}
+      - {fileID: 8300000, guid: ca70d006d6989e542a955fe1b3859285, type: 3}
+  - key: Gragas.Crit
+    eventName: Play_sfx_Gragas_GragasCritAttack_OnCast
+    sourceBank: gragas_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: d515ffb90c4a3ab4795b5d6dacf67809, type: 3}
+      - {fileID: 8300000, guid: d0b88518065b5b84a9398e9a760ede30, type: 3}
+  - key: Gragas.CritHit
+    eventName: Play_sfx_Gragas_GragasCritAttack_OnHit
+    sourceBank: gragas_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: c169063d3f9b37b42a512cbb8ed776fa, type: 3}
+      - {fileID: 8300000, guid: 4c32e499f3664bb45b659d0d16179e89, type: 3}
+      - {fileID: 8300000, guid: 33021629ede23d04eab1bd0ef4d7cd05, type: 3}
+      - {fileID: 8300000, guid: d5c92129fe7e50c40a1b3d1ed6f7a490, type: 3}
+      - {fileID: 8300000, guid: 91d7c403502cfeb448fb041ac413a6d7, type: 3}
+      - {fileID: 8300000, guid: ca70d006d6989e542a955fe1b3859285, type: 3}
+      - {fileID: 8300000, guid: d70e08f6f2a58f147ae11b1c4faaa54c, type: 3}
+      - {fileID: 8300000, guid: 9e410d0a564c67c42ba19a29ddf46714, type: 3}
+      - {fileID: 8300000, guid: 1db422a70f6f0a84fac322442301ffeb, type: 3}
+      - {fileID: 8300000, guid: 6c779c859789a554b83584b8d0db4ff3, type: 3}
+      - {fileID: 8300000, guid: ffc3d4a2fcdc3d3408a69601607e8b2d, type: 3}
+      - {fileID: 8300000, guid: 7c7e0994a94c23f4cb7b877cb377e404, type: 3}
+      - {fileID: 8300000, guid: a665201490f00b74c8729ff3dc18e0d8, type: 3}
+      - {fileID: 8300000, guid: 8ac784acf90084847af21b07a3419cd8, type: 3}
+      - {fileID: 8300000, guid: 693390e3550a6e74db545a2d5f3dab07, type: 3}
+      - {fileID: 8300000, guid: 602c7dd148f7ba948b23010664927765, type: 3}
+  - key: Gragas.QCast
+    eventName: Play_sfx_Gragas_GragasQ_OnCast
+    sourceBank: gragas_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: b76c7260da8c27f4089891c87983d828, type: 3}
+      - {fileID: 8300000, guid: 3a91faa9b07744e4eb6192005ed34788, type: 3}
+      - {fileID: 8300000, guid: 6f07a9e648018434d883cd0162493d0d, type: 3}
+      - {fileID: 8300000, guid: 7c0f1c9c1000d3946b9437d28b1ccbe1, type: 3}
+  - key: Gragas.QMissile
+    eventName: Play_sfx_Gragas_GragasQMissile_foam
+    sourceBank: gragas_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 1e64de84148a7394299a8e3dd0bd35d3, type: 3}
+      - {fileID: 8300000, guid: c7d19b2aeee5b8e44a9829298cd0f2e0, type: 3}
+      - {fileID: 8300000, guid: 307d9b3569d2d3a4ab7b7a8ab04e1654, type: 3}
+      - {fileID: 8300000, guid: 944824f87d5f36141b41e4d5957469bb, type: 3}
+  - key: Gragas.QExplode
+    eventName: Play_sfx_Gragas_GragasQMissile_boom
+    sourceBank: gragas_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 69c1a91cc1495474b99aef873ea59fc5, type: 3}
+      - {fileID: 8300000, guid: 1aa34efb032a26544be4f3ace8c7d569, type: 3}
+      - {fileID: 8300000, guid: d5dd3b7b8e5af3844b898603fe2cf45b, type: 3}
+      - {fileID: 8300000, guid: 439d4bca2c52dd044bd262c573b80881, type: 3}
+  - key: Gragas.WCast
+    eventName: Play_sfx_Gragas_GragasW_OnCast
+    sourceBank: gragas_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: dfcb0466c9274854bb639a320ce12f8b, type: 3}
+      - {fileID: 8300000, guid: e6898b41fa6aee24ca75b8f39dd1bd7a, type: 3}
+      - {fileID: 8300000, guid: 3902b8c2ec1e3924faf345ef22abe114, type: 3}
+      - {fileID: 8300000, guid: ad12d0aa136d80148ad82077d53e60a8, type: 3}
+  - key: Gragas.WEmpoweredHit
+    eventName: Play_sfx_Gragas_GragasWAttack_OnHit
+    sourceBank: gragas_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 1db422a70f6f0a84fac322442301ffeb, type: 3}
+      - {fileID: 8300000, guid: 6c779c859789a554b83584b8d0db4ff3, type: 3}
+      - {fileID: 8300000, guid: 7c7e0994a94c23f4cb7b877cb377e404, type: 3}
+      - {fileID: 8300000, guid: ffc3d4a2fcdc3d3408a69601607e8b2d, type: 3}
+      - {fileID: 8300000, guid: 602c7dd148f7ba948b23010664927765, type: 3}
+      - {fileID: 8300000, guid: 8ac784acf90084847af21b07a3419cd8, type: 3}
+      - {fileID: 8300000, guid: a665201490f00b74c8729ff3dc18e0d8, type: 3}
+      - {fileID: 8300000, guid: 693390e3550a6e74db545a2d5f3dab07, type: 3}
+      - {fileID: 8300000, guid: c169063d3f9b37b42a512cbb8ed776fa, type: 3}
+      - {fileID: 8300000, guid: 4c32e499f3664bb45b659d0d16179e89, type: 3}
+      - {fileID: 8300000, guid: 33021629ede23d04eab1bd0ef4d7cd05, type: 3}
+      - {fileID: 8300000, guid: d5c92129fe7e50c40a1b3d1ed6f7a490, type: 3}
+      - {fileID: 8300000, guid: 91d7c403502cfeb448fb041ac413a6d7, type: 3}
+      - {fileID: 8300000, guid: 9e410d0a564c67c42ba19a29ddf46714, type: 3}
+      - {fileID: 8300000, guid: d70e08f6f2a58f147ae11b1c4faaa54c, type: 3}
+      - {fileID: 8300000, guid: ca70d006d6989e542a955fe1b3859285, type: 3}
+  - key: Gragas.WEmpoweredCast
+    eventName: Play_sfx_Gragas_GragasWAttack_OnCast
+    sourceBank: gragas_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: d0b88518065b5b84a9398e9a760ede30, type: 3}
+      - {fileID: 8300000, guid: d515ffb90c4a3ab4795b5d6dacf67809, type: 3}
+  - key: Gragas.WBuffActivate
+    eventName: Play_sfx_Gragas_GragasWSelf_OnBuffActivate
+    sourceBank: gragas_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: e2ef7407555f43d4ab7c5782f304081c, type: 3}
+      - {fileID: 8300000, guid: c3b191da2018247478851dd668eb0d1e, type: 3}
+      - {fileID: 8300000, guid: e8207efa6d712014bb84b20ee9ea8546, type: 3}
+      - {fileID: 8300000, guid: 976bd51fe4fb1ab4ab4d63e575524700, type: 3}
+  - key: Gragas.ECast
+    eventName: Play_sfx_Gragas_GragasE_OnCast
+    sourceBank: gragas_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 7e3699f0dd0e9884fbb390287e41d555, type: 3}
+  - key: Gragas.EHit
+    eventName: Play_sfx_Gragas_GragasE_hit
+    sourceBank: gragas_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 483eee336554c0d41bb6a4159b30bc31, type: 3}
+      - {fileID: 8300000, guid: 3d4544b511ebf81488a11bf57ec3336d, type: 3}
+      - {fileID: 8300000, guid: 343f32ac79c3bd048aa9e757d32b9f00, type: 3}
+      - {fileID: 8300000, guid: eefdcc39220fe3940a8c8b4275f84e99, type: 3}
+  - key: Gragas.RCast
+    eventName: Play_sfx_Gragas_GragasR_OnCast
+    sourceBank: gragas_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 194fbcba973f4704aa504395e5db5b78, type: 3}
+  - key: Gragas.RExplode
+    eventName: Play_sfx_Gragas_GragasR_boom
+    sourceBank: gragas_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 122cbf886209d42468574df68ed59b7a, type: 3}
+      - {fileID: 8300000, guid: b084db6ee90435642ae6f405170dcb0d, type: 3}
+      - {fileID: 8300000, guid: b3be6fe35cd177749bfcb02cfd9af80c, type: 3}
+      - {fileID: 8300000, guid: 7bfc3c74cb035c346aa9e5d83454785e, type: 3}
+  - key: Gragas.VOMove
+    eventName: Play_vo_Gragas_Move2DStandard
+    sourceBank: gragas_base_vo_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: f43fa45a3db6f3541a52ec86f706dd2f, type: 3}
+      - {fileID: 8300000, guid: 4a81f6874a7e546488e85d6685bf749a, type: 3}
+      - {fileID: 8300000, guid: 3621e0f7174a4b8489a801067766c8a1, type: 3}
+      - {fileID: 8300000, guid: 30ff4a27e504bba4fa86315b1559a7b1, type: 3}
+      - {fileID: 8300000, guid: bbb495682339023418ebf2594eedce6b, type: 3}
+      - {fileID: 8300000, guid: cd73f3693f83efd489d28c0eed682d80, type: 3}
+      - {fileID: 8300000, guid: d8f0f6a8ffaefc040b39836d5168c440, type: 3}
+  - key: Gragas.VOAttack
+    eventName: Play_vo_Gragas_Attack2DGeneral
+    sourceBank: gragas_base_vo_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 0b15b83e9acd48948b2b9263c770f0a6, type: 3}
+      - {fileID: 8300000, guid: f645a9dc4af7eb8458d15a7f943f464c, type: 3}
+      - {fileID: 8300000, guid: 789f6afe776414e489718bbc1aa9666c, type: 3}
+      - {fileID: 8300000, guid: 219dd49c5dbce744cbae0521b8ecc738, type: 3}
+      - {fileID: 8300000, guid: 5b7b451f0c7534f40b8f39f9cd41277a, type: 3}
+      - {fileID: 8300000, guid: 59c8b7eb7eb533d4199feab35f9ac67c, type: 3}
+      - {fileID: 8300000, guid: 9651dde8e99e9cb4885c5407a481d428, type: 3}
+  - key: Gragas.VOQ
+    eventName: Play_vo_Gragas_GragasQ_cast3D
+    sourceBank: gragas_base_vo_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: c33c09b59b92c2141bd74b08e57281ff, type: 3}
+      - {fileID: 8300000, guid: df9a0103148856f45874e79460a6ba71, type: 3}
+      - {fileID: 8300000, guid: e255eaeeaad94d0468a584bbeb40a369, type: 3}
+      - {fileID: 8300000, guid: ca4807f7156e38a489d2073feed1cf43, type: 3}
+  - key: Gragas.VOW
+    eventName: Play_vo_Gragas_GragasW_OnCast
+    sourceBank: gragas_base_vo_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 725965c320106e3499d635a90b5594c6, type: 3}
+      - {fileID: 8300000, guid: b783f97c48d19574aa4f550219b04546, type: 3}
+      - {fileID: 8300000, guid: 9bcab764842ec61469e00a0ed35cab30, type: 3}
+      - {fileID: 8300000, guid: 5232a89979c43e046b64088ff7456f28, type: 3}
+  - key: Gragas.VOE
+    eventName: Play_vo_Gragas_GragasE_cast3D
+    sourceBank: gragas_base_vo_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: df9a0103148856f45874e79460a6ba71, type: 3}
+      - {fileID: 8300000, guid: e255eaeeaad94d0468a584bbeb40a369, type: 3}
+      - {fileID: 8300000, guid: c33c09b59b92c2141bd74b08e57281ff, type: 3}
+      - {fileID: 8300000, guid: 6764df967a4d4fe4c976fb1c1a71047b, type: 3}
+      - {fileID: 8300000, guid: b33f3e13772865a468c814e9aab9be44, type: 3}
+      - {fileID: 8300000, guid: ca4807f7156e38a489d2073feed1cf43, type: 3}
+  - key: Gragas.VOR
+    eventName: Play_vo_Gragas_GragasR_cast3D
+    sourceBank: gragas_base_vo_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: c33c09b59b92c2141bd74b08e57281ff, type: 3}
+      - {fileID: 8300000, guid: e255eaeeaad94d0468a584bbeb40a369, type: 3}
+      - {fileID: 8300000, guid: 6764df967a4d4fe4c976fb1c1a71047b, type: 3}
+      - {fileID: 8300000, guid: b33f3e13772865a468c814e9aab9be44, type: 3}
+      - {fileID: 8300000, guid: df9a0103148856f45874e79460a6ba71, type: 3}
+      - {fileID: 8300000, guid: ca4807f7156e38a489d2073feed1cf43, type: 3}
+  - key: Gragas.VODeath
+    eventName: Play_vo_Gragas_Death3D
+    sourceBank: gragas_base_vo_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: e1c38465fb1e5a64ab0833dd038ea78c, type: 3}
+      - {fileID: 8300000, guid: 1881287b0b1647a4780f72a90988f3ea, type: 3}
+      - {fileID: 8300000, guid: d5aaea53a0c664f4d9f01e1ef859805e, type: 3}
+      - {fileID: 8300000, guid: f926d6559f6c067469768941959fb96f, type: 3}
+  - key: Gragas.VOTaunt
+    eventName: Play_vo_Gragas_Taunt3DGeneral
+    sourceBank: gragas_base_vo_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 7e26fe7496e7d154c9c56f244c1ff9dc, type: 3}
+  - key: Gragas.VOJoke
+    eventName: Play_vo_Gragas_Joke3DGeneral
+    sourceBank: gragas_base_vo_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 164bc8ac2302bc249b6ce238c72ed6a5, type: 3}
+  - key: Gragas.VOLaugh
+    eventName: Play_vo_Gragas_Laugh3DGeneral
+    sourceBank: gragas_base_vo_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 24c2eee5a9d605147b1ef8d973103690, type: 3}
+      - {fileID: 8300000, guid: a53cac3779a4d66458e53826564f82ee, type: 3}
+      - {fileID: 8300000, guid: caf0a9499c1107b45a4645be092bd906, type: 3}
+      - {fileID: 8300000, guid: 0b314e4e617ec88469e38b9c6931c76e, type: 3}
+  - key: Gragas.VOBasicAttack
+    eventName: Play_vo_Gragas_GragasBasicAttack_cast3D
+    sourceBank: gragas_base_vo_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: c33c09b59b92c2141bd74b08e57281ff, type: 3}
+      - {fileID: 8300000, guid: df9a0103148856f45874e79460a6ba71, type: 3}
+      - {fileID: 8300000, guid: e255eaeeaad94d0468a584bbeb40a369, type: 3}
+      - {fileID: 8300000, guid: ca4807f7156e38a489d2073feed1cf43, type: 3}

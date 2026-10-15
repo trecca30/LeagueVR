@@ -82,6 +82,11 @@ namespace LeagueVR.Champions
             { ChampionId.Zoe, new[] { "Zoe_Base_Mat", "Zoe_Base_Hair_Mat" } },
             { ChampionId.Pantheon, new[] { "Pantheon_Base_Mat", "L_Arm", "Cape", "Spear", "Shield", "Head", "Helmet" } },
             { ChampionId.Zeri, new[] { "Body", "Shoes", "Gun", "Hair", "HairSpike" } },
+            // Gragas is one material: the whole model, keg included, casts the shadow.
+            { ChampionId.Gragas, new[] { "MAT_gragas" } },
+            { ChampionId.Brand, new[] { "riotRig_lambert4" } },
+            // Yunara's prayer beads are left out of her first-person body but belong to her shadow.
+            { ChampionId.Yunara, new[] { "Body", "Pants", "Dragon_Head", "Tail", "Bead_1", "Bead_2", "Bead_3", "Bead_4", "Bead_5", "Bead_6", "Bead_7", "Bead_8" } },
         };
 
         [Tooltip("Angle between the controller handle and a held weapon: pitch, yaw, roll. Positive pitch lowers the weapon toward the pointing direction.")]
@@ -203,8 +208,12 @@ namespace LeagueVR.Champions
             }
         }
 
-        /// <summary>Copies the prop's triangles out of the skinned mesh into the prop bone's own space.</summary>
-        static Mesh ExtractPropMesh(SkinnedMeshRenderer skin, Transform bone, string materialSuffix, out Material material)
+        /// <summary>
+        /// Copies the prop's triangles out of the skinned mesh into the prop bone's own space: by material when the prop
+        /// has its own (Pantheon's spear, Zeri's gun), otherwise by the vertices that follow the prop's bones (Gragas's
+        /// keg shares the body's only material).
+        /// </summary>
+        internal static Mesh ExtractPropMesh(SkinnedMeshRenderer skin, Transform bone, string materialSuffix, out Material material)
         {
             material = null;
             var source = skin.sharedMesh;
@@ -221,22 +230,42 @@ namespace LeagueVR.Champions
             var outUvs = new List<Vector2>();
             var triangles = new List<int>();
             var materials = skin.sharedMaterials;
+            bool byBone = string.IsNullOrEmpty(materialSuffix);
+            var propBones = new HashSet<int>();
+            for (int b = 0; b < skin.bones.Length; b++)
+                if (skin.bones[b] && (skin.bones[b] == bone || skin.bones[b].IsChildOf(bone)))
+                    propBones.Add(b);
+            var weights = byBone ? source.boneWeights : null;
+            bool OnProp(int v)
+            {
+                var w = weights[v];
+                float sum = (propBones.Contains(w.boneIndex0) ? w.weight0 : 0) + (propBones.Contains(w.boneIndex1) ? w.weight1 : 0)
+                    + (propBones.Contains(w.boneIndex2) ? w.weight2 : 0) + (propBones.Contains(w.boneIndex3) ? w.weight3 : 0);
+                return sum >= .5f;
+            }
             for (int s = 0; s < source.subMeshCount; s++)
             {
-                if (s >= materials.Length || !materials[s] || !materials[s].name.EndsWith(materialSuffix, StringComparison.Ordinal))
+                if (s >= materials.Length || !materials[s] || (!byBone && !materials[s].name.EndsWith(materialSuffix, StringComparison.Ordinal)))
                     continue;
-                material = materials[s];
-                foreach (int index in source.GetTriangles(s))
+                var tris = source.GetTriangles(s);
+                for (int t = 0; t < tris.Length; t += 3)
                 {
-                    if (!map.TryGetValue(index, out int mapped))
+                    if (byBone && !(OnProp(tris[t]) && OnProp(tris[t + 1]) && OnProp(tris[t + 2])))
+                        continue;
+                    material = materials[s];
+                    for (int k = 0; k < 3; k++)
                     {
-                        mapped = outVertices.Count;
-                        map[index] = mapped;
-                        outVertices.Add(bind.MultiplyPoint3x4(vertices[index]));
-                        outNormals.Add(normals.Length > index ? bind.MultiplyVector(normals[index]).normalized : Vector3.up);
-                        outUvs.Add(uvs.Length > index ? uvs[index] : Vector2.zero);
+                        int index = tris[t + k];
+                        if (!map.TryGetValue(index, out int mapped))
+                        {
+                            mapped = outVertices.Count;
+                            map[index] = mapped;
+                            outVertices.Add(bind.MultiplyPoint3x4(vertices[index]));
+                            outNormals.Add(normals.Length > index ? bind.MultiplyVector(normals[index]).normalized : Vector3.up);
+                            outUvs.Add(uvs.Length > index ? uvs[index] : Vector2.zero);
+                        }
+                        triangles.Add(mapped);
                     }
-                    triangles.Add(mapped);
                 }
             }
             if (triangles.Count == 0)

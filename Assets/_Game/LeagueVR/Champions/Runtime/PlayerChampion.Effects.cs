@@ -96,5 +96,38 @@ namespace LeagueVR.Champions
         }
 
         void LateUpdate() => UpdateBlink();
+
+        // ---------- Rush vignette ----------
+
+        /// <summary>The vignette's request while a charge carries the view (see <see cref="ComfortSettings.ConfigureRush"/>).</summary>
+        sealed class Rush : UnityEngine.XR.Interaction.Toolkit.Locomotion.Comfort.ITunnelingVignetteProvider
+        {
+            public UnityEngine.XR.Interaction.Toolkit.Locomotion.Comfort.VignetteParameters vignetteParameters { get; } = new();
+        }
+
+        readonly Rush rush = new();
+        bool rushing;
+
+        /// <summary>
+        /// Narrows the view while an ability carries the player along the ground (Gragas's Body Slam), the way the stick's
+        /// vignette does while walking; nothing when the comfort vignette is off. Call again with false when it ends.
+        /// </summary>
+        public void RushVignette(bool on)
+        {
+            if (on == rushing)
+                return;
+            var controller = origin ? origin.GetComponentInChildren<UnityEngine.XR.Interaction.Toolkit.Locomotion.Comfort.TunnelingVignetteController>(true) : null;
+            if (on)
+            {
+                if (!controller || !ComfortSettings.ConfigureRush(rush.vignetteParameters))
+                    return;
+                rushing = true;
+                controller.BeginTunnelingVignette(rush);
+                return;
+            }
+            rushing = false;
+            if (controller)
+                controller.EndTunnelingVignette(rush);
+        }
     }
 }

@@ -1,0 +1,106 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1507f9c1fc5ee634f85448889214c929, type: 3}
+  m_Name: Gragas
+  m_EditorClassIdentifier: Assembly-CSharp::LeagueVR.Champions.ChampionDefinition
+  id: 8
+  title: the Rabble Rouser
+  role: Fighter / Mage
+  passiveName: Happy Hour
+  passiveDescription: After each ability Gragas takes a swig from his keg, healing 5.5% of his maximum health (every 12 / 10 / 8 / 6 seconds by level).
+  patch: 16.20.1
+  portrait: {fileID: 2800000, guid: c678ee98b2e54014b1333c3fc133b5ea, type: 3}
+  passiveIcon: {fileID: 2800000, guid: 525cfc3cecaa43e19db6e0c312d3012a, type: 3}
+  spells:
+  - name: Barrel Roll
+    vrDescription: 'B: hold and point your right hand at the ground (the ring shows where the barrel lands), release to roll it there. It ferments for 2 seconds, hitting harder and slowing more; press B again to burst it, or it bursts 4 seconds after it stops.'
+    icon: {fileID: 2800000, guid: 50283cd61f294ef7bec63c2b7d1b14c5, type: 3}
+    cooldowns:
+    - 10
+    - 9
+    - 8
+    - 7
+    - 6
+    costs:
+    - 80
+    - 80
+    - 80
+    - 80
+    - 80
+  - name: Drunken Rage
+    vrDescription: 'X: drink from your keg for 0.75 seconds (you can keep walking). You take less damage for 2.5 seconds, and your next keg hit within 5 seconds splashes around the target for bonus magic damage plus 7% of its maximum health.'
+    icon: {fileID: 2800000, guid: fb658cada4f94175bbd910ff346cd190, type: 3}
+    cooldowns:
+    - 5
+    - 5
+    - 5
+    - 5
+    - 5
+    costs:
+    - 30
+    - 30
+    - 30
+    - 30
+    - 30
+  - name: Body Slam
+    vrDescription: 'A: hold to see the charge and the first enemy it meets, release to charge where you walk (or where your right hand points). Enemies around the first one hit are knocked up and stunned for 1 second; a hit takes 40% off the cooldown.'
+    icon: {fileID: 2800000, guid: 0f02d325699c407095147464426249e0, type: 3}
+    cooldowns:
+    - 14
+    - 13.5
+    - 13
+    - 12.5
+    - 12
+    costs:
+    - 50
+    - 50
+    - 50
+    - 50
+    - 50
+  - name: Explosive Cask
+    vrDescription: 'Left trigger: hold and point your left hand where the cask should land (the ring shows the blast), release to hurl it. It bursts, knocking enemies away from its centre.'
+    icon: {fileID: 2800000, guid: b08778687dbf4ff3890cf2f59c444a2b, type: 3}
+    cooldowns:
+    - 100
+    - 85
+    - 70
+    costs:
+    - 100
+    - 100
+    - 100
+  model: {fileID: 661795807306025728, guid: f967d84dcda231e41a2bfc592192e7ef, type: 3}
+  firstPerson: {fileID: 360755282943199767, guid: 8ba08510424a61940a3bb39d94e6715d, type: 3}
+  idle: {fileID: -3020990790245188044, guid: 5ded38b5f0d84beb9744ee5f0aa95582, type: 3}
+  color: {r: 0.95, g: 0.55, b: 0.95, a: 1}
+  health: 640
+  healthGrowth: 115
+  armor: 38
+  armorGrowth: 5
+  magicResist: 32
+  magicResistGrowth: 2.05
+  mana: 400
+  manaGrowth: 47
+  attackDamage: 64
+  attackGrowth: 3.5
+  attackSpeed: 0.675
+  attackSpeedGrowth: 2.05
+  moveSpeed: 330
+  healthRegen: 5.5
+  manaRegen: 6
+  healthRegenGrowth: 0.5
+  manaRegenGrowth: 0.8
+  attackReach: 2
+  bodyHeight: 1.75
+  kitTuning: {fileID: 0}
+  kitPrefab: {fileID: 0}
+  kitMaterial: {fileID: 0}
+  skillOrder: QEW
