@@ -100,7 +100,13 @@ namespace LeagueVR.Champions
         /// <summary>Skip 'n Slash: both hands ready on the scissors for the dash.</summary>
         public void StartDash(float seconds, Vector3 toward) => Begin(Move.Dash, seconds, toward);
 
-        public void StartTwinSnip(float seconds, Vector3 toward) => Begin(Move.TwinSnip, seconds, toward);
+        public void StartTwinSnip(float seconds, Vector3 toward, bool fromDash = false)
+        {
+            twinFromDash = fromDash;
+            Begin(Move.TwinSnip, seconds, toward);
+        }
+
+        bool twinFromDash;
 
         /// <summary>
         /// Needlework: the scissors snip the thread as the needles go; for a plain release (<paramref name="flick"/>) the left
@@ -194,10 +200,10 @@ namespace LeagueVR.Champions
         // Wind-up, strike and follow-through of each basic attack (fist from the eyes, where the blades point, the blade
         // opening in degrees): read off League's Attack1-3 and Crit, laid out to stay within reach and keep the blades
         // under the eye line. The blades snap shut on the strike.
-        static readonly Key[] ThrustKeys = { new(.22f, .06f, -.42f, 5, 15, 0, 24), new(.12f, .32f, -.36f, 0, 4, 0, 0), new(.12f, .28f, -.38f, 0, 6, 0, 8) };
-        static readonly Key[] SweepKeys = { new(.36f, .18f, -.38f, 65, 10, 90, 24), new(.08f, .32f, -.38f, 0, 6, 90, 0), new(-.12f, .28f, -.4f, -45, 8, 90, 6) };
-        static readonly Key[] BackhandKeys = { new(-.05f, .24f, -.46f, -55, 12, 90, 24), new(.1f, .32f, -.42f, 0, 6, 90, 0), new(.3f, .2f, -.42f, 45, 8, 90, 6) };
-        static readonly Key[] LungeKeys = { new(.2f, .04f, -.4f, 5, 20, 0, 30), new(.1f, .36f, -.34f, 0, 2, 0, 0), new(.1f, .32f, -.36f, 0, 4, 0, 20) };
+        static readonly Key[] ThrustKeys = { new(.22f, .06f, -.42f, 5, 15, 0, 24), new(.12f, .40f, -.8f, 0, 4, 0, 0), new(.12f, .28f, -.38f, 0, 6, 0, 8) };
+        static readonly Key[] SweepKeys = { new(.36f, .18f, -.38f, 65, 10, 90, 24), new(.08f, .40f, -.8f, 0, 6, 90, 0), new(-.12f, .28f, -.4f, -45, 8, 90, 6) };
+        static readonly Key[] BackhandKeys = { new(-.05f, .24f, -.46f, -55, 12, 90, 24), new(.1f, .40f, -.8f, 0, 6, 90, 0), new(.3f, .2f, -.42f, 45, 8, 90, 6) };
+        static readonly Key[] LungeKeys = { new(.2f, .04f, -.4f, 5, 20, 0, 30), new(.1f, .42f, -.8f, 0, 2, 0, 0), new(.1f, .32f, -.36f, 0, 4, 0, 20) };
 
         Key[] Keys(Move m) => m switch
         {
@@ -289,7 +295,7 @@ namespace LeagueVR.Champions
         /// <summary>Skip 'n Slash: both hands on the scissors, held open and ready for the slash at the end of the dash.</summary>
         void Dash(float clock, out Pose pose, out float open, out float hands)
         {
-            float w = Smooth(Mathf.Clamp01(clock / .08f));
+            float w = Smooth(Mathf.Clamp01(clock / .08f)) * (1 - Smooth(Mathf.Clamp01((clock - (duration - .08f)) / .08f)));
             hands = w;
             pose = Blend(Controller(), TwoHandHold(.04f), w);
             open = 26 * w;
@@ -299,11 +305,11 @@ namespace LeagueVR.Champions
         void TwinSnip(float clock, out Pose pose, out float open, out float hands)
         {
             float p = clock / duration;
-            float w = p < .2f ? Smooth(p / .2f) : p > .8f ? 1 - Smooth((p - .8f) / .2f) : 1;
+            float w = p < .2f && !twinFromDash ? Smooth(p / .2f) : p > .8f ? 1 - Smooth((p - .8f) / .2f) : 1;
             hands = w;
-            float push = .1f * Smooth(Mathf.Clamp01((p - .3f) / .2f));
+            float push = .04f + .06f * Smooth(Mathf.Clamp01((p - .3f) / .2f));
             pose = Blend(Controller(), TwoHandHold(push), w);
-            open = p < TwinStrike ? 28 * Smooth(Mathf.Clamp01(p / .3f)) * (1 - Smooth(Mathf.Clamp01((p - .4f) / .1f))) : 0;
+            open = p < TwinStrike ? 28 * (twinFromDash ? 1 : Smooth(Mathf.Clamp01(p / .3f))) * (1 - Smooth(Mathf.Clamp01((p - .4f) / .1f))) : 0;
         }
 
         // ---------- What the avatar asks for each frame ----------
@@ -342,9 +348,10 @@ namespace LeagueVR.Champions
                 float p = Progress;
                 return p >= 0 && move switch
                 {
-                    Move.Thrust or Move.Sweep or Move.Backhand or Move.Lunge => p > .3f && p < .72f,
+                    Move.Thrust or Move.Sweep or Move.Backhand or Move.Lunge => p > .35f && p < .6f,
                     Move.Mist => p > .15f && p < .75f,
-                    Move.Snip or Move.TwinSnip => true,
+                    Move.TwinSnip => p > .2f && p < .6f,
+                    Move.Snip => false,
                     _ => false,
                 };
             }
@@ -373,6 +380,21 @@ namespace LeagueVR.Champions
             }
         }
 
+        /// <summary>Set by the kit while the needles are readied: the left palm rises to chest height in front.</summary>
+        public System.Func<bool> Readying { get; set; }
+        float readyW;
+
+        /// <summary>Measures where the left palm sits on its controller (called when Needlework starts being held).</summary>
+        public void MeasurePalm() => MeasureLeftPalm();
+
+        Pose ReadyPalm(Pose grip, float w)
+        {
+            forward = player.PlanarDirection(player.head.transform.forward);
+            Vector3 palm = At(-.2f, .3f, -.2f);
+            var turn = Quaternion.LookRotation(forward, -Right);
+            return new Pose(Vector3.Lerp(grip.position, palm - turn * leftPalmInGrip, w), Quaternion.Slerp(grip.rotation, turn, w));
+        }
+
         /// <summary>
         /// The grip each arm reaches for: the right hand follows its handle as the blade turns, the left takes blade B's
         /// handle for the two-handed moves (and opens upward for the mist, or flicks the needles); otherwise the controllers.
@@ -380,6 +402,12 @@ namespace LeagueVR.Champions
         public Pose Grip(bool left, Pose grip)
         {
             float clock = Clock;
+            if (left && clock < 0 && avatar && !player.HandStowed(true))
+            {
+                readyW = Mathf.MoveTowards(readyW, Readying != null && Readying() ? 1 : 0, Time.deltaTime * 4);
+                if (readyW > 0)
+                    return ReadyPalm(grip, Smooth(readyW));
+            }
             if (clock < 0 || !avatar || player.HandStowed(false) || (left && player.HandStowed(true)))
                 return grip;
             if (!left)

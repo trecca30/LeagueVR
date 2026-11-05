@@ -310,7 +310,7 @@ namespace LeagueVR.Champions
                 // A vault's arc starts right before the eyes and lands up to 12 m away: thin near, bold far.
                 bool vault = look == ZeriKit.SurgeLook.Vault;
                 surgePath.startWidth = vault ? .015f : .04f;
-                surgePath.endWidth = vault ? .09f : .04f;
+                surgePath.endWidth = vault ? .05f : .04f;
                 surgeRing.startWidth = surgeRing.endWidth = vault ? .08f : .05f;
             }
             // From just ahead of the feet (followed every frame) to the planned landing, arcing like the vault itself.
@@ -345,7 +345,7 @@ namespace LeagueVR.Champions
             surgeHead.SetPosition(0, head - plan.direction * .5f + across * .38f);
             surgeHead.SetPosition(1, head);
             surgeHead.SetPosition(2, head - plan.direction * .5f - across * .38f);
-            float radius = look == ZeriKit.SurgeLook.Vault ? .85f : look == ZeriKit.SurgeLook.Dash ? .55f : .35f;
+            float radius = look == ZeriKit.SurgeLook.Vault ? 1.05f : look == ZeriKit.SurgeLook.Dash ? .55f : .35f;
             float pulse = 1 + Mathf.Sin(Time.time * 8) * .08f;
             AbilityFx.SetCircle(surgeRing, plan.landing + Vector3.up * .06f, radius * pulse);
         }
@@ -559,9 +559,9 @@ namespace LeagueVR.Champions
                 Vector3 dir = throwDirection;
                 // Drawn back a hand's width from where the player holds it, then thrust out along the palm's own aim line,
                 // so the pulse leaves exactly where the player aimed from.
-                wind = hand - dir * .12f;
-                snap = hand + dir * .22f;
-                follow = hand + dir * .16f - up * .03f;
+                wind = hand - dir * .25f;
+                snap = hand + dir * .3f;
+                follow = hand + dir * .2f - up * .03f;
                 windTurn = snapTurn = LeftTurn(dir, up);
                 tWind = .06f;
                 tSnap = .12f;
@@ -1298,7 +1298,7 @@ namespace LeagueVR.Champions
                 float along = Vector3.Dot(rel, direction);
                 if (along < -Radius || along > bestAlong)
                     continue;
-                if ((rel - direction * along).magnitude <= Radius + .9f)
+                if ((rel - direction * along).magnitude <= .25f + .3f * transform.localScale.x)
                 {
                     best = target;
                     bestAlong = along;

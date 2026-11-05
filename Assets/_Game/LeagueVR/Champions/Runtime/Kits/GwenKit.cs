@@ -40,6 +40,8 @@ namespace LeagueVR.Champions
         public int QStacks { get; private set; }
         public int RStage { get; private set; }
         public int NeedlesReady { get; private set; }
+        /// <summary>The needles the hand shows: a plain release keeps them in the fingers until the flick.</summary>
+        public int NeedlesShown => volleyAt >= 0 ? volleyCount : NeedlesReady;
         public Vector3 MistCenter { get; private set; }
         public bool MistActive => Time.time < mistUntil && Health.IsAlive;
         public float MistRemaining => Mathf.Max(0, mistUntil - Time.time);
@@ -62,6 +64,7 @@ namespace LeagueVR.Champions
 
         /// <summary>True while Skip 'n Slash carries her along the ground.</summary>
         public bool Dashing { get; private set; }
+        bool slashFromDash;
 
         /// <summary>Skip 'n Slash's dash: League's dash animation lasts 0.27 s.</summary>
         const float DashTime = .25f;
@@ -240,6 +243,8 @@ namespace LeagueVR.Champions
         /// </summary>
         public override void BasicAttack(Vector3 origin, Vector3 direction)
         {
+            bool fromDash = slashFromDash;
+            slashFromDash = false;
             var targets = Player.SweepTargets(origin, direction, Player.AttackReach, .45f);
             if (targets.Count == 0)
                 return;
@@ -251,7 +256,7 @@ namespace LeagueVR.Champions
             else if (Empowered)
             {
                 seconds = Mathf.Clamp(Player.AttackInterval * .55f, .26f, .4f);
-                moves.StartTwinSnip(seconds, toward);
+                moves.StartTwinSnip(seconds, toward, fromDash);
                 seconds *= GwenMoves.TwinStrike;
             }
             else
@@ -270,6 +275,19 @@ namespace LeagueVR.Champions
         }
 
         /// <summary>
+        /// True when the blade's edge passes within reach of the target, in three dimensions: the blade stops about 1.1 m
+        /// from the eyes, so a target further off than that is not hit by a blade that cannot reach it.
+        /// </summary>
+        bool BladeReaches(Combatant target)
+        {
+            if (!WeaponEdge(out var from, out var to))
+                return Geo.FlatDistance(target.transform.position, Player.Feet) <= Player.AttackReach;
+            Vector3 p = target.AimPosition, ab = to - from;
+            float t = ab.sqrMagnitude > 1e-6f ? Mathf.Clamp01(Vector3.Dot(p - from, ab) / ab.sqrMagnitude) : 0;
+            return Vector3.Distance(p, from + ab * t) <= .6f;
+        }
+
+        /// <summary>
         /// The blades snap shut: the attack hits its target if it is still within reach (+1 m: it may have stepped back).
         /// A miss spends nothing, so the next attack may start at once.
         /// </summary>
@@ -278,7 +296,7 @@ namespace LeagueVR.Champions
             swingPending = false;
             var target = swingTarget;
             swingTarget = null;
-            if (!target || !target.IsAlive || Geo.FlatDistance(target.transform.position, Player.Feet) > Player.AttackReach + 1)
+            if (!target || !target.IsAlive || !BladeReaches(target))
             {
                 Player.ResetAttackTimer();
                 return;
@@ -412,10 +430,10 @@ namespace LeagueVR.Champions
         {
             Vector3 middle = Player.Feet + forward * (t.qRange * .5f);
             float heading = Quaternion.LookRotation(forward).eulerAngles.y;
-            var scratch = ZeriSprite.Create(Player, middle + Vector3.up * .05f, Fx("GwenFx_Scratch"), new Color(.55f, 1f, 1f, .9f), t.qRange * .85f, t.qRange, .45f, flat: true);
+            var scratch = ZeriSprite.Create(Player, middle + Vector3.up * .05f, Fx("GwenFx_Scratch"), new Color(.55f, 1f, 1f, .9f), t.qRange * .5f, t.qRange * .6f, .45f, flat: true);
             scratch.Roll = heading;
             if (final)
-                ZeriSprite.Create(Player, middle + Vector3.up * .9f, Fx("GwenFx_CentreCut"), new Color(.85f, 1f, 1f, 1f), t.qRange * .6f, t.qRange * .8f, .35f, axis: forward);
+                ZeriSprite.Create(Player, middle + Vector3.up * .9f, Fx("GwenFx_CentreCut"), new Color(.85f, 1f, 1f, 1f), t.qRange * .35f, t.qRange * .45f, .35f, axis: forward);
         }
 
         SpectralScissorsFx SpectralScissors(Vector3 feet, Vector3 forward, int snips)
@@ -426,8 +444,8 @@ namespace LeagueVR.Champions
             var weapon = Player.WeaponPose != null ? Player.WeaponPose() : new Pose(Player.AttackOrigin, Quaternion.LookRotation(Player.AttackDirection));
             float roll = Vector3.SignedAngle(Vector3.up, Vector3.ProjectOnPlane(weapon.rotation * Vector3.up, forward), forward);
             // Far enough ahead (and a little smaller) that the closing blades do not fill the view in the headset.
-            go.transform.SetPositionAndRotation(feet + Vector3.up * .9f + forward * (t.qRange * .45f), Quaternion.LookRotation(forward) * Quaternion.Euler(0, 0, Mathf.Clamp(roll, -40, 40)));
-            go.transform.localScale = Vector3.one * avatar.WeaponScale * 1.8f;
+            go.transform.SetPositionAndRotation(feet + Vector3.up * .9f + forward * (t.qRange * .75f), Quaternion.LookRotation(forward) * Quaternion.Euler(0, 0, Mathf.Clamp(roll, -40, 40)));
+            go.transform.localScale = Vector3.one * avatar.WeaponScale * 1.1f;
             var fx = go.AddComponent<SpectralScissorsFx>();
             fx.Build(avatar.bladeA, avatar.bladeB, Cyan, t.qDuration + .35f);
             Player.Track(go);
@@ -442,6 +460,9 @@ namespace LeagueVR.Champions
                     return false;
                 MistCenter = Player.Feet;
                 mistMoved = true;
+                mistBloom = Time.time;
+                CancelSwing();
+                moves?.StartMist(Player.PlanarDirection(Player.head.transform.forward));
                 return true;
             }
             if (!Player.Commit(1, false, Player.Feet, Vector3.up))
@@ -484,6 +505,7 @@ namespace LeagueVR.Champions
                 return true;
             }
             Player.ComfortBlink(.12f);
+            moves?.StartDash(.15f, direction);
             Player.Dash(direction, t.eDistance);
             DashDone(from, direction);
             return true;
@@ -503,8 +525,10 @@ namespace LeagueVR.Champions
             while (Player.Kit == this && Health.IsAlive)
             {
                 float u = Mathf.Clamp01((Time.time - begin) / DashTime);
-                Vector3 at = Vector3.Lerp(from, landing, 1 - (1 - u) * (1 - u));
-                at.y = RiftMatch.Instance && RiftMatch.Instance.Ground(new Vector3(at.x, height + .1f, at.z), out var floor) && Mathf.Abs(floor.y - height) < .3f ? floor.y : height;
+                Vector3 at = Vector3.Lerp(from, landing, u * u * (3 - 2 * u));
+                if (RiftMatch.Instance && RiftMatch.Instance.Ground(new Vector3(at.x, height + .1f, at.z), out var floor) && Mathf.Abs(floor.y - height) < .6f)
+                    height = Mathf.MoveTowards(height, floor.y, 3f * Time.deltaTime);
+                at.y = height;
                 height = at.y;
                 Player.MoveFeet(at);
                 if (u >= 1)
@@ -531,7 +555,9 @@ namespace LeagueVR.Champions
         {
             ZeriBeam.Create(Player, from + Vector3.up * .9f, Player.Feet + Vector3.up * .9f, new Color(.5f, .95f, 1f, 1f), 1f, .45f, .4f, 0, texture: Fx("GwenFx_DashTrail"));
             Player.ResetAttackTimer();
+            slashFromDash = true;
             Player.BasicAttack();
+            slashFromDash = false;
         }
 
         /// <summary>A fading cyan copy of Gwen left where the dash began.</summary>
@@ -559,6 +585,7 @@ namespace LeagueVR.Champions
             // A window that ran out while needles were held starts a fresh first cast.
             if (!recast)
                 RStage = 0;
+            moves?.MeasurePalm();
             NeedlesReady = 2 * (RStage + 1) - 1;
             return true;
         }
@@ -718,13 +745,15 @@ namespace LeagueVR.Champions
             // The dome breathes gently and thins out in its last second.
             float fade = Mathf.Clamp01(MistRemaining);
             // Light enough to see enemies through from inside; the ring and threads carry the shape.
-            domeMaterial.SetColor("_BaseColor", new Color(.6f, .95f, 1f, (.07f + .02f * Mathf.Sin(Time.time * 3)) * fade));
+            domeMaterial.SetColor("_BaseColor", new Color(.6f, .95f, 1f, (.13f + .03f * Mathf.Sin(Time.time * 3)) * fade));
             if (mistGround)
             {
                 // The dome is scaled to the mist's diameter, so the unit quad under it spans the whole mist.
                 mistGround.SetPositionAndRotation(MistCenter + Vector3.up * .04f, Quaternion.Euler(90, Time.time * 12, 0));
                 ringMaterial.SetColor("_BaseColor", new Color(.55f, 1f, 1f, .9f * fade));
             }
+            Vector3 palm = moves != null ? moves.MistSource() : MistCenter;
+            Vector3 threadBase = Vector3.Lerp(palm, MistCenter, Mathf.SmoothStep(0, 1, Mathf.Clamp01((Time.time - mistBloom - .12f) / .4f)));
             for (int i = 0; i < mistThreads.Count; i++)
             {
                 float baseAngle = i * Mathf.PI * 2 / mistThreads.Count + Time.time * .35f;
@@ -734,7 +763,7 @@ namespace LeagueVR.Champions
                     float u = k / 5f;
                     float a = baseAngle + u * .6f;
                     float r = radius * (1 - .25f * u * u);
-                    mistThreads[i].SetPosition(k, MistCenter + new Vector3(Mathf.Cos(a) * r, .05f + u * height, Mathf.Sin(a) * r));
+                    mistThreads[i].SetPosition(k, threadBase + new Vector3(Mathf.Cos(a) * r, .05f + u * height, Mathf.Sin(a) * r));
                 }
             }
             for (int i = 0; i < mistRing.positionCount; i++)

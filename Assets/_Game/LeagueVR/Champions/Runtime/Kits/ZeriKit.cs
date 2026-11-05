@@ -139,6 +139,7 @@ namespace LeagueVR.Champions
             if (Vaulting)
             {
                 Vaulting = false;
+                Player.RushVignette(false);
                 if (boundBody)
                     boundBody.Hidden = false;
                 Player.FreezeLocomotion(false);
@@ -795,7 +796,7 @@ namespace LeagueVR.Champions
                     {
                         zapped = true;
                         Player.MoveFeet(at);
-                        Player.ScreenFade(new Color(.75f, 1f, .5f), .05f, .05f, .14f, 1);
+                        Player.ScreenFade(new Color(.75f, 1f, .5f), .06f, .12f, .14f, 1);
                         visuals?.ZapThrough(at, plan.direction);
                         while (Player.FadeCoveredIn > 0 && Player.Kit == this && Health.IsAlive)
                             yield return null;
@@ -808,7 +809,9 @@ namespace LeagueVR.Champions
                 else
                 {
                     // Up and down ramps the feet keep to the floor nearest the height she is at.
-                    at.y = RiftMatch.Instance && RiftMatch.Instance.Ground(new Vector3(at.x, height + .1f, at.z), out var floor) && Mathf.Abs(floor.y - height) < .3f ? floor.y : height;
+                    if (RiftMatch.Instance && RiftMatch.Instance.Ground(new Vector3(at.x, height + .1f, at.z), out var floor) && Mathf.Abs(floor.y - height) < .6f)
+                        height = Mathf.MoveTowards(height, floor.y, 3f * Time.deltaTime);
+                    at.y = height;
                     height = at.y;
                 }
                 Player.MoveFeet(at);
@@ -957,6 +960,7 @@ namespace LeagueVR.Champions
             Vaulting = true;
             var spark = new Color(.85f, 1f, .6f);
             Player.FreezeLocomotion(true);
+            Player.RushVignette(true);
             // A quick flash of her electricity hides the cut (it used to linger as a yellow wash over half the vault).
             Player.ScreenFade(spark, .05f, 0, .1f, .7f);
             visuals?.SurgeRushStart(plan.start, plan.direction);
@@ -988,7 +992,9 @@ namespace LeagueVR.Champions
                     if (puppet)
                         puppet.transform.position = at;
                     VaultClips(vault, plan, Time.time - begin);
-                    Player.MoveFeet(at + offset - eyeAboveFeet);
+                    Vector3 ground = Vector3.Lerp(plan.start, plan.landing, t);
+                    ground.y = plan.start.y;
+                    Player.MoveFeet(ground + offset - eyeAboveFeet);
                     yield return null;
                 }
                 Player.ScreenFade(spark, .05f, 0, .12f, .7f);
@@ -1003,6 +1009,7 @@ namespace LeagueVR.Champions
                 Player.MoveFeet(plan.landing);
                 Player.Emit("Surge", plan.landing, plan.direction);
             }
+            Player.RushVignette(false);
             Player.FreezeLocomotion(false);
             Vaulting = false;
         }

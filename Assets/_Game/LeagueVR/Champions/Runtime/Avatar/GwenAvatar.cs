@@ -131,7 +131,7 @@ namespace LeagueVR.Champions
             foreach (var g in glows)
                 if (g)
                     g.SetActive(empowered);
-            int needles = kit != null ? kit.NeedlesReady : 0;
+            int needles = kit != null ? kit.NeedlesShown : 0;
             ThreadNeedles(needles);
             var prefab = player.Definition ? player.Definition.kitPrefab : null;
             var grip = LeftGrip();

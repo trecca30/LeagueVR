@@ -63,7 +63,7 @@ namespace LeagueVR.Champions
                 blinkQuad.name = "Comfort blink";
                 blinkQuad.transform.SetParent(head.transform, false);
                 blinkQuad.transform.localPosition = new Vector3(0, 0, .08f);
-                blinkQuad.transform.localScale = new Vector3(.5f, .4f, 1);
+                blinkQuad.transform.localScale = new Vector3(.8f, .6f, 1);
                 var r = blinkQuad.GetComponent<Renderer>();
                 blinkMaterial = new Material(AbilityFx.Glass(Color.black)) { hideFlags = HideFlags.HideAndDontSave, renderQueue = 4500 };
                 r.sharedMaterial = blinkMaterial;
