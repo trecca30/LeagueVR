@@ -41,11 +41,12 @@ namespace LeagueVR
         }
 
         const string StreamViewKey = "LeagueVR.StreamView";
-        public static readonly string[] StreamViewNames = { "HEADSET", "SMOOTH", "SHOULDER" };
+        public static readonly string[] StreamViewNames = { "HEADSET", "SMOOTH", "SHOULDER", "EXACT 1:1" };
 
         /// <summary>
-        /// What the desktop window shows for viewers (Discord, OBS): the raw headset view, a smoothed first-person view,
-        /// or an over-the-shoulder view of the whole champion. See <c>SpectatorCamera</c>.
+        /// What the desktop window shows for viewers (Discord, OBS): the raw headset mirror (cropped to fill the window), a
+        /// smoothed first-person view, an over-the-shoulder view of the whole champion, or exactly the headset's left-eye
+        /// view, uncropped. See <c>SpectatorCamera</c>.
         /// </summary>
         public static int StreamView
         {

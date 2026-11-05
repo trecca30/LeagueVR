@@ -9,20 +9,23 @@ namespace LeagueVR.Champions
 {
     /// <summary>
     /// The stream view: what the desktop window shows while someone plays in the headset, for sharing on Discord or
-    /// OBS. The raw headset mirror shakes with every head movement, so this camera renders its own view instead:
-    /// SMOOTH follows the player's eyes with the jitter and roll filtered out and a wider field of view; SHOULDER
-    /// films the whole champion from behind. The headset view is never affected. F8 cycles the views.
+    /// OBS. The raw headset mirror shakes with every head movement and is cropped to fill the window, so this camera
+    /// renders its own view instead: SMOOTH follows the player's eyes with the jitter and roll filtered out and a wider
+    /// field of view; SHOULDER films the whole champion from behind; EXACT shows the headset's own left-eye view 1:1,
+    /// uncropped. The headset view is never affected. F8 cycles the views.
     /// </summary>
     public class SpectatorCamera : MonoBehaviour
     {
         public PlayerChampion player;
 
-        const float SmoothFov = 62, ShoulderFov = 58;
+        // SMOOTH's vertical field of view: 72 degrees is about 104 across a 16:9 window, close to the headset's.
+        const float SmoothFov = 72, ShoulderFov = 58;
+        const int Exact = 3;
         const float FollowTime = .05f, TurnTime = .18f, ShoulderTime = .14f, ShoulderTurnTime = .4f;
 
-        Camera view;
+        Camera view, letterbox;
         int mode = -1;
-        bool mirrorOff;
+        bool mirrorOff, exactApplied;
         Vector3 position, shoulderForward, lastPivot;
         Quaternion rotation;
         bool placed;
@@ -43,6 +46,8 @@ namespace LeagueVR.Champions
             SetMirror(true);
             if (view)
                 view.enabled = false;
+            if (letterbox)
+                letterbox.enabled = false;
         }
 
         void OnDestroy()
@@ -84,15 +89,105 @@ namespace LeagueVR.Champions
             {
                 if (view)
                     view.enabled = false;
+                if (letterbox)
+                    letterbox.enabled = false;
                 return;
             }
             EnsureCamera();
             view.enabled = true;
-            if (mode == 1)
-                FollowEyes();
+            if (mode == Exact)
+                FollowExact();
             else
-                FollowShoulder();
+            {
+                ResetExact();
+                if (mode == 1)
+                    FollowEyes();
+                else
+                    FollowShoulder();
+            }
             view.transform.SetPositionAndRotation(position, rotation);
+        }
+
+        /// <summary>
+        /// EXACT: exactly what the player sees in the headset. The headset's left eye, its pose and its lens frustum
+        /// straight from the XR display each frame, shown whole at the eye image's own shape (never cropped or stretched)
+        /// with black bars at the sides. The comfort vignette and fades show as they do in the headset.
+        /// </summary>
+        void FollowExact()
+        {
+            position = player.head.transform.position;
+            rotation = player.head.transform.rotation;
+            placed = false;
+            ApplyEyeMatrices();
+        }
+
+        void ApplyEyeMatrices()
+        {
+            SubsystemManager.GetSubsystems(displays);
+            foreach (var display in displays)
+            {
+                if (!display.running || display.GetRenderPassCount() == 0)
+                    continue;
+                display.GetRenderPass(0, out var pass);
+                if (pass.GetRenderParameterCount() == 0)
+                    continue;
+                pass.GetRenderParameter(player.head, 0, out var eye);
+                view.worldToCameraMatrix = eye.view;
+                view.projectionMatrix = eye.projection;
+                exactApplied = true;
+                Letterbox(eye.projection);
+                return;
+            }
+            // No headset running: the head camera's own view.
+            ResetExact();
+            view.fieldOfView = player.head.fieldOfView;
+        }
+
+        /// <summary>The eye's whole image, centred at its own aspect; a black camera clears the bars around it.</summary>
+        void Letterbox(Matrix4x4 projection)
+        {
+            // The frustum's side tangents, read off the (OpenGL style) projection: lenses are asymmetric.
+            float left = (projection.m02 - 1) / projection.m00, right = (projection.m02 + 1) / projection.m00;
+            float bottom = (projection.m12 - 1) / projection.m11, top = (projection.m12 + 1) / projection.m11;
+            float eyeAspect = Mathf.Abs((right - left) / Mathf.Max(1e-4f, top - bottom));
+            float screenAspect = (float)Screen.width / Mathf.Max(1, Screen.height);
+            var rect = eyeAspect < screenAspect
+                ? new Rect((1 - eyeAspect / screenAspect) / 2, 0, eyeAspect / screenAspect, 1)
+                : new Rect(0, (1 - screenAspect / eyeAspect) / 2, 1, screenAspect / eyeAspect);
+            view.rect = rect;
+            EnsureLetterbox();
+            letterbox.enabled = rect.width < .999f || rect.height < .999f;
+        }
+
+        void ResetExact()
+        {
+            if (letterbox)
+                letterbox.enabled = false;
+            if (!exactApplied)
+                return;
+            exactApplied = false;
+            view.ResetWorldToCameraMatrix();
+            view.ResetProjectionMatrix();
+            view.ResetAspect();
+            view.rect = new Rect(0, 0, 1, 1);
+        }
+
+        void EnsureLetterbox()
+        {
+            if (letterbox)
+                return;
+            var go = new GameObject("Spectator letterbox");
+            go.transform.SetParent(view.transform, false);
+            letterbox = go.AddComponent<Camera>();
+            letterbox.stereoTargetEye = StereoTargetEyeMask.None;
+            letterbox.depth = view.depth - 1;
+            letterbox.cullingMask = 0;
+            letterbox.clearFlags = CameraClearFlags.SolidColor;
+            letterbox.backgroundColor = Color.black;
+            var data = letterbox.GetUniversalAdditionalCameraData();
+            data.allowXRRendering = false;
+            data.renderPostProcessing = false;
+            data.renderShadows = false;
         }
 
         /// <summary>First person, steadied: position follows the head closely, rotation lags a little and never rolls.</summary>
@@ -207,6 +302,12 @@ namespace LeagueVR.Champions
                 return;
             RenderPipelineManager.endCameraRendering -= EndCamera;
             RenderPipelineManager.endCameraRendering += EndCamera;
+            // EXACT shows what the headset shows, face effects included, with this frame's final eye pose.
+            if (mode == Exact)
+            {
+                ApplyEyeMatrices();
+                return;
+            }
             // Things fixed to the player's face (comfort vignette, screen fades) are for the player's eyes only.
             if (Time.unscaledTime >= faceScanAt)
             {

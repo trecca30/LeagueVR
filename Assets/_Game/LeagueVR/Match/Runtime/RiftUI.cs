@@ -462,7 +462,7 @@ namespace LeagueVR.Match
             for (int i = 0; i < ComfortSettings.StreamViewNames.Length; i++)
             {
                 int value = i;
-                var b = Button(root, ComfortSettings.StreamViewNames[i], -720 + i * 330, -445, 310, 64, () =>
+                var b = Button(root, ComfortSettings.StreamViewNames[i], -720 + i * 262, -445, 250, 64, () =>
                 {
                     ComfortSettings.StreamView = value;
                     Settings();
@@ -470,7 +470,7 @@ namespace LeagueVR.Match
                 b.selected = stream == i;
                 b.Hover(false);
             }
-            Button(root, "BACK", 330, -445, 300, 64, OpenMenu, "back");
+            Button(root, "BACK", 390, -445, 240, 64, OpenMenu, "back");
         }
 
         string AbilityName(int slot)
