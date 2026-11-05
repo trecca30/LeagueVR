@@ -6,7 +6,7 @@ namespace LeagueVR.Champions
     public enum ChampionId
     {
         // Append only: champion assets store these as numbers.
-        Gwen, Zoe, Aatrox, Akshan, Brand, Pantheon, Yunara, Zeri, Gragas
+        Gwen, Zoe, Aatrox, Akshan, Brand, Pantheon, Yunara, Zeri, Gragas, Hwei
     }
 
     [Serializable]

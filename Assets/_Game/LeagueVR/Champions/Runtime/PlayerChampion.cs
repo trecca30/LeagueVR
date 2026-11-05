@@ -148,6 +148,7 @@ namespace LeagueVR.Champions
             if (Kit == null || !Health.IsAlive)
             {
                 CancelHolds();
+                Kit?.TickWhileDead();
                 return;
             }
             if (!CanAct)
@@ -186,13 +187,16 @@ namespace LeagueVR.Champions
         /// <summary>Button pressed: starts a hold for kits that aim/charge/throw, otherwise casts immediately.</summary>
         public bool PressSlot(int slot)
         {
-            if (!Unlocked(slot))
+            // A recast is never locked (Hwei's Wash Brush takes the R button below level 6).
+            bool recast = Kit != null && Kit.CanRecast(slot);
+            if (!recast && !Unlocked(slot))
                 return false;
             if (Kit == null || !Kit.HoldToCast(slot))
                 return CastSlot(slot);
-            if (!CanAct || holding[slot])
+            // Some recasts work through stuns (Hwei's Wash Brush), never while dead, in a menu or in brush view.
+            bool disabledOnly = Health && Health.IsAlive && Health.Stunned && !CombatLocked && !(BrushView && BrushView.Active);
+            if ((!CanAct && !(disabledOnly && Kit.CastsWhileStunned(slot))) || holding[slot])
                 return false;
-            bool recast = Kit.CanRecast(slot);
             if ((Kit.BlocksCasts && !recast) || (Cooldown(slot) > 0 && !recast))
                 return false;
             holding[slot] = Kit.BeginHold(slot);
@@ -384,9 +388,11 @@ namespace LeagueVR.Champions
         /// </summary>
         public bool CastSlot(int slot)
         {
-            if (!CanAct || !Unlocked(slot))
+            if (!CanAct)
                 return false;
             bool recast = Kit.CanRecast(slot);
+            if (!recast && !Unlocked(slot))
+                return false;
             if (Kit.BlocksCasts && !recast)
                 return false;
             if (Cooldown(slot) > 0 && !recast)

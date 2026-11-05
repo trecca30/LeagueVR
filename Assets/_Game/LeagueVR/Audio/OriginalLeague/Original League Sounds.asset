@@ -1652,3 +1652,579 @@ MonoBehaviour:
       - {fileID: 8300000, guid: df9a0103148856f45874e79460a6ba71, type: 3}
       - {fileID: 8300000, guid: e255eaeeaad94d0468a584bbeb40a369, type: 3}
       - {fileID: 8300000, guid: ca4807f7156e38a489d2073feed1cf43, type: 3}
+  - key: Hwei.Attack
+    eventName: Play_sfx_Hwei_HweiBasicAttack_OnCast
+    sourceBank: hwei_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 1ba675d8e49cdad409e09a915fe8f313, type: 3}
+      - {fileID: 8300000, guid: 6c583a7fb155b7841a442676deca0c96, type: 3}
+      - {fileID: 8300000, guid: 02b6e93873c877d4e9fdb4a28eca8c84, type: 3}
+      - {fileID: 8300000, guid: 964f221d04ec21e4ab48be854025a48a, type: 3}
+  - key: Hwei.AttackMissile
+    eventName: Play_sfx_Hwei_HweiBasicAttack_OnMissileLaunch
+    sourceBank: hwei_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 1b72e4d7da7e29242b0774320849a979, type: 3}
+      - {fileID: 8300000, guid: 5b21a91f753d09f4a96d7ce083a8b561, type: 3}
+      - {fileID: 8300000, guid: c5a0b2705cb73ad41b8a5ea0776188d8, type: 3}
+      - {fileID: 8300000, guid: 0d413583cb9539d488e927b0b4dff317, type: 3}
+  - key: Hwei.AttackHit
+    eventName: Play_sfx_Hwei_HweiBasicAttack_OnHit
+    sourceBank: hwei_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 845edc644c20d864592d9d19a2c43e39, type: 3}
+      - {fileID: 8300000, guid: ce6f5634668b09140afa2e81cc18a9b0, type: 3}
+      - {fileID: 8300000, guid: 94167a36271610a4eafaf17320ba4a78, type: 3}
+      - {fileID: 8300000, guid: f527d50bf5f00de48a3dc8677be324e7, type: 3}
+  - key: Hwei.Crit
+    eventName: Play_sfx_Hwei_HweiCritAttack_OnCast
+    sourceBank: hwei_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 1ba675d8e49cdad409e09a915fe8f313, type: 3}
+      - {fileID: 8300000, guid: 964f221d04ec21e4ab48be854025a48a, type: 3}
+      - {fileID: 8300000, guid: 02b6e93873c877d4e9fdb4a28eca8c84, type: 3}
+      - {fileID: 8300000, guid: 6c583a7fb155b7841a442676deca0c96, type: 3}
+  - key: Hwei.CritHit
+    eventName: Play_sfx_Hwei_HweiCritAttack_OnHit
+    sourceBank: hwei_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: ce6f5634668b09140afa2e81cc18a9b0, type: 3}
+      - {fileID: 8300000, guid: 94167a36271610a4eafaf17320ba4a78, type: 3}
+      - {fileID: 8300000, guid: 845edc644c20d864592d9d19a2c43e39, type: 3}
+      - {fileID: 8300000, guid: f527d50bf5f00de48a3dc8677be324e7, type: 3}
+  - key: Hwei.SubjectQ
+    eventName: Play_sfx_Hwei_HweiQ_cast
+    sourceBank: hwei_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 06ec027a4a16a1e498e7bd0ac7165690, type: 3}
+      - {fileID: 8300000, guid: 658a49d68ff2ad34daefc4567a1cf045, type: 3}
+      - {fileID: 8300000, guid: 761c81b6a05a32345ad7248eacee1bb7, type: 3}
+  - key: Hwei.SubjectW
+    eventName: Play_sfx_Hwei_HweiW_cast
+    sourceBank: hwei_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: cda6b314404f5964d8d1e4b425477432, type: 3}
+      - {fileID: 8300000, guid: f607f3e3fca185b468373e962eb621a4, type: 3}
+      - {fileID: 8300000, guid: 4fbd7071b7dfd524e944158f3874fc4e, type: 3}
+  - key: Hwei.SubjectE
+    eventName: Play_sfx_Hwei_HweiE_cast
+    sourceBank: hwei_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 2a74fcde9b0d0e74c90d93d8afbe43b6, type: 3}
+      - {fileID: 8300000, guid: bac9abb15f4b85a4e960f0c3bd7e2b92, type: 3}
+      - {fileID: 8300000, guid: db51ab9cd7b41484aa4e0eb6b57adbdb, type: 3}
+  - key: Hwei.WashBrush
+    eventName: Play_sfx_Hwei_HweiWashBrush_cast
+    sourceBank: hwei_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 3a8db734c18469741aaa1854227d0baa, type: 3}
+      - {fileID: 8300000, guid: 01cc152350c627940bfa8458f149d178, type: 3}
+      - {fileID: 8300000, guid: a70f01b4cd5ef2642b85158551b5bea5, type: 3}
+  - key: Hwei.QQCast
+    eventName: Play_sfx_Hwei_HweiQQ_OnCast
+    sourceBank: hwei_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: c71453861985fe342b58d6856de2cd7a, type: 3}
+      - {fileID: 8300000, guid: d28cede8cb1faea4db85445dc19cc44a, type: 3}
+      - {fileID: 8300000, guid: 5ae21de22c5af534a8470c3416b15ecf, type: 3}
+  - key: Hwei.QQMissile
+    eventName: Play_sfx_Hwei_HweiQQ_OnMissileLaunch
+    sourceBank: hwei_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 0c82faf4bf7790c4495d9143237ed865, type: 3}
+      - {fileID: 8300000, guid: c36dfee34515bd7459afd496b049591c, type: 3}
+      - {fileID: 8300000, guid: d482977b09136df41a28ee677969a4b1, type: 3}
+  - key: Hwei.QQExplode
+    eventName: Play_sfx_Hwei_HweiQQ_explosion
+    sourceBank: hwei_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: e1e482839870d5c4a812d10e5bbcd723, type: 3}
+      - {fileID: 8300000, guid: dd10a0b9aaea1544b980e1289a469c66, type: 3}
+      - {fileID: 8300000, guid: aeab25ad57462cb41815dcab25b85381, type: 3}
+  - key: Hwei.QWCast
+    eventName: Play_sfx_Hwei_HweiQW_OnCast
+    sourceBank: hwei_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 837b4f0f915d6214fa1756bbf72c5378, type: 3}
+      - {fileID: 8300000, guid: 7446f7a1d795769459f9e02afce38e4c, type: 3}
+      - {fileID: 8300000, guid: 1544945c3d8ac0648a4a6736c8e71679, type: 3}
+  - key: Hwei.QWZone
+    eventName: Play_sfx_Hwei_HweiQW_aoe_warning
+    sourceBank: hwei_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 545251325b89dc64b8d0a6c68b7688f4, type: 3}
+      - {fileID: 8300000, guid: 64adcbcc2300a9340914eefd707cc3ab, type: 3}
+      - {fileID: 8300000, guid: 0dd69c0e2f27f214a9c02a106bbcc75b, type: 3}
+  - key: Hwei.QWExplode
+    eventName: Play_sfx_Hwei_HweiQW_AoE_explode
+    sourceBank: hwei_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 6fd69577f9ae7c248a9f8c2159cacb9e, type: 3}
+      - {fileID: 8300000, guid: dd435276556ac924f9fc25c1b4edb5a6, type: 3}
+      - {fileID: 8300000, guid: 4c42e02b86af7ad478e88a6bbac3aeb8, type: 3}
+  - key: Hwei.QECast
+    eventName: Play_sfx_Hwei_HweiQE_OnCast
+    sourceBank: hwei_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: c8f473419a4256b41accb5f96cbe2f84, type: 3}
+      - {fileID: 8300000, guid: e1081463b18c3734281b0095a2537a98, type: 3}
+      - {fileID: 8300000, guid: 18bf44d9c35d205408aa0115be512fda, type: 3}
+  - key: Hwei.QEMissile
+    eventName: Play_sfx_Hwei_HweiQETell_OnMissileLaunch
+    sourceBank: hwei_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 2b6c12ed7f631914bba83a01da47a24d, type: 3}
+      - {fileID: 8300000, guid: 733c67b6f514ed6428197dcca73a3a54, type: 3}
+      - {fileID: 8300000, guid: 013ae0c89a8ef2b459f88e929c4e63d2, type: 3}
+  - key: Hwei.QEExplode
+    eventName: Play_sfx_Hwei_HweiQE_lava_explode
+    sourceBank: hwei_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 95fdfc7a02f2dca49b43e69fe5785875, type: 3}
+      - {fileID: 8300000, guid: f70ed982a4940c047a8f15ffafd609c1, type: 3}
+      - {fileID: 8300000, guid: f9e9d5f85b19f47458895df419ba1b8c, type: 3}
+      - {fileID: 8300000, guid: 0d000a33eae8f56499d32b24c9941c45, type: 3}
+      - {fileID: 8300000, guid: 3893f7fd3026e7944ac33aaef3b98001, type: 3}
+  - key: Hwei.WQCast
+    eventName: Play_sfx_Hwei_HweiWQ_OnCast
+    sourceBank: hwei_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: f8594f2827ca563409f053a974c85ab3, type: 3}
+      - {fileID: 8300000, guid: b29f1d8cda59399438cb48af5dd64183, type: 3}
+      - {fileID: 8300000, guid: 095586d10d343fd45a0c73d5b17e5f70, type: 3}
+  - key: Hwei.WQMissile
+    eventName: Play_sfx_Hwei_HweiWQ_OnMissileLaunch
+    sourceBank: hwei_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: d22acd828e42d0e45aa34f5b3dfcd57c, type: 3}
+      - {fileID: 8300000, guid: 436fd0026da99154eb12fa101796a904, type: 3}
+      - {fileID: 8300000, guid: abcedeffe6a0a024b91845a7aa1e8342, type: 3}
+  - key: Hwei.WQZone
+    eventName: Play_sfx_Hwei_HweiWQ_AoE_buffactivate_loop
+    sourceBank: hwei_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: b9003449bfc90fa46852c66afc8b90e8, type: 3}
+  - key: Hwei.WQMoveSpeed
+    eventName: Play_sfx_Hwei_HweiWQMoveSpeed_OnBuffActivate
+    sourceBank: hwei_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 8b93e2a16c2af04488c7a24bb1a851cb, type: 3}
+  - key: Hwei.WWCast
+    eventName: Play_sfx_Hwei_HweiWW_OnCast
+    sourceBank: hwei_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: ca29a1907ac698a4c8b41d3b104d7092, type: 3}
+      - {fileID: 8300000, guid: d2eb9c1ec7a058248a341b50bb968e8d, type: 3}
+      - {fileID: 8300000, guid: 5a92be0ef3d32304a914d24322d1bf31, type: 3}
+  - key: Hwei.WWZone
+    eventName: Play_sfx_Hwei_HweiWW_AoE_buffactivate
+    sourceBank: hwei_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: e05a162ef66830948af0cd3452fc4832, type: 3}
+      - {fileID: 8300000, guid: 293a2bced41bd7d4493788d187361c24, type: 3}
+      - {fileID: 8300000, guid: 500b875935197414c9175adfbc55b8b3, type: 3}
+    - variants:
+      - {fileID: 8300000, guid: 7c5339e43f4d58349b1bf478fb221147, type: 3}
+  - key: Hwei.WWShieldOn
+    eventName: Play_sfx_Hwei_HweiWWShield_OnBuffActivate
+    sourceBank: hwei_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 883519ee413aafd4c931289f6760ac3c, type: 3}
+      - {fileID: 8300000, guid: 0a2e2973a8850e146b92cfdf089b9370, type: 3}
+      - {fileID: 8300000, guid: 4c51c6c2769cc8340a0fa1f7885996a7, type: 3}
+  - key: Hwei.WWShieldOff
+    eventName: Play_sfx_Hwei_HweiWWShield_OnBuffDeactivate
+    sourceBank: hwei_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: cddd121b524fe7448981977055b28f10, type: 3}
+      - {fileID: 8300000, guid: b25ec31e105891249a5acb8479546e72, type: 3}
+      - {fileID: 8300000, guid: 1db7a539dc9e3174c8a816c21b13cd55, type: 3}
+  - key: Hwei.WECast
+    eventName: Play_sfx_Hwei_HweiWE_OnCast
+    sourceBank: hwei_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 16dc18021399f3f4ca66b50d85357a84, type: 3}
+      - {fileID: 8300000, guid: 71cd11c112792ee4a999eee9294b742a, type: 3}
+      - {fileID: 8300000, guid: 699bac375f661b949aa4793bcce5632c, type: 3}
+  - key: Hwei.WEBuffStart
+    eventName: Play_sfx_Hwei_HweiWEBuffCounter_OnBuffActivate
+    sourceBank: hwei_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 9e1453bd3cb53d44cb954859fed93676, type: 3}
+  - key: Hwei.WEHit
+    eventName: Play_sfx_Hwei_HweiWE_empowered_damage_hit
+    sourceBank: hwei_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 92ab2b32576f5d24dbb1bd830fb65710, type: 3}
+      - {fileID: 8300000, guid: 2ea54ed0898959b4daedc03d81764392, type: 3}
+      - {fileID: 8300000, guid: 2ccede034aba2374db4b5e68a7693abf, type: 3}
+  - key: Hwei.WEBuffEnd
+    eventName: Play_sfx_Hwei_HweiWEBuffCounter_OnBuffDeactivate
+    sourceBank: hwei_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: ff4f2fcf2f7dc7b469d3a351da0793b6, type: 3}
+      - {fileID: 8300000, guid: 977128830ea718a44981dddb436ad3c6, type: 3}
+      - {fileID: 8300000, guid: c64299d4a2ddc0c47a9a7df9347f2f97, type: 3}
+  - key: Hwei.EQCast
+    eventName: Play_sfx_Hwei_HweiEQ_OnCast
+    sourceBank: hwei_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: cd6c81d26cca8ec458c6393000b205f4, type: 3}
+      - {fileID: 8300000, guid: 37b8bceae970a5b45a6edb53b375b6dd, type: 3}
+      - {fileID: 8300000, guid: b34c7c8e6fc89134dba03b51bec72841, type: 3}
+  - key: Hwei.EQMissile
+    eventName: Play_sfx_Hwei_HweiEQ_OnMissileLaunch
+    sourceBank: hwei_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: d76a25f1e55230a4d8e9dd4168fa29af, type: 3}
+      - {fileID: 8300000, guid: 29fe7fd2f9a1a344aaf0ea257f65803f, type: 3}
+      - {fileID: 8300000, guid: 98358104326324441ac7b908b3fcf024, type: 3}
+  - key: Hwei.EQHit
+    eventName: Play_sfx_Hwei_HweiEQ_OnHit
+    sourceBank: hwei_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: b80274b880f85464c8df336887d6cb1f, type: 3}
+      - {fileID: 8300000, guid: 1e6c0b17563806b4cb76c4e0a63e12bc, type: 3}
+      - {fileID: 8300000, guid: d25670d8de8a5b34ba13605e6763a39f, type: 3}
+  - key: Hwei.EWCast
+    eventName: Play_sfx_Hwei_HweiEW_OnCast
+    sourceBank: hwei_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 7e94094cf103c7c4d84ec2f41dcd4b02, type: 3}
+  - key: Hwei.EWZone
+    eventName: Play_sfx_Hwei_HweiEW_AoE_buffactivate
+    sourceBank: hwei_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 862d3a905358f3740a1bea24fff13d6a, type: 3}
+  - key: Hwei.EWTargetWarning
+    eventName: Play_sfx_Hwei_HweiEW_target_warning
+    sourceBank: hwei_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 8d690110f35522c469124e906cc72818, type: 3}
+  - key: Hwei.EWMissile
+    eventName: Play_sfx_Hwei_HweiEW_OnMissileLaunch
+    sourceBank: hwei_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 865322ba1165b794bb673cf583b87827, type: 3}
+  - key: Hwei.EWHit
+    eventName: Play_sfx_Hwei_HweiEW_hit
+    sourceBank: hwei_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: e3244bd36af72804287b632392d78a03, type: 3}
+  - key: Hwei.EWZoneEnd
+    eventName: Play_sfx_Hwei_HweiEW_aoe_buffdeactivate
+    sourceBank: hwei_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: b3a8cf87e60e8a640909796766192f69, type: 3}
+  - key: Hwei.EECast
+    eventName: Play_sfx_Hwei_HweiEE_OnCast
+    sourceBank: hwei_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 8f18602189d0c224d8e102c2373cc3ba, type: 3}
+      - {fileID: 8300000, guid: 63000dfcef0e4c8428450c422aaf5b22, type: 3}
+      - {fileID: 8300000, guid: 2746100859802f54fa3ddd3e1eeb8f92, type: 3}
+  - key: Hwei.EEZone
+    eventName: Play_sfx_Hwei_HweiEE_AoE_buffactivate
+    sourceBank: hwei_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: b02b07907fb7630499c5b2a05de51bdc, type: 3}
+      - {fileID: 8300000, guid: 61ce9644aa5b0444c8e7691d9be05ee3, type: 3}
+      - {fileID: 8300000, guid: 47ef6ab1bd7881d4b892ac307a530f6f, type: 3}
+  - key: Hwei.EEHit
+    eventName: Play_sfx_Hwei_HweiEE_hit
+    sourceBank: hwei_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 67fabcd5db9a30a498f64d2342dbb3f0, type: 3}
+      - {fileID: 8300000, guid: 9009904d1bc0c774eaed77e670aea708, type: 3}
+      - {fileID: 8300000, guid: 5fe4cb9bcbb26274da78a75a0202dbd9, type: 3}
+  - key: Hwei.RCast
+    eventName: Play_sfx_Hwei_HweiR_OnCast
+    sourceBank: hwei_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 26b15b3d6a7494e44a1e7e6f74eaedb0, type: 3}
+  - key: Hwei.RMissile
+    eventName: Play_sfx_Hwei_HweiR_OnMissileLaunch
+    sourceBank: hwei_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: fb8360a543b53454ea99aa0edb935c4d, type: 3}
+  - key: Hwei.RAttach
+    eventName: Play_sfx_Hwei_HweiR_OnHit
+    sourceBank: hwei_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 8362abd4b3c314e499378a8cdc9a2823, type: 3}
+  - key: Hwei.RGrow
+    eventName: Play_sfx_Hwei_HweiR_aoe_grow_buffactivate
+    sourceBank: hwei_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 7ac1a41a90edabb4d9ebfb56fd58b5bf, type: 3}
+  - key: Hwei.RExplode
+    eventName: Play_sfx_Hwei_HweiR_AoE_shatter_buffactivate
+    sourceBank: hwei_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: a4c5d2b8e6c77cd438ef500c7ae94e47, type: 3}
+  - key: Hwei.PMark
+    eventName: Play_sfx_Hwei_HweiP_mark_buffactivate
+    sourceBank: hwei_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 91f90e22363c6204fad547389592e338, type: 3}
+  - key: Hwei.PWarning
+    eventName: Play_sfx_Hwei_HweiP_explosion_warning_buffactivate
+    sourceBank: hwei_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: eb8b16b2ed5c95a42b6414f086e164fa, type: 3}
+      - {fileID: 8300000, guid: 8a360c93757375940be2e8409371886a, type: 3}
+      - {fileID: 8300000, guid: 0be506b8e3142e14dbcabfa3e0222bcd, type: 3}
+  - key: Hwei.PDetonate
+    eventName: Play_sfx_Hwei_HweiP_explosion_buffactivate
+    sourceBank: hwei_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: cbca11e519184ee42a7b3d5a50358472, type: 3}
+      - {fileID: 8300000, guid: 3ac7f07eee8af1941976fc2628af8fcc, type: 3}
+      - {fileID: 8300000, guid: bc74ec230546f7743aeb909486870e66, type: 3}
+  - key: Hwei.Death
+    eventName: Play_sfx_Hwei_Death3D_cast
+    sourceBank: hwei_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 210669e54d8d5894fa83a3743eeae066, type: 3}
+  - key: Hwei.Respawn
+    eventName: Play_sfx_Hwei_Respawn3D_buffactivate
+    sourceBank: hwei_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 4f79f5a57382efe49b939bb50341184e, type: 3}
+  - key: Hwei.Recall
+    eventName: Play_sfx_Hwei_Recall3D_buffactivate
+    sourceBank: hwei_base_sfx_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 2442f4600b52a9644883b04e10e9cbe2, type: 3}
+  - key: Hwei.VOMove
+    eventName: Play_vo_Hwei_Move2DStandard
+    sourceBank: hwei_base_vo_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: a9069f3858b7f494e8144c81e64f8adc, type: 3}
+      - {fileID: 8300000, guid: 6a17a277fbb216c43b16e2d5dd39384a, type: 3}
+      - {fileID: 8300000, guid: 370bfc9c35224304abcf8e18249d39a5, type: 3}
+      - {fileID: 8300000, guid: 523a1fb026706064b83b01e8d8f25dc5, type: 3}
+      - {fileID: 8300000, guid: e84b1bd2e98f7754d8933060c48fb15d, type: 3}
+      - {fileID: 8300000, guid: 2d7c946abefdba04b9cdabbb970250c7, type: 3}
+      - {fileID: 8300000, guid: 51dce8ed2dc8c9b40b5c680c1e4ec2fd, type: 3}
+      - {fileID: 8300000, guid: dafb3aa156c5674419d2564408dc0287, type: 3}
+      - {fileID: 8300000, guid: 893510b2a4c09574c9c6663feec2655b, type: 3}
+      - {fileID: 8300000, guid: 35389df7906a77141902dee3ffa1a6f0, type: 3}
+      - {fileID: 8300000, guid: 6ea20feaa2e936f4fb32685b5b6fe9e4, type: 3}
+      - {fileID: 8300000, guid: c4716cf1bface6546ad55728e6fffa8e, type: 3}
+      - {fileID: 8300000, guid: 4c07e0e7d0c88ae42b39878122e5e101, type: 3}
+      - {fileID: 8300000, guid: 5d0bb78f00563e64c8682eb7741a343a, type: 3}
+      - {fileID: 8300000, guid: 5bdbb87aae4e4ff4eb89ec7034f81a85, type: 3}
+      - {fileID: 8300000, guid: 7be0a5b8f0809ec47b5a28d4f60ea6dc, type: 3}
+      - {fileID: 8300000, guid: 89ff625f7b1a2b044bd925aad81caf3b, type: 3}
+      - {fileID: 8300000, guid: dc8e69753ff357040960dc1a4229ca4c, type: 3}
+      - {fileID: 8300000, guid: c7174c5d29489b740af16d90e7046db3, type: 3}
+      - {fileID: 8300000, guid: dfb76f495097f2641826a16507ebd1f7, type: 3}
+      - {fileID: 8300000, guid: 7e631b055b4ddef4bb7eb45b27cde591, type: 3}
+      - {fileID: 8300000, guid: 00e7d88e0d22ce548b47a9fae4a70c64, type: 3}
+      - {fileID: 8300000, guid: 6df90dadda49ef74d8808e8413e380f7, type: 3}
+      - {fileID: 8300000, guid: b49ed841efb9a1d4fbeb721f77a61bbd, type: 3}
+      - {fileID: 8300000, guid: 8ef9eb3e7634a56438cf8917b3b85e68, type: 3}
+  - key: Hwei.VOAttack
+    eventName: Play_vo_Hwei_Attack2DGeneral
+    sourceBank: hwei_base_vo_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: d74302cdc74bee04eb3e25218e0b6bd3, type: 3}
+      - {fileID: 8300000, guid: 9864a92d5eafc5241b326784de681be0, type: 3}
+      - {fileID: 8300000, guid: 9398504467ce2ef499c03a6535c1abe3, type: 3}
+      - {fileID: 8300000, guid: 69cd9c52a80b87c4da9f490db044fc83, type: 3}
+      - {fileID: 8300000, guid: 9da4effe08235244793774e87f6a013f, type: 3}
+      - {fileID: 8300000, guid: 456702e1238b96645a5290f111173676, type: 3}
+      - {fileID: 8300000, guid: 5669fe91d5c1e9241a40324ae5f91667, type: 3}
+      - {fileID: 8300000, guid: 5bfbb3a7a6f7e574fbd2006d0f4765fe, type: 3}
+      - {fileID: 8300000, guid: f070922bd3caea84db8a37db4a73c5c1, type: 3}
+      - {fileID: 8300000, guid: 0fba8f5cf33e59c46921524e9183e698, type: 3}
+      - {fileID: 8300000, guid: fc76bde0226b73f4eb41beeb83a3adda, type: 3}
+      - {fileID: 8300000, guid: a320263c2c1ecea40976ed5345cbf800, type: 3}
+  - key: Hwei.VOKill
+    eventName: Play_vo_Hwei_Kill3DGeneral
+    sourceBank: hwei_base_vo_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 7f23a2e82ee49494dbc17c029aec6d78, type: 3}
+      - {fileID: 8300000, guid: c4795fda8fed30448af3975b046eb211, type: 3}
+      - {fileID: 8300000, guid: 8a1091db694697448ad9e878bde8b51a, type: 3}
+      - {fileID: 8300000, guid: c0ccc42eea4cfb04da6c351f764b33ea, type: 3}
+      - {fileID: 8300000, guid: a7f8d384f49a1fa458125932b172b852, type: 3}
+  - key: Hwei.VORecall
+    eventName: Play_vo_Hwei_Recall3DGeneral
+    sourceBank: hwei_base_vo_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 3f103cedf2c5a444c9c93f4565d015f3, type: 3}
+      - {fileID: 8300000, guid: 323d8f543cec3b34fb71adbcd68277cd, type: 3}
+      - {fileID: 8300000, guid: 2e9cf52a1d8c4444fa27bc0237ef1c92, type: 3}
+      - {fileID: 8300000, guid: 5f05d000f3d07d34f89955b25e9e3565, type: 3}
+      - {fileID: 8300000, guid: 1a6f33e87cb913548a250ebec584c9a9, type: 3}
+  - key: Hwei.VORespawn
+    eventName: Play_vo_Hwei_Respawn2DGeneral
+    sourceBank: hwei_base_vo_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: a709f26d5fd622c4b88effdc2cdb5806, type: 3}
+      - {fileID: 8300000, guid: e1a922b2fa9416b408ec19ac8b1bcb96, type: 3}
+      - {fileID: 8300000, guid: 6bc48a5c8b08f2849b4298a9b3a885dd, type: 3}
+      - {fileID: 8300000, guid: 268e986467e43394c8ca5bf86a2f01e1, type: 3}
+  - key: Hwei.VODeath
+    eventName: Play_vo_Hwei_Death3D
+    sourceBank: hwei_base_vo_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: c539bd4742b831149ac104c6dfc2dce3, type: 3}
+      - {fileID: 8300000, guid: 1d2e245f99ed9d744a7eb0a8a5f11af0, type: 3}
+      - {fileID: 8300000, guid: e5f22e6c408cd21499e3eac4f91c61df, type: 3}
+      - {fileID: 8300000, guid: 37f1cd6f661ceaa4b87330237772a32f, type: 3}
+  - key: Hwei.VOQQ
+    eventName: Play_vo_Hwei_HweiQQ_cast3D
+    sourceBank: hwei_base_vo_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 709518d52169c22468e0d87c5fa8a62a, type: 3}
+      - {fileID: 8300000, guid: d7135895ebad5cd46975a3b5a2eebf2f, type: 3}
+      - {fileID: 8300000, guid: 22be52790e7f587419fdb7051222d8bb, type: 3}
+      - {fileID: 8300000, guid: 2425399621458a24bb80a795db825433, type: 3}
+  - key: Hwei.VOQE
+    eventName: Play_vo_Hwei_HweiQE_cast3D
+    sourceBank: hwei_base_vo_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: ffda32a982a577940a4003e30c0eccc4, type: 3}
+      - {fileID: 8300000, guid: f2358c313dd75c04fb01d98116d66073, type: 3}
+      - {fileID: 8300000, guid: f2cd5d63b8ec8b5488b41b578880c2e9, type: 3}
+  - key: Hwei.VOWQ
+    eventName: Play_vo_Hwei_HweiWQ_cast3D
+    sourceBank: hwei_base_vo_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: f1f273c75b65066458188caf876c67a5, type: 3}
+      - {fileID: 8300000, guid: efaae2a0775052c4993b755c88614113, type: 3}
+      - {fileID: 8300000, guid: 28e42179fe507eb459fccd9d5e1a85e4, type: 3}
+      - {fileID: 8300000, guid: 929090e46522b4d47b1c67f72190ae41, type: 3}
+      - {fileID: 8300000, guid: aa9c82d14dd44c84697834c967326b0e, type: 3}
+  - key: Hwei.VOWW
+    eventName: Play_vo_Hwei_HweiWW_cast3D
+    sourceBank: hwei_base_vo_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 8aeb967a983814c47a745866a39a0234, type: 3}
+      - {fileID: 8300000, guid: cf9de248023d4cf499e6954e9427194f, type: 3}
+      - {fileID: 8300000, guid: 179c55d4696c1a54aba02dc20e4eb1a3, type: 3}
+      - {fileID: 8300000, guid: c9f50bda5a04f7a41822a71ef0f26609, type: 3}
+      - {fileID: 8300000, guid: 7c927406dc93c5f4296148e39efed0dd, type: 3}
+  - key: Hwei.VOEQ
+    eventName: Play_vo_Hwei_HweiEQ_cast3D
+    sourceBank: hwei_base_vo_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 9743fbd1f3653fe46ad0a8560d93854c, type: 3}
+      - {fileID: 8300000, guid: bf1f8a22ad341bc4db420247820f763d, type: 3}
+      - {fileID: 8300000, guid: 7f2cef8268da8b74ba7777434cc80064, type: 3}
+      - {fileID: 8300000, guid: 2997cf81cc1d4b043b430192d6f510e6, type: 3}
+      - {fileID: 8300000, guid: f366db0e7c4dc3d47a82ca6d796aa6e3, type: 3}
+      - {fileID: 8300000, guid: 074a1c1729744c74eaa7972413d30077, type: 3}
+  - key: Hwei.VOEE
+    eventName: Play_vo_Hwei_HweiEE_cast3D
+    sourceBank: hwei_base_vo_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 9a4eb1eaf1f7e364cbb6fb4f91146050, type: 3}
+      - {fileID: 8300000, guid: fd11cc61d22d1844a93654da6ada6d51, type: 3}
+      - {fileID: 8300000, guid: 3c36e05d32f5587428d0997853a63090, type: 3}
+  - key: Hwei.VOR
+    eventName: Play_vo_Hwei_HweiR_cast3D
+    sourceBank: hwei_base_vo_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 94d8f4594f835394485658ba9ce32a98, type: 3}
+      - {fileID: 8300000, guid: 0a937b755d78dfb4c84b42eb976d531c, type: 3}
+      - {fileID: 8300000, guid: 8a484ddf15040444d81d8b59038b729c, type: 3}
+      - {fileID: 8300000, guid: 3ac8f1a1db5b65b48ba00efa2e7e8846, type: 3}
+      - {fileID: 8300000, guid: b10a164ce291aba488233eafebd08dc5, type: 3}
+  - key: Hwei.VOEWRoot
+    eventName: Play_vo_Hwei_Spell3DEWRoot
+    sourceBank: hwei_base_vo_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 3375db13031164e4f991cb30d1b26fa5, type: 3}
+      - {fileID: 8300000, guid: d8f95f2d181987947ba47a6d6695127b, type: 3}
+      - {fileID: 8300000, guid: ee4275fa9f83c8447ad27d5a02325d79, type: 3}
+      - {fileID: 8300000, guid: 082fdef47ad57d6449b689bf6a9547db, type: 3}
+      - {fileID: 8300000, guid: 4198654dab08a714eae8acb5967183de, type: 3}
+  - key: Hwei.VOTaunt
+    eventName: Play_vo_Hwei_Taunt3DGeneral
+    sourceBank: hwei_base_vo_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 711c0a475c65e094a8d47c0e465caefd, type: 3}
+  - key: Hwei.VOJoke
+    eventName: Play_vo_Hwei_Joke3DGeneral
+    sourceBank: hwei_base_vo_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 8f1b21872de6a1341934777ed212b60f, type: 3}
+  - key: Hwei.VOLaugh
+    eventName: Play_vo_Hwei_Laugh3DGeneral
+    sourceBank: hwei_base_vo_events
+    layers:
+    - variants:
+      - {fileID: 8300000, guid: 53947cd6189990a47933c7072f53c10f, type: 3}

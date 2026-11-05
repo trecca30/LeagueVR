@@ -18191,11 +18191,10 @@ MonoBehaviour:
   redMaterial: {fileID: 2100000, guid: 4149ef9da2933de44a15e12efba11b38, type: 2}
   neutralMaterial: {fileID: 2100000, guid: babab6b90a9371d45a896c8b5136ab51, type: 2}
   spawnedRoot: {fileID: 642377330}
-  botChampion: {fileID: 11400000, guid: 7de29132a257cda4b863feae3ce968a8, type: 2}
-  startingBots: 2
-  botGroupSize: 2
-  botGroupWaves: 2
-  maxBots: 8
+  startingSupers: 2
+  superGroupSize: 2
+  superGroupWaves: 2
+  maxSupers: 8
   testLoadout: 1
   testLevel: 12
   testItemCount: 6
@@ -32621,6 +32620,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6361190d765454247bc2285eac0e6dcf, type: 2}
   - {fileID: 11400000, guid: c677ec3b5b66fa24f80c156308e75106, type: 2}
   - {fileID: 11400000, guid: 0db3f5e20d779344888414a08f5acdc5, type: 2}
+  - {fileID: 11400000, guid: 2c40e5e18856f4d40910ede2eaadd281, type: 2}
   selected: 0
   player: {fileID: 1373153115}
   avatar: {fileID: 1373153136}

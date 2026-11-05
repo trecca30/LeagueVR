@@ -1,0 +1,106 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1507f9c1fc5ee634f85448889214c929, type: 3}
+  m_Name: Hwei
+  m_EditorClassIdentifier: Assembly-CSharp::LeagueVR.Champions.ChampionDefinition
+  id: 9
+  title: the Visionary
+  role: Mage / Support
+  passiveName: Signature of the Visionary
+  passiveDescription: A spell marks the enemies it hits for 4 seconds; hitting a marked enemy with a different spell completes his signature beneath it, which bursts 0.85 seconds later for 40-285 (by level) +35% AP magic damage around where it was.
+  patch: 16.20.1
+  portrait: {fileID: 2800000, guid: 272cc0377fdfcb4439681a5836d5eb88, type: 3}
+  passiveIcon: {fileID: 2800000, guid: 14c0c2112421c4845918f039259e54e4, type: 3}
+  spells:
+  - name: 'Subject: Disaster'
+    vrDescription: 'B opens Disaster: the brush turns red-orange. Then B, X or A (hold to aim with the brush, release to paint): Devastating Fire, a fireball that bursts on the first enemy; Severing Bolt, lightning on a far spot after 1 second (more against a lone or immobile enemy the more health it is missing); Molten Fissure, seven eruptions along a line that leave slowing lava.'
+    icon: {fileID: 2800000, guid: 190dfbe13967f9e45ba3953e63ace03e, type: 3}
+    cooldowns:
+    - 10
+    - 9
+    - 8
+    - 7
+    - 6
+    costs:
+    - 80
+    - 90
+    - 100
+    - 110
+    - 120
+  - name: 'Subject: Serenity'
+    vrDescription: 'X opens Serenity: the brush turns cyan. Then B, X or A: Fleeting Current, a stream that speeds you up while you stand in it; Pool of Reflection, a pool that shields you while you are inside; Stirring Lights, three lights whose next attacks or spells deal bonus damage and give mana back.'
+    icon: {fileID: 2800000, guid: c7b1cb3f9b5044448b626f3d23104508, type: 3}
+    cooldowns:
+    - 18
+    - 17.5
+    - 17
+    - 16.5
+    - 16
+    costs:
+    - 90
+    - 95
+    - 100
+    - 105
+    - 110
+  - name: 'Subject: Torment'
+    vrDescription: 'A opens Torment: the brush turns magenta. Then B, X or A: Grim Visage, a face that makes the first enemy flee; Gaze of the Abyss, an eye that strikes and roots the first enemy to come near; Crushing Maw, jaws that bite and drag enemies in, slowing them. In any subject the left trigger is Wash Brush: it leaves the subject at no cost.'
+    icon: {fileID: 2800000, guid: d419c3708194e97438c63d88c8f066e6, type: 3}
+    cooldowns:
+    - 12
+    - 11.5
+    - 11
+    - 10.5
+    - 10
+    costs:
+    - 50
+    - 55
+    - 60
+    - 65
+    - 70
+  - name: Spiraling Despair
+    vrDescription: 'Left trigger (outside a subject): hold and both hands take the staff and point it where you look; release to fire. It sticks to the first enemy champion it meets (or settles where you looked), slows more and more for 3 seconds and then bursts.'
+    icon: {fileID: 2800000, guid: e734a51a0e2cd6545a35215759d5061f, type: 3}
+    cooldowns:
+    - 120
+    - 100
+    - 80
+    costs:
+    - 100
+    - 100
+    - 100
+  model: {fileID: 6727505242695521227, guid: 29fd1e827015c87489d9b9725d1541e3, type: 3}
+  firstPerson: {fileID: 6833917628130703874, guid: b55d1046a478d5e4eb040a0eab631441, type: 3}
+  idle: {fileID: -4018411851501446075, guid: c2374b618ddf4376a5b41dc7c0117c4d, type: 3}
+  color: {r: 0.62, g: 0.42, b: 1, a: 1}
+  health: 580
+  healthGrowth: 109
+  armor: 21
+  armorGrowth: 4.7
+  magicResist: 30
+  magicResistGrowth: 1.3
+  mana: 480
+  manaGrowth: 30
+  attackDamage: 54
+  attackGrowth: 3.3
+  attackSpeed: 0.69
+  attackSpeedGrowth: 2.5
+  moveSpeed: 330
+  healthRegen: 5.5
+  manaRegen: 7.5
+  healthRegenGrowth: 0.55
+  manaRegenGrowth: 0.75
+  attackReach: 10
+  bodyHeight: 1.75
+  kitTuning: {fileID: 0}
+  kitPrefab: {fileID: 0}
+  kitMaterial: {fileID: 0}
+  skillOrder: QEW

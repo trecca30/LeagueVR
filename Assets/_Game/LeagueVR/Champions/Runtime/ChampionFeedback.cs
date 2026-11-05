@@ -24,6 +24,8 @@ namespace LeagueVR.Champions
 
         void OnSignal(string signal, Vector3 start, Vector3 direction)
         {
+            if (player.Kit is HweiKit && HweiSignal(signal))
+                return;
             switch (signal)
             {
                 case "Attack1":
@@ -148,6 +150,68 @@ namespace LeagueVR.Champions
                     Haptic(XRNode.RightHand, .3f, .05f);
                     break;
             }
+        }
+
+        /// <summary>
+        /// Hwei: a tick in the hand that opened a subject (X is on the left controller), the brush hand feels each stroke
+        /// leave it and the big impacts; the ultimate's fire shakes both hands, which hold the staff. True when handled.
+        /// </summary>
+        static bool HweiSignal(string signal)
+        {
+            switch (signal)
+            {
+                case "Q":
+                case "W":
+                case "E":
+                    return true;
+                case "SubjectQ":
+                case "SubjectE":
+                    Haptic(XRNode.RightHand, .2f, .05f);
+                    return true;
+                case "SubjectW":
+                    Haptic(XRNode.LeftHand, .2f, .05f);
+                    return true;
+                case "WashBrush":
+                    Haptic(XRNode.RightHand, .15f, .12f);
+                    return true;
+                case "QQRelease":
+                case "EQRelease":
+                case "WQRelease":
+                case "QEStart":
+                    Haptic(XRNode.RightHand, .35f, .07f);
+                    return true;
+                case "QW":
+                case "WW":
+                case "WE":
+                case "EW":
+                case "EE":
+                    Haptic(XRNode.RightHand, .25f, .06f);
+                    return true;
+                case "QQHit":
+                case "QWHit":
+                case "EEHit":
+                case "EQHit":
+                case "EWHit":
+                case "MarkBurst":
+                    Haptic(XRNode.RightHand, .4f, .08f);
+                    return true;
+                case "WEHit":
+                    Haptic(XRNode.RightHand, .3f, .04f);
+                    return true;
+                case "R":
+                    Haptic(XRNode.LeftHand, .6f, .15f);
+                    Haptic(XRNode.RightHand, .6f, .15f);
+                    return true;
+                case "RBurst":
+                    Haptic(XRNode.LeftHand, .5f, .15f);
+                    Haptic(XRNode.RightHand, .5f, .15f);
+                    return true;
+                case "WWShield":
+                    Haptic(XRNode.LeftHand, .25f, .1f);
+                    Haptic(XRNode.RightHand, .25f, .1f);
+                    return true;
+            }
+            return false;
         }
 
         void SwingTrail(Vector3 start, Vector3 direction, float range, float width)

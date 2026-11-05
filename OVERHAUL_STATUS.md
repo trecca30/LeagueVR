@@ -96,15 +96,12 @@ Last updated: 2026-10-13. Every step up to Zeri and the Rift is a git commit; `g
     - **Zeri:** her basic attack is League's own: the left hand flicks a spark at the enemy. Ultrashock Laser is thrown from the left hand, the laser is as wide as it hits and green-gold instead of white. Spark Surge rushes in first person (dashes and short vaults through towers and thin walls, behind a quick flash of her electricity); long vaults are cleaned up; the preview arrow is smoother, with chevrons and an arrowhead.
     - **Gwen:** animated basic attacks after League's three attacks (thrust, sweep, backhand, a lunge on a crit), two-handed Snip Snip!, a spinning-scissors flourish for Hallowed Mist that blooms from her palm, Skip 'n Slash as a real dash ending in a two-handed slash, and a thread from the scissors to the needles for Needlework.
     - **Checks:** Gwen capture test 24/24, Zeri captures reviewed, smoke test 0 errors, Haiku 5.5 reviews of both.
+    - **Review fixes applied (2026-10-16):** Gwen's blade must pass the target (3D, 0.6 m) to hit, so the strike poses are at waist height (the blade had passed over small minions at head height); the E dash is smoothstep, ramps its hold out, and the two-handed slash starts from the hold; the dash works without rushing too; Needlework's needles stay in the fingers until the flick, and the left hand readies them at chest height; the mist grows from the palm and blooms again on recast, with a stronger dome; the Q scissors are further out and smaller; the trails run only in the strike window. Zeri: the short-vault cover holds longer and fully covers the view; the long vault has the comfort vignette and a level camera; the pulse hits what it shows (0.34-0.55 m); the throw draws back 25 cm and thrusts 30 cm; the preview's landing arc is thinner and its ring larger. Checks: Gwen 12/12 attacks and 12/12 Q/W/E/R; Zeri captures reviewed; smoke test 0 errors.
 
 ## Next (planned, in order)
 - **User roadmap (2026-10-15), in this order; each champion gets Haiku 5.5 review agents (works? adapts? makes sense? looks right?):**
   - **Zeri** and **Gwen**: done (item 18); headset check pending.
-  - **Hwei** (new champion):
-    - His staff in the right hand in first person, original texture and colour, turning the subject's colour when one is chosen (Q Disaster red, W Serenity, E Torment).
-    - Two-press casting: Q, W or E chooses the subject, a second press picks the spell (QQ, QW, QE, WQ, WW, WE, EQ, EW, EE), each with its own League-like animation.
-    - A floating UI only for Hwei, clear and well designed, showing the active subject and its three spells.
-    - R: both hands toward where he looks, the other hand on the staff aimed at the enemy, then the cast.
+  - **Hwei**: done (see STATE_DICTIONARY.md); Haiku 5.5 reviews applied, headset check and the no-sound problem pending.
 - **Map, from the final review:**
   - Headset check of the brush colour and density.
   - The light level of the stylized look; reviewers find it a little dim.

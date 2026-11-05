@@ -2849,6 +2849,1005 @@
           ]
         }
       ]
+    },
+    {
+      "key": "Hwei.Attack",
+      "eventName": "Play_sfx_Hwei_HweiBasicAttack_OnCast",
+      "bank": "hwei_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "hwei_base_sfx-896970569.wav",
+            "hwei_base_sfx-264119915.wav",
+            "hwei_base_sfx-509415897.wav",
+            "hwei_base_sfx-920687034.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Hwei.AttackMissile",
+      "eventName": "Play_sfx_Hwei_HweiBasicAttack_OnMissileLaunch",
+      "bank": "hwei_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "hwei_base_sfx-712783096.wav",
+            "hwei_base_sfx-469434993.wav",
+            "hwei_base_sfx-834357895.wav",
+            "hwei_base_sfx-794898167.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Hwei.AttackHit",
+      "eventName": "Play_sfx_Hwei_HweiBasicAttack_OnHit",
+      "bank": "hwei_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "hwei_base_sfx-921414364.wav",
+            "hwei_base_sfx-99660840.wav",
+            "hwei_base_sfx-717501662.wav",
+            "hwei_base_sfx-336067650.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Hwei.Crit",
+      "eventName": "Play_sfx_Hwei_HweiCritAttack_OnCast",
+      "bank": "hwei_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "hwei_base_sfx-896970569.wav",
+            "hwei_base_sfx-920687034.wav",
+            "hwei_base_sfx-509415897.wav",
+            "hwei_base_sfx-264119915.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Hwei.CritHit",
+      "eventName": "Play_sfx_Hwei_HweiCritAttack_OnHit",
+      "bank": "hwei_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "hwei_base_sfx-99660840.wav",
+            "hwei_base_sfx-717501662.wav",
+            "hwei_base_sfx-921414364.wav",
+            "hwei_base_sfx-336067650.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Hwei.SubjectQ",
+      "eventName": "Play_sfx_Hwei_HweiQ_cast",
+      "bank": "hwei_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "hwei_base_sfx-125176752.wav",
+            "hwei_base_sfx-814320408.wav",
+            "hwei_base_sfx-1048501976.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Hwei.SubjectW",
+      "eventName": "Play_sfx_Hwei_HweiW_cast",
+      "bank": "hwei_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "hwei_base_sfx-508793077.wav",
+            "hwei_base_sfx-955896075.wav",
+            "hwei_base_sfx-875391169.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Hwei.SubjectE",
+      "eventName": "Play_sfx_Hwei_HweiE_cast",
+      "bank": "hwei_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "hwei_base_sfx-971815737.wav",
+            "hwei_base_sfx-864992003.wav",
+            "hwei_base_sfx-1069277997.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Hwei.WashBrush",
+      "eventName": "Play_sfx_Hwei_HweiWashBrush_cast",
+      "bank": "hwei_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "hwei_base_sfx-913971560.wav",
+            "hwei_base_sfx-203874653.wav",
+            "hwei_base_sfx-732034452.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Hwei.QQCast",
+      "eventName": "Play_sfx_Hwei_HweiQQ_OnCast",
+      "bank": "hwei_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "hwei_base_sfx-132116725.wav",
+            "hwei_base_sfx-272636676.wav",
+            "hwei_base_sfx-317724452.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Hwei.QQMissile",
+      "eventName": "Play_sfx_Hwei_HweiQQ_OnMissileLaunch",
+      "bank": "hwei_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "hwei_base_sfx-1015498916.wav",
+            "hwei_base_sfx-890829090.wav",
+            "hwei_base_sfx-384316185.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Hwei.QQExplode",
+      "eventName": "Play_sfx_Hwei_HweiQQ_explosion",
+      "bank": "hwei_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "hwei_base_sfx-661237584.wav",
+            "hwei_base_sfx-712570078.wav",
+            "hwei_base_sfx-809882295.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Hwei.QWCast",
+      "eventName": "Play_sfx_Hwei_HweiQW_OnCast",
+      "bank": "hwei_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "hwei_base_sfx-180135768.wav",
+            "hwei_base_sfx-365730371.wav",
+            "hwei_base_sfx-779488228.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Hwei.QWZone",
+      "eventName": "Play_sfx_Hwei_HweiQW_aoe_warning",
+      "bank": "hwei_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "hwei_base_sfx-623755826.wav",
+            "hwei_base_sfx-220391854.wav",
+            "hwei_base_sfx-524415055.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Hwei.QWExplode",
+      "eventName": "Play_sfx_Hwei_HweiQW_AoE_explode",
+      "bank": "hwei_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "hwei_base_sfx-59360961.wav",
+            "hwei_base_sfx-133629197.wav",
+            "hwei_base_sfx-405884972.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Hwei.QECast",
+      "eventName": "Play_sfx_Hwei_HweiQE_OnCast",
+      "bank": "hwei_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "hwei_base_sfx-241389340.wav",
+            "hwei_base_sfx-350824723.wav",
+            "hwei_base_sfx-365481898.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Hwei.QEMissile",
+      "eventName": "Play_sfx_Hwei_HweiQETell_OnMissileLaunch",
+      "bank": "hwei_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "hwei_base_sfx-406707590.wav",
+            "hwei_base_sfx-646220841.wav",
+            "hwei_base_sfx-31448537.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Hwei.QEExplode",
+      "eventName": "Play_sfx_Hwei_HweiQE_lava_explode",
+      "bank": "hwei_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "hwei_base_sfx-32982011.wav",
+            "hwei_base_sfx-113873006.wav",
+            "hwei_base_sfx-889290978.wav",
+            "hwei_base_sfx-545873862.wav",
+            "hwei_base_sfx-917625137.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Hwei.WQCast",
+      "eventName": "Play_sfx_Hwei_HweiWQ_OnCast",
+      "bank": "hwei_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "hwei_base_sfx-906285292.wav",
+            "hwei_base_sfx-517659938.wav",
+            "hwei_base_sfx-210764644.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Hwei.WQMissile",
+      "eventName": "Play_sfx_Hwei_HweiWQ_OnMissileLaunch",
+      "bank": "hwei_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "hwei_base_sfx-409448275.wav",
+            "hwei_base_sfx-557659008.wav",
+            "hwei_base_sfx-39246469.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Hwei.WQZone",
+      "eventName": "Play_sfx_Hwei_HweiWQ_AoE_buffactivate_loop",
+      "bank": "hwei_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "hwei_base_sfx-702862147.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Hwei.WQMoveSpeed",
+      "eventName": "Play_sfx_Hwei_HweiWQMoveSpeed_OnBuffActivate",
+      "bank": "hwei_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "hwei_base_sfx-152381603.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Hwei.WWCast",
+      "eventName": "Play_sfx_Hwei_HweiWW_OnCast",
+      "bank": "hwei_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "hwei_base_sfx-418862165.wav",
+            "hwei_base_sfx-373472203.wav",
+            "hwei_base_sfx-401414887.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Hwei.WWZone",
+      "eventName": "Play_sfx_Hwei_HweiWW_AoE_buffactivate",
+      "bank": "hwei_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "hwei_base_sfx-484442950.wav",
+            "hwei_base_sfx-1069930793.wav",
+            "hwei_base_sfx-959023424.wav"
+          ]
+        },
+        {
+          "clips": [
+            "hwei_base_sfx-82312596.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Hwei.WWShieldOn",
+      "eventName": "Play_sfx_Hwei_HweiWWShield_OnBuffActivate",
+      "bank": "hwei_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "hwei_base_sfx-917985218.wav",
+            "hwei_base_sfx-11883371.wav",
+            "hwei_base_sfx-847111021.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Hwei.WWShieldOff",
+      "eventName": "Play_sfx_Hwei_HweiWWShield_OnBuffDeactivate",
+      "bank": "hwei_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "hwei_base_sfx-295475204.wav",
+            "hwei_base_sfx-613960608.wav",
+            "hwei_base_sfx-943573375.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Hwei.WECast",
+      "eventName": "Play_sfx_Hwei_HweiWE_OnCast",
+      "bank": "hwei_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "hwei_base_sfx-805805808.wav",
+            "hwei_base_sfx-341436263.wav",
+            "hwei_base_sfx-189233813.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Hwei.WEBuffStart",
+      "eventName": "Play_sfx_Hwei_HweiWEBuffCounter_OnBuffActivate",
+      "bank": "hwei_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "hwei_base_sfx-836352885.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Hwei.WEHit",
+      "eventName": "Play_sfx_Hwei_HweiWE_empowered_damage_hit",
+      "bank": "hwei_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "hwei_base_sfx-9129879.wav",
+            "hwei_base_sfx-28395576.wav",
+            "hwei_base_sfx-830220018.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Hwei.WEBuffEnd",
+      "eventName": "Play_sfx_Hwei_HweiWEBuffCounter_OnBuffDeactivate",
+      "bank": "hwei_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "hwei_base_sfx-1072959099.wav",
+            "hwei_base_sfx-420993106.wav",
+            "hwei_base_sfx-109368057.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Hwei.EQCast",
+      "eventName": "Play_sfx_Hwei_HweiEQ_OnCast",
+      "bank": "hwei_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "hwei_base_sfx-612368760.wav",
+            "hwei_base_sfx-75087253.wav",
+            "hwei_base_sfx-44534611.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Hwei.EQMissile",
+      "eventName": "Play_sfx_Hwei_HweiEQ_OnMissileLaunch",
+      "bank": "hwei_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "hwei_base_sfx-1011508883.wav",
+            "hwei_base_sfx-860479110.wav",
+            "hwei_base_sfx-156665197.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Hwei.EQHit",
+      "eventName": "Play_sfx_Hwei_HweiEQ_OnHit",
+      "bank": "hwei_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "hwei_base_sfx-69834651.wav",
+            "hwei_base_sfx-239381480.wav",
+            "hwei_base_sfx-287426527.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Hwei.EWCast",
+      "eventName": "Play_sfx_Hwei_HweiEW_OnCast",
+      "bank": "hwei_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "hwei_base_sfx-787880827.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Hwei.EWZone",
+      "eventName": "Play_sfx_Hwei_HweiEW_AoE_buffactivate",
+      "bank": "hwei_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "hwei_base_sfx-579031134.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Hwei.EWTargetWarning",
+      "eventName": "Play_sfx_Hwei_HweiEW_target_warning",
+      "bank": "hwei_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "hwei_base_sfx-893879419.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Hwei.EWMissile",
+      "eventName": "Play_sfx_Hwei_HweiEW_OnMissileLaunch",
+      "bank": "hwei_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "hwei_base_sfx-885155326.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Hwei.EWHit",
+      "eventName": "Play_sfx_Hwei_HweiEW_hit",
+      "bank": "hwei_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "hwei_base_sfx-293542346.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Hwei.EWZoneEnd",
+      "eventName": "Play_sfx_Hwei_HweiEW_aoe_buffdeactivate",
+      "bank": "hwei_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "hwei_base_sfx-509579061.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Hwei.EECast",
+      "eventName": "Play_sfx_Hwei_HweiEE_OnCast",
+      "bank": "hwei_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "hwei_base_sfx-409023581.wav",
+            "hwei_base_sfx-316379760.wav",
+            "hwei_base_sfx-672044604.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Hwei.EEZone",
+      "eventName": "Play_sfx_Hwei_HweiEE_AoE_buffactivate",
+      "bank": "hwei_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "hwei_base_sfx-878541495.wav",
+            "hwei_base_sfx-913692991.wav",
+            "hwei_base_sfx-31144744.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Hwei.EEHit",
+      "eventName": "Play_sfx_Hwei_HweiEE_hit",
+      "bank": "hwei_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "hwei_base_sfx-631926018.wav",
+            "hwei_base_sfx-884789044.wav",
+            "hwei_base_sfx-168525570.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Hwei.RCast",
+      "eventName": "Play_sfx_Hwei_HweiR_OnCast",
+      "bank": "hwei_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "hwei_base_sfx-596012280.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Hwei.RMissile",
+      "eventName": "Play_sfx_Hwei_HweiR_OnMissileLaunch",
+      "bank": "hwei_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "hwei_base_sfx-422723899.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Hwei.RAttach",
+      "eventName": "Play_sfx_Hwei_HweiR_OnHit",
+      "bank": "hwei_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "hwei_base_sfx-845806209.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Hwei.RGrow",
+      "eventName": "Play_sfx_Hwei_HweiR_aoe_grow_buffactivate",
+      "bank": "hwei_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "hwei_base_sfx-604542522.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Hwei.RExplode",
+      "eventName": "Play_sfx_Hwei_HweiR_AoE_shatter_buffactivate",
+      "bank": "hwei_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "hwei_base_sfx-85753487.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Hwei.PMark",
+      "eventName": "Play_sfx_Hwei_HweiP_mark_buffactivate",
+      "bank": "hwei_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "hwei_base_sfx-774366203.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Hwei.PWarning",
+      "eventName": "Play_sfx_Hwei_HweiP_explosion_warning_buffactivate",
+      "bank": "hwei_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "hwei_base_sfx-923466744.wav",
+            "hwei_base_sfx-421543990.wav",
+            "hwei_base_sfx-434178266.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Hwei.PDetonate",
+      "eventName": "Play_sfx_Hwei_HweiP_explosion_buffactivate",
+      "bank": "hwei_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "hwei_base_sfx-59284678.wav",
+            "hwei_base_sfx-720691046.wav",
+            "hwei_base_sfx-213300042.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Hwei.Death",
+      "eventName": "Play_sfx_Hwei_Death3D_cast",
+      "bank": "hwei_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "hwei_base_sfx-958521376.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Hwei.Respawn",
+      "eventName": "Play_sfx_Hwei_Respawn3D_buffactivate",
+      "bank": "hwei_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "hwei_base_sfx-291270139.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Hwei.Recall",
+      "eventName": "Play_sfx_Hwei_Recall3D_buffactivate",
+      "bank": "hwei_base_sfx_events",
+      "layers": [
+        {
+          "clips": [
+            "hwei_base_sfx-255288334.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Hwei.VOMove",
+      "eventName": "Play_vo_Hwei_Move2DStandard",
+      "bank": "hwei_base_vo_events",
+      "layers": [
+        {
+          "clips": [
+            "hwei_base_vo-907236016.wav",
+            "hwei_base_vo-638644394.wav",
+            "hwei_base_vo-274545042.wav",
+            "hwei_base_vo-542623983.wav",
+            "hwei_base_vo-80928595.wav",
+            "hwei_base_vo-581267061.wav",
+            "hwei_base_vo-627402726.wav",
+            "hwei_base_vo-443878215.wav",
+            "hwei_base_vo-361757298.wav",
+            "hwei_base_vo-369969867.wav",
+            "hwei_base_vo-325906304.wav",
+            "hwei_base_vo-733746285.wav",
+            "hwei_base_vo-348411833.wav",
+            "hwei_base_vo-162034592.wav",
+            "hwei_base_vo-976726254.wav",
+            "hwei_base_vo-982014051.wav",
+            "hwei_base_vo-661161120.wav",
+            "hwei_base_vo-197161322.wav",
+            "hwei_base_vo-11953226.wav",
+            "hwei_base_vo-268389929.wav",
+            "hwei_base_vo-734196970.wav",
+            "hwei_base_vo-913153350.wav",
+            "hwei_base_vo-886146117.wav",
+            "hwei_base_vo-1057309976.wav",
+            "hwei_base_vo-700619944.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Hwei.VOAttack",
+      "eventName": "Play_vo_Hwei_Attack2DGeneral",
+      "bank": "hwei_base_vo_events",
+      "layers": [
+        {
+          "clips": [
+            "hwei_base_vo-821236653.wav",
+            "hwei_base_vo-273480672.wav",
+            "hwei_base_vo-204982536.wav",
+            "hwei_base_vo-585728692.wav",
+            "hwei_base_vo-892547820.wav",
+            "hwei_base_vo-1041411452.wav",
+            "hwei_base_vo-740352612.wav",
+            "hwei_base_vo-1044453977.wav",
+            "hwei_base_vo-563417496.wav",
+            "hwei_base_vo-262328319.wav",
+            "hwei_base_vo-247714215.wav",
+            "hwei_base_vo-236576853.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Hwei.VOKill",
+      "eventName": "Play_vo_Hwei_Kill3DGeneral",
+      "bank": "hwei_base_vo_events",
+      "layers": [
+        {
+          "clips": [
+            "hwei_base_vo-545011952.wav",
+            "hwei_base_vo-813572626.wav",
+            "hwei_base_vo-896033264.wav",
+            "hwei_base_vo-84864195.wav",
+            "hwei_base_vo-462039233.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Hwei.VORecall",
+      "eventName": "Play_vo_Hwei_Recall3DGeneral",
+      "bank": "hwei_base_vo_events",
+      "layers": [
+        {
+          "clips": [
+            "hwei_base_vo-154635896.wav",
+            "hwei_base_vo-728090402.wav",
+            "hwei_base_vo-629287137.wav",
+            "hwei_base_vo-978029505.wav",
+            "hwei_base_vo-102657728.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Hwei.VORespawn",
+      "eventName": "Play_vo_Hwei_Respawn2DGeneral",
+      "bank": "hwei_base_vo_events",
+      "layers": [
+        {
+          "clips": [
+            "hwei_base_vo-256983499.wav",
+            "hwei_base_vo-316977135.wav",
+            "hwei_base_vo-984330038.wav",
+            "hwei_base_vo-337209396.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Hwei.VODeath",
+      "eventName": "Play_vo_Hwei_Death3D",
+      "bank": "hwei_base_vo_events",
+      "layers": [
+        {
+          "clips": [
+            "hwei_base_vo-365998325.wav",
+            "hwei_base_vo-967437748.wav",
+            "hwei_base_vo-917827777.wav",
+            "hwei_base_vo-163501491.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Hwei.VOQQ",
+      "eventName": "Play_vo_Hwei_HweiQQ_cast3D",
+      "bank": "hwei_base_vo_events",
+      "layers": [
+        {
+          "clips": [
+            "hwei_base_vo-1068397906.wav",
+            "hwei_base_vo-618412015.wav",
+            "hwei_base_vo-154595018.wav",
+            "hwei_base_vo-582012581.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Hwei.VOQE",
+      "eventName": "Play_vo_Hwei_HweiQE_cast3D",
+      "bank": "hwei_base_vo_events",
+      "layers": [
+        {
+          "clips": [
+            "hwei_base_vo-115177689.wav",
+            "hwei_base_vo-914712498.wav",
+            "hwei_base_vo-1063003394.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Hwei.VOWQ",
+      "eventName": "Play_vo_Hwei_HweiWQ_cast3D",
+      "bank": "hwei_base_vo_events",
+      "layers": [
+        {
+          "clips": [
+            "hwei_base_vo-843976401.wav",
+            "hwei_base_vo-326489285.wav",
+            "hwei_base_vo-374239719.wav",
+            "hwei_base_vo-705486133.wav",
+            "hwei_base_vo-373995459.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Hwei.VOWW",
+      "eventName": "Play_vo_Hwei_HweiWW_cast3D",
+      "bank": "hwei_base_vo_events",
+      "layers": [
+        {
+          "clips": [
+            "hwei_base_vo-533606644.wav",
+            "hwei_base_vo-353046660.wav",
+            "hwei_base_vo-889445534.wav",
+            "hwei_base_vo-911102549.wav",
+            "hwei_base_vo-957187840.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Hwei.VOEQ",
+      "eventName": "Play_vo_Hwei_HweiEQ_cast3D",
+      "bank": "hwei_base_vo_events",
+      "layers": [
+        {
+          "clips": [
+            "hwei_base_vo-520807397.wav",
+            "hwei_base_vo-380796293.wav",
+            "hwei_base_vo-521563154.wav",
+            "hwei_base_vo-846072534.wav",
+            "hwei_base_vo-503649806.wav",
+            "hwei_base_vo-21995993.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Hwei.VOEE",
+      "eventName": "Play_vo_Hwei_HweiEE_cast3D",
+      "bank": "hwei_base_vo_events",
+      "layers": [
+        {
+          "clips": [
+            "hwei_base_vo-141793922.wav",
+            "hwei_base_vo-217096417.wav",
+            "hwei_base_vo-863877595.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Hwei.VOR",
+      "eventName": "Play_vo_Hwei_HweiR_cast3D",
+      "bank": "hwei_base_vo_events",
+      "layers": [
+        {
+          "clips": [
+            "hwei_base_vo-303351685.wav",
+            "hwei_base_vo-378420649.wav",
+            "hwei_base_vo-859212755.wav",
+            "hwei_base_vo-790184957.wav",
+            "hwei_base_vo-984979741.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Hwei.VOEWRoot",
+      "eventName": "Play_vo_Hwei_Spell3DEWRoot",
+      "bank": "hwei_base_vo_events",
+      "layers": [
+        {
+          "clips": [
+            "hwei_base_vo-903157906.wav",
+            "hwei_base_vo-637861895.wav",
+            "hwei_base_vo-942409228.wav",
+            "hwei_base_vo-115290845.wav",
+            "hwei_base_vo-1032965206.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Hwei.VOTaunt",
+      "eventName": "Play_vo_Hwei_Taunt3DGeneral",
+      "bank": "hwei_base_vo_events",
+      "layers": [
+        {
+          "clips": [
+            "hwei_base_vo-905956697.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Hwei.VOJoke",
+      "eventName": "Play_vo_Hwei_Joke3DGeneral",
+      "bank": "hwei_base_vo_events",
+      "layers": [
+        {
+          "clips": [
+            "hwei_base_vo-601247230.wav"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Hwei.VOLaugh",
+      "eventName": "Play_vo_Hwei_Laugh3DGeneral",
+      "bank": "hwei_base_vo_events",
+      "layers": [
+        {
+          "clips": [
+            "hwei_base_vo-318897151.wav"
+          ]
+        }
+      ]
     }
   ],
   "media": [
@@ -4277,5 +5276,6 @@
   "notes": "Decoded unchanged original Wwise media from the local League installation. Event mapping follows verified bank event IDs and Play action container lineage. Unity mixes the selected original layers; Wwise RTPC/filter/delay processing is not recreated.",
   "zeriNotes": "Zeri: original Wwise media from the local League installation (Zeri.wad.client, Zeri.en_US.wad.client), decoded with vgmstream r2117; events resolved through the bank HIRC (event -> action -> container -> media).",
   "gwenVoiceNotes": "Gwen voice: original Wwise media from the local League installation (Gwen.en_US.wad.client), decoded with vgmstream; events named by FNV-1 against the strings in Gwen.wad.client.",
-  "gragasNotes": "Gragas: original Wwise media from the local League installation (Gragas.wad.client base-skin effects, Gragas.en_US.wad.client voice), decoded with vgmstream; events named by FNV-1 against the strings in the champion bins."
+  "gragasNotes": "Gragas: original Wwise media from the local League installation (Gragas.wad.client base-skin effects, Gragas.en_US.wad.client voice), decoded with vgmstream; events named by FNV-1 against the strings in the champion bins.",
+  "hweiNotes": "Hwei: original Wwise media from the local League installation (Hwei.wad.client base-skin effects, Hwei.en_US.wad.client voice), decoded with vgmstream; events named by FNV-1 against the strings in the champion bins."
 }

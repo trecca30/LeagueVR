@@ -35,6 +35,8 @@ namespace LeagueVR.Champions
             public HandCurl curl;
             /// <summary>Recoil, 0-1: the prop tips up and back after each shot and settles (the camera never moves).</summary>
             public float kick;
+            /// <summary>Angle between the controller handle and this prop; null uses the avatar's <see cref="weaponTilt"/>.</summary>
+            public Vector3? tilt;
 
             public bool Visible => bone && !hidden && bone.localScale.x > 0;
         }
@@ -50,6 +52,8 @@ namespace LeagueVR.Champions
             public float scale;
             public bool aimed;
             public HandCurl curl;
+            /// <summary>The prop's own angle to the controller handle (zero: the avatar's weapon tilt).</summary>
+            public Vector3 tilt;
         }
 
         /// <summary>
@@ -74,6 +78,16 @@ namespace LeagueVR.Champions
                     new PropSpec { bone = "Weapon1", material = "Gun", forward = Vector3.back, up = Vector3.up, handle = new Vector3(0, .02f, .03f), edge = Vector3.zero, tip = new Vector3(0, .07f, -.3f), scale = .85f, aimed = true, curl = new HandCurl(.2f, .85f, .55f) },
                 }
             },
+            {
+                // Hwei's brush, in his right hand (League's is in his left): the bristles run from 0.55 m to the tip at
+                // 0.97 m along the bone's -Z and the ornamented handle end is 0.53 m along +Z. League's palm holds it at
+                // the bone; here the fist sits higher on the shaft, under the ornament, so the short end stays clear of
+                // the face in every stroke. Held like a wand: the bristles point a little above where the hand points.
+                ChampionId.Hwei, new[]
+                {
+                    new PropSpec { bone = "Weapon1", material = "Brush", forward = Vector3.back, up = Vector3.up, handle = new Vector3(0, .007f, .3f), edge = new Vector3(0, 0, -.3f), tip = new Vector3(0, .003f, -.97f), scale = .75f, tilt = new Vector3(48, 0, 0) },
+                }
+            },
         };
 
         /// <summary>Submeshes of the complete model that cast the body's shadow (head, hair, cape and props in hand).</summary>
@@ -87,6 +101,7 @@ namespace LeagueVR.Champions
             { ChampionId.Brand, new[] { "riotRig_lambert4" } },
             // Yunara's prayer beads are left out of her first-person body but belong to her shadow.
             { ChampionId.Yunara, new[] { "Body", "Pants", "Dragon_Head", "Tail", "Bead_1", "Bead_2", "Bead_3", "Bead_4", "Bead_5", "Bead_6", "Bead_7", "Bead_8" } },
+            { ChampionId.Hwei, new[] { "Brush", "PaletteA", "Hair", "Body" } },
         };
 
         [Tooltip("Angle between the controller handle and a held weapon: pitch, yaw, roll. Positive pitch lowers the weapon toward the pointing direction.")]
@@ -199,6 +214,7 @@ namespace LeagueVR.Champions
                     scale = spec.scale,
                     aimed = spec.aimed,
                     curl = spec.curl,
+                    tilt = spec.tilt != Vector3.zero ? spec.tilt : null,
                 };
                 prop.mesh = ExtractPropMesh(Skin, bone, spec.material, out prop.material);
                 if (spec.left)
@@ -281,16 +297,20 @@ namespace LeagueVR.Champions
 
         // ---------- Prop poses ----------
 
+        /// <summary>The angle between the controller handle and a held prop (pitch, yaw, roll).</summary>
+        public Vector3 PropTilt(Prop prop) => prop?.tilt ?? weaponTilt;
+
         /// <summary>
         /// The hand frame a prop is fitted to. Weapons run along the controller handle, lowered by
-        /// <see cref="weaponTilt"/>, with the palm normal as up; shields face where the fist points.
+        /// <see cref="weaponTilt"/>, with the palm normal as up; shields face where the fist points. A kit animation that
+        /// moves the hand (<see cref="ChampionBodyBase.GripOverride"/>) turns the prop with it.
         /// </summary>
         Quaternion HandFrame(Prop prop)
         {
-            var grip = Grip(prop.left);
+            var grip = ReachedGrip(prop.left);
             if (prop.left || prop.aimed)
                 return XRPoses.AimFromGrip(grip.rotation);
-            var along = grip.rotation * Quaternion.Euler(weaponTilt);
+            var along = grip.rotation * Quaternion.Euler(PropTilt(prop));
             Vector3 forward = along * Vector3.forward;
             Vector3 palmNormal = Vector3.ProjectOnPlane(grip.rotation * Vector3.right, forward);
             return Quaternion.LookRotation(forward, palmNormal.sqrMagnitude > 1e-4f ? palmNormal : along * Vector3.up);

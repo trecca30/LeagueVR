@@ -36,6 +36,8 @@ namespace LeagueVR.Champions
         public virtual void OnUnequip() { }
         /// <summary>Called every frame while the champion is alive.</summary>
         public virtual void Tick() { }
+        /// <summary>Called every frame while the champion is dead (spells already out keep playing out).</summary>
+        public virtual void TickWhileDead() { }
         public virtual void OnDeath() { }
         public virtual void OnRespawn() { }
         public virtual void OnUnitDefeated(Combatant victim, DamageHit hit) { }
@@ -56,6 +58,9 @@ namespace LeagueVR.Champions
 
         /// <summary>True while a recast window lets the slot be used again without waiting for its cooldown.</summary>
         public virtual bool CanRecast(int slot) => false;
+
+        /// <summary>True when pressing the slot still works while stunned (League lets some cancels through crowd control).</summary>
+        public virtual bool CastsWhileStunned(int slot) => false;
 
         // ---------- Hold-to-cast (aim, charge or throw) ----------
 
